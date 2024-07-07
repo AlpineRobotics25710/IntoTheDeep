@@ -20,20 +20,20 @@ public class GenericTeleOp extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
+            double y = Math.pow(-gamepad1.left_stick_y,3); // Remember, Y stick value is reversed
+            double x = Math.pow(gamepad1.left_stick_x * 1.1,3); // Counteract imperfect strafing
+            double rx = Math.pow(gamepad1.right_stick_x,3);
 
             // Denominator is the largest motor power (absolute value) or 1
-            // This ensures all the powers maintain the same ratio,
+            // This ensures all the powers maintain the same ratio,x
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
             double frontLeftPower = (y + x + rx) / denominator;
