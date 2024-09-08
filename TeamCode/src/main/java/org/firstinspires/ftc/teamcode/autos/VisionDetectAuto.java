@@ -12,8 +12,6 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous()
 public class VisionDetectAuto extends LinearOpMode {
-    private int propLoc = 0;
-    private ElapsedTime intakeTimer = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -29,7 +27,9 @@ public class VisionDetectAuto extends LinearOpMode {
         telemetry.addData("VisionPortal", "Initialized");
 
         while (opModeInInit()) {
-            telemetry.addData("Prop location", propLoc);
+            telemetry.addData("Bounding box", propDetection.getContourAmt());
+            telemetry.addData("Alliance color sample center", propDetection.getBiggestCenter());
+            telemetry.addData("Yellow sample center", propDetection.getBiggestYellowCenter());
             telemetry.update();
         }
     }

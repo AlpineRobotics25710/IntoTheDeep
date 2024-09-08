@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibra
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.imgproc.Moments;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -20,10 +21,12 @@ public class SampleDetectionPipeline implements VisionProcessor {
     private Mat imgBlur = new Mat();
     private Mat imgHSV = new Mat();
     private Mat mask = new Mat();
+    private Mat yellowMask = new Mat();
     private Mat imgCanny = new Mat();
     private Mat hierarchy = new Mat();
 
     private List<MatOfPoint> contours = new ArrayList<>();
+    private List<MatOfPoint> yellowContours = new ArrayList<>();
 
     // Variables to store input dimensions
     private int inputX;
@@ -32,11 +35,18 @@ public class SampleDetectionPipeline implements VisionProcessor {
     // Variables to store contour information
     private int contourAmt;
     private double biggestArea;
+    private double biggestYellowArea;
+
+    // Variables to store the center points of the biggest contours
+    private Point biggestCenter;
+
+    private Point biggestYellowCenter;
 
     Scalar lower;
     Scalar upper;
 
     Rect biggestPropRect;
+    Rect biggestYellowRect;
     MatOfPoint biggestContour;
 
     OpenCvWebcam webcam;
@@ -72,10 +82,21 @@ public class SampleDetectionPipeline implements VisionProcessor {
         return biggestArea;
     }
 
+    // Method to return the center of the biggest alliance color contour
+    public Point getBiggestCenter() {
+        return biggestCenter;
+    }
+
+    // Method to return the center of the biggest yellow contour
+    public Point getBiggestYellowCenter() {
+        return biggestYellowCenter;
+    }
+
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
         biggestContour = new MatOfPoint();
         biggestPropRect = new Rect();
+        biggestYellowRect = new Rect();
     }
 
     @Override
@@ -92,7 +113,7 @@ public class SampleDetectionPipeline implements VisionProcessor {
         Imgproc.GaussianBlur(frame, imgBlur, new Size(7, 7), 0);
         Imgproc.cvtColor(imgBlur, imgHSV, Imgproc.COLOR_RGB2HSV);
 
-        // Step 2: Define color bounds (red or blue)
+        // Step 2: Define color bounds (red or blue based on alliance)
         if (alliance == ALLIANCE.RED) {
             lower = new Scalar(0, 100, 0);     // Red min
             upper = new Scalar(10, 255, 255);  // Red max
@@ -101,47 +122,88 @@ public class SampleDetectionPipeline implements VisionProcessor {
             upper = new Scalar(125, 255, 255); // Blue max
         }
 
-        // Step 3: Create a mask based on the selected color
+        // Step 3: Create a mask for red or blue based on alliance
         inRange(imgHSV, lower, upper, mask);
 
-        // Step 4: Detect edges using Canny
+        // Step 4: Detect edges using Canny for alliance color
         Imgproc.Canny(mask, imgCanny, 50, 50);
 
-        // Step 5: Find contours
+        // Step 5: Find contours for alliance color
         contours.clear();
         Imgproc.findContours(imgCanny, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
+        // Step 6: Detect yellow contours
+        Scalar lowerYellow = new Scalar(20, 100, 100);  // Yellow min
+        Scalar upperYellow = new Scalar(30, 255, 255);  // Yellow max
+        inRange(imgHSV, lowerYellow, upperYellow, yellowMask);
+
+        // Step 7: Find yellow contours
+        yellowContours.clear();
+        Imgproc.findContours(yellowMask, yellowContours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+
         contourAmt = contours.size();  // Update the contour count
 
-        if (contours.isEmpty()) {
-            return frame;
-        }
-
-        // Step 6: Find the biggest contour
+        // Reset biggest contour and area tracking
         biggestArea = 0;
+        biggestYellowArea = 0;
+        biggestCenter = null;
+        biggestYellowCenter = null;
+
+        // Step 8: Find the biggest contour for alliance color
         for (MatOfPoint cnt : contours) {
             double area = Imgproc.boundingRect(cnt).area();
             if (area > biggestArea) {
                 biggestArea = area;
                 biggestPropRect = Imgproc.boundingRect(cnt);
                 biggestContour = cnt;
+
+                // Calculate the center of the biggest contour using moments
+                Moments M = Imgproc.moments(cnt);
+                if (M.m00 != 0) {
+                    biggestCenter = new Point(M.m10 / M.m00, M.m01 / M.m00);
+                }
             }
         }
 
-        // Step 7: Draw all contours in purple
+        // Step 9: Find the biggest yellow contour
+        for (MatOfPoint cnt : yellowContours) {
+            double area = Imgproc.boundingRect(cnt).area();
+            if (area > biggestYellowArea) {
+                biggestYellowArea = area;
+                biggestYellowRect = Imgproc.boundingRect(cnt);
+
+                // Calculate the center of the biggest yellow contour using moments
+                Moments M = Imgproc.moments(cnt);
+                if (M.m00 != 0) {
+                    biggestYellowCenter = new Point(M.m10 / M.m00, M.m01 / M.m00);
+                }
+            }
+        }
+
+        // Step 10: Draw contours for the alliance color in purple
         Imgproc.drawContours(frame, contours, -1, new Scalar(255, 0, 255), 2);
 
-        // Step 8: Draw bounding box around the biggest contour in red
+        // Step 11: Draw bounding box around the biggest contour for alliance color in red
         Imgproc.rectangle(
                 frame,
                 new Point(biggestPropRect.x, biggestPropRect.y),
                 new Point(biggestPropRect.x + biggestPropRect.width, biggestPropRect.y + biggestPropRect.height),
                 new Scalar(0, 0, 255), 4);
 
-        // Step 9: Clean up
+        // Step 12: Draw bounding box around the biggest yellow contour in green
+        if (biggestYellowArea > 0) {
+            Imgproc.rectangle(
+                    frame,
+                    new Point(biggestYellowRect.x, biggestYellowRect.y),
+                    new Point(biggestYellowRect.x + biggestYellowRect.width, biggestYellowRect.y + biggestYellowRect.height),
+                    new Scalar(0, 255, 0), 4);
+        }
+
+        // Step 13: Clean up
         imgCanny.release();
         imgHSV.release();
         imgBlur.release();
+        yellowMask.release();
 
         return frame;
     }
