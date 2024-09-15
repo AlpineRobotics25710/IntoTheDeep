@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.roadrunner.runnables;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -16,15 +17,12 @@ public class RoadRunnerTest extends LinearOpMode {
         Pose2d startPose = new Pose2d(-35, -60, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
-        TrajectorySequence testPath = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
-                .turn(Math.toRadians(90))
-                .forward(15)
-                .turn(Math.toRadians(90))
-                .forward(15)
-                .turn(Math.toRadians(90))
-                .forward(15)
-                .turn(Math.toRadians(90))
+        TrajectorySequence testPath = drive.trajectorySequenceBuilder(new Pose2d(-36.08, -58.70, Math.toRadians(90.00)))
+                .lineTo(new Vector2d(-37.30, 42.65))
+                .splineTo(new Vector2d(7.95, 62.06), Math.toRadians(2.22))
+                .splineTo(new Vector2d(38.37, -42.96), Math.toRadians(269.18))
+                .splineTo(new Vector2d(-0.76, -60.54), Math.toRadians(167.61))
+                .splineTo(new Vector2d(-36.69, -58.85), Math.toRadians(180.95))
                 .build();
 
         waitForStart();
