@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.*;
 import org.firstinspires.ftc.teamcode.pedropathing.config.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedropathing.config.pedroPathing.pathGeneration.BezierCurve;
 import org.firstinspires.ftc.teamcode.pedropathing.config.pedroPathing.pathGeneration.BezierLine;
