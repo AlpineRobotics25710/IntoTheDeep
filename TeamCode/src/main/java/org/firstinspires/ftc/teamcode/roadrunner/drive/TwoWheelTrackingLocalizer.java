@@ -38,17 +38,17 @@ import java.util.List;
 @Config
 public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 2000;
-    public static double WHEEL_RADIUS = 24.0 / 25.4; // in
+    public static double WHEEL_RADIUS = 1.88976378; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double PARALLEL_X = 8.5; // X is the up and down direction
-    public static double PARALLEL_Y = 7; // Y is the strafe direction
+    public static double PARALLEL_X = 8; // X is the up and down direction
+    public static double PARALLEL_Y = -6.5; // Y is the strafe direction
 
-    public static double PERPENDICULAR_X = -8;
-    public static double PERPENDICULAR_Y = -3;
+    public static double PERPENDICULAR_X = 7;
+    public static double PERPENDICULAR_Y = -2.5;
 
-    public static double X_MULTIPLIER = 1;
-    public static double Y_MULTIPLIER = 1;
+    public static double X_MULTIPLIER = 0.99961039;
+    public static double Y_MULTIPLIER = 0.98805166;
 
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
@@ -103,8 +103,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         //  compensation method
 
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()) * X_MULTIPLIER,
-                encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity()) * Y_MULTIPLIER
+                encoderTicksToInches(parallelEncoder.getRawVelocity()) * X_MULTIPLIER,
+                encoderTicksToInches(perpendicularEncoder.getRawVelocity()) * Y_MULTIPLIER
         );
     }
 }
