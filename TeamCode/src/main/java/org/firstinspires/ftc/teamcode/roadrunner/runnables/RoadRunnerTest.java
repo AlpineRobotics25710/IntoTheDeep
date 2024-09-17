@@ -18,11 +18,15 @@ public class RoadRunnerTest extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence testPath = drive.trajectorySequenceBuilder(new Pose2d(-36.08, -58.70, Math.toRadians(90.00)))
-                .lineTo(new Vector2d(-37.30, 42.65))
-                .splineTo(new Vector2d(7.95, 62.06), Math.toRadians(2.22))
-                .splineTo(new Vector2d(38.37, -42.96), Math.toRadians(269.18))
-                .splineTo(new Vector2d(-0.76, -60.54), Math.toRadians(167.61))
-                .splineTo(new Vector2d(-36.69, -58.85), Math.toRadians(180.95))
+                .splineToLinearHeading(new Pose2d(0.15, -30, Math.toRadians(90.00)), Math.toRadians(90.00))
+                .lineTo(new Vector2d(0.00, -47))
+                .splineToConstantHeading(new Vector2d(-20, -44), Math.toRadians(90))
+                .splineToSplineHeading(new Pose2d(-40, -28, Math.toRadians(180)), Math.toRadians(180.00))
+                .lineToLinearHeading(new Pose2d(-60, -55, Math.toRadians(245.00)))
+                .lineToLinearHeading(new Pose2d(-58, -28, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-60, -55, Math.toRadians(245.00)))
+                .lineToLinearHeading(new Pose2d(-68, -28, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-60, -55, Math.toRadians(245.00)))
                 .build();
 
         waitForStart();
