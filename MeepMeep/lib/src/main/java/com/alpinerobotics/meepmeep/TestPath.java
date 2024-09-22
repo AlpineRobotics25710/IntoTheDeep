@@ -24,7 +24,7 @@ public class TestPath {
                         drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90.00)))
                                 .splineToLinearHeading(new Pose2d(0.15, -30, Math.toRadians(90.00)), Math.toRadians(90.00))
                                 .lineTo(new Vector2d(0.00, -47))
-                                .splineToConstantHeading(new Vector2d(-20, -44), Math.toRadians(90))
+                                .splineToConstantHeading(new Vector2d(-25, -44), Math.toRadians(90))
                                 .splineToSplineHeading(new Pose2d(-40, -28, Math.toRadians(180)), Math.toRadians(180.00))
                                 .lineToLinearHeading(new Pose2d(-60, -55, Math.toRadians(245.00)))
                                 .lineToLinearHeading(new Pose2d(-58, -28, Math.toRadians(90)))
