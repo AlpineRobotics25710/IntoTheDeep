@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms;
 
 public interface Mechanism {
+    /**
+     * Runs the initialization code for this mechanism
+     */
     void init();
 
     /**

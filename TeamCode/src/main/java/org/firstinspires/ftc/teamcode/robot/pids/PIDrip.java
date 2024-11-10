@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.robot.pids;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class PIDrip {
-    public double Kp = 0;
-    public double Ki = 0;
-    public double Kd = 0;
-    public double Kf = 0;
+    public double Kp;
+    public double Ki;
+    public double Kd;
+    public double Kf;
     private final ElapsedTime timer = new ElapsedTime();
     private double reference;
     private double motorPower;
@@ -36,7 +36,7 @@ public class PIDrip {
         return motorPower;
     }
 
-    public double pid(double encoderPosition) {
+    public double updatePID(double encoderPosition) {
         // calculate the error
         double error = reference - encoderPosition;
 
