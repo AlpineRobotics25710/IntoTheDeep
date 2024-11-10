@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
 public class Utils {
     public static double clip(double value, double min, double max){
