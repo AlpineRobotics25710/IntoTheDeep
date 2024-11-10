@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.robot.pids;
+
+import org.firstinspires.ftc.teamcode.robot.Utils;
 
 public class PIDBetter {
     public double p;
