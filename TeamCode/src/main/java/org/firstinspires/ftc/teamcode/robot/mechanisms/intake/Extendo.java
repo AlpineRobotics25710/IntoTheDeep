@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
-import org.firstinspires.ftc.teamcode.robot.pids.PIDrip;
+import org.firstinspires.ftc.teamcode.robot.utils.pids.PIDrip;
 
 public class Extendo implements Mechanism {
     private HardwareMap hardwareMap;
