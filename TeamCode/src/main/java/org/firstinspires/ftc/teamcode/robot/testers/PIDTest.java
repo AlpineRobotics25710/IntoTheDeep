@@ -1,19 +1,22 @@
 package org.firstinspires.ftc.teamcode.robot.testers;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 
-@TeleOp
+@TeleOp(group = "Testers")
+@Config
 public class PIDTest extends LinearOpMode {
     private boolean gamepadA;
     private boolean gamepadY;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        resetFlags();
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         Extendo extendo = new Extendo(this.hardwareMap, 0.0);
         extendo.init();
@@ -29,6 +32,8 @@ public class PIDTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            resetFlags();
+
             // Extendo code
             if (gamepad1.a && !gamepadA) {
                 extendo.setTargetPosition(extendo.getTargetPosition() + 10);

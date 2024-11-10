@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 import org.firstinspires.ftc.teamcode.robot.utils.pids.PIDrip;
 
+@Config
 public class Extendo implements Mechanism {
     private HardwareMap hardwareMap;
     private DcMotor leftMotor, rightMotor;
