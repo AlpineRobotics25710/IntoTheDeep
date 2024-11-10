@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 public class Utils {
-    public Utils(){}
-
     public static double clip(double value, double min, double max){
         return Math.min(Math.max(min, value), max);
     }
@@ -12,5 +10,4 @@ public class Utils {
         double dY = y1 - y2;
         return Math.sqrt(dX * dX + dY * dY);
     }
-
 }
