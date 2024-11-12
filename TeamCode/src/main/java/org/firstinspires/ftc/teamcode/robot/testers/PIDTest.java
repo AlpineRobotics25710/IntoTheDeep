@@ -44,6 +44,8 @@ public class PIDTest extends LinearOpMode {
                 extendo.setTargetPosition(extendo.getTargetPosition() - 10);
                 gamepadY = true;
             }
+            
+            extendo.update();
         }
     }
 
