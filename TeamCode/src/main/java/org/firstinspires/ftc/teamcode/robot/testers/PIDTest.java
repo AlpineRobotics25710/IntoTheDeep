@@ -7,16 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
+import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
 
 @TeleOp(group = "Testers")
 @Config
 public class PIDTest extends LinearOpMode {
-    private boolean gamepadA;
-    private boolean gamepadY;
-
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        CustomGamepad gp1 = new CustomGamepad(this.gamepad1);
 
         Extendo extendo = new Extendo(this.hardwareMap, 0.0);
         extendo.init();
@@ -32,31 +32,17 @@ public class PIDTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            resetFlags();
-
-            // Extendo code
-            if (gamepad1.a && !gamepadA) {
+            // Extendo code with custom gamepad code
+            if(gp1.getA().isClicked()) {
                 extendo.setTargetPosition(extendo.getTargetPosition() + 10);
-                gamepadA = true;
             }
 
-            if (gamepad1.y && !gamepadY) {
+            if(gp1.getY().isClicked()) {
                 extendo.setTargetPosition(extendo.getTargetPosition() - 10);
-                gamepadY = true;
             }
             
             extendo.update();
-        }
-    }
-
-    // Resetting the flags
-    public void resetFlags() {
-        if (!gamepad1.a) {
-            gamepadA = false;
-        }
-
-        if (!gamepad1.y) {
-            gamepadY = false;
+            gp1.update();
         }
     }
 }
