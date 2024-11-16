@@ -92,19 +92,19 @@ public class CustomGamepad {
         touchpad.updateCurrentState(gamepad.touchpad);
     }
 
-    public Button getButtonA() {
+    public Button getA() {
         return buttonA;
     }
 
-    public Button getButtonB() {
+    public Button getB() {
         return buttonB;
     }
 
-    public Button getButtonX() {
+    public Button getX() {
         return buttonX;
     }
 
-    public Button getButtonY() {
+    public Button getY() {
         return buttonY;
     }
 
