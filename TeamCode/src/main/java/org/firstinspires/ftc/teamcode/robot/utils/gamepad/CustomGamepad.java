@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class CustomGamepad {
     //TODO: Add support for analog inputs (such as the sticks) and also the PS4 touchpad
-    //TODO: Add support for the drive train movements
+    //TODO: Add support for other drive train movements (non-mecanum)
 
     private final Gamepad gamepad;
     private final Button buttonA;
