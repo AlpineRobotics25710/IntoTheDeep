@@ -18,7 +18,7 @@ public abstract class Drivetrain {
     /**
      * Represents how sensitive the joysticks should be
      */
-    protected double sensitivity;
+    protected double sensitivity = 1.0;
 
     /**
      * Constructor for FieldCentricMecanumDrivetrain.

@@ -21,7 +21,7 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
      * @param frontRightMotor the front right wheel motor
      * @param backRightMotor the back right wheel motor
      */
-    public FieldCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor,
+    FieldCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor,
                                          DcMotor frontRightMotor, DcMotor backRightMotor, Gamepad gamepad, IMU imu,
                                          RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
                                          RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection

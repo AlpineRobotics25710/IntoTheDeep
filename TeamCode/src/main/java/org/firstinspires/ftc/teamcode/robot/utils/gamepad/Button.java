@@ -32,6 +32,7 @@ public class Button {
      * @return returns true only once at the instant the user presses the button
      */
     public boolean isPressed() {
+        System.out.println("is pressed: " + (currentState && !lastState));
         return currentState && !lastState;
     }
 
@@ -40,7 +41,8 @@ public class Button {
      * @return returns true only once at the instant the user releases the button
      */
     public boolean isReleased() {
-        return !currentState && lastState;
+        System.out.println("is released: " + (currentState && !lastState));
+        return currentState && !lastState;
     }
 
     /**
@@ -58,8 +60,10 @@ public class Button {
     public boolean isClicked() {
         if (wasClicked) {
             wasClicked = false; // Ensure this only returns true once
+            System.out.println("is clicked: " + true);
             return true;
         }
+        System.out.println("is clicked" + false);
         return false;
     }
 
@@ -71,14 +75,6 @@ public class Button {
      */
     public boolean getCurrentState() {
         return currentState;
-    }
-
-    /**
-     * Sets the current state of the button.
-     * @param currentState The new state of the button.
-     */
-    public void setCurrentState(boolean currentState) {
-        this.currentState = currentState;
     }
 
     /**
