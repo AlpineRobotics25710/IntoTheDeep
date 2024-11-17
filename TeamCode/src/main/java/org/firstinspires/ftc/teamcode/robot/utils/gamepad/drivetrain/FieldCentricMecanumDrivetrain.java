@@ -53,9 +53,9 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double y = -gamepad.left_stick_y;
-        double x = gamepad.left_stick_x;
-        double rx = gamepad.right_stick_x;
+        double y = -gamepad.left_stick_y * sensitivity;
+        double x = gamepad.left_stick_x * strafingMultiplier * sensitivity;
+        double rx = gamepad.right_stick_x * sensitivity;
 
         // This button choice was made so that it is hard to hit on accident,
         // it can be freely changed based on preference.

@@ -11,6 +11,16 @@ public abstract class Drivetrain {
     protected Gamepad gamepad;
 
     /**
+     * Multiplier to counteract imperfect strafing. Multiplied by the x-value of the left joystick
+     */
+    protected double strafingMultiplier = 1.1;
+
+    /**
+     * Represents how sensitive the joysticks should be
+     */
+    protected double sensitivity;
+
+    /**
      * Constructor for FieldCentricMecanumDrivetrain.
      * NOTE: Remember to initialize your wheel motors before calling this constructor. The motors are not
      * initialized by default.
@@ -26,6 +36,37 @@ public abstract class Drivetrain {
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.gamepad = gamepad;
+    }
+
+    /**
+     * Sets the strafing multiplier to counteract imperfect strafing
+     * @param strafingMultiplier the strafing multiplier
+     */
+    public void setStrafingMultiplier(double strafingMultiplier) {
+        this.strafingMultiplier = strafingMultiplier;
+    }
+
+    /**
+     * Sets teh sensitivity of the joysticks
+     */
+    public void setSensitivity(double sensitivity) {
+        this.sensitivity = sensitivity;
+    }
+
+    /**
+     * Returns the strafing multiplier.
+     * @return the strafing multiplier
+     */
+    public double getStrafingMultiplier() {
+        return strafingMultiplier;
+    }
+
+    /**
+     * Returns the controller sensitivity.
+     * @return the controller sensitivity.
+     */
+    public double getSensitivity() {
+        return sensitivity;
     }
 
     /**
