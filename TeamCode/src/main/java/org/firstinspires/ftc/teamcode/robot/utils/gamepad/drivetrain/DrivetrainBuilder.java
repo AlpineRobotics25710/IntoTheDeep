@@ -39,7 +39,6 @@ public class DrivetrainBuilder {
 
     private DrivetrainType type;
 
-    private double sensitivity;
     private double strafingMultiplier;
 
     /**
@@ -102,11 +101,6 @@ public class DrivetrainBuilder {
         return this;
     }
 
-    public DrivetrainBuilder setSensitivity(double sensitivity) {
-        this.sensitivity = sensitivity;
-        return this;
-    }
-
     public DrivetrainBuilder setStrafingMultiplier(double strafingMultiplier) {
         this.strafingMultiplier = strafingMultiplier;
         return this;
@@ -140,7 +134,6 @@ public class DrivetrainBuilder {
                         gamepad, imu, logoFacingDirection, usbFacingDirection
                 );
 
-                fieldCentric.setSensitivity(sensitivity);
                 fieldCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return fieldCentric;
@@ -150,7 +143,6 @@ public class DrivetrainBuilder {
                         gamepad
                 );
 
-                robotCentric.setSensitivity(sensitivity);
                 robotCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return robotCentric;

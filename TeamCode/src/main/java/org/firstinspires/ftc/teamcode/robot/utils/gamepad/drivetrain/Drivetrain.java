@@ -18,11 +18,6 @@ public abstract class Drivetrain {
     protected double strafingMultiplier = 1.1;
 
     /**
-     * Represents how sensitive the joysticks should be
-     */
-    protected double sensitivity = 1.0;
-
-    /**
      * Constructor for FieldCentricMecanumDrivetrain.
      * NOTE: Remember to initialize your wheel motors before calling this constructor. The motors are not
      * initialized by default.
@@ -57,22 +52,6 @@ public abstract class Drivetrain {
      */
     public void setStrafingMultiplier(double strafingMultiplier) {
         this.strafingMultiplier = strafingMultiplier;
-    }
-
-    /**
-     * Returns the controller sensitivity.
-     *
-     * @return the controller sensitivity.
-     */
-    public double getSensitivity() {
-        return sensitivity;
-    }
-
-    /**
-     * Sets teh sensitivity of the joysticks
-     */
-    public void setSensitivity(double sensitivity) {
-        this.sensitivity = sensitivity;
     }
 
     /**

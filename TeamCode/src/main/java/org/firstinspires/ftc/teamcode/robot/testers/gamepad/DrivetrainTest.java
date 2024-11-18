@@ -29,12 +29,13 @@ public class DrivetrainTest extends LinearOpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
+        gp1.getLeftStick().setSensitivity(1.0);
+        gp1.getRightStick().setSensitivity(1.0);
 
         Drivetrain drivetrain = new DrivetrainBuilder()
                 .setType(DrivetrainBuilder.DrivetrainType.ROBOT_CENTRIC_MECANUM)
                 .setGamepad(gp1)
                 .setMotors(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor)
-                .setSensitivity(1.0)
                 .setStrafingMultiplier(1.1)
                 .build();
 

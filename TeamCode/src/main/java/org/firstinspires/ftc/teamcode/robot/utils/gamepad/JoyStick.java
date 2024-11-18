@@ -5,13 +5,20 @@ public class JoyStick {
      * How much error the input has, such as controller drift. Initially set to 0.
      */
     private double error = 0.0;
+
+    /**
+     * Represents how sensitive the joystick should be
+     */
+    protected double sensitivity = 1.0;
+
     private double xValue;
     private double yValue;
     
-    public JoyStick(double error, double xValue, double yValue) {
+    public JoyStick(double error, double xValue, double yValue, double sensitivity) {
         this.error = error;
         this.xValue = xValue;
         this.yValue = yValue;
+        this.sensitivity = sensitivity;
     }
     
     public JoyStick(double xValue, double yValue) {
@@ -30,6 +37,14 @@ public class JoyStick {
     
     public double getError() {
         return error;
+    }
+
+    public void setSensitivity(double sensitivity) {
+        this.sensitivity = sensitivity;
+    }
+
+    public double getSensitivity() {
+        return sensitivity;
     }
 
     public double getX() {
