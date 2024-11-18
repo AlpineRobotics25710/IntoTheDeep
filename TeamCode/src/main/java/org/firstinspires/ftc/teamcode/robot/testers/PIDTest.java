@@ -33,11 +33,11 @@ public class PIDTest extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Extendo code with custom gamepad code
-            if(gp1.getA().isClicked()) {
+            if(gp1.getA().isPressed()) {
                 extendo.setTargetPosition(extendo.getTargetPosition() + 10);
             }
 
-            if(gp1.getY().isClicked()) {
+            if(gp1.getY().isPressed()) {
                 extendo.setTargetPosition(extendo.getTargetPosition() - 10);
             }
             

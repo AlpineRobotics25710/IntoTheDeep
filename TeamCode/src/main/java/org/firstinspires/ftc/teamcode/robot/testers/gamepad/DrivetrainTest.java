@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
 import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.Drivetrain;
 import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.DrivetrainBuilder;
 import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.RobotCentricMecanumDrivetrain;
@@ -26,9 +28,11 @@ public class DrivetrainTest extends LinearOpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        CustomGamepad gp1 = new CustomGamepad(gamepad1);
+
         Drivetrain drivetrain = new DrivetrainBuilder()
                 .setType(DrivetrainBuilder.DrivetrainType.ROBOT_CENTRIC_MECANUM)
-                .setGamepad(gamepad1)
+                .setGamepad(gp1)
                 .setMotors(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor)
                 .setSensitivity(1.0)
                 .setStrafingMultiplier(1.1)

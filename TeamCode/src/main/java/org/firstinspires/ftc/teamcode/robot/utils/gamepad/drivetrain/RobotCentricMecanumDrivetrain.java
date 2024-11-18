@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
 
 public class RobotCentricMecanumDrivetrain extends Drivetrain {
-    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, Gamepad gamepad) {
+    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
         super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
     }
 
@@ -13,9 +14,9 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double y = -gamepad.left_stick_y * sensitivity; // Y stick value is reversed
-        double x = gamepad.left_stick_x * strafingMultiplier * 0.75; // Counteract imperfect strafing
-        double rx = gamepad.right_stick_x * sensitivity;
+        double y = -gamepad.getLeftStick().getY() * sensitivity; // Y stick value is reversed
+        double x = gamepad.getLeftStick().getX() * strafingMultiplier * 0.75; // Counteract imperfect strafing
+        double rx = gamepad.getRightStick().getY() * sensitivity;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
@@ -23,7 +24,7 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        if (gamepad.right_bumper) {
+        if (gamepad.getRightBumper().isClicked()) {
             if (y > 0) {
                 frontLeftMotor.setPower(0.75);
                 backLeftMotor.setPower(0.75);
@@ -40,7 +41,7 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
                 frontRightMotor.setPower(0);
                 backRightMotor.setPower(0);
             }
-        } else if (gamepad.left_bumper) {
+        } else if (gamepad.getLeftBumper().isClicked()) {
             if (x > 0) {
                 frontLeftMotor.setPower(0.75);
                 backLeftMotor.setPower(-0.75);

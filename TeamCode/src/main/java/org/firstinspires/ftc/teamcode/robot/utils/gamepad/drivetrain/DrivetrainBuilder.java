@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
+
 /**
  * A builder class for creating different types of drivetrains used in FIRST Tech Challenge robots.
  * This class supports both field-centric and robot-centric mecanum drivetrains.
@@ -29,7 +31,7 @@ public class DrivetrainBuilder {
     private DcMotor backLeftMotor;
     private DcMotor frontRightMotor;
     private DcMotor backRightMotor;
-    private Gamepad gamepad;
+    private CustomGamepad gamepad;
     private IMU imu;
 
     private RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
@@ -71,7 +73,7 @@ public class DrivetrainBuilder {
      * @param gamepad The gamepad used for input control.
      * @return The current DrivetrainBuilder instance for method chaining.
      */
-    public DrivetrainBuilder setGamepad(Gamepad gamepad) {
+    public DrivetrainBuilder setGamepad(CustomGamepad gamepad) {
         this.gamepad = gamepad;
         return this;
     }

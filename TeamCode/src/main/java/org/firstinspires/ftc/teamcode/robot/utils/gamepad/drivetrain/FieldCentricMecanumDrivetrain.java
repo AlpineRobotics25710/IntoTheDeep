@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
 
 public class FieldCentricMecanumDrivetrain extends Drivetrain {
     private final IMU imu;
@@ -22,9 +22,9 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
      * @param backRightMotor the back right wheel motor
      */
     FieldCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor,
-                                         DcMotor frontRightMotor, DcMotor backRightMotor, Gamepad gamepad, IMU imu,
-                                         RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
-                                         RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection
+                                  DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, IMU imu,
+                                  RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
+                                  RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection
     ) {
         super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
         this.imu = imu;
@@ -53,14 +53,14 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double y = -gamepad.left_stick_y * sensitivity;
-        double x = gamepad.left_stick_x * strafingMultiplier * sensitivity;
-        double rx = gamepad.right_stick_x * sensitivity;
+        double y = -gamepad.getLeftStick().getY() * sensitivity;
+        double x = gamepad.getRightStick().getX() * strafingMultiplier * sensitivity;
+        double rx = gamepad.getRightStick().getX() * sensitivity;
 
         // This button choice was made so that it is hard to hit on accident,
         // it can be freely changed based on preference.
         // The equivalent button is start on Xbox-style controllers.
-        if (gamepad.options) {
+        if (gamepad.getOptions().isPressed()) {
             imu.resetYaw();
         }
 

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class CustomGamepad {
-    //TODO: Add support for analog inputs (such as the sticks) and also the PS4 touchpad
+    //TODO: Add support for the PS4 touchpad
     //TODO: Add support for other drive train movements (non-mecanum)
 
     private final Gamepad gamepad;
@@ -31,6 +31,14 @@ public class CustomGamepad {
     private final Button share;
     private final Button options;
     private final Button touchpad;
+
+    // Support for joysticks
+    private final JoyStick leftJoyStick;
+    private final JoyStick rightJoyStick;
+
+    // Support for triggers
+    private final Trigger leftTrigger;
+    private final Trigger rightTrigger;
 
     /**
      * Constructor for CustomGamepad.
@@ -61,6 +69,12 @@ public class CustomGamepad {
         share = new Button(gamepad.share);
         options = new Button(gamepad.options);
         touchpad = new Button(gamepad.touchpad);
+
+        leftJoyStick = new JoyStick(gamepad.left_stick_x, gamepad.left_stick_y);
+        rightJoyStick = new JoyStick(gamepad.right_stick_x, gamepad.right_stick_y);
+
+        leftTrigger = new Trigger(gamepad.left_trigger);
+        rightTrigger = new Trigger(gamepad.right_trigger);
     }
 
     /**
@@ -90,6 +104,12 @@ public class CustomGamepad {
         share.updateCurrentState(gamepad.share);
         options.updateCurrentState(gamepad.options);
         touchpad.updateCurrentState(gamepad.touchpad);
+
+        leftJoyStick.updateCurrentValues(gamepad.left_stick_x, gamepad.left_stick_y);
+        rightJoyStick.updateCurrentValues(gamepad.right_stick_x, gamepad.right_stick_y);
+
+        leftTrigger.updateCurrentValue(gamepad.left_trigger);
+        rightTrigger.updateCurrentValue(gamepad.right_trigger);
     }
 
     public Button getA() {
@@ -178,5 +198,21 @@ public class CustomGamepad {
 
     public Button getTouchpad() {
         return touchpad;
+    }
+
+    public JoyStick getLeftStick() {
+        return leftJoyStick;
+    }
+
+    public JoyStick getRightStick() {
+        return rightJoyStick;
+    }
+
+    public Trigger getLeftTrigger() {
+        return leftTrigger;
+    }
+
+    public Trigger getRightTrigger() {
+        return rightTrigger;
     }
 }
