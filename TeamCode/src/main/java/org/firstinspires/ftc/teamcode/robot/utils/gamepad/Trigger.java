@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
 
+import com.qualcomm.robotcore.util.Range;
+
 public class Trigger {
     /**
      * How much error the input has, such as controller drift. Initially set to 0.
@@ -22,7 +24,7 @@ public class Trigger {
 
     public double getValue() {
         if (value > error || value < -error) {
-            return value;
+            return Range.clip(value, -1.0, 1.0);
         } else {
             return 0;
         }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
 
+import com.qualcomm.robotcore.util.Range;
+
 public class JoyStick {
     /**
      * How much error the input has, such as controller drift. Initially set to 0.
@@ -49,14 +51,14 @@ public class JoyStick {
 
     public double getX() {
         if (xValue > error || xValue < -error) {
-            return xValue;
+            return Range.clip(xValue, -1.0, 1.0);
         }
         return 0;
     }
 
     public double getY() {
         if (yValue > error || yValue < -error) {
-            return yValue;
+            return Range.clip(yValue, -1.0, 1.0);
         }
         return 0;
     }
