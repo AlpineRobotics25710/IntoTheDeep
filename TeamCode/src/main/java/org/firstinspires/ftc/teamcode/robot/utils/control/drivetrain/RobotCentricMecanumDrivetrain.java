@@ -12,7 +12,7 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
     @Override
     public void update() {
         double y = -gamepad.getLeftStick().getY() * gamepad.getLeftStick().getSensitivity(); // Y stick value is reversed
-        double x = gamepad.getLeftStick().getX() * strafingMultiplier * 0.75; // Counteract imperfect strafing
+        double x = gamepad.getLeftStick().getX() * strafingMultiplier * gamepad.getRightStick().getSensitivity(); // Counteract imperfect strafing
         double rx = gamepad.getRightStick().getY() * gamepad.getRightStick().getSensitivity();
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);

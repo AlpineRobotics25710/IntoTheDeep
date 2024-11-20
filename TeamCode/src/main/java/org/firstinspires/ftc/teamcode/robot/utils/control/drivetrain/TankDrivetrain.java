@@ -23,9 +23,9 @@ public class TankDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double drive = gamepad.getLeftStick().getY();
-        double turn = gamepad.getRightStick().getX();
-        double strafe = gamepad.getLeftStick().getX();
+        double drive = gamepad.getLeftStick().getY() * gamepad.getLeftStick().getSensitivity();
+        double turn = gamepad.getRightStick().getX() * gamepad.getRightStick().getSensitivity();
+        double strafe = gamepad.getLeftStick().getX() * gamepad.getLeftStick().getSensitivity();
 
         frontLeftMotor.setPower(Range.clip(drive + turn + strafe, -1, 1));
         frontRightMotor.setPower(Range.clip(drive - turn - strafe, -1, 1));
