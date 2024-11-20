@@ -1,16 +1,13 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
 
 public class RobotCentricMecanumDrivetrain extends Drivetrain {
     RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
         super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
     }
-
-    @Override
-    public void init() {}
 
     @Override
     public void update() {

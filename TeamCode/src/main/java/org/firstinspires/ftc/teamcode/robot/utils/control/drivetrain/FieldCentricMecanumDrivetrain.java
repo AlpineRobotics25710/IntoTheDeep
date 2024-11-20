@@ -1,15 +1,13 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
 
 public class FieldCentricMecanumDrivetrain extends Drivetrain {
     private final IMU imu;
-    private RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-    private RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
     /**
      * Constructor for FieldCentricMecanumDrivetrain.
@@ -28,22 +26,7 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
     ) {
         super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
         this.imu = imu;
-        setRevHubOrientations(logoFacingDirection, usbFacingDirection);
-    }
 
-    /**
-     * Sets the REV Hub orientation. By default, the logo is set to facing UP and the USB is set to
-     * facing FORWARD.
-     * @param logoFacingDirection the direction the logo is facing on the REV hub
-     * @param usbFacingDirection the direction the USB is facing on the REV hub
-     */
-    public void setRevHubOrientations(RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection, RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection) {
-        this.logoFacingDirection = logoFacingDirection;
-        this.usbFacingDirection = usbFacingDirection;
-    }
-
-    @Override
-    public void init() {
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 logoFacingDirection,
                 usbFacingDirection));

@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
-
-import com.qualcomm.robotcore.util.Range;
+package org.firstinspires.ftc.teamcode.robot.utils.control.gamepad;
 
 public class JoyStick {
     /**
@@ -19,18 +17,18 @@ public class JoyStick {
     public JoyStick(double error, double xValue, double yValue, double sensitivity) {
         this.error = error;
         this.xValue = xValue;
-        this.yValue = yValue;
+        this.yValue = -yValue;
         this.sensitivity = sensitivity;
     }
     
     public JoyStick(double xValue, double yValue) {
         this.xValue = xValue;
-        this.yValue = yValue;
+        this.yValue = -yValue;
     }
     
     public void updateCurrentValues(double xValue, double yValue) {
         this.xValue = xValue;
-        this.yValue = yValue;
+        this.yValue = -yValue;
     }
     
     public void setError(double error) {
@@ -51,14 +49,14 @@ public class JoyStick {
 
     public double getX() {
         if (xValue > error || xValue < -error) {
-            return Range.clip(xValue, -1.0, 1.0);
+            return xValue;
         }
         return 0;
     }
 
     public double getY() {
         if (yValue > error || yValue < -error) {
-            return Range.clip(yValue, -1.0, 1.0);
+            return yValue;
         }
         return 0;
     }

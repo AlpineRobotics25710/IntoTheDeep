@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
 
 public abstract class Drivetrain {
     protected DcMotor frontLeftMotor;
@@ -18,9 +17,9 @@ public abstract class Drivetrain {
     protected double strafingMultiplier = 1.1;
 
     /**
-     * Constructor for FieldCentricMecanumDrivetrain.
+     * Constructor for Drivetrain.
      * NOTE: Remember to initialize your wheel motors before calling this constructor. The motors are not
-     * initialized by default.
+     * initialized by default. For example, you must set the zero power behavior of the motors yourself.
      *
      * @param frontLeftMotor  the front left wheel motor
      * @param backLeftMotor   the back left wheel motor
@@ -37,15 +36,6 @@ public abstract class Drivetrain {
     }
 
     /**
-     * Returns the strafing multiplier.
-     *
-     * @return the strafing multiplier
-     */
-    public double getStrafingMultiplier() {
-        return strafingMultiplier;
-    }
-
-    /**
      * Sets the strafing multiplier to counteract imperfect strafing
      *
      * @param strafingMultiplier the strafing multiplier
@@ -55,14 +45,9 @@ public abstract class Drivetrain {
     }
 
     /**
-     * Runs initialization code for the drivetrain. Should be called during robot initialization, before waitForStart().
-     * DOES NOT INITIALIZE THE WHEEL MOTORS.
-     */
-    public abstract void init();
-
-    /**
      * Updates the program and moves the robot based on gamepad inputs. Should be called continuously
-     * in the opmode loop. Pressing options (PS) or start (Xbox) will reset the yaw value of the IMU.
+     * in the opmode loop. Pressing options (PS) or start (Xbox) will reset the yaw value of the IMU
+     * when running a field centric mecanum drive train.
      */
     public abstract void update();
 }

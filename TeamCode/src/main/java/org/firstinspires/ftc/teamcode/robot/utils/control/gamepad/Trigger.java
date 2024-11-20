@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
-
-import com.qualcomm.robotcore.util.Range;
+package org.firstinspires.ftc.teamcode.robot.utils.control.gamepad;
 
 public class Trigger {
     /**
@@ -24,7 +22,7 @@ public class Trigger {
 
     public double getValue() {
         if (value > error || value < -error) {
-            return Range.clip(value, -1.0, 1.0);
+            return value;
         } else {
             return 0;
         }

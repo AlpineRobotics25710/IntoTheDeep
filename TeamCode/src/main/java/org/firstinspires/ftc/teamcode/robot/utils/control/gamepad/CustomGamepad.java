@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
+package org.firstinspires.ftc.teamcode.robot.utils.control.gamepad;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -62,6 +62,7 @@ public class CustomGamepad {
         rightBumper = new Button(gamepad.right_bumper);
         leftStickButton = new Button(gamepad.left_stick_button);
         rightStickButton = new Button(gamepad.right_stick_button);
+
         circle = new Button(gamepad.circle);
         cross = new Button(gamepad.cross);
         triangle = new Button(gamepad.triangle);
@@ -97,6 +98,7 @@ public class CustomGamepad {
         rightBumper.updateCurrentState(gamepad.right_bumper);
         leftStickButton.updateCurrentState(gamepad.left_stick_button);
         rightStickButton.updateCurrentState(gamepad.right_stick_button);
+
         circle.updateCurrentState(gamepad.circle);
         cross.updateCurrentState(gamepad.cross);
         triangle.updateCurrentState(gamepad.triangle);

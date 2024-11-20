@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils.gamepad;
+package org.firstinspires.ftc.teamcode.robot.utils.control.gamepad;
 
 public class Button {
     private boolean lastState;

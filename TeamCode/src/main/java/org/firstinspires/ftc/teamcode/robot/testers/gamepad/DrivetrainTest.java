@@ -4,12 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.CustomGamepad;
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.Drivetrain;
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.DrivetrainBuilder;
-import org.firstinspires.ftc.teamcode.robot.utils.gamepad.drivetrain.RobotCentricMecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain.Drivetrain;
+import org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain.DrivetrainBuilder;
 
 @TeleOp
 public class DrivetrainTest extends LinearOpMode {
@@ -39,15 +37,14 @@ public class DrivetrainTest extends LinearOpMode {
                 .setStrafingMultiplier(1.1)
                 .build();
 
-
-        drivetrain.init();
-
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
             drivetrain.update();
+            gp1.update();
+
             telemetry.addData("Left stick y: ", -gamepad1.left_stick_y);
             telemetry.addData("Left stick X: ", gamepad1.left_stick_x);
             telemetry.update();
