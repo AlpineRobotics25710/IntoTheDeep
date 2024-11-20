@@ -79,7 +79,7 @@ public class CustomGamepad {
     }
 
     /**
-     * Updates the button states.
+     * Updates the button states and executes any actions mapped to the buttons.
      * Needs to be called continuously in opmode loop
      */
     public void update() {
@@ -112,6 +112,14 @@ public class CustomGamepad {
 
         leftTrigger.updateCurrentValue(gamepad.left_trigger);
         rightTrigger.updateCurrentValue(gamepad.right_trigger);
+
+        executeButtonActions();
+    }
+
+    public void executeButtonActions() {
+        if (buttonA.getFlagValue()) {
+            buttonA.getAction().executeAction();
+        }
     }
 
     public Button getA() {

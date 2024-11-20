@@ -4,6 +4,8 @@ public class Button {
     private boolean lastState;
     private boolean currentState;
     private boolean wasClicked;
+    private RobotAction action;
+    private ActionFlag flag;
 
     /**
      * Constructor for Button.
@@ -67,6 +69,11 @@ public class Button {
         return false;
     }
 
+    public void setAction(ActionFlag flag, RobotAction action) {
+        this.action = action;
+        this.flag = flag;
+    }
+
     // Getters
 
     /**
@@ -83,5 +90,13 @@ public class Button {
      */
     public boolean getLastState() {
         return lastState;
+    }
+
+    public RobotAction getAction() {
+        return action;
+    }
+
+    public boolean getFlagValue() {
+        return flag.getValue();
     }
 }

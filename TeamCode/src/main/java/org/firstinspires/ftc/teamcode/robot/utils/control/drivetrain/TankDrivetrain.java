@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
 
-public class TankDrvetrain extends Drivetrain {
+public class TankDrivetrain extends Drivetrain {
     /**
      * Constructor for Drivetrain.
      * NOTE: Remember to initialize your wheel motors before calling this constructor. The motors are not
@@ -17,7 +17,7 @@ public class TankDrvetrain extends Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public TankDrvetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
+    public TankDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
         super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
     }
 

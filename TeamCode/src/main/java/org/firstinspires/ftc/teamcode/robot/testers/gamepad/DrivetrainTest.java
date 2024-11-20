@@ -29,6 +29,8 @@ public class DrivetrainTest extends LinearOpMode {
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
         gp1.getLeftStick().setSensitivity(1.0);
         gp1.getRightStick().setSensitivity(1.0);
+        gp1.getA().setAction(() -> gp1.getA().isClicked(), () -> telemetry.addData("A is clicked", "through lambda"));
+        gp1.getB().setAction(() -> gp1.getB().isClicked(), () -> telemetry.addData("B is clicked", "through lambda"));
 
         Drivetrain drivetrain = new DrivetrainBuilder()
                 .setType(DrivetrainBuilder.DrivetrainType.ROBOT_CENTRIC_MECANUM)

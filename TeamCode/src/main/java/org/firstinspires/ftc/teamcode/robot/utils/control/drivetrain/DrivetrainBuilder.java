@@ -141,11 +141,11 @@ public class DrivetrainBuilder {
 
                 return robotCentric;
             case TANK_DRIVETRAIN:
-                TankDrvetrain tankDrvetrain = new TankDrvetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+                TankDrivetrain tankDrivetrain = new TankDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
 
-                tankDrvetrain.setStrafingMultiplier(strafingMultiplier);
+                tankDrivetrain.setStrafingMultiplier(strafingMultiplier);
 
-                return tankDrvetrain;
+                return tankDrivetrain;
             default:
                 throw new IllegalStateException("Unknown drivetrain type.");
         }
