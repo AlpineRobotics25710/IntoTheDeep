@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.config.testers.tuners;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.config.Robot;
 import org.firstinspires.ftc.teamcode.config.subsystem.intake.Extendo;
 import org.firstinspires.ftc.teamcode.config.utils.Globals;
-import org.firstinspires.ftc.teamcode.config.utils.TelemetryUtil;
 
 
 @Disabled
