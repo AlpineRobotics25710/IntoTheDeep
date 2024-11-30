@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils;
+package org.firstinspires.ftc.teamcode.config.utils;
 
 import android.util.Log;
 
