@@ -93,9 +93,29 @@ public class CustomGamepad {
      * Needs to be called continuously in opmode loop
      */
     public void update() {
-        for (Button button : allButtons) {
-            button.updateCurrentState(button.isPressed());
-        }
+        buttonA.updateCurrentState(gamepad.a);
+        buttonB.updateCurrentState(gamepad.b);
+        buttonX.updateCurrentState(gamepad.x);
+        buttonY.updateCurrentState(gamepad.y);
+        dpadDown.updateCurrentState(gamepad.dpad_down);
+        dpadUp.updateCurrentState(gamepad.dpad_up);
+        dpadLeft.updateCurrentState(gamepad.dpad_left);
+        dpadRight.updateCurrentState(gamepad.dpad_right);
+        guide.updateCurrentState(gamepad.guide);
+        start.updateCurrentState(gamepad.start);
+        back.updateCurrentState(gamepad.back);
+        leftBumper.updateCurrentState(gamepad.left_bumper);
+        rightBumper.updateCurrentState(gamepad.right_bumper);
+        leftStickButton.updateCurrentState(gamepad.left_stick_button);
+        rightStickButton.updateCurrentState(gamepad.right_stick_button);
+
+        circle.updateCurrentState(gamepad.circle);
+        cross.updateCurrentState(gamepad.cross);
+        triangle.updateCurrentState(gamepad.triangle);
+        square.updateCurrentState(gamepad.square);
+        share.updateCurrentState(gamepad.share);
+        options.updateCurrentState(gamepad.options);
+        touchpad.updateCurrentState(gamepad.touchpad);
 
         leftJoyStick.updateCurrentValues(gamepad.left_stick_x, gamepad.left_stick_y);
         rightJoyStick.updateCurrentValues(gamepad.right_stick_x, gamepad.right_stick_y);
@@ -108,7 +128,7 @@ public class CustomGamepad {
 
     public void executeButtonActions() {
         for (Button button : allButtons) {
-            if (button.isPressed()) {
+            if (button.getFlagValue()) {
                 button.getAction().execute();
             }
         }
