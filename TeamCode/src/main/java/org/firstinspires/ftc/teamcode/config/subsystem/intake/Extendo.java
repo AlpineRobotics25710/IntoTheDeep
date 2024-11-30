@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.config.utils.priority.HardwareQueue;
 import org.firstinspires.ftc.teamcode.config.utils.priority.PriorityMotor;
 import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
 import com.arcrobotics.ftclib.controller.PIDController;
+
 @Config
 public class Extendo {
     private final PriorityMotor slidesMotors;

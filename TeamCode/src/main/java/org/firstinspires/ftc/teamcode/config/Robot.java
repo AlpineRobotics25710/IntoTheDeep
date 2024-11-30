@@ -16,7 +16,7 @@ public class Robot {
     public Follower follower;
     public Robot(HardwareMap hardwareMap){
         hardwareQueue = new HardwareQueue();
-        sensors = new Sensors(hardwareMap, hardwareQueue, this);\
+        sensors = new Sensors(hardwareMap, hardwareQueue, this);
         follower = new Follower(hardwareMap);
         extendo = new Extendo(hardwareMap, hardwareQueue, sensors);
     }

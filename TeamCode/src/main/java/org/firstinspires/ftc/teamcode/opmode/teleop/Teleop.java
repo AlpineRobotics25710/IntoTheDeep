@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.config.Robot;
-import org.firstinspires.ftc.teamcode.config.utils.;
+import org.firstinspires.ftc.teamcode.config.utils.ButtonToggle;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 
 @TeleOp(name = "Extendo Control Teleop", group = "Teleop")
