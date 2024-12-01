@@ -28,7 +28,6 @@ public class ExtendoTest extends LinearOpMode {
 
             robot.sensors.update();
             robot.extendo.update();
-//            TelemetryUtil.sendTelemetry();
             robot.hardwareQueue.update();
         }
     }

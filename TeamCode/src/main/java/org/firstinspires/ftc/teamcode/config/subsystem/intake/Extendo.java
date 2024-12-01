@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.config.utils.Globals;
 import org.firstinspires.ftc.teamcode.config.utils.RunMode;
 import org.firstinspires.ftc.teamcode.config.utils.Utils;
-import org.firstinspires.ftc.teamcode.config.utils.priority.HardwareQueue;
-import org.firstinspires.ftc.teamcode.config.utils.priority.PriorityMotor;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.HardwareQueue;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.PriorityMotor;
 import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
 import com.arcrobotics.ftclib.controller.PIDController;
 
