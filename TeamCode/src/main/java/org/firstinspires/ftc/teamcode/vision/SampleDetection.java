@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SampleDetectionPipeline implements VisionProcessor {
+public class SampleDetection implements VisionProcessor {
     private Mat imgBlur = new Mat();
     private Mat imgHSV = new Mat();
     private Mat mask = new Mat();
@@ -58,36 +58,30 @@ public class SampleDetectionPipeline implements VisionProcessor {
 
     private ALLIANCE alliance;
 
-    public SampleDetectionPipeline(ALLIANCE alliance) {
+    public SampleDetection(ALLIANCE alliance) {
         this.alliance = alliance;
     }
 
-    // Method to return the number of contours detected
     public int getContourAmt() {
         return contourAmt;
     }
 
-    // Method to return the width of the input frame
     public int getInputX() {
         return inputX;
     }
 
-    // Method to return the height of the input frame
     public int getInputY() {
         return inputY;
     }
 
-    // Method to return the area of the biggest contour
     public double getBiggestArea() {
         return biggestArea;
     }
 
-    // Method to return the center of the biggest alliance color contour
     public Point getBiggestCenter() {
         return biggestCenter;
     }
 
-    // Method to return the center of the biggest yellow contour
     public Point getBiggestYellowCenter() {
         return biggestYellowCenter;
     }
@@ -109,11 +103,11 @@ public class SampleDetectionPipeline implements VisionProcessor {
         inputX = (int) frame.size().width;
         inputY = (int) frame.size().height;
 
-        // Step 1: Blur and convert the frame to HSV
+        // Blur and convert the frame to HSV
         Imgproc.GaussianBlur(frame, imgBlur, new Size(7, 7), 0);
         Imgproc.cvtColor(imgBlur, imgHSV, Imgproc.COLOR_RGB2HSV);
 
-        // Step 2: Define color bounds (red or blue based on alliance)
+        // Defining colors to mask baseed on alliance
         if (alliance == ALLIANCE.RED) {
             lower = new Scalar(0, 100, 0);     // Red min
             upper = new Scalar(10, 255, 255);  // Red max
@@ -122,22 +116,22 @@ public class SampleDetectionPipeline implements VisionProcessor {
             upper = new Scalar(125, 255, 255); // Blue max
         }
 
-        // Step 3: Create a mask for red or blue based on alliance
+        // Create a mask for red or blue based on alliance
         inRange(imgHSV, lower, upper, mask);
 
-        // Step 4: Detect edges using Canny for alliance color
+        // Detect edges using Canny for alliance color
         Imgproc.Canny(mask, imgCanny, 50, 50);
 
-        // Step 5: Find contours for alliance color
+        // Find contours for alliance color
         contours.clear();
         Imgproc.findContours(imgCanny, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        // Step 6: Detect yellow contours
+        // Detect yellow contours
         Scalar lowerYellow = new Scalar(20, 100, 100);  // Yellow min
         Scalar upperYellow = new Scalar(30, 255, 255);  // Yellow max
         inRange(imgHSV, lowerYellow, upperYellow, yellowMask);
 
-        // Step 7: Find yellow contours
+        // Find yellow contours
         yellowContours.clear();
         Imgproc.findContours(yellowMask, yellowContours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
@@ -149,7 +143,7 @@ public class SampleDetectionPipeline implements VisionProcessor {
         biggestCenter = null;
         biggestYellowCenter = null;
 
-        // Step 8: Find the biggest contour for alliance color
+        // Find the biggest contour for alliance color
         for (MatOfPoint cnt : contours) {
             double area = Imgproc.boundingRect(cnt).area();
             if (area > biggestArea) {
@@ -158,14 +152,14 @@ public class SampleDetectionPipeline implements VisionProcessor {
                 biggestContour = cnt;
 
                 // Calculate the center of the biggest contour using moments
-                Moments M = Imgproc.moments(cnt);
+                Moments M = Imgproc.moments(biggestContour);
                 if (M.m00 != 0) {
                     biggestCenter = new Point(M.m10 / M.m00, M.m01 / M.m00);
                 }
             }
         }
 
-        // Step 9: Find the biggest yellow contour
+        // Find the biggest yellow contour
         for (MatOfPoint cnt : yellowContours) {
             double area = Imgproc.boundingRect(cnt).area();
             if (area > biggestYellowArea) {
@@ -180,17 +174,17 @@ public class SampleDetectionPipeline implements VisionProcessor {
             }
         }
 
-        // Step 10: Draw contours for the alliance color in purple
+        // Draw contours for the alliance color in purple
         Imgproc.drawContours(frame, contours, -1, new Scalar(255, 0, 255), 2);
 
-        // Step 11: Draw bounding box around the biggest contour for alliance color in red
+        // Draw bounding box around the biggest contour for alliance color in red
         Imgproc.rectangle(
                 frame,
                 new Point(biggestPropRect.x, biggestPropRect.y),
                 new Point(biggestPropRect.x + biggestPropRect.width, biggestPropRect.y + biggestPropRect.height),
                 new Scalar(0, 0, 255), 4);
 
-        // Step 12: Draw bounding box around the biggest yellow contour in green
+        // Draw bounding box around the biggest yellow contour in green
         if (biggestYellowArea > 0) {
             Imgproc.rectangle(
                     frame,
@@ -199,7 +193,6 @@ public class SampleDetectionPipeline implements VisionProcessor {
                     new Scalar(0, 255, 0), 4);
         }
 
-        // Step 13: Clean up
         imgCanny.release();
         imgHSV.release();
         imgBlur.release();
