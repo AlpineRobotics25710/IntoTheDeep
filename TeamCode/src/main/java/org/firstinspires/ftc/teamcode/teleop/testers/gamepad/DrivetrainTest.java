@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.testers.gamepad;
+package org.firstinspires.ftc.teamcode.teleop.testers.gamepad;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
