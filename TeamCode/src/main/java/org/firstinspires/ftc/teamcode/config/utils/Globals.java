@@ -8,7 +8,7 @@ public class Globals {
     public static double slidesMax = 5.0;
 
     public static double GET_LOOP_TIMES() {
-        LOOP_TIME = System.nanoTime() - LOOP_START / 1.0e9;
+        LOOP_TIME = (System.nanoTime() - LOOP_START) / 1.0e9;
         return LOOP_TIME;
     }
 

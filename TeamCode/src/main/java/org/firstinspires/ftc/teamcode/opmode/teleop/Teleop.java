@@ -44,7 +44,7 @@ public class Teleop extends OpMode {
         extendoLength = Math.max(0, extendoLength); // Prevent negative lengths
 
         // Apply the target length to the extendo
-        robot.extendo.setTargetLengthFORCED(extendoLength);
+        robot.extendo.setTargetLength(extendoLength);
 
         // Telemetry feedback
         telemetry.addData("X", robot.follower.getPose().getX());

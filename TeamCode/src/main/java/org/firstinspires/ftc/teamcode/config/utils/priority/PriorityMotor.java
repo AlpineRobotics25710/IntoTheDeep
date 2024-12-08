@@ -28,6 +28,10 @@ public class PriorityMotor extends PriorityDevice {
         this(new DcMotorEx[] {motor}, name, basePriority, priorityScale, new double[]{1}, sensors);
     }
 
+    public PriorityMotor(DcMotorEx motor, String name, double multiplier, Sensors sensors) {
+        this(new DcMotorEx[] {motor}, name, 1, 1, new double[]{multiplier}, sensors);
+    }
+
     public PriorityMotor(DcMotorEx[] motor, String name, double basePriority, double priorityScale, double[] multiplier, Sensors sensors) {
         super(basePriority, priorityScale, name);
         this.motor = motor;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.config.subsystem.intake;
+package org.firstinspires.ftc.teamcode.config.subsystem.outtake;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
@@ -21,13 +21,13 @@ import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
 import com.arcrobotics.ftclib.controller.PIDController;
 
 @Config
-public class Extendo {
+public class Slides {
     private final PriorityMotor slidesMotors;
     public double length;
     public double vel;
     private final Sensors sensors;
     public static double ticksToInches = 0.04132142857142857;
-    public static double maxIntakeLength = 10;
+    public static double maxSlidesLength = 10;
     private double targetLength = 0;
     public static double maxVel = 1.6528571428571428;
     public static double kP = 0.15; // used to be 0.11
@@ -40,26 +40,27 @@ public class Extendo {
 
     public PIDController controller;
     public static double p = 0, i = 0, d = 0;
+    public static double f = 0;
     public static double ticks_in_degree = 700 / 180.0;
     private DcMotorEx m1;
     private DcMotorEx m2;
 
-    public Extendo(HardwareMap hardwareMap, HardwareQueue hardwareQueue, Sensors sensors) {
+    public Slides(HardwareMap hardwareMap, HardwareQueue hardwareQueue, Sensors sensors) {
         this.sensors = sensors;
 
         controller = new PIDController(p, i, d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        m1 = hardwareMap.get(DcMotorEx.class, "linkageMotor1");
-        m2 = hardwareMap.get(DcMotorEx.class, "linkageMotor2");
+        m1 = hardwareMap.get(DcMotorEx.class, "slidesMotor1");
+        m2 = hardwareMap.get(DcMotorEx.class, "slidesMotor2");
         DcMotorEx[] motors = {m1, m2};
-        m2.setDirection(DcMotorSimple.Direction.REVERSE);
+        m2.setDirection(DcMotorSimple.Direction.REVERSE); //might have to be changed
 
         if (Globals.mode != RunMode.TELEOP) {
             resetExtendoEncoders();
         }
 
-        slidesMotors = new PriorityMotor(motors, "linkageMotor", 2, 5, new double[]{1, 1}, sensors);
+        slidesMotors = new PriorityMotor(motors, "slidesMotor", 2, 5, new double[]{1, 1}, sensors);
         hardwareQueue.addDevice(slidesMotors);
     }
 
@@ -96,14 +97,15 @@ public class Extendo {
      */
     private double power() {
         controller.setPID(p, i, d);
-        double extendoPos = sensors.getExtendoPos();
-        double pid = controller.calculate(extendoPos, targetLength * ticksToInches);
 
-        telemetry.addData("extendo pos ", extendoPos);
+        //we need an f
+        double slidesPos = sensors.getSlidesPos();
+        double pid = controller.calculate(slidesPos, targetLength * ticksToInches);
+        double power = pid + f;
+
+        telemetry.addData("slides pos ", slidesPos);
         telemetry.addData("target ", targetLength * ticksToInches);
-
-        return pid;
-
+        return power;
     }
 
     public boolean manualMode = false;
@@ -120,7 +122,7 @@ public class Extendo {
     }
 
     public void setTargetLength(double length) {
-        targetLength = Math.max(Math.min(length, maxIntakeLength),0);
+        targetLength = Math.max(Math.min(length, maxSlidesLength),0);
     }
 
     public void setTargetPowerFORCED(double power) {
@@ -132,4 +134,19 @@ public class Extendo {
         slidesMotors.motor[1].setPower(0);
     }
 
+    public void setTargetLengthFORCED(double length) {
+        targetLength = length;
+    }
+
+    public boolean inPosition(double threshold) {
+        return Math.abs(targetLength - length) <= threshold;
+    }
+
+    public double getLength(double length) {
+        return this.length;
+    }
+
+    public double getLength() {
+        return length;
+    }
 }

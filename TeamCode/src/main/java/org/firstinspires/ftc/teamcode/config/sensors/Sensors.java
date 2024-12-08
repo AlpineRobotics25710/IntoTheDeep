@@ -16,6 +16,9 @@ public class Sensors {
     public Robot robot;
     private double extendoEncoder;
     private double extendoVel;
+
+    private double slidesEncoder;
+    private double slidesVel;
     private double voltage;
     public Sensors(HardwareMap hardwareMap, HardwareQueue queue, Robot robot){
         this.hardwareMap = hardwareMap;
@@ -31,7 +34,7 @@ public class Sensors {
 
         //NEED TO ADD EXPANSION HUB HERE
         //expansionHub = hardwareMap.get(LynxModule.class, "Expansion Hub");
-        //expansionHub.setBulkCachingMode ....
+        //expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 
         voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
     }
@@ -47,8 +50,9 @@ public class Sensors {
             voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
         }
 
-        extendoEncoder = ((PriorityMotor) hardwareQueue.getDevice("linkageMotor")).motor[0].getCurrentPosition() * -1; // this might have to be changed
-//        extendoVel = ((PriorityMotor) hardwareQueue.getDevice("intakeMotor")).motor[0].getVelocity() * -1;
+        extendoEncoder = ((PriorityMotor) hardwareQueue.getDevice("linkageMotor")).motor[0].getCurrentPosition(); // this might have to be changed to * -1
+//        extendoVel = ((PriorityMotor) hardwareQueue.getDevice("linkageMotor")).motor[0].getVelocity() * -1;
+        slidesEncoder = ((PriorityMotor) hardwareQueue.getDevice("slidesMotor")).motor[0].getCurrentPosition(); //this might have to be changed to * -1
     }
 
     public double getVoltage(){
@@ -64,5 +68,7 @@ public class Sensors {
     }
 
 
-
+    public double getSlidesPos() {
+        return slidesEncoder;
+    }
 }

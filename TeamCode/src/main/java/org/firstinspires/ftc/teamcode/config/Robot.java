@@ -23,7 +23,7 @@ public class Robot {
 
     public void update(){
         Globals.START_LOOP();
-        hardwareQueue.update();
+//        hardwareQueue.update();
         follower.update(); //add follower to hardwareQueue
         sensors.update();
         extendo.update();
