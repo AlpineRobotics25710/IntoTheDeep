@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.config.utils.priority;
+package org.firstinspires.ftc.teamcode.config.utils.wrappers;
 
 public abstract class PriorityDevice {
     protected final double basePriority, priorityScale;

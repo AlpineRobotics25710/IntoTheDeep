@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.config.utils.priority;
-import org.firstinspires.ftc.teamcode.config.utils.Utils;
-import org.firstinspires.ftc.teamcode.config.utils.priority.PriorityDevice;
+package org.firstinspires.ftc.teamcode.config.utils.wrappers;
 import org.firstinspires.ftc.teamcode.config.utils.Globals;
 import java.util.ArrayList;
 

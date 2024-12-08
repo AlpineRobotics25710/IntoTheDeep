@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.config.testers;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,14 +9,11 @@ import org.firstinspires.ftc.teamcode.config.Robot;
 import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
 import org.firstinspires.ftc.teamcode.config.utils.Utils;
 import org.firstinspires.ftc.teamcode.config.utils.ButtonToggle;
-import org.firstinspires.ftc.teamcode.config.utils.priority.HardwareQueue;
-import org.firstinspires.ftc.teamcode.config.utils.priority.PriorityDevice;
-import org.firstinspires.ftc.teamcode.config.utils.priority.PriorityMotor;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.HardwareQueue;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.PriorityDevice;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.PriorityMotor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Config
 @TeleOp(group = "Test")
