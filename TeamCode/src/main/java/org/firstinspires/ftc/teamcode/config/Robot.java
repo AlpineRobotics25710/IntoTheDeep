@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.config.utils.Globals;
 import org.firstinspires.ftc.teamcode.config.subsystem.intake.Extendo;
 import org.firstinspires.ftc.teamcode.config.utils.Globals;
-import org.firstinspires.ftc.teamcode.config.utils.priority.HardwareQueue;
+import org.firstinspires.ftc.teamcode.config.utils.wrappers.HardwareQueue;
 import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 

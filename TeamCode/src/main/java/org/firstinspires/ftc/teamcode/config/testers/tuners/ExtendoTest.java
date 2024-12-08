@@ -50,7 +50,6 @@ public class ExtendoTest extends OpMode {
         if(buttonX.isClicked(gamepad2.x)){
             usingPid = !usingPid;
         }
-        // Apply the target length to the extendo
         if(usingPid){
             robot.extendo.setTargetLength(targetLength);
         }
