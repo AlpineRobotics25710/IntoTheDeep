@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.utils.priority;
+package org.firstinspires.ftc.teamcode.robot.utils.wrappers;
 
 public abstract class PriorityDevice {
     protected final double basePriority, priorityScale;

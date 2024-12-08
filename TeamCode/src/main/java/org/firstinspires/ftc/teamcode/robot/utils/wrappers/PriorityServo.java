@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.config.utils.wrappers;
+package org.firstinspires.ftc.teamcode.robot.utils.wrappers;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;

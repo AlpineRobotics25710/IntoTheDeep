@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teleop/testers/DemoTeleOp.java
 package org.firstinspires.ftc.teamcode.teleop.testers;
-========
-package org.firstinspires.ftc.teamcode.config.testers;
->>>>>>>> main:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/config/testers/DemoTeleOp.java
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
