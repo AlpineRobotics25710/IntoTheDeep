@@ -39,8 +39,8 @@ public class Sensors {
             voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
         }
 
-        extendoEncoder = ((PriorityMotor) hardwareQueue.getDevice("extendoMotor")).motor[0].getCurrentPosition() * -1;
-        extendoVel = ((PriorityMotor) hardwareQueue.getDevice("extendoMotor")).motor[0].getVelocity() * -1;
+//        extendoEncoder = ((PriorityMotor) hardwareQueue.getDevice("intakeMotor")).motor[0].getCurrentPosition() * -1;
+//        extendoVel = ((PriorityMotor) hardwareQueue.getDevice("intakeMotor")).motor[0].getVelocity() * -1;
     }
 
     public double getVoltage(){

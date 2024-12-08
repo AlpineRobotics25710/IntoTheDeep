@@ -20,7 +20,7 @@ public class PIDTest extends LinearOpMode {
 
         Extendo extendo = new Extendo(this.hardwareMap, 0.0);
         extendo.init();
-        telemetry.addData("Intake Status", "Initialized");
+        telemetry.addData("Extendo Status", "Initialized");
 
         telemetry.update();
 

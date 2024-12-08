@@ -6,6 +6,7 @@ public class Constants {
     public static RunMode mode = RunMode.TEST;
     public static boolean isRed = false;
     public static double slidesMax = 5.0;
+    public static double ticksToInches = 0.04132142857142857;
 
     public static double GET_LOOP_TIMES() {
         LOOP_TIME = System.nanoTime() - LOOP_START / 1.0e9;

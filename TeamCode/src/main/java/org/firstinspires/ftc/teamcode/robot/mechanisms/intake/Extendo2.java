@@ -21,7 +21,7 @@ public class Extendo2 {
     public double vel;
     private final Sensors sensors;
     public static double ticksToInches = 0.04132142857142857;
-    public static double maxSlidesHeight = 27.891;
+    public static double maxIntakeLength = 10;
     private double targetLength = 0;
     public static double maxVel = 1.6528571428571428;
     public static double kP = 0.15; // used to be 0.11
@@ -38,21 +38,20 @@ public class Extendo2 {
     public Extendo2(HardwareMap hardwareMap, HardwareQueue hardwareQueue, Sensors sensors) {
         this.sensors = sensors;
 
-        m1 = hardwareMap.get(DcMotorEx.class, "extendoMotor1");
-        m2 = hardwareMap.get(DcMotorEx.class, "extendoMotor2");
+        m1 = hardwareMap.get(DcMotorEx.class, "linkageMotor1");
 
-        m2.setDirection(DcMotorSimple.Direction.REVERSE);
+//        m2.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if (Constants.mode != RunMode.TELEOP) {
             resetSlidesEncoders();
         }
 
-        slidesMotors = new PriorityMotor(new DcMotorEx[] {m1, m2}, "slidesMotor", 2, 5, new double[] {-1, -1}, sensors);
+        slidesMotors = new PriorityMotor(m1, "linkageMotor", 2, 5, sensors);
         hardwareQueue.addDevice(slidesMotors);
     }
 
     public void resetSlidesEncoders() {
-        Log.e("RESETTTING", "RESTETING SLIDES *************");
+        Log.e("RESETTTING", "RESTETING MOTOR *************");
 
         //drivetrain.resetSlidesMotorRightFront();
 
@@ -107,7 +106,7 @@ public class Extendo2 {
     }
 
     public void setTargetLength(double length) {
-        targetLength = Math.max(Math.min(length, maxSlidesHeight),0);
+        targetLength = Math.max(Math.min(length, maxIntakeLength),0);
     }
 
     public void setTargetPowerFORCED(double power) {
