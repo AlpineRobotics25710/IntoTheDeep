@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Outtake;
 import org.firstinspires.ftc.teamcode.robot.utils.RobotConstants;
-import org.firstinspires.ftc.teamcode.robot.utils.priority.HardwareQueue;
+import org.firstinspires.ftc.teamcode.robot.utils.wrappers.HardwareQueue;
 import org.firstinspires.ftc.teamcode.robot.sensors.Sensors;
 
 public class Robot {

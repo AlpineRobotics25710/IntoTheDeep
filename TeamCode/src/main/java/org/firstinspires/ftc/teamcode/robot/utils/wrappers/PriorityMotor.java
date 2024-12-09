@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.robot.utils.wrappers;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 //import org.firstinspires.ftc.teamcode.sensors.Sensors;
-import org.firstinspires.ftc.teamcode.config.utils.Utils;
-import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
+import org.firstinspires.ftc.teamcode.robot.utils.Utils;
+import org.firstinspires.ftc.teamcode.robot.sensors.Sensors;
 
 
 public class PriorityMotor extends PriorityDevice {

@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot.utils.wrappers;
-import org.firstinspires.ftc.teamcode.config.utils.Globals;
+import org.firstinspires.ftc.teamcode.robot.utils.RobotConstants;
 import java.util.ArrayList;
 
 public class HardwareQueue {
@@ -25,7 +25,7 @@ public class HardwareQueue {
         }
 
         double bestDevice;
-        double loopTime = Globals.GET_LOOP_TIMES(); // finds loopTime in seconds
+        double loopTime = RobotConstants.GET_LOOP_TIMES(); // finds loopTime in seconds
         int numUpdates = 0;
         do { // updates the motors while still time remaining in the loop
             int bestIndex = 0;
@@ -43,7 +43,7 @@ public class HardwareQueue {
                 devices.get(bestIndex).update(); // Resetting the motor priority so that it knows that it updated the motor and setting the motor of the one that most needs it
                 numUpdates++;
             }
-            loopTime = Globals.GET_LOOP_TIMES();
+            loopTime = RobotConstants.GET_LOOP_TIMES();
         } while (bestDevice > 0 && loopTime <= targetLoopLength);
         // Log.i("numUpdates", numUpdates + "");
     }

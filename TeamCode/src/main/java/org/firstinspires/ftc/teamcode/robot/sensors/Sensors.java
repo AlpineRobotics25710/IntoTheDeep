@@ -4,8 +4,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.utils.priority.HardwareQueue;
-import org.firstinspires.ftc.teamcode.robot.utils.priority.PriorityMotor;
+import org.firstinspires.ftc.teamcode.robot.utils.wrappers.HardwareQueue;
 
 public class Sensors {
     private LynxModule controlHub;
