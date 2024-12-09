@@ -30,10 +30,6 @@ public class DrivetrainTest extends LinearOpMode {
                 .setStrafingMultiplier(1.1)
                 .build();
 
-        while (opModeInInit()) {
-            robot.getSlides().update();
-        }
-
         waitForStart();
 
         if (isStopRequested()) return;
