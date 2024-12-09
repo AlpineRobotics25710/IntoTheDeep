@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.utils.wrappers;
-import org.firstinspires.ftc.teamcode.robot.utils.RobotConstants;
+
+import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import java.util.ArrayList;
 
 public class HardwareQueue {

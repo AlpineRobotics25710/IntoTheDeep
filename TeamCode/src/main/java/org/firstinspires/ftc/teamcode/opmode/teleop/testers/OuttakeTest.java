@@ -18,8 +18,8 @@ public class OuttakeTest extends LinearOpMode {
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
         gp1.getLeftStick().setSensitivity(1.0);
         gp1.getRightStick().setSensitivity(1.0);
-        gp1.getA().setAction(() -> gp1.getA().isClicked(), () -> robot.getOuttake().getClaw().open());
-        gp1.getB().setAction(() -> gp1.getB().isClicked(), () -> robot.getOuttake().getClaw().close());
+        gp1.getA().setAction(() -> gp1.getA().isClicked(), () -> robot.getClaw().open());
+        gp1.getB().setAction(() -> gp1.getB().isClicked(), () -> robot.getClaw().close());
 
         Drivetrain drivetrain = new DrivetrainBuilder()
                 .setType(DrivetrainBuilder.DrivetrainType.ROBOT_CENTRIC_MECANUM)
@@ -30,7 +30,7 @@ public class OuttakeTest extends LinearOpMode {
 
         while(opModeInInit()) {
             // TODO: Get rid of outtake wrapper class and just add a transferOuttake() method to the Robot class
-            robot.getOuttake().getSlides().update();
+            robot.getSlides().update();
         }
 
         waitForStart();
