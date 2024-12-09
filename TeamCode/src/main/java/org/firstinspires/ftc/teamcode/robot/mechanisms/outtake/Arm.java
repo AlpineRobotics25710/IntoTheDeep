@@ -34,11 +34,6 @@ public class Arm implements Mechanism {
         swivelServo.setPosition(SWIVEL_LEFT_POS);
     }
 
-    @Override
-    public void update() {
-        Mechanism.super.update();
-    }
-
     public void wristUp() {
         wristServoLeft.setPosition(WRIST_UP_POS);
         wristServoRight.setPosition(WRIST_UP_POS);

@@ -4,9 +4,10 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 import org.firstinspires.ftc.teamcode.robot.utils.wrappers.HardwareQueue;
 
-public class Sensors {
+public class Sensors implements Mechanism {
     private LynxModule controlHub;
     private HardwareMap hardwareMap;
     private HardwareQueue hardwareQueue;
@@ -21,11 +22,14 @@ public class Sensors {
         this.robot = robot;
     }
 
-    public void initSensors(HardwareMap hardwareMap){
+    @Override
+    public void init(){
         controlHub = hardwareMap.get(LynxModule.class, "Control Hub");
         controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
     }
+
+    @Override
     public void update(){
         updateControlHub();
     }

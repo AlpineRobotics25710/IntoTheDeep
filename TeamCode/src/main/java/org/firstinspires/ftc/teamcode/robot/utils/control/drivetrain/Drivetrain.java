@@ -20,6 +20,7 @@ public abstract class Drivetrain {
      * Constructor for Drivetrain.
      * NOTE: Remember to initialize your wheel motors before calling this constructor. The motors are not
      * initialized by default. For example, you must set the zero power behavior of the motors yourself.
+     * Also remember to reverse the right motors.
      *
      * @param frontLeftMotor  the front left wheel motor
      * @param backLeftMotor   the back left wheel motor

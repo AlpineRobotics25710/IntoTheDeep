@@ -18,7 +18,7 @@ public class RobotConstants {
     }
 
     public enum Mode {
-        AUTO,TELEOP,TEST
+        AUTO,TELEOP, TESTING
     }
 
     public enum Alliance {

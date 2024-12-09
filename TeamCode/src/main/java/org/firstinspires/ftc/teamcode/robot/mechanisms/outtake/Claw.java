@@ -23,17 +23,12 @@ public class Claw implements Mechanism {
         clawServo.setPosition(CLOSED_POS);
     }
 
-    public void openClaw() {
+    public void open() {
         clawServo.setPosition(OPEN_POS);
     }
 
-    public void closeClaw() {
+    public void close() {
         clawServo.setPosition(CLOSED_POS);
-    }
-
-    @Override
-    public void update() {
-        Mechanism.super.update();
     }
 
     public double getOPEN_POS() {
