@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
 import org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain.Drivetrain;
 import org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain.DrivetrainBuilder;
@@ -14,6 +15,7 @@ public class OuttakeTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Robot robot = new Robot(this.hardwareMap);
+        RobotConstants.mode = RobotConstants.Mode.TESTING;
 
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
         gp1.getLeftStick().setSensitivity(1.0);
