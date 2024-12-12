@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 
 public class Arm implements Mechanism {
-    private Servo wristServoLeft;
-    private Servo wristServoRight;
+    private Servo armServoLeft;
+    private Servo armServoRight;
+    //TODO: Add all of the proper outtake motors
     private Servo swivelServo;
     private HardwareMap hardwareMap;
 
@@ -25,23 +26,23 @@ public class Arm implements Mechanism {
 
     @Override
     public void init() {
-        wristServoLeft = hardwareMap.get(Servo.class, "wristServoLeft");
-        wristServoRight = hardwareMap.get(Servo.class, "wristServoRight");
+        armServoLeft = hardwareMap.get(Servo.class, "wristServoLeft");
+        armServoRight = hardwareMap.get(Servo.class, "wristServoRight");
         swivelServo = hardwareMap.get(Servo.class, "swivelServo");
 
-        wristServoLeft.setPosition(WRIST_DOWN_POS);
-        wristServoRight.setPosition(WRIST_DOWN_POS);
+        armServoLeft.setPosition(WRIST_DOWN_POS);
+        armServoRight.setPosition(WRIST_DOWN_POS);
         swivelServo.setPosition(SWIVEL_LEFT_POS);
     }
 
     public void wristUp() {
-        wristServoLeft.setPosition(WRIST_UP_POS);
-        wristServoRight.setPosition(WRIST_UP_POS);
+        armServoLeft.setPosition(WRIST_UP_POS);
+        armServoRight.setPosition(WRIST_UP_POS);
     }
 
     public void wristDown() {
-        wristServoLeft.setPosition(WRIST_DOWN_POS);
-        wristServoRight.setPosition(WRIST_DOWN_POS);
+        armServoLeft.setPosition(WRIST_DOWN_POS);
+        armServoRight.setPosition(WRIST_DOWN_POS);
     }
 
     public void swivelLeft() {

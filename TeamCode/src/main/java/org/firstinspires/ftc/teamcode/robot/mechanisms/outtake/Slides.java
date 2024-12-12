@@ -9,8 +9,9 @@ import org.firstinspires.ftc.teamcode.robot.utils.pids.PIDrip;
 
 @Config
 public class Slides implements Mechanism {
-    private final DcMotor leftMotor;
-    private final DcMotor rightMotor;
+    private final HardwareMap hardwareMap;
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
 
     private final PIDrip pid;
     private double targetPosition;
@@ -22,8 +23,7 @@ public class Slides implements Mechanism {
     public double Kf;
 
     public Slides(HardwareMap hardwareMap) {
-        this.leftMotor = hardwareMap.dcMotor.get("slidesLeftMotor");
-        this.rightMotor = hardwareMap.dcMotor.get("slidesRightMotor");
+        this.hardwareMap = hardwareMap;
         this.pid = new PIDrip(Kp, Ki, Kd, Kf, INIT_POS);
     }
 
@@ -40,6 +40,9 @@ public class Slides implements Mechanism {
 
     @Override
     public void init() {
+        this.leftMotor = hardwareMap.dcMotor.get("slidesLeftMotor");
+        this.rightMotor = hardwareMap.dcMotor.get("slidesRightMotor");
+
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
