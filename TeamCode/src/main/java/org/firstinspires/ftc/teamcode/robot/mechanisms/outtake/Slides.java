@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
-import org.firstinspires.ftc.teamcode.robot.utils.pids.PIDrip;
+import org.firstinspires.ftc.teamcode.robot.utils.PID;
 
 @Config
 public class Slides implements Mechanism {
@@ -13,7 +13,7 @@ public class Slides implements Mechanism {
     private DcMotor leftMotor;
     private DcMotor rightMotor;
 
-    private final PIDrip pid;
+    private final PID pid;
     private double targetPosition;
     private final double INIT_POS = 0;
 
@@ -24,7 +24,7 @@ public class Slides implements Mechanism {
 
     public Slides(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
-        this.pid = new PIDrip(Kp, Ki, Kd, Kf, INIT_POS);
+        this.pid = new PID(Kp, Ki, Kd, Kf, INIT_POS);
     }
 
     public void setTargetPosition(double targetPosition) {

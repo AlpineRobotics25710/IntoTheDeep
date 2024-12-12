@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.robot.utils.pids;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class PIDrip {
+public class PID {
     public double Kp;
     public double Ki;
     public double Kd;
@@ -13,14 +13,14 @@ public class PIDrip {
     private double lastError;
     private double integralSum = 0;
 
-    public PIDrip(double Kp, double Ki, double Kd, double Kf) {
+    public PID(double Kp, double Ki, double Kd, double Kf) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
         this.Kf = Kf;
     }
 
-    public PIDrip(double Kp, double Ki, double Kd, double Kf, double reference) {
+    public PID(double Kp, double Ki, double Kd, double Kf, double reference) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;

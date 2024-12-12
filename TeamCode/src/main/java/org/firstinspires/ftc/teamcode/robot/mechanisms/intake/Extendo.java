@@ -5,13 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
-import org.firstinspires.ftc.teamcode.robot.utils.pids.PIDrip;
+import org.firstinspires.ftc.teamcode.robot.utils.PID;
 
 @Config
 public class Extendo implements Mechanism {
     private HardwareMap hardwareMap;
     private DcMotor leftMotor, rightMotor;
-    private PIDrip pid;
+    private PID pid;
     private double targetPosition;
 
     public Extendo(HardwareMap hardwareMap) {
@@ -40,7 +40,7 @@ public class Extendo implements Mechanism {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Initialize the PID controller
-        pid = new PIDrip(0.00, 0.0, 0.0, 0.0, targetPosition);
+        pid = new PID(0.00, 0.0, 0.0, 0.0, targetPosition);
     }
 
     @Override
