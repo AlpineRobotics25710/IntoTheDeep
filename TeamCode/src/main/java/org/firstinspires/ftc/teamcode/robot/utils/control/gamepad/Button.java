@@ -69,9 +69,12 @@ public class Button {
         return false;
     }
 
-    public void setAction(ActionFlag flag, RobotAction action) {
-        this.action = action;
+    public void setActionFlag(ActionFlag flag) {
         this.flag = flag;
+    }
+
+    public void setAction(RobotAction action) {
+        this.action = action;
     }
 
     // Getters

@@ -14,13 +14,15 @@ public class Slides implements Mechanism {
     private DcMotor rightMotor;
 
     private final PID pid;
-    private double targetPosition;
-    private final double INIT_POS = 0;
+    public double targetPosition;
+    public final double INIT_POS = 0;
 
     public double Kp;
     public double Ki;
     public double Kd;
     public double Kf;
+
+    public boolean manualMode = false;
 
     public Slides(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -28,14 +30,33 @@ public class Slides implements Mechanism {
     }
 
     public void setTargetPosition(double targetPosition) {
-        this.targetPosition = targetPosition;
-        pid.setReference(targetPosition);
+        if (!manualMode) {  // Only set target position if not in manual mode
+            this.targetPosition = targetPosition;
+            pid.setReference(targetPosition);
+        }
     }
 
     public void moveSlides(double power) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(power);
-        setTargetPosition(getEncoderPosition());
+        if (manualMode) {
+            leftMotor.setPower(power);
+            rightMotor.setPower(power);
+        } else {
+            setTargetPosition(getEncoderPosition());
+        }
+    }
+
+    public void setManualMode(boolean manualMode) {
+        this.manualMode = manualMode;
+        if (manualMode) {
+            leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // Allow free control of power
+            rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        } else {
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            setTargetPosition(getEncoderPosition()); // Reinitialize PID target when exiting manual mode
+        }
     }
 
     @Override
@@ -58,7 +79,11 @@ public class Slides implements Mechanism {
 
     @Override
     public void update() {
-        leftMotor.setPower(pid.updatePID(leftMotor.getCurrentPosition()));
+        if (!manualMode) { // Only use PID control if not in manual mode
+            double power = pid.updatePID(leftMotor.getCurrentPosition());
+            leftMotor.setPower(power);
+            rightMotor.setPower(power);
+        }
     }
 
     public double getTargetPosition() {

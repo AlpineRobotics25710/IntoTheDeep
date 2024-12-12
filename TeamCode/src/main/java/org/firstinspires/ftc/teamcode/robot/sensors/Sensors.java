@@ -5,20 +5,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
-import org.firstinspires.ftc.teamcode.robot.utils.wrappers.HardwareQueue;
 
 public class Sensors implements Mechanism {
     private LynxModule controlHub;
     private HardwareMap hardwareMap;
-    private HardwareQueue hardwareQueue;
 
     public Robot robot;
     private double extendoEncoder;
     private double extendoVel;
     private double voltage;
-    public Sensors(HardwareMap hardwareMap, HardwareQueue queue, Robot robot){
+    public Sensors(HardwareMap hardwareMap, Robot robot){
         this.hardwareMap = hardwareMap;
-        this.hardwareQueue = queue;
         this.robot = robot;
     }
 
@@ -57,7 +54,4 @@ public class Sensors implements Mechanism {
     public double getExtendoVel(){
         return extendoVel;
     }
-
-
-
 }
