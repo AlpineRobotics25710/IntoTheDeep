@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Claw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 @Config
@@ -20,15 +20,15 @@ public class ArmTest extends LinearOpMode {
         OuttakeArm outtakeArm = new OuttakeArm(this.hardwareMap);
         outtakeArm.init();
 
-        Claw claw = new Claw(this.hardwareMap);
-        claw.init();
+        OuttakeClaw outtakeClaw = new OuttakeClaw(this.hardwareMap);
+        outtakeClaw.init();
 
         waitForStart();
         while (opModeIsActive()) {
             outtakeArm.setArmPosition(armPosition);
             outtakeArm.setWristPosition(armWristPosition);
-            claw.setClawPosition(clawPosition);
-            claw.setSwivelPosition(clawSwivelPosition);
+            outtakeClaw.setClawPosition(clawPosition);
+            outtakeClaw.setSwivelPosition(clawSwivelPosition);
         }
     }
 }

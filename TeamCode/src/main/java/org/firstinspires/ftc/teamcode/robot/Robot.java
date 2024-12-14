@@ -5,13 +5,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Claw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 
 public class Robot {
-    public final OuttakeArm outtakeArm;
-    public final Claw claw;
-    //public final Slides outtakeSlides;
+    public OuttakeArm outtakeArm;
+    public OuttakeClaw outtakeClaw;
+    //public Slides outtakeSlides;
+    public IntakeArm intakeArm;
+    public IntakeClaw intakeClaw;
 
     public final DcMotor frontLeftMotor;
     public final DcMotor backLeftMotor;
@@ -21,8 +25,8 @@ public class Robot {
     public static Follower follower;
 
     public Robot(HardwareMap hardwareMap) {
-        assert RobotConstants.mode != null;
-        assert RobotConstants.mode == RobotConstants.Mode.TESTING || RobotConstants.alliance != null;
+        //assert RobotConstants.mode != null;
+        //assert RobotConstants.mode == RobotConstants.Mode.TESTING || RobotConstants.alliance != null;
 
         // Initialize drive train
         frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
@@ -31,21 +35,29 @@ public class Robot {
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Initialize outtake
-        outtakeArm = new OuttakeArm(hardwareMap);
-        claw = new Claw(hardwareMap);
+        //outtakeArm = new OuttakeArm(hardwareMap);
+        //outtakeClaw = new OuttakeClaw(hardwareMap);
         //outtakeSlides = new Slides(hardwareMap);
-        outtakeArm.init();
-        claw.init();
+        //outtakeArm.init();
+        //outtakeClaw.init();
         //outtakeSlides.init();
+
+        // Initialize intake
+        intakeArm = new IntakeArm(hardwareMap);
+        intakeClaw = new IntakeClaw(hardwareMap);
+        intakeArm.init();
+        intakeClaw.init();
     }
 
     public void update() {
         RobotConstants.START_LOOP();
-        outtakeArm.update();
-        claw.update();
+        //outtakeArm.update();
+        //outtakeClaw.update();
         //outtakeSlides.update();
     }
 }

@@ -128,9 +128,11 @@ public class CustomGamepad {
 
     public void executeButtonActions() {
         for (Button button : allButtons) {
-            if (button.getFlagValue()) {
-                button.getAction().execute();
-            }
+            try {
+                if (button.getFlagValue()) {
+                    button.getAction().execute();
+                }
+            } catch (NullPointerException ignored){}
         }
     }
 

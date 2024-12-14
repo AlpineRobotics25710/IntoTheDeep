@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 
 @Config
-public class Claw implements Mechanism {
+public class OuttakeClaw implements Mechanism {
     private Servo clawServo;
     private Servo swivelServo;
     private final HardwareMap hardwareMap;
@@ -20,7 +20,7 @@ public class Claw implements Mechanism {
     public static double SWIVEL_OUTTAKE_POS = 0.0;
     public static double SWIVEL_INIT_POS = SWIVEL_INTAKE_POS;
 
-    public Claw(HardwareMap hardwareMap) {
+    public OuttakeClaw(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
     }
 

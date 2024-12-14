@@ -70,7 +70,7 @@ left_arm
 left_hand
 right_hand
 outtakeArm
-claw
+outtakeClaw
 
 ** Sensors:
 sensor_color
