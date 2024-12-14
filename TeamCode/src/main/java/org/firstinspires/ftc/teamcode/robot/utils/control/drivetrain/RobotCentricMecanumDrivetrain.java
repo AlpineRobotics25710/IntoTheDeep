@@ -15,51 +15,22 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
         double x = gamepad.getLeftStick().getX() * strafingMultiplier * gamepad.getRightStick().getSensitivity(); // Counteract imperfect strafing
         double rx = gamepad.getRightStick().getY() * gamepad.getRightStick().getSensitivity();
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        // Denominator is the largest motor power (absolute value) or 1
+        double denominator;
+        if (gamepad.getLeftBumper().isPressed()) {
+            denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 0.75);
+        } else {
+            denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        }
+        
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        if (gamepad.getRightBumper().isClicked()) {
-            if (y > 0) {
-                frontLeftMotor.setPower(0.75);
-                backLeftMotor.setPower(0.75);
-                frontRightMotor.setPower(0.75);
-                backRightMotor.setPower(0.75);
-            } else if (y < -0){
-                frontLeftMotor.setPower(-0.75);
-                backLeftMotor.setPower(-0.75);
-                frontRightMotor.setPower(-0.75);
-                backRightMotor.setPower(-0.75);
-            } else {
-                frontLeftMotor.setPower(0);
-                backLeftMotor.setPower(0);
-                frontRightMotor.setPower(0);
-                backRightMotor.setPower(0);
-            }
-        } else if (gamepad.getLeftBumper().isClicked()) {
-            if (x > 0) {
-                frontLeftMotor.setPower(0.75);
-                backLeftMotor.setPower(-0.75);
-                frontRightMotor.setPower(-0.75);
-                backRightMotor.setPower(0.75);
-            } else if (x < -0){
-                frontLeftMotor.setPower(-0.75);
-                backLeftMotor.setPower(0.75);
-                frontRightMotor.setPower(0.75);
-                backRightMotor.setPower(-0.75);
-            } else {
-                frontLeftMotor.setPower(0);
-                backLeftMotor.setPower(0);
-                frontRightMotor.setPower(0);
-                backRightMotor.setPower(0);
-            }
-        } else {
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
-        }
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
     }
 }

@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain.DrivetrainB
 
 @TeleOp
 public class OuttakeTest extends LinearOpMode {
-
     @Override
     public void runOpMode() {
         Robot robot = new Robot(this.hardwareMap);
