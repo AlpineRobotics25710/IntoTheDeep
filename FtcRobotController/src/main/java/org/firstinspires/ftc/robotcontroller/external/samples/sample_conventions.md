@@ -69,7 +69,7 @@ left_arm
 ** Servos:
 left_hand
 right_hand
-arm
+outtakeArm
 claw
 
 ** Sensors:

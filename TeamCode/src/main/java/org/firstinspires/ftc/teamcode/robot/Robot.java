@@ -4,21 +4,21 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Arm;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Claw;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.Slides;
-import org.firstinspires.ftc.teamcode.robot.sensors.Sensors;
 
 public class Robot {
-    public final Sensors sensors;
-    public final Arm arm;
+    public final OuttakeArm outtakeArm;
     public final Claw claw;
-    public final Slides outtakeSlides;
+    //public final Slides outtakeSlides;
 
     public final DcMotor frontLeftMotor;
     public final DcMotor backLeftMotor;
     public final DcMotor frontRightMotor;
     public final DcMotor backRightMotor;
+
+    public static Follower follower;
 
     public Robot(HardwareMap hardwareMap) {
         assert RobotConstants.mode != null;
@@ -34,23 +34,18 @@ public class Robot {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Initialize outtake
-        arm = new Arm(hardwareMap);
+        outtakeArm = new OuttakeArm(hardwareMap);
         claw = new Claw(hardwareMap);
-        outtakeSlides = new Slides(hardwareMap);
-        arm.init();
+        //outtakeSlides = new Slides(hardwareMap);
+        outtakeArm.init();
         claw.init();
-        outtakeSlides.init();
-
-        // Initialize sensors
-        sensors = new Sensors(hardwareMap, this);
-        sensors.init();
+        //outtakeSlides.init();
     }
 
     public void update() {
         RobotConstants.START_LOOP();
-        sensors.update();
-        arm.update();
+        outtakeArm.update();
         claw.update();
-        outtakeSlides.update();
+        //outtakeSlides.update();
     }
 }

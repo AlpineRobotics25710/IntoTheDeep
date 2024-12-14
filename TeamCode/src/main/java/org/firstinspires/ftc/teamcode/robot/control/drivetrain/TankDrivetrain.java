@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public class TankDrivetrain extends Drivetrain {
     /**

@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.robot.utils.control.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public class FieldCentricMecanumDrivetrain extends Drivetrain {
     private final IMU imu;

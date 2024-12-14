@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
-import org.firstinspires.ftc.teamcode.robot.utils.control.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 @TeleOp(group = "Testers")
 @Config

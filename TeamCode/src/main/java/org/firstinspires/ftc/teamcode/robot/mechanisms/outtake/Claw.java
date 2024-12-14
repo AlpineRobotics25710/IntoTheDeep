@@ -13,11 +13,12 @@ public class Claw implements Mechanism {
     private final HardwareMap hardwareMap;
 
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE  POSITIONS FOR CLAW
-    private final double OPEN_POS = 1.0;
-    private final double CLOSED_POS = 0.0;
-    public final double SWIVEL_LEFT_POS = 0.0;
-    public final double SWIVEL_STRAIGHT_POS = 0.5;
-    public final double SWIVEL_RIGHT_POS = 1.0;
+    public static double OPEN_POS = 0.0;
+    public static double CLOSED_POS = 0.0;
+
+    public static double SWIVEL_INTAKE_POS = 0.0;
+    public static double SWIVEL_OUTTAKE_POS = 0.0;
+    public static double SWIVEL_INIT_POS = SWIVEL_INTAKE_POS;
 
     public Claw(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -25,30 +26,18 @@ public class Claw implements Mechanism {
 
     @Override
     public void init() {
-        clawServo = hardwareMap.get(Servo.class, "clawServo");
-        swivelServo = hardwareMap.get(Servo.class, "swivelServo");
+        clawServo = hardwareMap.get(Servo.class, "outtakeClaw");
+        swivelServo = hardwareMap.get(Servo.class, "outtakeClawSwivel");
 
         clawServo.setPosition(CLOSED_POS);
-        swivelServo.setPosition(SWIVEL_STRAIGHT_POS);
+        swivelServo.setPosition(SWIVEL_INIT_POS);
     }
 
-    public void open() {
-        clawServo.setPosition(OPEN_POS);
+    public void setClawPosition(double position) {
+        clawServo.setPosition(position);
     }
 
-    public void close() {
-        clawServo.setPosition(CLOSED_POS);
-    }
-
-    public void setSwivelPosition(int position) {
+    public void setSwivelPosition(double position) {
         swivelServo.setPosition(position);
-    }
-
-    public double getOPEN_POS() {
-        return OPEN_POS;
-    }
-
-    public double getCLOSED_POS() {
-        return CLOSED_POS;
     }
 }
