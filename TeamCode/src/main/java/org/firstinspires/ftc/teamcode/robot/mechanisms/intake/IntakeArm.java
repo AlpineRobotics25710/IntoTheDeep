@@ -57,7 +57,7 @@ public class IntakeArm implements Mechanism {
         return armServoRight.getPosition();
     }
 
-    public void ascent() {
+    public void ascend() {
         armServoLeft.setPosition(ARM_ASCENT_POS);
         armServoRight.setPosition(ARM_ASCENT_POS);
         wristServoLeft.setPosition(WRIST_ASCENT_POS);

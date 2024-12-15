@@ -11,13 +11,12 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
 
 @TeleOp(group = "prod")
 public class GenericTeleOp extends LinearOpMode {
-    private Robot robot;
     private CustomGamepad gp1;
     private Drivetrain drivetrain;
 
     @Override
     public void runOpMode() {
-        robot = new Robot(this.hardwareMap);
+        Robot robot = new Robot(this.hardwareMap);
         gp1 = new CustomGamepad(gamepad1);
         drivetrain = new DrivetrainBuilder()
                 .setType(DrivetrainBuilder.DrivetrainType.ROBOT_CENTRIC_MECANUM)
@@ -31,7 +30,7 @@ public class GenericTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("cross is clicked", gp1.cross().isPressed());
             if (gp1.cross().isClicked()) {
-                robot.intakeArm.ascent();
+                robot.intakeArm.ascend();
                 robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
                 robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_ASCENT_POS);
                 telemetry.addData("Intake", "ascending");
