@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 @Config
 @TeleOp
-public class ArmTest extends LinearOpMode {
+public class OuttakeTest extends LinearOpMode {
     public static double armPosition = 0.075;
     public static double armWristPosition = 0;
     public static double clawPosition = 0;

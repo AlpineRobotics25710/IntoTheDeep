@@ -4,12 +4,11 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 
 @Config
-public class OuttakeClaw implements Mechanism {
-    private Servo clawServo;
-    private Servo swivelServo;
+public class OuttakeClaw extends Claw {
     private final HardwareMap hardwareMap;
 
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE  POSITIONS FOR CLAW
@@ -31,13 +30,5 @@ public class OuttakeClaw implements Mechanism {
 
         clawServo.setPosition(CLOSED_POS);
         swivelServo.setPosition(SWIVEL_INIT_POS);
-    }
-
-    public void setClawPosition(double position) {
-        clawServo.setPosition(position);
-    }
-
-    public void setSwivelPosition(double position) {
-        swivelServo.setPosition(position);
     }
 }
