@@ -55,7 +55,6 @@ public class Robot {
     }
 
     public void update() {
-        RobotConstants.START_LOOP();
         //outtakeArm.update();
         //outtakeClaw.update();
         //outtakeSlides.update();
