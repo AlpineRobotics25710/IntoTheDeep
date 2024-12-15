@@ -4,6 +4,8 @@ public class Button {
     private boolean lastState;
     private boolean currentState;
     private boolean wasClicked;
+    private boolean wasPressed;
+    private boolean wasReleased;
     private RobotAction action;
     private ActionFlag flag;
 
@@ -15,6 +17,8 @@ public class Button {
         this.currentState = currentState;
         this.lastState = currentState;
         this.wasClicked = false;
+        this.wasPressed = false;
+        this.wasReleased = false;
     }
 
     /**
@@ -26,7 +30,11 @@ public class Button {
         this.lastState = this.currentState;
         this.currentState = currentState;
 
-        wasClicked = !currentState && lastState;
+        wasPressed = currentState && !lastState;
+        wasReleased = !currentState && lastState;
+        if (wasReleased) {
+            wasClicked = true;
+        }
     }
 
     /**
@@ -34,8 +42,11 @@ public class Button {
      * @return returns true only once at the instant the user presses the button
      */
     public boolean isPressed() {
-        System.out.println("is pressed: " + (currentState && !lastState));
-        return currentState && !lastState;
+        if (wasPressed) {
+            wasPressed = false;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -43,8 +54,11 @@ public class Button {
      * @return returns true only once at the instant the user releases the button
      */
     public boolean isReleased() {
-        System.out.println("is released: " + (currentState && !lastState));
-        return currentState && !lastState;
+        if (wasReleased) {
+            wasReleased = false;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -61,20 +75,43 @@ public class Button {
      */
     public boolean isClicked() {
         if (wasClicked) {
-            wasClicked = false; // Ensure this only returns true once
-            System.out.println("is clicked: " + true);
+            wasClicked = false;
             return true;
         }
-        System.out.println("is clicked" + false);
         return false;
     }
 
+    /**
+     * Sets the flag with which the action that is mapped to this button will be executed. Also need to set an action
+     * through setAction().
+     * @param flag a {@link ActionFlag} that controls when the action should be executed
+     */
     public void setActionFlag(ActionFlag flag) {
         this.flag = flag;
     }
 
+    /**
+     * Sets the action to be executed when the given ActionFlag is true. Also need to set an {@link ActionFlag} for
+     * this to work.
+     * @param action the action to execute
+     */
     public void setAction(RobotAction action) {
         this.action = action;
+    }
+
+    /**
+     * Executes the mapped action if the set flag is true. Both an {@link ActionFlag} and {@link RobotAction} need to
+     * be set for this to work.
+     */
+    public void executeAction() {
+        if (flag != null && action != null) {
+            if (flag.getValue()) {
+                action.execute();
+            }
+        } else {
+            throw new NullPointerException("Attempt to call executeAction() when an ActionFlag and RobotAction have " +
+                    "not been set!");
+        }
     }
 
     // Getters

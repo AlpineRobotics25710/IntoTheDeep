@@ -126,117 +126,119 @@ public class CustomGamepad {
         executeButtonActions();
     }
 
+    /**
+     * Executes any actions mapped to the buttons. Handles any NullPointerExceptions if an action
+     * is not mapped to a button or a flag has not been set.
+     */
     public void executeButtonActions() {
         for (Button button : allButtons) {
             try {
-                if (button.getFlagValue()) {
-                    button.getAction().execute();
-                }
+                button.executeAction();
             } catch (NullPointerException ignored){}
         }
     }
 
-    public Button getA() {
+    public Button a() {
         return buttonA;
     }
 
-    public Button getB() {
+    public Button b() {
         return buttonB;
     }
 
-    public Button getX() {
+    public Button x() {
         return buttonX;
     }
 
-    public Button getY() {
+    public Button y() {
         return buttonY;
     }
 
-    public Button getDpadUp() {
+    public Button dpadUp() {
         return dpadUp;
     }
 
-    public Button getDpadDown() {
+    public Button dpadDown() {
         return dpadDown;
     }
 
-    public Button getDpadLeft() {
+    public Button dpadLeft() {
         return dpadLeft;
     }
 
-    public Button getDpadRight() {
+    public Button dpadRight() {
         return dpadRight;
     }
 
-    public Button getGuide() {
+    public Button guide() {
         return guide;
     }
 
-    public Button getStart() {
+    public Button start() {
         return start;
     }
 
-    public Button getBack() {
+    public Button back() {
         return back;
     }
 
-    public Button getLeftBumper() {
+    public Button leftBumper() {
         return leftBumper;
     }
 
-    public Button getRightBumper() {
+    public Button rightBumper() {
         return rightBumper;
     }
 
-    public Button getLeftStickButton() {
+    public Button leftStickButton() {
         return leftStickButton;
     }
 
-    public Button getRightStickButton() {
+    public Button rightStickButton() {
         return rightStickButton;
     }
 
-    public Button getCircle() {
+    public Button circle() {
         return circle;
     }
 
-    public Button getCross() {
+    public Button cross() {
         return cross;
     }
 
-    public Button getTriangle() {
+    public Button triangle() {
         return triangle;
     }
 
-    public Button getSquare() {
+    public Button square() {
         return square;
     }
 
-    public Button getShare() {
+    public Button share() {
         return share;
     }
 
-    public Button getOptions() {
+    public Button options() {
         return options;
     }
 
-    public Button getTouchpad() {
+    public Button touchpad() {
         return touchpad;
     }
 
-    public JoyStick getLeftStick() {
+    public JoyStick leftStick() {
         return leftJoyStick;
     }
 
-    public JoyStick getRightStick() {
+    public JoyStick rightStick() {
         return rightJoyStick;
     }
 
-    public Trigger getLeftTrigger() {
+    public Trigger leftTrigger() {
         return leftTrigger;
     }
 
-    public Trigger getRightTrigger() {
+    public Trigger rightTrigger() {
         return rightTrigger;
     }
 }

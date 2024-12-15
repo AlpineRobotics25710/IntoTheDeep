@@ -17,19 +17,19 @@ public class OuttakeTest extends LinearOpMode {
         RobotConstants.mode = RobotConstants.Mode.TESTING;
 
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
-        gp1.getLeftStick().setSensitivity(1.0);
-        gp1.getRightStick().setSensitivity(1.0);
-        gp1.getA().setActionFlag(() -> gp1.getA().isClicked());
+        gp1.leftStick().setSensitivity(1.0);
+        gp1.rightStick().setSensitivity(1.0);
+        gp1.a().setActionFlag(() -> gp1.a().isClicked());
         //gp1.getA().setAction(robot.claw.setClawPosition(robot.claw););
-        gp1.getB().setActionFlag(() -> gp1.getB().isClicked());
+        gp1.b().setActionFlag(() -> gp1.b().isClicked());
         //gp1.getB().setAction(robot.claw::close);
-        gp1.getX().setActionFlag(() -> gp1.getX().isClicked());
+        gp1.x().setActionFlag(() -> gp1.x().isClicked());
         //gp1.getX().setAction(() -> robot.outtakeSlides.setTargetPosition(robot.outtakeSlides.getTargetPosition() + 10));
-        gp1.getY().setActionFlag(() -> gp1.getY().isClicked());
+        gp1.y().setActionFlag(() -> gp1.y().isClicked());
         //gp1.getY().setAction(() -> robot.outtakeSlides.setTargetPosition(robot.outtakeSlides.getTargetPosition() - 10));
-        gp1.getDpadDown().setActionFlag(() -> gp1.getDpadDown().isClicked());
+        gp1.dpadDown().setActionFlag(() -> gp1.dpadDown().isClicked());
        // gp1.getDpadDown().setAction(() -> robot.outtakeSlides.setManualMode(!robot.outtakeSlides.manualMode));
-        gp1.getDpadLeft().setActionFlag(() -> gp1.getDpadLeft().isClicked());
+        gp1.dpadLeft().setActionFlag(() -> gp1.dpadLeft().isClicked());
        // gp1.getDpadUp().setAction(() -> robot.outtakeSlides.setTargetPosition(700));
 
         Drivetrain drivetrain = new DrivetrainBuilder()
@@ -48,7 +48,7 @@ public class OuttakeTest extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            double manualSlidesPower = Math.pow(gp1.getLeftStick().getY(), 3) / 1.5;
+            double manualSlidesPower = Math.pow(gp1.leftStick().getY(), 3) / 1.5;
            // robot.outtakeSlides.moveSlides(manualSlidesPower);
 
             drivetrain.update();

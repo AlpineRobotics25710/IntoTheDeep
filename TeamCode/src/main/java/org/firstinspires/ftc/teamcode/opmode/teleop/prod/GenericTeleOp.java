@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.control.drivetrain.Drivetrain;
 import org.firstinspires.ftc.teamcode.robot.control.drivetrain.DrivetrainBuilder;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
 
 @TeleOp(group = "prod")
 public class GenericTeleOp extends LinearOpMode {
@@ -28,25 +29,25 @@ public class GenericTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-//            telemetry.addData("cross is clicked", gp1.getCross().isPressed());
-//            if (gp1.getCross().isClicked()) {
-//                robot.intakeArm.ascent();
-//                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
-//                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_ASCENT_POS);
-//                telemetry.addData("Intake", "ascending");
-//            }
-//            if (gp1.getSquare().isClicked()) {
-//                robot.intakeArm.intake();
-//                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_OPEN_POS);
-//                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_INTAKE_POS);
-//                telemetry.addData("Intake", "intaking");
-//            }
-//            if (gp1.getCircle().isClicked()) {
-//                robot.intakeArm.transfer();
-//                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
-//                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_TRANSFER_POS);
-//                telemetry.addData("Intake", "transferring");
-//            }
+            telemetry.addData("cross is clicked", gp1.cross().isPressed());
+            if (gp1.cross().isClicked()) {
+                robot.intakeArm.ascent();
+                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
+                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_ASCENT_POS);
+                telemetry.addData("Intake", "ascending");
+            }
+            if (gp1.square().isClicked()) {
+                robot.intakeArm.intake();
+                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_OPEN_POS);
+                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_INTAKE_POS);
+                telemetry.addData("Intake", "intaking");
+            }
+            if (gp1.circle().isClicked()) {
+                robot.intakeArm.transfer();
+                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
+                robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_TRANSFER_POS);
+                telemetry.addData("Intake", "transferring");
+            }
             update();
         }
     }

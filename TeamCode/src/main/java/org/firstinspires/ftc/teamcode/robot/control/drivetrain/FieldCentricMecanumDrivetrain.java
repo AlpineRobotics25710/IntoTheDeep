@@ -36,14 +36,14 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double y = -gamepad.getLeftStick().getY() * gamepad.getLeftStick().getSensitivity();
-        double x = gamepad.getRightStick().getX() * strafingMultiplier * gamepad.getRightStick().getSensitivity();
-        double rx = gamepad.getRightStick().getX() * gamepad.getRightStick().getSensitivity();
+        double y = -gamepad.leftStick().getY() * gamepad.leftStick().getSensitivity();
+        double x = gamepad.rightStick().getX() * strafingMultiplier * gamepad.rightStick().getSensitivity();
+        double rx = gamepad.rightStick().getX() * gamepad.rightStick().getSensitivity();
 
         // This button choice was made so that it is hard to hit on accident,
         // it can be freely changed based on preference.
         // The equivalent button is start on Xbox-style controllers.
-        if (gamepad.getOptions().isPressed()) {
+        if (gamepad.options().isPressed()) {
             imu.resetYaw();
         }
 

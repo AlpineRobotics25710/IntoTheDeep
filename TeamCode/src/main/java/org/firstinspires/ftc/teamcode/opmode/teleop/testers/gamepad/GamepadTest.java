@@ -8,12 +8,12 @@ public class GamepadTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
-        gp1.getA().setActionFlag(() -> gp1.getA().isPressed());
-        gp1.getA().setAction(() -> telemetry.addData("Button A", "pressed"));
+        gp1.a().setActionFlag(() -> gp1.a().isPressed());
+        gp1.a().setAction(() -> telemetry.addData("Button A", "pressed"));
 
         waitForStart();
         while(opModeIsActive()) {
-            telemetry.addData("Button A", gp1.getA().isClicked());
+            telemetry.addData("Button A", gp1.a().isClicked());
 
             gp1.update();
             telemetry.update();

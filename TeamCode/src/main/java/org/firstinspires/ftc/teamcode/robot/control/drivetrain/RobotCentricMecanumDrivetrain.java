@@ -11,13 +11,13 @@ public class RobotCentricMecanumDrivetrain extends Drivetrain {
 
     @Override
     public void update() {
-        double y = -gamepad.getLeftStick().getY() * gamepad.getLeftStick().getSensitivity(); // Y stick value is reversed
-        double x = gamepad.getLeftStick().getX() * strafingMultiplier * gamepad.getRightStick().getSensitivity(); // Counteract imperfect strafing
-        double rx = gamepad.getRightStick().getY() * gamepad.getRightStick().getSensitivity();
+        double y = -gamepad.leftStick().getY() * gamepad.leftStick().getSensitivity(); // Y stick value is reversed
+        double x = gamepad.leftStick().getX() * strafingMultiplier * gamepad.rightStick().getSensitivity(); // Counteract imperfect strafing
+        double rx = gamepad.rightStick().getY() * gamepad.rightStick().getSensitivity();
 
         // Denominator is the largest motor power (absolute value) or 1
         double denominator;
-        if (gamepad.getLeftBumper().isPressed()) {
+        if (gamepad.leftBumper().isPressed()) {
             denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 0.75);
         } else {
             denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
