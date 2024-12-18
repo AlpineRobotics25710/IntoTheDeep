@@ -16,7 +16,7 @@ public class JoyStick {
     /**
      * Represents how sensitive the joystick should be
      */
-    protected double sensitivity = 1.0;
+    protected double multiplier = 1.0;
 
     private double xValue;
     private double yValue;
@@ -27,7 +27,15 @@ public class JoyStick {
     }
     
     public void updateCurrentValues(double xValue, double yValue) {
+        updateXValue(xValue);
+        updateYValue(yValue);
+    }
+
+    public void updateXValue(double xValue) {
         this.xValue = xValue;
+    }
+
+    public void updateYValue(double yValue) {
         this.yValue = -yValue;
     }
 
@@ -47,12 +55,16 @@ public class JoyStick {
         return yError;
     }
 
-    public void setSensitivity(double sensitivity) {
-        this.sensitivity = sensitivity;
+    /**
+     * Changes the sensitivity of the joysticks by multiplying the input by a multiplier
+     * @param multiplier the multiplier to multiply the input by
+     */
+    public void setMultiplier(double multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public double getSensitivity() {
-        return sensitivity;
+    public double getMultiplier() {
+        return multiplier;
     }
 
     /**
@@ -61,14 +73,14 @@ public class JoyStick {
      */
     public double getX() {
         if (xValue > xError || xValue < -xError) {
-            return xValue * sensitivity;
+            return xValue * multiplier;
         }
         return 0;
     }
 
     public double getY() {
         if (yValue > yError || yValue < -yError) {
-            return yValue * sensitivity;
+            return yValue * multiplier;
         }
         return 0;
     }
