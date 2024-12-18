@@ -22,7 +22,6 @@ public class OuttakeArm extends Arm {
     public static double WRIST_LOW_CHAMBER_POS = 0.0;
     public static double WRIST_HIGH_CHAMBER_POS = 0.0;
     public static double WRIST_ASCENT_POS = 0.0;
-    public static double WRIST_INIT_POS = WRIST_WALL_INTAKE_POS;
 
     private final HardwareMap hardwareMap;
 
