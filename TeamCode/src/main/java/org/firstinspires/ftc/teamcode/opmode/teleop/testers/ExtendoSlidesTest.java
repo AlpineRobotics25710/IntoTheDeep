@@ -5,10 +5,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlides;
-import org.firstinspires.ftc.teamcode.robot.utils.Utils;
 
 @Config
 @TeleOp
@@ -30,7 +30,7 @@ public class ExtendoSlidesTest extends LinearOpMode {
             slides.setManualMode(manualMode);
 
             // Cubed to slowly increase speed
-            double manualSlidesPower = Utils.clip(Math.pow(-gamepad1.left_stick_y, 3), -1, 1);
+            double manualSlidesPower = Range.clip(Math.pow(-gamepad1.left_stick_y, 3), -1, 1);
             slides.moveSlides(manualSlidesPower);
 
             telemetry.addData("Target Position", slides.getTargetPosition());
