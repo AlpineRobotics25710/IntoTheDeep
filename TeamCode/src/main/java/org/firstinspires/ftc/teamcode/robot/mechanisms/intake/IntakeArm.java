@@ -4,15 +4,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
-public class IntakeArm implements Mechanism {
+public class IntakeArm extends Arm {
     private final HardwareMap hardwareMap;
-    private Servo armServoLeft;
-    private Servo armServoRight;
-    private Servo wristServoLeft;
-    private Servo wristServoRight;
 
     public static double ARM_INTAKE_POS = 0.0;
     public static double ARM_TRANSFER_POS = 0.0;
@@ -20,14 +18,6 @@ public class IntakeArm implements Mechanism {
     public static double WRIST_INTAKE_POS = 0.0;
     public static double WRIST_TRANSFER_POS = 0.0;
     public static double WRIST_ASCENT_POS = 0.0;
-
-    public IntakeArmState intakeArmState;
-
-    public enum IntakeArmState {
-        ASCENT,
-        INTAKE,
-        TRANSFER,
-    }
 
     public IntakeArm(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -43,41 +33,52 @@ public class IntakeArm implements Mechanism {
         transfer();
     }
 
-    public void setArmPosition(double position) {
-        armServoLeft.setPosition(position);
-        armServoRight.setPosition(position);
-    }
-
-    public void setWristPosition(double position) {
-        wristServoLeft.setPosition(position);
-        wristServoRight.setPosition(position);
-    }
-
     public double getArmPosition() {
         return armServoRight.getPosition();
     }
 
+    @Override
     public void ascend() {
-        armServoLeft.setPosition(ARM_ASCENT_POS);
-        armServoRight.setPosition(ARM_ASCENT_POS);
-        wristServoLeft.setPosition(WRIST_ASCENT_POS);
-        wristServoRight.setPosition(WRIST_ASCENT_POS);
-        intakeArmState = IntakeArmState.ASCENT;
+        setArmPosition(ARM_ASCENT_POS);
+        setWristPosition(WRIST_ASCENT_POS);
+        armState = MechanismState.ASCENT;
     }
 
+    @Override
     public void intake() {
-        armServoLeft.setPosition(ARM_INTAKE_POS);
-        armServoRight.setPosition(ARM_INTAKE_POS);
-        wristServoLeft.setPosition(WRIST_INTAKE_POS);
-        wristServoRight.setPosition(WRIST_INTAKE_POS);
-        intakeArmState = IntakeArmState.INTAKE;
+        setArmPosition(ARM_INTAKE_POS);
+        setWristPosition(WRIST_INTAKE_POS);
+        armState = MechanismState.INTAKE;
     }
 
+    @Override
+    public void lowChamber() {
+        intake();
+        armState = MechanismState.LOW_CHAMBER;
+    }
+
+    @Override
+    public void highChamber() {
+        intake();
+        armState = MechanismState.HIGH_CHAMBER;
+    }
+
+    @Override
+    public void lowBasket() {
+        intake();
+        armState = MechanismState.LOW_BASKET;
+    }
+
+    @Override
+    public void highBasket() {
+        intake();
+        armState = MechanismState.HIGH_BASKET;
+    }
+
+    @Override
     public void transfer() {
-        armServoLeft.setPosition(ARM_TRANSFER_POS);
-        armServoRight.setPosition(ARM_TRANSFER_POS);
-        wristServoLeft.setPosition(WRIST_TRANSFER_POS);
-        wristServoRight.setPosition(WRIST_TRANSFER_POS);
-        intakeArmState = IntakeArmState.TRANSFER;
+        setArmPosition(ARM_TRANSFER_POS);
+        setWristPosition(WRIST_TRANSFER_POS);
+        armState = MechanismState.TRANSFER;
     }
 }

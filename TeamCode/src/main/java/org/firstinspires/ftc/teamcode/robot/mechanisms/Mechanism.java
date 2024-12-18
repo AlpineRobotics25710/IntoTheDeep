@@ -11,4 +11,18 @@ public interface Mechanism {
      * needs to be updated continuously. By default, this method does nothing.
      */
     default void update(){};
+
+    void ascend();
+
+    void transfer();
+
+    void intake();
+
+    void lowChamber();
+
+    void highChamber();
+
+    void lowBasket();
+
+    void highBasket();
 }

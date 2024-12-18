@@ -31,7 +31,7 @@ public class GenericTeleOp extends LinearOpMode {
             telemetry.addData("cross is clicked", gp1.cross().isPressed());
             if (gp1.cross().isClicked()) {
                 robot.intakeArm.ascend();
-                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
+                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSED_POS);
                 robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_ASCENT_POS);
                 telemetry.addData("Intake", "ascending");
             }
@@ -43,7 +43,7 @@ public class GenericTeleOp extends LinearOpMode {
             }
             if (gp1.circle().isClicked()) {
                 robot.intakeArm.transfer();
-                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSE_POS);
+                robot.intakeClaw.setClawPosition(IntakeClaw.CLAW_CLOSED_POS);
                 robot.intakeClaw.setSwivelPosition(IntakeClaw.SWIVEL_TRANSFER_POS);
                 telemetry.addData("Intake", "transferring");
             }

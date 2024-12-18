@@ -6,6 +6,8 @@ public abstract class Claw implements Mechanism {
     protected Servo clawServo;
     protected Servo swivelServo;
 
+    protected MechanismState clawState;
+
     public void setClawPosition(double position) {
         clawServo.setPosition(position);
     }

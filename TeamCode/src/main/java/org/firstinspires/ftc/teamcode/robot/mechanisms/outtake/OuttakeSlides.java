@@ -4,13 +4,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 
 @Config
 public class OuttakeSlides extends Slides {
     public static double BASE_POS = 0.0;
-    public static double BASKET_ONE_POS = 0.0;
-    public static double BASKET_TWO_POS = 0.0;
+    public static double LOW_BASKET_POS = 0.0;
+    public static double HIGH_BASKET_POS = 0.0;
     public static double LOW_RUNG_POS = 0.0;
     public static double HIGH_RUNG_POS = 0.0;
     public static double TRANSFER_POS = 0.0;
@@ -43,5 +44,47 @@ public class OuttakeSlides extends Slides {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         setTargetPosition(BASE_POS);
+    }
+
+    @Override
+    public void ascend() {
+        setTargetPosition(LOW_RUNG_POS);
+        slidesState = MechanismState.ASCENT;
+    }
+
+    @Override
+    public void transfer() {
+        setTargetPosition(TRANSFER_POS);
+        slidesState = MechanismState.TRANSFER;
+    }
+
+    @Override
+    public void intake() {
+        setTargetPosition(BASE_POS);
+        slidesState = MechanismState.INTAKE;
+    }
+
+    @Override
+    public void lowChamber() {
+        setTargetPosition(LOW_RUNG_POS);
+        slidesState = MechanismState.LOW_CHAMBER;
+    }
+
+    @Override
+    public void highChamber() {
+        setTargetPosition(HIGH_RUNG_POS);
+        slidesState = MechanismState.HIGH_CHAMBER;
+    }
+
+    @Override
+    public void lowBasket() {
+        setTargetPosition(LOW_BASKET_POS);
+        slidesState = MechanismState.LOW_BASKET;
+    }
+
+    @Override
+    public void highBasket() {
+        setTargetPosition(HIGH_BASKET_POS);
+        slidesState = MechanismState.HIGH_BASKET;
     }
 }
