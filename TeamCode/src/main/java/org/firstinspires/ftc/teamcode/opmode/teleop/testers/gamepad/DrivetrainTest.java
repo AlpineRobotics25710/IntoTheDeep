@@ -16,7 +16,6 @@ public class DrivetrainTest extends LinearOpMode {
         Robot robot = new Robot(this.hardwareMap);
 
         CustomGamepad gp1 = new CustomGamepad(gamepad1);
-        gp1.leftStick().setSensitivity(1.0);
         gp1.rightStick().setSensitivity(1.0);
         gp1.a().setActionFlag(() -> gp1.a().isClicked());
         gp1.a().setAction(() -> telemetry.addData("A is clicked", "through lambda"));
@@ -28,6 +27,7 @@ public class DrivetrainTest extends LinearOpMode {
                 .setGamepad(gp1)
                 .setMotors(robot.frontLeftMotor, robot.backLeftMotor, robot.frontRightMotor, robot.backRightMotor)
                 .setStrafingMultiplier(1.1)
+                .setHardwareMap(hardwareMap)
                 .build();
 
         waitForStart();
@@ -37,6 +37,7 @@ public class DrivetrainTest extends LinearOpMode {
         while (opModeIsActive()) {
             drivetrain.update();
             gp1.update();
+            gp1.leftStick().updateCurrentValues(gamepad1.left_stick_x, Math.pow(gamepad1.left_stick_y, 3));
             robot.update();
 
             telemetry.addData("Left stick y: ", -gamepad1.left_stick_y);

@@ -23,6 +23,7 @@ public class GenericTeleOp extends LinearOpMode {
                 .setGamepad(gp1)
                 .setMotors(robot.frontLeftMotor, robot.backLeftMotor, robot.frontRightMotor, robot.backRightMotor)
                 .setStrafingMultiplier(1.1)
+                .setHardwareMap(hardwareMap)
                 .build();
 
         waitForStart();

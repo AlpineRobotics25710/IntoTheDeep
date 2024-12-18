@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public class RobotCentricMecanumDrivetrain extends Drivetrain {
-    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, HardwareMap hardwareMap) {
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
     }
 
     @Override

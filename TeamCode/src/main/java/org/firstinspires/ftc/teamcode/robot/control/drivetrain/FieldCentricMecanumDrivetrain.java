@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
@@ -22,9 +23,10 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
     FieldCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor,
                                   DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, IMU imu,
                                   RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
-                                  RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection
+                                  RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection,
+                                  HardwareMap hardwareMap
     ) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
         this.imu = imu;
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(

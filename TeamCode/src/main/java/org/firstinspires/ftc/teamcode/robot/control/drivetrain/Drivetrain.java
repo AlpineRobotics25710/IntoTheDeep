@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public abstract class Drivetrain {
@@ -10,6 +12,7 @@ public abstract class Drivetrain {
     protected DcMotor frontRightMotor;
     protected DcMotor backRightMotor;
     protected CustomGamepad gamepad;
+    protected Follower follower;
 
     /**
      * Multiplier to counteract imperfect strafing. Multiplied by the x-value of the left joystick
@@ -28,12 +31,13 @@ public abstract class Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
+    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, HardwareMap hardwareMap) {
         this.frontLeftMotor = frontLeftMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.gamepad = gamepad;
+        follower = new Follower(hardwareMap);
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
@@ -17,8 +18,8 @@ public class TankDrivetrain extends Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public TankDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+    public TankDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, HardwareMap hardwareMap) {
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
     }
 
     @Override

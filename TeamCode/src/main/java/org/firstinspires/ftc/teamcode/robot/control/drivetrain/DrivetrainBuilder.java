@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
@@ -26,6 +27,7 @@ public class DrivetrainBuilder {
     private RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
     private RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
     private DrivetrainType type;
+    private HardwareMap hardwareMap;
     private double strafingMultiplier;
 
     /**
@@ -53,6 +55,11 @@ public class DrivetrainBuilder {
         this.backLeftMotor = backLeft;
         this.frontRightMotor = frontRight;
         this.backRightMotor = backRight;
+        return this;
+    }
+
+    public DrivetrainBuilder setHardwareMap(HardwareMap hardwareMap) {
+        this.hardwareMap = hardwareMap;
         return this;
     }
 
@@ -129,19 +136,19 @@ public class DrivetrainBuilder {
 
         switch (type) {
             case FIELD_CENTRIC_MECANUM:
-                FieldCentricMecanumDrivetrain fieldCentric = new FieldCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, imu, logoFacingDirection, usbFacingDirection);
+                FieldCentricMecanumDrivetrain fieldCentric = new FieldCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, imu, logoFacingDirection, usbFacingDirection, hardwareMap);
 
                 fieldCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return fieldCentric;
             case ROBOT_CENTRIC_MECANUM:
-                RobotCentricMecanumDrivetrain robotCentric = new RobotCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+                RobotCentricMecanumDrivetrain robotCentric = new RobotCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
 
                 robotCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return robotCentric;
             case TANK_DRIVETRAIN:
-                TankDrivetrain tankDrivetrain = new TankDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+                TankDrivetrain tankDrivetrain = new TankDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
 
                 tankDrivetrain.setStrafingMultiplier(strafingMultiplier);
 
