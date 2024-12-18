@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.teamcode.config.utils.Utils;
+import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name = "Time Based Park Only Red Net Side")
 public class RedNetSide extends LinearOpMode {
@@ -45,7 +44,7 @@ public class RedNetSide extends LinearOpMode {
         decelerate(halfTime, maxPower);
     }
 
-    public void accelerate(long time, double maxPower) throws InterruptedException {
+    public void accelerate(long time, double maxPower) {
         long interval = 50; // Time interval to increment power
         int steps = (int) (time / interval);
         for (int i = 0; i < steps; i++) {
@@ -55,7 +54,7 @@ public class RedNetSide extends LinearOpMode {
         }
     }
 
-    public void decelerate(long time, double maxPower) throws InterruptedException {
+    public void decelerate(long time, double maxPower) {
         long interval = 50; // Time interval to decrement power
         int steps = (int) (time / interval);
         for (int i = 0; i < steps; i++) {
@@ -67,7 +66,7 @@ public class RedNetSide extends LinearOpMode {
     }
 
     public void setPowerForStrafing(double power) {
-        power = Utils.clip(power, -1, 1);
+        power = Range.clip(power, -1, 1);
         frontLeftMotor.setPower(power);
         backLeftMotor.setPower(-power);
         frontRightMotor.setPower(-power);
