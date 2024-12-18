@@ -4,9 +4,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.config.sensors.Sensors;
-import org.firstinspires.ftc.teamcode.config.subsystem.outtake.Claw;
-import org.firstinspires.ftc.teamcode.config.utils.wrappers.HardwareQueue;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.*;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
@@ -15,25 +12,18 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
-
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 
 @Autonomous(name = "2+0 Auto Specimen Preload", group = "Autos")
 public class PreloadedSpecimen2_0Auto extends OpMode {
-
-    HardwareQueue queue;
-    Sensors sensors;
+    private Robot robot;
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
 
     /** This is the variable where we store the state of our auto.
      * It is used by the pathUpdate method. */
     private int pathState;
-
-    /** This is our Outtake Claw and Intake Claw subsystem.
-     * We call its methods to manipulate the servos that it has within the subsystem. */
-    public org.firstinspires.ftc.teamcode.config.subsystem.outtake.Claw oClaw;
-    public org.firstinspires.ftc.teamcode.config.subsystem.outtake.Claw iClaw;
 
 
     /** Create and Define Poses + Paths
@@ -204,10 +194,7 @@ public class PreloadedSpecimen2_0Auto extends OpMode {
 
         buildPaths();
 
-        oClaw = new Claw(hardwareMap, queue, sensors);
-
-        // Set the oClaw to positions for init
-        oClaw.clamp();
+        robot.init();
     }
 
     /** This method is called continuously after Init while waiting for "play". **/
