@@ -61,14 +61,14 @@ public class JoyStick {
      */
     public double getX() {
         if (xValue > xError || xValue < -xError) {
-            return xValue;
+            return xValue * sensitivity;
         }
         return 0;
     }
 
     public double getY() {
         if (yValue > yError || yValue < -yError) {
-            return yValue;
+            return yValue * sensitivity;
         }
         return 0;
     }
