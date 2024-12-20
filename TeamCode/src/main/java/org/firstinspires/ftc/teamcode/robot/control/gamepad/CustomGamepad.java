@@ -93,29 +93,29 @@ public class CustomGamepad {
      * Needs to be called continuously in opmode loop
      */
     public void update() {
-        buttonA.updateCurrentState(gamepad.a);
-        buttonB.updateCurrentState(gamepad.b);
-        buttonX.updateCurrentState(gamepad.x);
-        buttonY.updateCurrentState(gamepad.y);
-        dpadDown.updateCurrentState(gamepad.dpad_down);
-        dpadUp.updateCurrentState(gamepad.dpad_up);
-        dpadLeft.updateCurrentState(gamepad.dpad_left);
-        dpadRight.updateCurrentState(gamepad.dpad_right);
-        guide.updateCurrentState(gamepad.guide);
-        start.updateCurrentState(gamepad.start);
-        back.updateCurrentState(gamepad.back);
-        leftBumper.updateCurrentState(gamepad.left_bumper);
-        rightBumper.updateCurrentState(gamepad.right_bumper);
-        leftStickButton.updateCurrentState(gamepad.left_stick_button);
-        rightStickButton.updateCurrentState(gamepad.right_stick_button);
+        buttonA.update(gamepad.a);
+        buttonB.update(gamepad.b);
+        buttonX.update(gamepad.x);
+        buttonY.update(gamepad.y);
+        dpadDown.update(gamepad.dpad_down);
+        dpadUp.update(gamepad.dpad_up);
+        dpadLeft.update(gamepad.dpad_left);
+        dpadRight.update(gamepad.dpad_right);
+        guide.update(gamepad.guide);
+        start.update(gamepad.start);
+        back.update(gamepad.back);
+        leftBumper.update(gamepad.left_bumper);
+        rightBumper.update(gamepad.right_bumper);
+        leftStickButton.update(gamepad.left_stick_button);
+        rightStickButton.update(gamepad.right_stick_button);
 
-        circle.updateCurrentState(gamepad.circle);
-        cross.updateCurrentState(gamepad.cross);
-        triangle.updateCurrentState(gamepad.triangle);
-        square.updateCurrentState(gamepad.square);
-        share.updateCurrentState(gamepad.share);
-        options.updateCurrentState(gamepad.options);
-        touchpad.updateCurrentState(gamepad.touchpad);
+        circle.update(gamepad.circle);
+        cross.update(gamepad.cross);
+        triangle.update(gamepad.triangle);
+        square.update(gamepad.square);
+        share.update(gamepad.share);
+        options.update(gamepad.options);
+        touchpad.update(gamepad.touchpad);
 
         leftJoyStick.updateCurrentValues(gamepad.left_stick_x, gamepad.left_stick_y);
         rightJoyStick.updateCurrentValues(gamepad.right_stick_x, gamepad.right_stick_y);
@@ -134,7 +134,7 @@ public class CustomGamepad {
         for (Button button : allButtons) {
             try {
                 button.executeAction();
-            } catch (NullPointerException ignored){}
+            } catch (IllegalStateException ignored){}
         }
     }
 

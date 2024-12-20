@@ -26,24 +26,30 @@ public class Button {
      * Should be called continuously in the opmode loop
      * @param currentState The new state of the button
      */
-    public void updateCurrentState(boolean currentState) {
+    public void update(boolean currentState) {
         this.lastState = this.currentState;
         this.currentState = currentState;
 
-        wasPressed = currentState && !lastState;
-        wasReleased = !currentState && lastState;
-        if (wasReleased) {
+        boolean justPressed = currentState && !lastState;
+        boolean justReleased = !currentState && lastState;
+
+        if (justPressed) wasPressed = true;
+        if (justReleased) wasReleased = true;
+
+        if (wasPressed && wasReleased) {
             wasClicked = true;
+            wasPressed = false;
+            wasReleased = false;
         }
     }
 
     /**
      * Uses a rising edge detector to detect when the button is pressed
-     * @return returns true only once at the instant the user presses the button
+     * @return true only once at the instant the button is pressed
      */
     public boolean isPressed() {
         if (wasPressed) {
-            wasPressed = false;
+            wasPressed = false; // Clear after read
             return true;
         }
         return false;
@@ -51,11 +57,11 @@ public class Button {
 
     /**
      * Uses a falling edge detector to detect when the button is released
-     * @return returns true only once at the instant the user releases the button
+     * @return true only once at the instant the button is released
      */
     public boolean isReleased() {
         if (wasReleased) {
-            wasReleased = false;
+            wasReleased = false; // Clear after read
             return true;
         }
         return false;
@@ -63,36 +69,34 @@ public class Button {
 
     /**
      * Checks if the button is currently being held down
-     * @return continuously returns true while the button is being held down
+     * @return true while the button is being held down
      */
     public boolean isHeld() {
         return currentState;
     }
 
     /**
-     * Checks if the button was pressed and then released.
-     * Returns true only once after the button was pressed down and then it was released
+     * Checks if the button was pressed and released.
+     * @return true only once after the button was pressed and released
      */
     public boolean isClicked() {
         if (wasClicked) {
-            wasClicked = false;
+            wasClicked = false; // Clear after read
             return true;
         }
         return false;
     }
 
     /**
-     * Sets the flag with which the action that is mapped to this button will be executed. Also need to set an action
-     * through setAction().
-     * @param flag a {@link ActionFlag} that controls when the action should be executed
+     * Sets the flag with which the action that is mapped to this button will be executed.
+     * @param flag the ActionFlag that controls when the action should be executed
      */
     public void setActionFlag(ActionFlag flag) {
         this.flag = flag;
     }
 
     /**
-     * Sets the action to be executed when the given ActionFlag is true. Also need to set an {@link ActionFlag} for
-     * this to work.
+     * Sets the action to be executed when the given ActionFlag is true.
      * @param action the action to execute
      */
     public void setAction(RobotAction action) {
@@ -100,21 +104,13 @@ public class Button {
     }
 
     /**
-     * Executes the mapped action if the set flag is true. Both an {@link ActionFlag} and {@link RobotAction} need to
-     * be set for this to work.
+     * Executes the mapped action if the set flag is true.
      */
-    public void executeAction() {
-        if (flag != null && action != null) {
-            if (flag.getValue()) {
-                action.execute();
-            }
-        } else {
-            throw new NullPointerException("Attempt to call executeAction() when an ActionFlag and RobotAction have " +
-                    "not been set!");
-        }
+    public void executeAction() throws IllegalStateException {
+        if (flag == null) throw new IllegalStateException("ActionFlag is not set for this button.");
+        if (action == null) throw new IllegalStateException("RobotAction is not set for this button.");
+        if (flag.getValue()) action.execute();
     }
-
-    // Getters
 
     /**
      * Gets the current state of the button.
@@ -132,11 +128,19 @@ public class Button {
         return lastState;
     }
 
+    /**
+     * Gets the assigned RobotAction.
+     * @return The assigned action.
+     */
     public RobotAction getAction() {
         return action;
     }
 
+    /**
+     * Gets the value of the flag.
+     * @return The flag's value, or false if the flag is null.
+     */
     public boolean getFlagValue() {
-        return flag.getValue();
+        return flag != null && flag.getValue();
     }
 }
