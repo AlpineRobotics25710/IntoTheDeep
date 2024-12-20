@@ -117,11 +117,11 @@ public class CustomGamepad {
         options.update(gamepad.options);
         touchpad.update(gamepad.touchpad);
 
-        leftJoyStick.updateCurrentValues(gamepad.left_stick_x, gamepad.left_stick_y);
-        rightJoyStick.updateCurrentValues(gamepad.right_stick_x, gamepad.right_stick_y);
+        leftJoyStick.updateValues(gamepad.left_stick_x, gamepad.left_stick_y);
+        rightJoyStick.updateValues(gamepad.right_stick_x, gamepad.right_stick_y);
 
-        leftTrigger.updateCurrentValue(gamepad.left_trigger);
-        rightTrigger.updateCurrentValue(gamepad.right_trigger);
+        leftTrigger.updateValue(gamepad.left_trigger);
+        rightTrigger.updateValue(gamepad.right_trigger);
 
         executeButtonActions();
     }

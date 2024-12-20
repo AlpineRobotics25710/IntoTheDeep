@@ -16,7 +16,7 @@ public class Trigger {
         this.value = value;
     }
 
-    public void updateCurrentValue(double value) {
+    public void updateValue(double value) {
         this.value = value;
     }
 

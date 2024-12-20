@@ -26,7 +26,7 @@ public class JoyStick {
         this.yValue = -yValue;
     }
     
-    public void updateCurrentValues(double xValue, double yValue) {
+    public void updateValues(double xValue, double yValue) {
         updateXValue(xValue);
         updateYValue(yValue);
     }
