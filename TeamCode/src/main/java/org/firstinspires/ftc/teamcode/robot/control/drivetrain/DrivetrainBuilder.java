@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
@@ -14,8 +13,7 @@ import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
  * This class supports both field-centric and robot-centric mecanum drivetrains.
  * <p>
  * It provides methods to configure essential drivetrain components, including motors, IMU,
- * gamepad, and REV Hub orientation. The type of drivetrain can be set to either
- * {@link DrivetrainType#FIELD_CENTRIC_MECANUM} or {@link DrivetrainType#ROBOT_CENTRIC_MECANUM}.
+ * gamepad, and REV Hub orientation.
  */
 public class DrivetrainBuilder {
     private DcMotor frontLeftMotor;
@@ -125,7 +123,7 @@ public class DrivetrainBuilder {
             throw new IllegalStateException("All motors must be set before building the drivetrain.");
         }
         if (imu == null && type == DrivetrainType.FIELD_CENTRIC_MECANUM) {
-            throw new IllegalStateException("IMU must be set before building the drivetrain because " + "you are using a field-centric drivetrain.");
+            throw new IllegalStateException("IMU must be set before building the drivetrain because you are using a field-centric drivetrain.");
         }
         if (gamepad == null) {
             throw new IllegalStateException("Gamepad must be set before building the drivetrain.");
@@ -133,26 +131,28 @@ public class DrivetrainBuilder {
         if (type == null) {
             throw new IllegalStateException("Drivetrain type must be specified.");
         }
+        if (follower == null && type == DrivetrainType.PEDRO_DRIVETRAIN) {
+            throw new IllegalStateException("Follower must be set before building the drivetrain because you are using a Pedro Pathing drivetrain.");
+        }
 
         switch (type) {
             case FIELD_CENTRIC_MECANUM:
-                FieldCentricMecanumDrivetrain fieldCentric = new FieldCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, imu, logoFacingDirection, usbFacingDirection, follower);
-
+                FieldCentricMecanumDrivetrain fieldCentric = new FieldCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, imu, logoFacingDirection, usbFacingDirection);
                 fieldCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return fieldCentric;
             case ROBOT_CENTRIC_MECANUM:
-                RobotCentricMecanumDrivetrain robotCentric = new RobotCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
-
+                RobotCentricMecanumDrivetrain robotCentric = new RobotCentricMecanumDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
                 robotCentric.setStrafingMultiplier(strafingMultiplier);
 
                 return robotCentric;
             case TANK_DRIVETRAIN:
-                TankDrivetrain tankDrivetrain = new TankDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
-
+                TankDrivetrain tankDrivetrain = new TankDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
                 tankDrivetrain.setStrafingMultiplier(strafingMultiplier);
 
                 return tankDrivetrain;
+            case PEDRO_DRIVETRAIN:
+                return new PedroDrivetrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
             default:
                 throw new IllegalStateException("Unknown drivetrain type.");
         }
@@ -165,6 +165,6 @@ public class DrivetrainBuilder {
      * - TANK_DRIVETRAIN: For tank drivetrains. Allows turning and strafing.
      */
     public enum DrivetrainType {
-        FIELD_CENTRIC_MECANUM, ROBOT_CENTRIC_MECANUM, TANK_DRIVETRAIN,
+        FIELD_CENTRIC_MECANUM, ROBOT_CENTRIC_MECANUM, TANK_DRIVETRAIN, PEDRO_DRIVETRAIN
     }
 }

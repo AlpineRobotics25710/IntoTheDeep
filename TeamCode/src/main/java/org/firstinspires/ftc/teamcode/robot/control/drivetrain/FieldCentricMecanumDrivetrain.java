@@ -24,10 +24,9 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
     FieldCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor,
                                   DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, IMU imu,
                                   RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
-                                  RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection,
-                                  Follower follower
+                                  RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection
     ) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
         this.imu = imu;
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(

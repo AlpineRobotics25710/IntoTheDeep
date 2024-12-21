@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierLine;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public abstract class Drivetrain {
@@ -11,7 +14,6 @@ public abstract class Drivetrain {
     protected DcMotor frontRightMotor;
     protected DcMotor backRightMotor;
     protected CustomGamepad gamepad;
-    protected Follower follower;
 
     /**
      * Multiplier to counteract imperfect strafing. Multiplied by the x-value of the left joystick
@@ -30,13 +32,12 @@ public abstract class Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, Follower follower) {
+    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
         this.frontLeftMotor = frontLeftMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.gamepad = gamepad;
-        this.follower = follower;
     }
 
     /**
@@ -56,4 +57,41 @@ public abstract class Drivetrain {
      * when running a field centric mecanum drive train.
      */
     public abstract void update();
+
+    /**
+     * Saves a waypoint based on the current pose of the robot.
+     * ONLY TO BE USED WITH PEDRO DRIVETRAINS.
+     */
+    public void saveWaypoint() {}
+
+    /**
+     * Saves a waypoint based on the given pose
+     * ONLY TO BE USED WITH PEDRO DRIVETRAINS
+     * @param waypoint the pose to save as a waypoint
+     */
+    public void saveWaypoint(Pose waypoint) { }
+
+    /**
+     * Goes to the saved waypoint using a BezierLine and linearly changing the heading
+     * WARNING: BEFORE EXECUTING THIS METHOD, MAKE SURE THAT THERE ARE NOT OBSTACLES, SUCH AS FIELD
+     * ELEMENTS OR OTHER ROBOTS IN THE WAY BETWEEN YOUR CURRENT POSITION AND THE WAYPOINT.
+     * ONLY TO BE USED WITH PEDRO DRIVETRAINS.
+     */
+    public void goToWaypointWithLinearHeading() {}
+
+    /**
+     * Goes to the saved waypoint using a BezierLine and maintaining a constant heading (the heading of the waypoint)
+     * WARNING: BEFORE EXECUTING THIS METHOD, MAKE SURE THAT THERE ARE NOT OBSTACLES, SUCH AS FIELD
+     * ELEMENTS OR OTHER ROBOTS IN THE WAY BETWEEN YOUR CURRENT POSITION AND THE WAYPOINT.
+     * ONLY TO BE USED WITH PEDRO DRIVETRAINS.
+     */
+    public void goToWaypointWithConstantHeading() {}
+
+    /**
+     * Goes to the saved waypoint using a BezierLine and maintaining a tangential heading
+     * WARNING: BEFORE EXECUTING THIS METHOD, MAKE SURE THAT THERE ARE NOT OBSTACLES, SUCH AS FIELD
+     * ELEMENTS OR OTHER ROBOTS IN THE WAY BETWEEN YOUR CURRENT POSITION AND THE WAYPOINT.
+     * ONLY TO BE USED WITH PEDRO DRIVETRAINS.
+     */
+    public void goToWaypointWithTangentialHeading() {}
 }

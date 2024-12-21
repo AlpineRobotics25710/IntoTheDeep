@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public class RobotCentricMecanumDrivetrain extends Drivetrain {
-    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, Follower follower) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
+    RobotCentricMecanumDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
     }
 
     @Override

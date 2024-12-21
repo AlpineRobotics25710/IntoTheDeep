@@ -240,6 +240,7 @@ public class PreloadedParkAscentAuto extends OpMode {
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
 
+        robot = new Robot(hardwareMap);
         robot.init();
 
         buildPaths();

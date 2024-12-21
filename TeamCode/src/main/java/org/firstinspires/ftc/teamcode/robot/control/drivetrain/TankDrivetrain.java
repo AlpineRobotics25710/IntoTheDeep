@@ -19,8 +19,8 @@ public class TankDrivetrain extends Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public TankDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, Follower follower) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
+    public TankDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad) {
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
     }
 
     @Override
