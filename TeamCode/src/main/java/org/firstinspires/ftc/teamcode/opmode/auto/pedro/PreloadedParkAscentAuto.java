@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 /**
- * Defines a blue side 2+0+Ascent autonomous
+ * Defines a blue side 3+0+Ascent autonomous
  */
 @Autonomous(name="Preloaded Park Ascent Auto")
 public class PreloadedParkAscentAuto extends OpMode {
@@ -48,12 +48,15 @@ public class PreloadedParkAscentAuto extends OpMode {
     /** Pose where we pick up the second sample */
     private final Pose sample2Pose = new Pose(33.70212765957447, 121.10190369540874, 0);
 
+    /** Pose where we pick up the third sample */
+    private final Pose sample3Pose = new Pose(33.70212765957447, 110.136618141, 0);
+
     /** Pose where we ascend */
     private final Pose ascentPose = new Pose(72, 97, Math.toRadians(-90));
 
     /** These are our Paths and PathChains that we will define in buildPaths() */
     private Path scorePreload, ascend;
-    private PathChain sample1, sample2;
+    private PathChain sample1, sample2, sample3;
 
     /** Build the paths for the auto (adds, for example, constant/linear headings while doing paths)
      * It is necessary to do this so that all the paths are built before the auto starts. **/
@@ -73,9 +76,8 @@ public class PreloadedParkAscentAuto extends OpMode {
          * PathChains hold Path(s) within it and are able to hold their end point, meaning that they will holdPoint until another path is followed.
          * Here is a explanation of the difference between Paths and PathChains <https://pedropathing.com/commonissues/pathtopathchain.html> */
 
-        scorePreload = new Path(new BezierCurve(
+        scorePreload = new Path(new BezierLine(
                 new Point(startPose),
-                new Point(7.256, 116.426, Point.CARTESIAN),
                 new Point(basketPose)
         ));
         scorePreload.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45));
@@ -122,6 +124,24 @@ public class PreloadedParkAscentAuto extends OpMode {
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
                 .build();
+
+        // Picks up the third sample and scores it
+        sample3 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(basketPose),
+                                new Point(sample3Pose)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
+                .addPath(
+                        new BezierLine(
+                                new Point(sample3Pose),
+                                new Point(basketPose)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
+                .build();
     }
 
     /** This switch is called continuously and runs the pathing, at certain points, it triggers the action state.
@@ -160,10 +180,20 @@ public class PreloadedParkAscentAuto extends OpMode {
                 if (isRobotNearPose(currentPose, basketPose, 0.75)) {
                     robot.intake();
                     robot.transfer();
-                    follower.followPath(ascend);
+                    follower.followPath(sample3);
                     robot.highBasket();
                     robot.transfer();
                     setPathState(4);
+                    break;
+                }
+            case 4:
+                if (isRobotNearPose(currentPose, basketPose, 0.75)) {
+                    robot.intake();
+                    robot.transfer();
+                    follower.followPath(ascend);
+                    robot.highBasket();
+                    robot.transfer();
+                    setPathState(-1);
                     break;
                 }
         }
