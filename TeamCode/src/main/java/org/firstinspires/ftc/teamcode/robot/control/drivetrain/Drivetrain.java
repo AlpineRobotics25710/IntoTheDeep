@@ -49,8 +49,6 @@ public abstract class Drivetrain {
         this.strafingMultiplier = strafingMultiplier;
     }
 
-
-
     /**
      * Updates the program and moves the robot based on gamepad inputs. Should be called continuously
      * in the opmode loop. Pressing options (PS) or start (Xbox) will reset the yaw value of the IMU
