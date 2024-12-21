@@ -3,9 +3,6 @@ package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierLine;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public abstract class Drivetrain {
@@ -48,8 +45,6 @@ public abstract class Drivetrain {
     public void setStrafingMultiplier(double strafingMultiplier) {
         this.strafingMultiplier = strafingMultiplier;
     }
-
-
 
     /**
      * Updates the program and moves the robot based on gamepad inputs. Should be called continuously
