@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers.gamepad;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.control.drivetrain.Drivetrain;
 import org.firstinspires.ftc.teamcode.robot.control.drivetrain.DrivetrainBuilder;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
+@TeleOp
 public class PedroDrivetrainTest extends LinearOpMode {
 
     @Override
