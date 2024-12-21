@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.control.drivetrain.Drivetrain;
 import org.firstinspires.ftc.teamcode.robot.control.drivetrain.DrivetrainBuilder;
@@ -23,7 +24,7 @@ public class GenericTeleOp extends LinearOpMode {
                 .setGamepad(gp1)
                 .setMotors(robot.frontLeftMotor, robot.backLeftMotor, robot.frontRightMotor, robot.backRightMotor)
                 .setStrafingMultiplier(1.1)
-                .setHardwareMap(hardwareMap)
+                .setFollower(new Follower(hardwareMap))
                 .build();
 
         waitForStart();

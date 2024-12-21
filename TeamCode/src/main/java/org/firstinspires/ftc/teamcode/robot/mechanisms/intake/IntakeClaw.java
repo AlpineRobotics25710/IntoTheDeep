@@ -12,8 +12,8 @@ public class IntakeClaw extends Claw {
     private final HardwareMap hardwareMap;
 
     // TODO: NEED TO FIND RIGHT POSITIONS FOR INTAKE CLAW
-    public static double CLAW_OPEN_POS = 0.0;
-    public static double CLAW_CLOSED_POS = 0.0;
+    public static double CLAW_OPEN_POS = 0.3; // DONE
+    public static double CLAW_CLOSED_POS = 0.55; // DONE
     public static double SWIVEL_INTAKE_POS = 0.0;
     public static double SWIVEL_TRANSFER_POS = 0.0;
     public static double SWIVEL_ASCENT_POS = 0.0;

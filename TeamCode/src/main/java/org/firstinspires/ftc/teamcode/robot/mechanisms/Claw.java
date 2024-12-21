@@ -15,4 +15,12 @@ public abstract class Claw implements Mechanism {
     public void setSwivelPosition(double position) {
         swivelServo.setPosition(position);
     }
+
+    public double getClawPosition() {
+        return clawServo.getPosition();
+    }
+
+    public double getSwivelPosition() {
+        return swivelServo.getPosition();
+    }
 }

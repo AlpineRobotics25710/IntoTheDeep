@@ -19,4 +19,12 @@ public abstract class Arm implements Mechanism {
         wristServoLeft.setPosition(position);
         wristServoRight.setPosition(position);
     }
+
+    public double getArmPosition() {
+        return armServoRight.getPosition();
+    }
+
+    public double getSwivelPosition() {
+        return armServoLeft.getPosition();
+    }
 }

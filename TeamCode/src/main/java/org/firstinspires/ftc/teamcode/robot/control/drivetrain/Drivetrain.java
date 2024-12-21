@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
@@ -31,13 +30,13 @@ public abstract class Drivetrain {
      * @param backRightMotor  the back right wheel motor
      * @param gamepad         the gamepad to take input from
      */
-    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, HardwareMap hardwareMap) {
+    public Drivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, Follower follower) {
         this.frontLeftMotor = frontLeftMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.gamepad = gamepad;
-        follower = new Follower(hardwareMap);
+        this.follower = follower;
     }
 
     /**
@@ -48,6 +47,8 @@ public abstract class Drivetrain {
     public void setStrafingMultiplier(double strafingMultiplier) {
         this.strafingMultiplier = strafingMultiplier;
     }
+
+
 
     /**
      * Updates the program and moves the robot based on gamepad inputs. Should be called continuously

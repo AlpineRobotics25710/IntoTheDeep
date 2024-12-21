@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
 public class FieldCentricMecanumDrivetrain extends Drivetrain {
@@ -24,9 +25,9 @@ public class FieldCentricMecanumDrivetrain extends Drivetrain {
                                   DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, IMU imu,
                                   RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection,
                                   RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection,
-                                  HardwareMap hardwareMap
+                                  Follower follower
     ) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, hardwareMap);
+        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad, follower);
         this.imu = imu;
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(

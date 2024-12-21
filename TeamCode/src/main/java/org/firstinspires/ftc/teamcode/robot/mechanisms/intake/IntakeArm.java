@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
@@ -30,11 +29,12 @@ public class IntakeArm extends Arm {
         wristServoLeft = hardwareMap.get(Servo.class, "iWristLeft");
         wristServoRight = hardwareMap.get(Servo.class, "iWristRight");
 
-        transfer();
-    }
+        armServoRight.setDirection(Servo.Direction.REVERSE);
+        armServoLeft.setDirection(Servo.Direction.FORWARD);
+        wristServoRight.setDirection(Servo.Direction.REVERSE);
+        wristServoLeft.setDirection(Servo.Direction.FORWARD);
 
-    public double getArmPosition() {
-        return armServoRight.getPosition();
+        transfer();
     }
 
     @Override
