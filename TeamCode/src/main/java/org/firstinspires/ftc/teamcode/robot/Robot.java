@@ -3,12 +3,15 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Sensors;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlides;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.Globals;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class Robot implements Mechanism {
     public HardwareMap hardwareMap;
@@ -19,6 +22,7 @@ public class Robot implements Mechanism {
     public IntakeClaw intakeClaw;
     public OuttakeSlides outtakeSlides;
     public ExtendoSlides extendo;
+    public Sensors sensors;
 
     public Robot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -27,6 +31,10 @@ public class Robot implements Mechanism {
 
     @Override
     public void init() {
+        TelemetryUtil.setup();
+        sensors = new Sensors(hardwareMap, this);
+        sensors.init();
+
         // Initialize outtake
         outtakeArm = new OuttakeArm(hardwareMap);
         outtakeClaw = new OuttakeClaw(hardwareMap);
@@ -44,11 +52,16 @@ public class Robot implements Mechanism {
         extendo.init();
     }
 
+    @Override
     public void update() {
+        Globals.START_LOOP();
         outtakeSlides.update();
         extendo.update();
+        TelemetryUtil.packet.put("Loop time (seconds)", Globals.GET_LOOP_TIMES());
+        TelemetryUtil.sendTelemetry();
     }
 
+    @Override
     public void ascend() {
         outtakeArm.ascend();
         outtakeClaw.ascend();
@@ -58,6 +71,7 @@ public class Robot implements Mechanism {
         extendo.ascend();
     }
 
+    @Override
     public void transfer() {
         outtakeArm.transfer();
         outtakeClaw.transfer();
@@ -66,6 +80,7 @@ public class Robot implements Mechanism {
         intakeClaw.transfer();
     }
 
+    @Override
     public void intake() {
         outtakeArm.intake();
         outtakeClaw.intake();
@@ -75,6 +90,7 @@ public class Robot implements Mechanism {
         extendo.intake();
     }
 
+    @Override
     public void lowChamber() {
         outtakeArm.lowChamber();
         outtakeClaw.lowChamber();
@@ -84,6 +100,7 @@ public class Robot implements Mechanism {
         extendo.lowChamber();
     }
 
+    @Override
     public void highChamber() {
         outtakeArm.highChamber();
         outtakeClaw.highChamber();
@@ -93,6 +110,7 @@ public class Robot implements Mechanism {
         extendo.highChamber();
     }
 
+    @Override
     public void lowBasket() {
         outtakeArm.lowBasket();
         outtakeClaw.lowBasket();
@@ -102,6 +120,7 @@ public class Robot implements Mechanism {
         extendo.lowBasket();
     }
 
+    @Override
     public void highBasket() {
         outtakeArm.highBasket();
         outtakeClaw.highBasket();

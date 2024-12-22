@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.utils.PID;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public abstract class Slides implements Mechanism {

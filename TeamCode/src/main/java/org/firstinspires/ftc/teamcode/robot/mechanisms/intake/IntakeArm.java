@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class IntakeArm extends Arm {
