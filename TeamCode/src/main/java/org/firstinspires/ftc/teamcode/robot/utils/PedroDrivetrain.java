@@ -1,54 +1,51 @@
-package org.firstinspires.ftc.teamcode.robot.control.drivetrain;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierLine;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
-import org.firstinspires.ftc.teamcode.robot.control.gamepad.CustomGamepad;
 
-public class PedroDrivetrain extends Drivetrain {
+public class PedroDrivetrain {
     private Pose waypoint;
     private final Follower follower;
+    private final Gamepad gamepad;
 
-    PedroDrivetrain(DcMotor frontLeftMotor, DcMotor backLeftMotor, DcMotor frontRightMotor, DcMotor backRightMotor, CustomGamepad gamepad, Follower follower) {
-        super(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gamepad);
+    public PedroDrivetrain(Gamepad gamepad, Follower follower, Pose startPose) {
         this.follower = follower;
-        follower.setTeleOpMovementVectors(-gamepad.leftStick().getY(), gamepad.leftStick().getX(), gamepad.rightStick().getY());
+        follower.setStartingPose(startPose);
+        follower.startTeleopDrive();
+
+        this.gamepad = gamepad;
     }
 
-    @Override
     public void update() {
+        follower.setTeleOpMovementVectors(-gamepad.left_stick_y, gamepad.left_stick_x, gamepad.right_stick_y);
         follower.update();
     }
 
-    @Override
     public void saveWaypoint() {
         this.waypoint = follower.getPose();
     }
 
-    @Override
     public void saveWaypoint(Pose waypoint) {
         this.waypoint = waypoint;
     }
 
-    @Override
     public void goToWaypointWithLinearHeading() {
         Pose currPose = follower.getPose();
         Path path = new Path(new BezierLine(new Point(currPose), new Point(waypoint)));
         path.setLinearHeadingInterpolation(currPose.getHeading(), waypoint.getHeading());
     }
 
-    @Override
     public void goToWaypointWithConstantHeading() {
         Pose currPose = follower.getPose();
         Path path = new Path(new BezierLine(new Point(currPose), new Point(waypoint)));
         path.setConstantHeadingInterpolation(waypoint.getHeading());
     }
 
-    @Override
     public void goToWaypointWithTangentialHeading() {
         Pose currPose = follower.getPose();
         Path path = new Path(new BezierLine(new Point(currPose), new Point(waypoint)));

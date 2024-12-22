@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Mechanism;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlides;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
@@ -23,13 +20,6 @@ public class Robot implements Mechanism {
     public OuttakeSlides outtakeSlides;
     public ExtendoSlides extendo;
 
-    public DcMotor frontLeftMotor;
-    public DcMotor backLeftMotor;
-    public DcMotor frontRightMotor;
-    public DcMotor backRightMotor;
-
-    public static Follower follower;
-
     public Robot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         init();
@@ -37,17 +27,6 @@ public class Robot implements Mechanism {
 
     @Override
     public void init() {
-        // Initialize drive train
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
         // Initialize outtake
         outtakeArm = new OuttakeArm(hardwareMap);
         outtakeClaw = new OuttakeClaw(hardwareMap);

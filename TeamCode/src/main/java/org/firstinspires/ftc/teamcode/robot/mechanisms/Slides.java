@@ -33,6 +33,13 @@ public abstract class Slides implements Mechanism {
 
     public void setManualMode(boolean manualMode) {
         this.manualMode = manualMode;
+        if(manualMode) {
+            leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        } else {
+            leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
     }
 
     @Override

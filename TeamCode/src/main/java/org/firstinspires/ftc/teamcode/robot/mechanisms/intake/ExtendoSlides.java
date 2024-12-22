@@ -31,12 +31,12 @@ public class ExtendoSlides extends Slides {
         this.rightMotor = hardwareMap.dcMotor.get("extendoRightMotor");
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -84,5 +84,4 @@ public class ExtendoSlides extends Slides {
         setTargetPosition(BASE_POS);
         slidesState = MechanismState.HIGH_BASKET;
     }
-
 }

@@ -31,8 +31,9 @@ public class IntakeArm extends Arm {
 
         armServoRight.setDirection(Servo.Direction.REVERSE);
         armServoLeft.setDirection(Servo.Direction.FORWARD);
-        wristServoRight.setDirection(Servo.Direction.REVERSE);
-        wristServoLeft.setDirection(Servo.Direction.FORWARD);
+
+        wristServoRight.setDirection(Servo.Direction.FORWARD);
+        wristServoLeft.setDirection(Servo.Direction.REVERSE);
 
         transfer();
     }
