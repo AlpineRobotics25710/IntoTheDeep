@@ -28,6 +28,8 @@ public class PedroDrivetrainTest extends LinearOpMode {
                 .setStrafingMultiplier(1.1)
                 .build();
 
+        follower.startTeleopDrive();
+
         waitForStart();
 
         if (isStopRequested()) return;
