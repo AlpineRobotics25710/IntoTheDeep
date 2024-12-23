@@ -35,6 +35,10 @@ public class PedroDrivetrainTest extends LinearOpMode {
                 drivetrain.goToWaypointWithTangentialHeading();
             }
 
+            if (gp1.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+                follower.breakFollowing();
+            }
+
             drivetrain.update();
         }
     }
