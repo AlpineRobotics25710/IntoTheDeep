@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms;
 
+import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public abstract class Claw implements Mechanism {
+public abstract class Claw extends SubsystemBase implements Mechanism {
     protected Servo clawServo;
     protected Servo swivelServo;
 
