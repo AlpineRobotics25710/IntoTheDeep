@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers;
 
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -80,7 +82,6 @@ public class PinpointLocalizer extends Localizer {
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.REVERSED);
 
         odo.resetPosAndIMU();
-
         setStartPose(setStartPose);
         totalHeading = 0;
         previousHeading = setStartPose.getHeading();
