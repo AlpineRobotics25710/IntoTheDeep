@@ -8,4 +8,6 @@ public enum MechanismState {
     HIGH_CHAMBER,
     LOW_BASKET,
     HIGH_BASKET,
+    WALL_GRAB,
+    IDLE
 }
