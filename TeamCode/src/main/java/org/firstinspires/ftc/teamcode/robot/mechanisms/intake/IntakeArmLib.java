@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
