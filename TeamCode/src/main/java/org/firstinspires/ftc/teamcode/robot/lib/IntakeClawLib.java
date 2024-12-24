@@ -10,7 +10,7 @@ public class IntakeClawLib extends SubsystemBase {
     public static double CLAW_OPEN_POSITION = 0.0;
     public static double CLAW_CLOSED_POSITION = 0.0;
     public static double SWIVEL_FORWARD_POSITION = 0.0;
-    public static double SWIVEL_BACKWARD_POSITION = 0.0;
+    public static double SWIVEL_BACKWARD_POSITION = 0.5;
 
     public enum ClawState {
         OPEN,
