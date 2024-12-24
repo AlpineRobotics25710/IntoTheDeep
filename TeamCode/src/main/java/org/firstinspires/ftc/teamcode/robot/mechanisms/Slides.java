@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.utils.PID;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
-public abstract class Slides implements Mechanism {
+public abstract class Slides extends SubsystemBase implements Mechanism {
     protected DcMotor leftMotor;
     protected DcMotor rightMotor;
 
