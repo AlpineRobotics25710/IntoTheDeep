@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlidesLib;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArmLib;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClawLib;
@@ -21,6 +22,11 @@ public class RobotLib {
     LynxModule expansionHub;
     double voltage;
     //intake
+
+    //extendo
+    public DcMotor extendoLeft;
+    public DcMotor extendoRight;
+    //end
     public Servo intakeClaw;
     public Servo intakeSwivel;
 
@@ -42,43 +48,62 @@ public class RobotLib {
 
     public IntakeArmLib intakeArm; //we want to replace this with an overall intake class but its just an example rn
     public IntakeClawLib intakeEnd;
+    public ExtendoSlidesLib extendo;
     public void init(HardwareMap map){
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
+        frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
+        backLeftMotor = map.get(DcMotor.class, ("backLeftMotor"));
+        frontRightMotor = map.get(DcMotor.class, ("frontRightMotor"));
+        backRightMotor = map.get(DcMotor.class, ("backRightMotor"));
 
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //lmao we need to do this
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        intakeClaw = hardwareMap.get(Servo.class, "intakeClaw");
-        intakeSwivel = hardwareMap.get(Servo.class, "intakeSwivel");
+        extendoLeft = map.get(DcMotor.class, "extendoLeft");
+        extendoRight = map.get(DcMotor.class, "extendoRight");
 
-        iArmLeft = hardwareMap.get(Servo.class, "iArmLeft");
-        iArmRight = hardwareMap.get(Servo.class, "iArmRight");
-        iWristLeft = hardwareMap.get(Servo.class, "iWristLeft");
-        iWristRight = hardwareMap.get(Servo.class, "iWristRight");
+        extendoLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
+        extendoRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        //if teleop then we shouldn't reset encoders :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :)
+        extendoLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
+
+        intakeClaw = map.get(Servo.class, "intakeClaw");
+        intakeSwivel = map.get(Servo.class, "intakeSwivel");
+
+        iArmLeft = map.get(Servo.class, "iArmLeft");
+        iArmRight = map.get(Servo.class, "iArmRight");
+        iWristLeft = map.get(Servo.class, "iWristLeft");
+        iWristRight = map.get(Servo.class, "iWristRight");
 
         iArmRight.setDirection(Servo.Direction.REVERSE);
         iWristLeft.setDirection(Servo.Direction.REVERSE);
 
-        controlHub = hardwareMap.get(LynxModule.class, "Control Hub");
+        controlHub = map.get(LynxModule.class, "Control Hub");
         controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 
-        expansionHub = hardwareMap.get(LynxModule.class, "Expansion Hub");
+        expansionHub = map.get(LynxModule.class, "Expansion Hub");
         expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
+        voltage = map.voltageSensor.iterator().next().getVoltage();
 
         //if we were to include our mechanisms they would go here
         intakeArm = new IntakeArmLib();
         intakeEnd = new IntakeClawLib();
+        extendo = new ExtendoSlidesLib();
+
+
 
         TelemetryUtil.setup();
         //follower outtake whatever goes here

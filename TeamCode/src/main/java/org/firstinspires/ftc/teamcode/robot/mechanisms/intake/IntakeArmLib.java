@@ -16,13 +16,13 @@ public class IntakeArmLib extends SubsystemBase {
         TRANSFER,
     }
 
-    public ArmState currentState;
+    public ArmState currentState = ArmState.TRANSFER;
 
     public IntakeArmLib() {
     }
 
     public void init() {
-        //setState(ArmState.TRANSFER);
+        setState(ArmState.TRANSFER);
     }
 
     public void setState(ArmState state) {

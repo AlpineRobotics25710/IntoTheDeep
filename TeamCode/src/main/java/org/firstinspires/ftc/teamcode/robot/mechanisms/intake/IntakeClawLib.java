@@ -23,8 +23,8 @@ public class IntakeClawLib extends SubsystemBase {
         BACKWARD,
     }
 
-    private ClawState clawState;
-    private SwivelState swivelState;
+    private ClawState clawState = ClawState.OPEN;
+    private SwivelState swivelState = SwivelState.FORWARD;
 
 
     public void init() {

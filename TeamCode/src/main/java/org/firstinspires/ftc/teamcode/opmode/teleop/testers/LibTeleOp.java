@@ -29,29 +29,29 @@ public class LibTeleOp extends CommandOpMode {
                 new InstantCommand(() -> robot.intakeArm.setState(IntakeArmLib.ArmState.TRANSFER))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenHeld(
-                new InstantCommand(() -> robot.intakeEnd.setClawState(IntakeClawLib.ClawState.OPEN))
+                new InstantCommand(() -> robot.intakeEnd.setSwivelState(IntakeClawLib.SwivelState.FORWARD))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenReleased(
-                new InstantCommand(() -> robot.intakeEnd.setClawState(IntakeClawLib.ClawState.CLOSED))
+                new InstantCommand(() -> robot.intakeEnd.setSwivelState(IntakeClawLib.SwivelState.BACKWARD))
         );
     }
 
     @Override
     public void run() {
-        double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x;
-
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
-
-        robot.frontLeftMotor.setPower(frontLeftPower);
-        robot.backLeftMotor.setPower(backLeftPower);
-        robot.frontRightMotor.setPower(frontRightPower);
-        robot.backRightMotor.setPower(backRightPower);
+//        double y = -gamepad1.left_stick_y;
+//        double x = gamepad1.left_stick_x * 1.1;
+//        double rx = gamepad1.right_stick_x;
+//
+//        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        double frontLeftPower = (y + x + rx) / denominator;
+//        double backLeftPower = (y - x + rx) / denominator;
+//        double frontRightPower = (y - x - rx) / denominator;
+//        double backRightPower = (y + x - rx) / denominator;
+//
+//        robot.frontLeftMotor.setPower(frontLeftPower);
+//        robot.backLeftMotor.setPower(backLeftPower);
+//        robot.frontRightMotor.setPower(frontRightPower);
+//        robot.backRightMotor.setPower(backRightPower);
 
         super.run();
 
