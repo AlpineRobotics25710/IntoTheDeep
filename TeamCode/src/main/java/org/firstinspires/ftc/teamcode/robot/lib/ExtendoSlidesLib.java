@@ -19,7 +19,7 @@ public class ExtendoSlidesLib extends SubsystemBase {
 
     public void autoUpdateExtendo() {
         double extendoPower = extendoPIDF.calculate(robot.extendoRight.getCurrentPosition(), this.target);
-        extendoReached = (extendoPIDF.atSetPoint() && target > 0) || (robot.extendoRight.getCurrentPosition() <= 3 && target == 0);
+        extendoReached = (extendoPIDF.atSetPoint() && target > 0) || (robot.extendoRight.getCurrentPosition() <= 3 && target == 0); // 3 is example number
         extendoRetracted = (target <= 0) && extendoReached;
 
         // Just make sure it gets to fully retracted if target is 0

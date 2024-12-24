@@ -33,7 +33,6 @@ public class RobotLib {
     public Servo iWristRight;
 
     //outtake
-
     //drivetrain
     public DcMotor frontLeftMotor;
     public DcMotor frontRightMotor;
@@ -89,6 +88,7 @@ public class RobotLib {
         controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 
         expansionHub = map.get(LynxModule.class, "Expansion Hub");
+
         expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         voltage = map.voltageSensor.iterator().next().getVoltage();
 
