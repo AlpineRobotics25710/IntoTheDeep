@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class IntakeClaw extends Claw {
@@ -22,6 +21,32 @@ public class IntakeClaw extends Claw {
         this.hardwareMap = hardwareMap;
     }
 
+    public void setClawState(ClawState state) {
+        clawState = state;
+        switch (clawState) {
+            case OPEN:
+                setClawPosition(CLAW_OPEN_POS);
+                break;
+
+            case CLOSED:
+                setClawPosition(CLAW_CLOSED_POS);
+                break;
+        }
+    }
+
+    public void setSwivelState(SwivelState state) {
+        swivelState = state;
+        switch (swivelState) {
+            case INTAKE:
+                setSwivelPosition(SWIVEL_INTAKE_POS);
+                break;
+
+            case TRANSFER:
+                setSwivelPosition(SWIVEL_TRANSFER_POS);
+                break;
+        }
+    }
+
     @Override
     public void init() {
         clawServo = hardwareMap.get(Servo.class, "intakeClaw");
@@ -32,50 +57,38 @@ public class IntakeClaw extends Claw {
 
     @Override
     public void ascend() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_ASCENT_POS);
-        clawState = MechanismState.ASCENT;
+        transfer();
     }
 
     @Override
     public void transfer() {
-        setClawPosition(CLAW_OPEN_POS);
-        setSwivelPosition(SWIVEL_TRANSFER_POS);
-        clawState = MechanismState.TRANSFER;
+        setClawState(ClawState.CLOSED);
+        setSwivelState(SwivelState.TRANSFER);
     }
 
     @Override
     public void intake() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_TRANSFER_POS);
-        clawState = MechanismState.INTAKE;
+        setClawState(ClawState.OPEN);
+        setSwivelState(SwivelState.INTAKE);
     }
 
     @Override
     public void lowChamber() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_INTAKE_POS);
-        clawState = MechanismState.LOW_CHAMBER;
+        intake();
     }
 
     @Override
     public void highChamber() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_INTAKE_POS);
-        clawState = MechanismState.HIGH_CHAMBER;
+        intake();
     }
 
     @Override
     public void lowBasket() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_INTAKE_POS);
-        clawState = MechanismState.LOW_BASKET;
+        intake();
     }
 
     @Override
     public void highBasket() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_INTAKE_POS);
-        clawState = MechanismState.HIGH_BASKET;
+        intake();
     }
 }

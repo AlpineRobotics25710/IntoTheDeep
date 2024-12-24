@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
+package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
-import org.firstinspires.ftc.teamcode.robot.utils.RobotLib;
 @Config
 public class IntakeArmLib extends SubsystemBase {
     private final RobotLib robot = RobotLib.getInstance();

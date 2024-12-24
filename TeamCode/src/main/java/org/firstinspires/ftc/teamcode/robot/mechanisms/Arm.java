@@ -7,8 +7,14 @@ public abstract class Arm implements Mechanism {
     protected Servo armServoRight;
     protected Servo wristServoLeft;
     protected Servo wristServoRight;
+    protected ArmState currentState;
 
-    protected MechanismState armState;
+    public enum ArmState {
+        INTAKE,
+        TRANSFER,
+    }
+
+    public abstract void setState(ArmState state);
 
     public void setArmPosition(double position) {
         armServoLeft.setPosition(position);

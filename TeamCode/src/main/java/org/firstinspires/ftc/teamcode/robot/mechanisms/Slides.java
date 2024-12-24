@@ -16,7 +16,6 @@ public abstract class Slides implements Mechanism {
 
     public boolean manualMode = false;
 
-    protected MechanismState slidesState;
 
     public Slides(double Kp, double Ki, double Kd, double Kf) {
         this.pid = new PID(Kp, Ki, Kd, Kf);

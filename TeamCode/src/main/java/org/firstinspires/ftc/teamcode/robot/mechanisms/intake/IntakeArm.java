@@ -4,14 +4,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
-import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class IntakeArm extends Arm {
     private final HardwareMap hardwareMap;
-
     public static double ARM_INTAKE_POS = 0.0;
     public static double ARM_TRANSFER_POS = 0.0;
     public static double ARM_ASCENT_POS = 0.0;
@@ -36,51 +34,56 @@ public class IntakeArm extends Arm {
         wristServoRight.setDirection(Servo.Direction.FORWARD);
         wristServoLeft.setDirection(Servo.Direction.REVERSE);
 
-        transfer();
+        setState(ArmState.TRANSFER);
+    }
+
+    public void setState(ArmState state) {
+        currentState = state;
+        switch (currentState) {
+            case INTAKE:
+                setArmPosition(ARM_INTAKE_POS);
+                setWristPosition(WRIST_INTAKE_POS);
+                break;
+
+            case TRANSFER:
+                setArmPosition(ARM_TRANSFER_POS);
+                setWristPosition(WRIST_TRANSFER_POS);
+                break;
+        }
     }
 
     @Override
     public void ascend() {
-        setArmPosition(ARM_ASCENT_POS);
-        setWristPosition(WRIST_ASCENT_POS);
-        armState = MechanismState.ASCENT;
+        transfer();
     }
 
     @Override
     public void intake() {
-        setArmPosition(ARM_INTAKE_POS);
-        setWristPosition(WRIST_INTAKE_POS);
-        armState = MechanismState.INTAKE;
+        setState(ArmState.INTAKE);
     }
 
     @Override
     public void lowChamber() {
         intake();
-        armState = MechanismState.LOW_CHAMBER;
     }
 
     @Override
     public void highChamber() {
         intake();
-        armState = MechanismState.HIGH_CHAMBER;
     }
 
     @Override
     public void lowBasket() {
         intake();
-        armState = MechanismState.LOW_BASKET;
     }
 
     @Override
     public void highBasket() {
         intake();
-        armState = MechanismState.HIGH_BASKET;
     }
 
     @Override
     public void transfer() {
-        setArmPosition(ARM_TRANSFER_POS);
-        setWristPosition(WRIST_TRANSFER_POS);
-        armState = MechanismState.TRANSFER;
+        setState(ArmState.INTAKE);
     }
 }

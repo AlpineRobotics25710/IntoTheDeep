@@ -6,9 +6,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClawLib;
-import org.firstinspires.ftc.teamcode.robot.utils.RobotLib;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArmLib;
+import org.firstinspires.ftc.teamcode.robot.lib.IntakeClawLib;
+import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
+import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp(group="test")

@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class Robot implements Mechanism {
     public HardwareMap hardwareMap;
-
     public OuttakeArm outtakeArm;
     public OuttakeClaw outtakeClaw;
     public IntakeArm intakeArm;
@@ -23,6 +22,19 @@ public class Robot implements Mechanism {
     public OuttakeSlides outtakeSlides;
     public ExtendoSlides extendo;
     public Sensors sensors;
+    public RobotState robotState;
+    public boolean enabled;
+
+    public enum RobotState {
+        INIT,
+        ASCEND,
+        TRANSFER,
+        INTAKE,
+        LOW_CHAMBER,
+        HIGH_CHAMBER,
+        LOW_BASKET,
+        HIGH_BASKET,
+    }
 
     public Robot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -50,6 +62,7 @@ public class Robot implements Mechanism {
         intakeArm.init();
         intakeClaw.init();
         extendo.init();
+        robotState = RobotState.INIT;
     }
 
     @Override
@@ -69,6 +82,7 @@ public class Robot implements Mechanism {
         intakeArm.ascend();
         intakeClaw.ascend();
         extendo.ascend();
+        robotState = RobotState.ASCEND;
     }
 
     @Override
@@ -78,6 +92,8 @@ public class Robot implements Mechanism {
         outtakeSlides.transfer();
         intakeArm.transfer();
         intakeClaw.transfer();
+        extendo.transfer();
+        robotState = RobotState.TRANSFER;
     }
 
     @Override
@@ -88,6 +104,7 @@ public class Robot implements Mechanism {
         intakeArm.intake();
         intakeClaw.intake();
         extendo.intake();
+        robotState = RobotState.INTAKE;
     }
 
     @Override
@@ -98,6 +115,7 @@ public class Robot implements Mechanism {
         intakeArm.lowChamber();
         intakeClaw.lowChamber();
         extendo.lowChamber();
+        robotState = RobotState.LOW_CHAMBER;
     }
 
     @Override
@@ -108,6 +126,7 @@ public class Robot implements Mechanism {
         intakeArm.highChamber();
         intakeClaw.highChamber();
         extendo.highChamber();
+        robotState = RobotState.HIGH_CHAMBER;
     }
 
     @Override
@@ -118,6 +137,7 @@ public class Robot implements Mechanism {
         intakeArm.lowBasket();
         intakeClaw.lowBasket();
         extendo.lowBasket();
+        robotState = RobotState.LOW_BASKET;
     }
 
     @Override
@@ -128,5 +148,6 @@ public class Robot implements Mechanism {
         intakeArm.highBasket();
         intakeClaw.highBasket();
         extendo.highBasket();
+        robotState = RobotState.HIGH_BASKET;
     }
 }

@@ -1,19 +1,12 @@
-package org.firstinspires.ftc.teamcode.robot.utils;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlidesLib;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArmLib;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClawLib;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class RobotLib {

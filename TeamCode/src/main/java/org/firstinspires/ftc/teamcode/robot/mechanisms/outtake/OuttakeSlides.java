@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 
 @Config
@@ -49,42 +48,35 @@ public class OuttakeSlides extends Slides {
     @Override
     public void ascend() {
         setTargetPosition(LOW_RUNG_POS);
-        slidesState = MechanismState.ASCENT;
     }
 
     @Override
     public void transfer() {
         setTargetPosition(TRANSFER_POS);
-        slidesState = MechanismState.TRANSFER;
     }
 
     @Override
     public void intake() {
         setTargetPosition(BASE_POS);
-        slidesState = MechanismState.INTAKE;
     }
 
     @Override
     public void lowChamber() {
         setTargetPosition(LOW_RUNG_POS);
-        slidesState = MechanismState.LOW_CHAMBER;
     }
 
     @Override
     public void highChamber() {
         setTargetPosition(HIGH_RUNG_POS);
-        slidesState = MechanismState.HIGH_CHAMBER;
     }
 
     @Override
     public void lowBasket() {
         setTargetPosition(LOW_BASKET_POS);
-        slidesState = MechanismState.LOW_BASKET;
     }
 
     @Override
     public void highBasket() {
         setTargetPosition(HIGH_BASKET_POS);
-        slidesState = MechanismState.HIGH_BASKET;
     }
 }

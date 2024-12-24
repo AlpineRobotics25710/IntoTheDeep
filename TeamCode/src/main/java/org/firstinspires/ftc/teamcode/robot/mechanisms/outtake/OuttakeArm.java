@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class OuttakeArm extends Arm {
@@ -42,47 +41,43 @@ public class OuttakeArm extends Arm {
         transfer();
     }
 
+    @Override
+    public void setState(ArmState state) {}
+
     public void ascend() {
         setArmPosition(ARM_ASCENT_POS);
         setWristPosition(WRIST_ASCENT_POS);
-        armState = MechanismState.ASCENT;
     }
 
     public void intake() {
         setArmPosition(ARM_WALL_INTAKE_POS);
         setWristPosition(WRIST_WALL_INTAKE_POS);
-        armState = MechanismState.INTAKE;
     }
 
     public void transfer() {
         setArmPosition(ARM_TRANSFER_POS);
         setWristPosition(WRIST_TRANSFER_POS);
-        armState = MechanismState.TRANSFER;
     }
 
     public void lowChamber() {
         setArmPosition(ARM_LOW_CHAMBER_POS);
         setWristPosition(WRIST_LOW_CHAMBER_POS);
-        armState = MechanismState.LOW_CHAMBER;
     }
 
     public void highChamber() {
         setArmPosition(ARM_HIGH_CHAMBER_POS);
         setWristPosition(WRIST_HIGH_CHAMBER_POS);
-        armState = MechanismState.HIGH_CHAMBER;
     }
 
     @Override
     public void lowBasket() {
         setArmPosition(ARM_LOW_CHAMBER_POS);
         setWristPosition(WRIST_LOW_CHAMBER_POS);
-        armState = MechanismState.LOW_BASKET;
     }
 
     @Override
     public void highBasket() {
         setArmPosition(ARM_HIGH_CHAMBER_POS);
         setWristPosition(WRIST_HIGH_CHAMBER_POS);
-        armState = MechanismState.HIGH_BASKET;
     }
 }
