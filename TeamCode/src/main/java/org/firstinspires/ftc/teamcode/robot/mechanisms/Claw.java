@@ -4,20 +4,11 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class Claw extends SubsystemBase implements Mechanism {
-    public enum ClawState {
-        OPEN,
-        CLOSED,
-    }
-
-    public enum SwivelState {
-        INTAKE,
-        TRANSFER,
-    }
     protected Servo clawServo;
     protected Servo swivelServo;
-    protected ClawState clawState;
-    protected SwivelState swivelState;
+    protected MechanismState clawState;
 
+    public abstract void setState(MechanismState state);
     public void setClawPosition(double position) {
         clawServo.setPosition(position);
     }

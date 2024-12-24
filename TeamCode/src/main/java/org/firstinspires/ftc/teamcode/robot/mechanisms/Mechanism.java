@@ -10,19 +10,6 @@ public interface Mechanism {
      * This method is to be called continuously in a loop if a mechanism, such as a PID controller,
      * needs to be updated continuously. By default, this method does nothing.
      */
-    default void update(){};
-
-    void ascend();
-
-    void transfer();
-
-    void intake();
-
-    void lowChamber();
-
-    void highChamber();
-
-    void lowBasket();
-
-    void highBasket();
+    default void update() {
+    }
 }

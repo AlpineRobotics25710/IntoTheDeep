@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class OuttakeClaw extends Claw {
@@ -26,48 +27,24 @@ public class OuttakeClaw extends Claw {
         clawServo = hardwareMap.get(Servo.class, "outtakeClaw");
         swivelServo = hardwareMap.get(Servo.class, "outtakeClawSwivel");
 
-        intake();
+        setState(MechanismState.TRANSFER);;
     }
 
-    @Override
-    public void ascend() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_OUTTAKE_POS);
-    }
+    public void setState(MechanismState state) {
+        clawState = state;
+        switch (clawState) {
+            case TRANSFER:
+                setClawPosition(CLAW_OPEN_POS);
+                setSwivelPosition(SWIVEL_TRANSFER_POS);
+                break;
 
-    @Override
-    public void transfer() {
-        setClawPosition(CLAW_OPEN_POS);
-        setSwivelPosition(SWIVEL_TRANSFER_POS);
-    }
-
-    @Override
-    public void intake() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_TRANSFER_POS);
-    }
-
-    @Override
-    public void lowChamber() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_OUTTAKE_POS);
-    }
-
-    @Override
-    public void highChamber() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_OUTTAKE_POS);
-    }
-
-    @Override
-    public void lowBasket() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_OUTTAKE_POS);
-    }
-
-    @Override
-    public void highBasket() {
-        setClawPosition(CLAW_CLOSED_POS);
-        setSwivelPosition(SWIVEL_OUTTAKE_POS);
+            case LOW_CHAMBER:
+            case HIGH_CHAMBER:
+            case LOW_BASKET:
+            case HIGH_BASKET:
+                setClawPosition(CLAW_OPEN_POS);
+                setSwivelPosition(SWIVEL_OUTTAKE_POS);
+                break;
+        }
     }
 }

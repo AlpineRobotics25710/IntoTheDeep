@@ -8,14 +8,9 @@ public abstract class Arm extends SubsystemBase implements Mechanism {
     protected Servo armServoRight;
     protected Servo wristServoLeft;
     protected Servo wristServoRight;
-    protected ArmState currentState;
+    protected MechanismState currentState;
 
-    public enum ArmState {
-        INTAKE,
-        TRANSFER,
-    }
-
-    public abstract void setState(ArmState state);
+    public abstract void setState(MechanismState state);
 
     public void setArmPosition(double position) {
         armServoLeft.setPosition(position);

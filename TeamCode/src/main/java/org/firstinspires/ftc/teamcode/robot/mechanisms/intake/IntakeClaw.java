@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class IntakeClaw extends Claw {
@@ -15,36 +16,32 @@ public class IntakeClaw extends Claw {
     public static double CLAW_CLOSED_POS = 0.55; // DONE
     public static double SWIVEL_INTAKE_POS = 0.0;
     public static double SWIVEL_TRANSFER_POS = 0.0;
-    public static double SWIVEL_ASCENT_POS = 0.0;
 
     public IntakeClaw(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
     }
 
-    public void setClawState(ClawState state) {
+    public void setState(MechanismState state) {
         clawState = state;
         switch (clawState) {
-            case OPEN:
-                setClawPosition(CLAW_OPEN_POS);
-                break;
-
-            case CLOSED:
-                setClawPosition(CLAW_CLOSED_POS);
-                break;
-        }
-    }
-
-    public void setSwivelState(SwivelState state) {
-        swivelState = state;
-        switch (swivelState) {
             case INTAKE:
+                closeClaw();
                 setSwivelPosition(SWIVEL_INTAKE_POS);
                 break;
 
             case TRANSFER:
+                openClaw();
                 setSwivelPosition(SWIVEL_TRANSFER_POS);
                 break;
         }
+    }
+
+    public void closeClaw() {
+        setClawPosition(CLAW_CLOSED_POS);
+    }
+
+    public void openClaw() {
+        setClawPosition(CLAW_OPEN_POS);
     }
 
     @Override
@@ -52,43 +49,6 @@ public class IntakeClaw extends Claw {
         clawServo = hardwareMap.get(Servo.class, "intakeClaw");
         swivelServo = hardwareMap.get(Servo.class, "intakeSwivel");
 
-        intake();
-    }
-
-    @Override
-    public void ascend() {
-        transfer();
-    }
-
-    @Override
-    public void transfer() {
-        setClawState(ClawState.CLOSED);
-        setSwivelState(SwivelState.TRANSFER);
-    }
-
-    @Override
-    public void intake() {
-        setClawState(ClawState.OPEN);
-        setSwivelState(SwivelState.INTAKE);
-    }
-
-    @Override
-    public void lowChamber() {
-        intake();
-    }
-
-    @Override
-    public void highChamber() {
-        intake();
-    }
-
-    @Override
-    public void lowBasket() {
-        intake();
-    }
-
-    @Override
-    public void highBasket() {
-        intake();
+        setState(MechanismState.TRANSFER);
     }
 }

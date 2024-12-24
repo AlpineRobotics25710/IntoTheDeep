@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class IntakeArm extends Arm {
@@ -34,10 +35,10 @@ public class IntakeArm extends Arm {
         wristServoRight.setDirection(Servo.Direction.FORWARD);
         wristServoLeft.setDirection(Servo.Direction.REVERSE);
 
-        setState(ArmState.TRANSFER);
+        setState(MechanismState.TRANSFER);
     }
 
-    public void setState(ArmState state) {
+    public void setState(MechanismState state) {
         currentState = state;
         switch (currentState) {
             case INTAKE:
@@ -50,40 +51,5 @@ public class IntakeArm extends Arm {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
         }
-    }
-
-    @Override
-    public void ascend() {
-        transfer();
-    }
-
-    @Override
-    public void intake() {
-        setState(ArmState.INTAKE);
-    }
-
-    @Override
-    public void lowChamber() {
-        intake();
-    }
-
-    @Override
-    public void highChamber() {
-        intake();
-    }
-
-    @Override
-    public void lowBasket() {
-        intake();
-    }
-
-    @Override
-    public void highBasket() {
-        intake();
-    }
-
-    @Override
-    public void transfer() {
-        setState(ArmState.INTAKE);
     }
 }
