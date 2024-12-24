@@ -24,8 +24,8 @@ public class RobotLib {
     //intake
 
     //extendo
-    public DcMotor extendoLeft;
-    public DcMotor extendoRight;
+    public DcMotorEx extendoLeft;
+    public DcMotorEx extendoRight;
     //end
     public Servo intakeClaw;
     public Servo intakeSwivel;
@@ -65,20 +65,20 @@ public class RobotLib {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        extendoLeft = map.get(DcMotor.class, "extendoLeft");
-        extendoRight = map.get(DcMotor.class, "extendoRight");
+        extendoLeft = map.get(DcMotorEx.class, "extendoLeft");
+        extendoRight = map.get(DcMotorEx.class, "extendoRight");
 
-        extendoLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
-        extendoRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        extendoLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
+        extendoRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
         //if teleop then we shouldn't reset encoders :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :)
-        extendoLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extendoLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        extendoLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extendoRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        extendoRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
+        extendoLeft.setDirection(DcMotorEx.Direction.REVERSE);
 
         intakeClaw = map.get(Servo.class, "intakeClaw");
         intakeSwivel = map.get(Servo.class, "intakeSwivel");

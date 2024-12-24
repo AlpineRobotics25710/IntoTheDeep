@@ -1,27 +1,52 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.arcrobotics.ftclib.controller.PIDFController;
 
 import org.firstinspires.ftc.teamcode.robot.utils.RobotLib;
-@Config
+
 public class ExtendoSlidesLib extends SubsystemBase {
-    public static double RETRACTED = 0.0;
-    public static double EXTENDED = 0.0;
-    public static double Kp;
-    public static double Ki;
-    public static double Kd;
-    public static double Kf;
+    private final RobotLib robot = RobotLib.getInstance();
+    public double target;
+    public final double MAX_EXTENDO_EXTENSION = 0.0;
+    public boolean extendoReached;
+    public boolean extendoRetracted;
 
-    public enum ExtendoState{
-        RETRACTED, EXTENDED;
+    private static final PIDFController extendoPIDF = new PIDFController(0.01,0,0.000001, 0); //example values for now
+
+    public void init() {
+        setExtendoTarget(0);
+        extendoPIDF.setTolerance(15);
     }
-    RobotLib robot = RobotLib.getInstance();
-    public void init(){
 
+    public void autoUpdateExtendo() {
+        double extendoPower = extendoPIDF.calculate(robot.extendoRight.getCurrentPosition(), this.target);
+        extendoReached = (extendoPIDF.atSetPoint() && target > 0) || (robot.extendoRight.getCurrentPosition() <= 3 && target == 0);
+        extendoRetracted = (target <= 0) && extendoReached;
+
+        // Just make sure it gets to fully retracted if target is 0
+        if (target == 0) {
+            extendoPower -= 0.2;
+        } else {
+            extendoPower += 0.2;
+        }
+
+        if (extendoReached) {
+            robot.extendoLeft.setPower(0);
+            robot.extendoRight.setPower(0);
+        } else {
+            robot.extendoLeft.setPower(extendoPower);
+            robot.extendoRight.setPower(extendoPower);
+        }
     }
-    public void periodic(){
 
+    public void setExtendoTarget(double target) {
+        this.target = Math.max(Math.min(target, MAX_EXTENDO_EXTENSION), 0);
+        extendoPIDF.setSetPoint(this.target);
+    }
+
+    @Override
+    public void periodic() {
+        autoUpdateExtendo();
     }
 }
