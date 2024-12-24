@@ -1,9 +1,7 @@
-package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
+package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-
-import org.firstinspires.ftc.teamcode.robot.utils.RobotLib;
 
 public class ExtendoSlidesLib extends SubsystemBase {
     private final RobotLib robot = RobotLib.getInstance();
