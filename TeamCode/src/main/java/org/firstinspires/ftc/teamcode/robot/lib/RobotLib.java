@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
@@ -15,12 +18,14 @@ public class RobotLib {
     LynxModule controlHub;
     LynxModule expansionHub;
     double voltage;
+
     //intake
 
     //extendo
     public DcMotorEx extendoLeft;
     public DcMotorEx extendoRight;
-    //end
+
+    //end effector
     public Servo intakeClaw;
     public Servo intakeSwivel;
 
@@ -33,15 +38,37 @@ public class RobotLib {
     public Servo iWristRight;
 
     //outtake
+
+    // outtake end effector
+    public Servo outtakeClaw;
+    public Servo outtakeSwivel;
+
+    // outtake arm
+    public Servo oArmRight;
+    public Servo oArmLeft;
+
+    // outtake wrist
+    public Servo oWristLeft;
+    public Servo oWristRight;
+
+    // outtake slides
+    public DcMotorEx slideLeft;
+    public DcMotorEx slideRight;
+
     //drivetrain
     public DcMotor frontLeftMotor;
     public DcMotor frontRightMotor;
     public DcMotor backLeftMotor;
     public DcMotor backRightMotor;
 
-    public IntakeArmLib intakeArm; //we want to replace this with an overall intake class but its just an example rn
-    public IntakeClawLib intakeEnd;
+    public IntakeArm intakeArm; //we want to replace this with an overall intake class but its just an example rn
+    public IntakeClaw intakeEnd;
     public ExtendoSlidesLib extendo;
+
+    public OuttakeClaw outtakeEnd;
+
+    private static RobotLib instance = new RobotLib();
+
     public void init(HardwareMap map){
         frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
         backLeftMotor = map.get(DcMotor.class, ("backLeftMotor"));
@@ -93,24 +120,53 @@ public class RobotLib {
         voltage = map.voltageSensor.iterator().next().getVoltage();
 
         //if we were to include our mechanisms they would go here
-        intakeArm = new IntakeArmLib();
-        intakeEnd = new IntakeClawLib();
+        intakeArm = new IntakeArm();
+        intakeEnd = new IntakeClaw();
         extendo = new ExtendoSlidesLib();
 
-
+        //follower outtake whatever goes here
+        outtakeEnd = new OuttakeClaw();
 
         TelemetryUtil.setup();
-        //follower outtake whatever goes here
+
     }
-    private static RobotLib instance = new RobotLib();
+
     public boolean enabled;
+
     public static RobotLib getInstance(){
         if(instance == null){
-            return new RobotLib();
+            instance = new RobotLib();
         }
         instance.enabled = true;
         return instance;
-        //im ngl i like have no idea what all of these checks are for but all i know is that like 100 people do this in their robot class and i get what its used for
+    }
+
+    public void ascend() {
+
+    }
+
+    public void transfer() {
+
+    }
+
+    public void intake() {
+
+    }
+
+    public void lowChamber() {
+
+    }
+
+    public void highChamber() {
+
+    }
+
+    public void lowBasket() {
+
+    }
+
+    public void highBasket() {
+
     }
 
     public enum OpModeType{

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.oldcode.Robot;
 
 @TeleOp(group = "prod")
 public class GenericTeleOp extends LinearOpMode {

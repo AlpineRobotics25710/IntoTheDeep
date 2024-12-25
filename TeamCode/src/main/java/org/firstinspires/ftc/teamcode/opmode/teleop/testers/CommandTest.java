@@ -25,7 +25,7 @@ public class CommandTest extends CommandOpMode {
 
     @Override
     public void initialize() {
-        intakeClaw = new IntakeClaw(hardwareMap);
+        intakeClaw = new IntakeClaw();
         intakeClaw.init();
 
         InstantCommand closeClaw = new InstantCommand(() -> intakeClaw.setClawPosition(IntakeClaw.CLAW_OPEN_POS));

@@ -17,10 +17,10 @@ public class OuttakeTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        OuttakeArm outtakeArm = new OuttakeArm(this.hardwareMap);
+        OuttakeArm outtakeArm = new OuttakeArm();
         outtakeArm.init();
 
-        OuttakeClaw outtakeClaw = new OuttakeClaw(this.hardwareMap);
+        OuttakeClaw outtakeClaw = new OuttakeClaw();
         outtakeClaw.init();
 
         waitForStart();

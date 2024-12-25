@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+import org.firstinspires.ftc.teamcode.robot.oldcode.Robot;
 
 public class Sensors {
     private LynxModule controlHub;

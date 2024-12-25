@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakeClawLib;
 import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp(group="test")
@@ -23,16 +25,16 @@ public class LibTeleOp extends CommandOpMode {
         register(robot.intakeArm, robot.intakeEnd);
         gp1 = new GamepadEx(gamepad1);
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new InstantCommand(() -> robot.intakeArm.setState(IntakeArmLib.ArmState.INTAKE))
+                new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.INTAKE))
         );
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
-                new InstantCommand(() -> robot.intakeArm.setState(IntakeArmLib.ArmState.TRANSFER))
+                new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.TRANSFER))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenHeld(
-                new InstantCommand(() -> robot.intakeEnd.setSwivelState(IntakeClawLib.SwivelState.FORWARD))
+                new InstantCommand(() -> robot.intakeEnd.setSwivelState(Claw.SwivelState.OUTTAKE))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenReleased(
-                new InstantCommand(() -> robot.intakeEnd.setSwivelState(IntakeClawLib.SwivelState.BACKWARD))
+                new InstantCommand(() -> robot.intakeEnd.setSwivelState(Claw.SwivelState.TRANSFER))
         );
     }
 

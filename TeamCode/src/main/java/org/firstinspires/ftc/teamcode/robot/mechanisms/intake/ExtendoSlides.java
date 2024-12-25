@@ -41,39 +41,4 @@ public class ExtendoSlides extends Slides {
 
         setTargetPosition(BASE_POS);
     }
-
-    @Override
-    public void ascend() {
-        setTargetPosition(INTAKE_POS);
-    }
-
-    @Override
-    public void transfer() {
-        setTargetPosition(TRANSFER_POS);
-    }
-
-    @Override
-    public void intake() {
-        setTargetPosition(INTAKE_POS);
-    }
-
-    @Override
-    public void lowChamber() {
-        setTargetPosition(BASE_POS);
-    }
-
-    @Override
-    public void highChamber() {
-        setTargetPosition(BASE_POS);
-    }
-
-    @Override
-    public void lowBasket() {
-        setTargetPosition(BASE_POS);
-    }
-
-    @Override
-    public void highBasket() {
-        setTargetPosition(BASE_POS);
-    }
 }

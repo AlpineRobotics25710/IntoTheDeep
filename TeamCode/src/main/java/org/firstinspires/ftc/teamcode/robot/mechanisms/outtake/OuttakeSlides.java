@@ -44,39 +44,4 @@ public class OuttakeSlides extends Slides {
 
         setTargetPosition(BASE_POS);
     }
-
-    @Override
-    public void ascend() {
-        setTargetPosition(LOW_RUNG_POS);
-    }
-
-    @Override
-    public void transfer() {
-        setTargetPosition(TRANSFER_POS);
-    }
-
-    @Override
-    public void intake() {
-        setTargetPosition(BASE_POS);
-    }
-
-    @Override
-    public void lowChamber() {
-        setTargetPosition(LOW_RUNG_POS);
-    }
-
-    @Override
-    public void highChamber() {
-        setTargetPosition(HIGH_RUNG_POS);
-    }
-
-    @Override
-    public void lowBasket() {
-        setTargetPosition(LOW_BASKET_POS);
-    }
-
-    @Override
-    public void highBasket() {
-        setTargetPosition(HIGH_BASKET_POS);
-    }
 }

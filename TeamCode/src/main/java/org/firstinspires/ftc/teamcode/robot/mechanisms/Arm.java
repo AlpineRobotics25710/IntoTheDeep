@@ -3,14 +3,25 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public abstract class Arm extends SubsystemBase implements Mechanism {
-    protected Servo armServoLeft;
-    protected Servo armServoRight;
-    protected Servo wristServoLeft;
-    protected Servo wristServoRight;
-    protected MechanismState currentState;
+import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
+import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
 
-    public abstract void setState(MechanismState state);
+public abstract class Arm extends SubsystemBase implements Mechanism {
+    private final RobotLib robot = RobotLib.getInstance();
+    protected Servo armServoLeft = robot.iArmLeft;
+    protected Servo armServoRight = robot.iArmRight;
+    protected Servo wristServoLeft = robot.iWristLeft;
+    protected Servo wristServoRight = robot.iWristRight;
+
+    public enum ArmState {
+        INTAKE,
+        TRANSFER,
+        OUTTAKE,
+    }
+
+    public ArmState currentState;
+
+    public abstract void setState(ArmState state);
 
     public void setArmPosition(double position) {
         armServoLeft.setPosition(position);

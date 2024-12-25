@@ -19,8 +19,8 @@ public class IntakeTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        IntakeArm intakeArm = new IntakeArm(hardwareMap);
-        IntakeClaw intakeClaw = new IntakeClaw(hardwareMap);
+        IntakeArm intakeArm = new IntakeArm();
+        IntakeClaw intakeClaw = new IntakeClaw();
         intakeArm.init();
         intakeClaw.init();
 

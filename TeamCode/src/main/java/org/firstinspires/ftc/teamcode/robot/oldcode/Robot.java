@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.robot.oldcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -38,16 +38,16 @@ public class Robot implements Mechanism {
         sensors.init();
 
         // Initialize outtake
-        outtakeArm = new OuttakeArm(hardwareMap);
-        outtakeClaw = new OuttakeClaw(hardwareMap);
+        /*outtakeArm = new OuttakeArm(hardwareMap);
+        outtakeClaw = new OuttakeClaw(hardwareMap);*/
         outtakeSlides = new OuttakeSlides(hardwareMap);
         outtakeArm.init();
         outtakeClaw.init();
         outtakeSlides.init();
 
         // Initialize intake
-        intakeArm = new IntakeArm(hardwareMap);
-        intakeClaw = new IntakeClaw(hardwareMap);
+        /*intakeArm = new IntakeArm(hardwareMap);
+        intakeClaw = new IntakeClaw(hardwareMap);*/
         extendo = new ExtendoSlides(hardwareMap);
         intakeArm.init();
         intakeClaw.init();
@@ -63,7 +63,7 @@ public class Robot implements Mechanism {
         TelemetryUtil.sendTelemetry();
     }
 
-    public void ascend() {
+    /*public void ascend() {
         outtakeSlides.ascend();
         outtakeArm.setState(MechanismState.ASCEND);
         robotState = MechanismState.ASCEND;
@@ -127,5 +127,5 @@ public class Robot implements Mechanism {
         intakeClaw.highBasket();
         extendo.highBasket();
         robotState = MechanismState.HIGH_BASKET;
-    }
+    }*/
 }
