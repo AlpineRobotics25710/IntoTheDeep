@@ -4,10 +4,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 
 @Config
 public class ExtendoSlides extends Slides {
+    Robot robot = Robot.getInstance();
     public static double BASE_POS = 0.0;
     public static double TRANSFER_POS = 0.0;
     public static double INTAKE_POS = 0.0;
@@ -16,18 +18,14 @@ public class ExtendoSlides extends Slides {
     public static double Ki;
     public static double Kd;
     public static double Kf;
-
-    private final HardwareMap hardwareMap;
-
-    public ExtendoSlides(HardwareMap hardwareMap) {
+    public ExtendoSlides() {
         super(Kp, Ki, Kd, Kf);
-        this.hardwareMap = hardwareMap;
     }
 
     @Override
     public void init() {
-        this.leftMotor = hardwareMap.dcMotor.get("extendoLeftMotor");
-        this.rightMotor = hardwareMap.dcMotor.get("extendoRightMotor");
+        this.leftMotor = robot.extendoLeft;
+        this.rightMotor = robot.extendoRight;
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

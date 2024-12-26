@@ -3,11 +3,10 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.lib.IntakeClawLib;
-import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 public abstract class Claw extends SubsystemBase implements Mechanism {
-    protected final RobotLib robot = RobotLib.getInstance();
+    protected final Robot robot = Robot.getInstance();
     protected Servo clawServo;
     protected Servo swivelServo;
 

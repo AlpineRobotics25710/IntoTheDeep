@@ -6,9 +6,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.lib.IntakeClawLib;
-import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
-import org.firstinspires.ftc.teamcode.robot.lib.IntakeArmLib;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -16,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @TeleOp(group="test")
 public class LibTeleOp extends CommandOpMode {
     private GamepadEx gp1;
-    private final RobotLib robot = RobotLib.getInstance();
+    private final Robot robot = Robot.getInstance();
 
     @Override
     public void initialize() {

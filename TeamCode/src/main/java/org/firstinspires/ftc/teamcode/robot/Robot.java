@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.lib;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -7,13 +7,15 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.lib.ExtendoSlidesLib;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlides;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
-public class RobotLib {
+public class Robot {
     //hubs
     LynxModule controlHub;
     LynxModule expansionHub;
@@ -63,11 +65,11 @@ public class RobotLib {
 
     public IntakeArm intakeArm; //we want to replace this with an overall intake class but its just an example rn
     public IntakeClaw intakeEnd;
-    public ExtendoSlidesLib extendo;
+    public ExtendoSlides extendo;
 
     public OuttakeClaw outtakeEnd;
 
-    private static RobotLib instance = new RobotLib();
+    private static Robot instance = new Robot();
 
     public void init(HardwareMap map){
         frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
@@ -122,7 +124,7 @@ public class RobotLib {
         //if we were to include our mechanisms they would go here
         intakeArm = new IntakeArm();
         intakeEnd = new IntakeClaw();
-        extendo = new ExtendoSlidesLib();
+        extendo = new ExtendoSlides();
 
         //follower outtake whatever goes here
         outtakeEnd = new OuttakeClaw();
@@ -133,9 +135,9 @@ public class RobotLib {
 
     public boolean enabled;
 
-    public static RobotLib getInstance(){
+    public static Robot getInstance(){
         if(instance == null){
-            instance = new RobotLib();
+            instance = new Robot();
         }
         instance.enabled = true;
         return instance;

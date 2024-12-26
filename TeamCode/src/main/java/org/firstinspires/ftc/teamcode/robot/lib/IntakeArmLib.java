@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
 @Config
 public class IntakeArmLib extends SubsystemBase {
-    private final RobotLib robot = RobotLib.getInstance();
+    private final Robot robot = Robot.getInstance();
     public static double ARM_INTAKE_POS = 0.0;
     public static double ARM_TRANSFER_POS = 0.5;
     public static double WRIST_INTAKE_POS = 0.0;
