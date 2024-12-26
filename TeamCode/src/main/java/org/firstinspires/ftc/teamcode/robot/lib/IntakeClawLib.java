@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
 @Config
 public class IntakeClawLib extends SubsystemBase {
-    private final RobotLib robot = RobotLib.getInstance();
+    private final Robot robot = Robot.getInstance();
 
     public static double CLAW_OPEN_POSITION = 0.0;
     public static double CLAW_CLOSED_POSITION = 0.0;

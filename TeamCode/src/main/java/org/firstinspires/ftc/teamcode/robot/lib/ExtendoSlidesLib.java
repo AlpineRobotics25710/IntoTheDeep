@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
 public class ExtendoSlidesLib extends SubsystemBase {
-    private final RobotLib robot = RobotLib.getInstance();
+    private final Robot robot = Robot.getInstance();
     public double target;
     public final double MAX_EXTENDO_EXTENSION = 0.0;
     public boolean extendoReached;

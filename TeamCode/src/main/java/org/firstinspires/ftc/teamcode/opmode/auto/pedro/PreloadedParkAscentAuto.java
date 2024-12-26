@@ -11,8 +11,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
-import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
-import org.firstinspires.ftc.teamcode.robot.oldcode.Robot;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 /**
  * Defines a blue side 3+0+Ascent autonomous
@@ -27,7 +26,7 @@ public class PreloadedParkAscentAuto extends OpMode {
     private int pathState;
 
     /** Our robot object */
-    private RobotLib robot;
+    private Robot robot;
 
     /* Create and Define Poses + Paths
      * Poses are built with three constructors: x, y, and heading (in Radians).
@@ -240,7 +239,7 @@ public class PreloadedParkAscentAuto extends OpMode {
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
 
-        robot = RobotLib.getInstance();
+        robot = Robot.getInstance();
 
         buildPaths();
     }

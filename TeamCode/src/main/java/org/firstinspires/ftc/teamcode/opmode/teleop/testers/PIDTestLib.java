@@ -4,14 +4,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.lib.RobotLib;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
 @Config
 public class PIDTestLib extends CommandOpMode {
     private static double targetExtendo = 0.0;
-    private final RobotLib robot = RobotLib.getInstance();
+    private final Robot robot = Robot.getInstance();
     @Override
     public void initialize(){
         super.reset();

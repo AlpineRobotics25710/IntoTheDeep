@@ -44,7 +44,7 @@ public abstract class Slides extends SubsystemBase implements Mechanism {
     }
 
     @Override
-    public void update() {
+    public void periodic() {
         if (!manualMode) { // Only use PID control if not in manual mode
             double power = pid.updatePID(leftMotor.getCurrentPosition());
             moveSlides(power);
