@@ -123,6 +123,9 @@ public class Robot {
         outtakeSlideLeft.setDirection(DcMotorEx.Direction.REVERSE);
         outtakeSlideRight.setDirection(DcMotorEx.Direction.FORWARD);
 
+        // Opmode type dependant functions
+        assert opModeType != null;
+
         if (opModeType == OpModeType.AUTO) {
             extendo.setManualMode(false);
             outtakeSlides.setManualMode(false);
