@@ -60,8 +60,8 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
     private double previousHeading;
     private double deltaRadians;
     private double totalHeading;
-    public static double FORWARD_TICKS_TO_INCHES = 0.0019697292456123;
-    public static double STRAFE_TICKS_TO_INCHES = 0.001964347125503735;
+    public static double FORWARD_TICKS_TO_INCHES = 8192 * 1.37795 * 2 * Math.PI * 0.5008239963;
+    public static double STRAFE_TICKS_TO_INCHES = 8192 * 1.37795 * 2 * Math.PI * 0.5018874659;
 
     /**
      * This creates a new TwoWheelLocalizer from a HardwareMap, with a starting Pose at (0,0)
@@ -82,20 +82,20 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      */
     public TwoWheelPinpointIMULocalizer(HardwareMap map, Pose setStartPose) {
         // TODO: replace these with your encoder positions
-        forwardEncoderPose = new Pose(127 / 25.4, -46.0375 / 25.4);
-        strafeEncoderPose = new Pose(127 / 25.4,1.0 , Math.toRadians(90));
+        forwardEncoderPose = new Pose(-50.8, 127);
+        strafeEncoderPose = new Pose(-107.9/25.4+0.25, -1.1/25.4-0.23, Math.toRadians(90));
 
         hardwareMap = map;
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
 
         // TODO: replace these with your encoder ports
-        forwardEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "backLeftMotor"));
-        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "backRightMotor"));
+        forwardEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
+        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "strafeEncoder"));
 
         // TODO: reverse any encoders necessary
-        forwardEncoder.setDirection(Encoder.FORWARD);
+        forwardEncoder.setDirection(Encoder.REVERSE);
         strafeEncoder.setDirection(Encoder.FORWARD);
 
         setStartPose(setStartPose);
