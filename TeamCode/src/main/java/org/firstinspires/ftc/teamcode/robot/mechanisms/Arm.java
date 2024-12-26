@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 public abstract class Arm extends SubsystemBase implements Mechanism {
-    private final Robot robot = Robot.getInstance();
+    protected final Robot robot = Robot.getInstance();
     protected Servo armServoLeft = robot.iArmLeft;
     protected Servo armServoRight = robot.iArmRight;
     protected Servo wristServoLeft = robot.iWristLeft;

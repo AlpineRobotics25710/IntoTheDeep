@@ -20,7 +20,7 @@ public class LibTeleOp extends CommandOpMode {
     public void initialize() {
         super.reset();
         robot.init(hardwareMap);
-        register(robot.intakeArm, robot.intakeEnd);
+        register(robot.intakeArm, robot.intakeClaw);
         gp1 = new GamepadEx(gamepad1);
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.INTAKE))
@@ -29,10 +29,10 @@ public class LibTeleOp extends CommandOpMode {
                 new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.TRANSFER))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenHeld(
-                new InstantCommand(() -> robot.intakeEnd.setSwivelState(Claw.SwivelState.OUTTAKE))
+                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.OUTTAKE))
         );
         gp1.getGamepadButton(GamepadKeys.Button.X).whenReleased(
-                new InstantCommand(() -> robot.intakeEnd.setSwivelState(Claw.SwivelState.TRANSFER))
+                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.TRANSFER))
         );
     }
 

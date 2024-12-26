@@ -12,6 +12,13 @@ public class IntakeArm extends Arm {
     public static double WRIST_INTAKE_POS = 0.0;
     public static double WRIST_TRANSFER_POS = 0.0;
 
+    public IntakeArm() {
+        armServoRight = robot.iArmRight;
+        armServoLeft = robot.iArmLeft;
+        wristServoRight = robot.iWristRight;
+        wristServoLeft = robot.iWristLeft;
+    }
+
     @Override
     public void init() {
         armServoRight.setDirection(Servo.Direction.REVERSE);

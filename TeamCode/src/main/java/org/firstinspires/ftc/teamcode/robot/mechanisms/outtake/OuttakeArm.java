@@ -17,6 +17,13 @@ public class OuttakeArm extends Arm {
     public static double WRIST_TRANSFER_POS = 0.0;
     public static double WRIST_OUTTAKE_POS = 0.0;
 
+    public OuttakeArm() {
+        armServoRight = robot.oArmRight;
+        armServoLeft = robot.oArmLeft;
+        wristServoRight = robot.oWristRight;
+        wristServoLeft = robot.oWristLeft;
+    }
+
     @Override
     public void init() {
         armServoRight.setDirection(Servo.Direction.REVERSE);

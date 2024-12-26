@@ -13,8 +13,8 @@ public class IntakeClaw extends Claw {
     public static double SWIVEL_TRANSFER_POS = 0.0;
 
     public IntakeClaw() {
-        clawServo = robot.intakeClaw;
-        swivelServo = robot.intakeSwivel;
+        clawServo = robot.intakeClawServo;
+        swivelServo = robot.intakeSwivelServo;
     }
 
     @Override

@@ -21,9 +21,9 @@ public class Robot {}
 //public class Robot implements Mechanism {
 //    public HardwareMap hardwareMap;
 //    public OuttakeArm outtakeArm;
-//    public OuttakeClaw outtakeClaw;
+//    public OuttakeClaw outtakeClawServo;
 //    public IntakeArm intakeArm;
-//    public IntakeClaw intakeClaw;
+//    public IntakeClaw intakeClawServo;
 //    public OuttakeSlides outtakeSlides;
 //    public ExtendoSlides extendo;
 //    public Sensors sensors;
@@ -43,18 +43,18 @@ public class Robot {}
 //
 //        // Initialize outtake
 //        /*outtakeArm = new OuttakeArm(hardwareMap);
-//        outtakeClaw = new OuttakeClaw(hardwareMap);*/
+//        outtakeClawServo = new OuttakeClaw(hardwareMap);*/
 //        outtakeSlides = new OuttakeSlides(hardwareMap);
 //        outtakeArm.init();
-//        outtakeClaw.init();
+//        outtakeClawServo.init();
 //        outtakeSlides.init();
 //
 //        // Initialize intake
 //        /*intakeArm = new IntakeArm(hardwareMap);
-//        intakeClaw = new IntakeClaw(hardwareMap);*/
+//        intakeClawServo = new IntakeClaw(hardwareMap);*/
 //        extendo = new ExtendoSlides(hardwareMap);
 //        intakeArm.init();
-//        intakeClaw.init();
+//        intakeClawServo.init();
 //        extendo.init();
 //    }
 //
@@ -75,60 +75,60 @@ public class Robot {}
 //
 //    public void transfer() {
 //        outtakeArm.transfer();
-//        outtakeClaw.transfer();
+//        outtakeClawServo.transfer();
 //        outtakeSlides.transfer();
 //        intakeArm.transfer();
-//        intakeClaw.transfer();
+//        intakeClawServo.transfer();
 //        extendo.transfer();
 //        robotState = MechanismState.TRANSFER;
 //    }
 //
 //    public void intake() {
 //        outtakeArm.intake();
-//        outtakeClaw.intake();
+//        outtakeClawServo.intake();
 //        outtakeSlides.intake();
 //        intakeArm.intake();
-//        intakeClaw.intake();
+//        intakeClawServo.intake();
 //        extendo.intake();
 //        robotState = MechanismState.INTAKE;
 //    }
 //
 //    public void lowChamber() {
 //        outtakeArm.lowChamber();
-//        outtakeClaw.lowChamber();
+//        outtakeClawServo.lowChamber();
 //        outtakeSlides.lowChamber();
 //        intakeArm.lowChamber();
-//        intakeClaw.lowChamber();
+//        intakeClawServo.lowChamber();
 //        extendo.lowChamber();
 //        robotState = MechanismState.LOW_CHAMBER;
 //    }
 //
 //    public void highChamber() {
 //        outtakeArm.highChamber();
-//        outtakeClaw.highChamber();
+//        outtakeClawServo.highChamber();
 //        outtakeSlides.highChamber();
 //        intakeArm.highChamber();
-//        intakeClaw.highChamber();
+//        intakeClawServo.highChamber();
 //        extendo.highChamber();
 //        robotState = MechanismState.HIGH_CHAMBER;
 //    }
 //
 //    public void lowBasket() {
 //        outtakeArm.lowBasket();
-//        outtakeClaw.lowBasket();
+//        outtakeClawServo.lowBasket();
 //        outtakeSlides.lowBasket();
 //        intakeArm.lowBasket();
-//        intakeClaw.lowBasket();
+//        intakeClawServo.lowBasket();
 //        extendo.lowBasket();
 //        robotState = MechanismState.LOW_BASKET;
 //    }
 //
 //    public void highBasket() {
 //        outtakeArm.highBasket();
-//        outtakeClaw.highBasket();
+//        outtakeClawServo.highBasket();
 //        outtakeSlides.highBasket();
 //        intakeArm.highBasket();
-//        intakeClaw.highBasket();
+//        intakeClawServo.highBasket();
 //        extendo.highBasket();
 //        robotState = MechanismState.HIGH_BASKET;
 //    }*/

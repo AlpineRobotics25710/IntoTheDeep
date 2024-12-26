@@ -25,6 +25,14 @@ public abstract class Claw extends SubsystemBase implements Mechanism {
 
     public abstract void setSwivelState(SwivelState state);
 
+    public ClawState getClawState() {
+        return clawState;
+    }
+
+    public SwivelState getSwivelState() {
+        return swivelState;
+    }
+
     public void setClawPosition(double position) {
         clawServo.setPosition(position);
     }

@@ -60,10 +60,10 @@ public class IntakeClawLib extends SubsystemBase {
     }
 
     public void moveClawToPosition(double position) {
-        robot.intakeClaw.setPosition(position);
+        robot.intakeClawServo.setPosition(position);
     }
     public void moveSwivelToPosition(double position) {
-        robot.intakeSwivel.setPosition(position);
+        robot.intakeSwivelServo.setPosition(position);
     }
 
     @Override
