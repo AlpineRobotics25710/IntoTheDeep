@@ -1,3 +1,7 @@
+package org.firstinspires.ftc.teamcode.robot.oldcode;
+
+public class Robot {}
+
 //package org.firstinspires.ftc.teamcode.robot.oldcode;
 //
 //import com.qualcomm.robotcore.hardware.HardwareMap;
