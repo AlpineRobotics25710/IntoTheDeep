@@ -1,0 +1,13 @@
+package org.firstinspires.ftc.teamcode.robot.oldcode;
+
+public enum MechanismState {
+    ASCEND,
+    INTAKE,
+    TRANSFER,
+    LOW_CHAMBER,
+    HIGH_CHAMBER,
+    LOW_BASKET,
+    HIGH_BASKET,
+    WALL_GRAB,
+    IDLE
+}

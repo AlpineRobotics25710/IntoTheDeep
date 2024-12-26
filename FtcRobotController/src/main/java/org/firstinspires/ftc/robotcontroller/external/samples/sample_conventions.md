@@ -69,8 +69,8 @@ left_arm
 ** Servos:
 left_hand
 right_hand
-arm
-claw
+outtakeArm
+outtakeClaw
 
 ** Sensors:
 sensor_color
