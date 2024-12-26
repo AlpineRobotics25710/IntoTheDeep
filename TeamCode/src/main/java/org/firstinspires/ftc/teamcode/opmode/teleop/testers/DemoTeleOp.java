@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode.config.testers;
+package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.teamcode.config.utils.ButtonToggle;
 
 @TeleOp
 public class DemoTeleOp extends LinearOpMode {
@@ -22,30 +20,14 @@ public class DemoTeleOp extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
-        ButtonToggle a = new ButtonToggle();
-        ButtonToggle b = new ButtonToggle();
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
-            if(a.isClicked(gamepad1.a)) {
-                frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-                backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-                frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                telemetry.addData("left reverse", 1);
-            }
-            if(b.isClicked(gamepad1.b)){
-                frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-                backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-                telemetry.addData("right reverse", 2);
-            }
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
