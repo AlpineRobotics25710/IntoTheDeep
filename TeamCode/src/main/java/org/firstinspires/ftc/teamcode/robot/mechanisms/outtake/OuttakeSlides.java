@@ -20,18 +20,14 @@ public class OuttakeSlides extends Slides {
     public static double Kd;
     public static double Kf;
 
-    private final HardwareMap hardwareMap;
-
-    public OuttakeSlides(HardwareMap hardwareMap) {
+    public OuttakeSlides() {
         super(Kp, Ki, Kd, Kf);
-        this.hardwareMap = hardwareMap;
+        this.leftMotor = robot.outtakeSlideLeft;
+        this.rightMotor = robot.outtakeSlideRight;
     }
 
     @Override
     public void init() {
-        this.leftMotor = hardwareMap.dcMotor.get("extendoLeftMotor");
-        this.rightMotor = hardwareMap.dcMotor.get("extendoRightMotor");
-
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

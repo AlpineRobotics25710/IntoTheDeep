@@ -12,7 +12,7 @@ public class RetractCommand extends ParallelCommandGroup {
         addCommands(
             new InstantCommand(() -> robot.intakeEnd.setSwivelState(Claw.SwivelState.INTAKE)),
             new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.TRANSFER)),
-            new InstantCommand(() -> robot.extendo.setExtendoTarget(0))
+            new InstantCommand(() -> robot.extendo.setTargetPosition(0))
         );
     }
 }

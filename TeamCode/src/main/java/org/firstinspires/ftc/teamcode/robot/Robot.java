@@ -54,8 +54,8 @@ public class Robot {
     public Servo oWristRight;
 
     // outtake slides
-    public DcMotorEx slideLeft;
-    public DcMotorEx slideRight;
+    public DcMotorEx outtakeSlideLeft;
+    public DcMotorEx outtakeSlideRight;
 
     //drivetrain
     public DcMotor frontLeftMotor;
@@ -72,6 +72,7 @@ public class Robot {
     private static Robot instance = new Robot();
 
     public void init(HardwareMap map){
+        // Drivetrain motors (but we should be using PedroDrivetrain)
         frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
         backLeftMotor = map.get(DcMotor.class, ("backLeftMotor"));
         frontRightMotor = map.get(DcMotor.class, ("frontRightMotor"));
@@ -87,13 +88,14 @@ public class Robot {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // Extendo
         extendoLeft = map.get(DcMotorEx.class, "extendoLeft");
         extendoRight = map.get(DcMotorEx.class, "extendoRight");
 
         extendoLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
         extendoRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
-        //if teleop then we shouldn't reset encoders :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :)
+        // if teleop then we shouldn't reset encoders
         extendoLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         extendoLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -101,7 +103,9 @@ public class Robot {
         extendoRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         extendoLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        extendoRight.setDirection(DcMotorEx.Direction.FORWARD);
 
+        // Intake
         intakeClaw = map.get(Servo.class, "intakeClaw");
         intakeSwivel = map.get(Servo.class, "intakeSwivel");
 
@@ -113,15 +117,16 @@ public class Robot {
         iArmRight.setDirection(Servo.Direction.REVERSE);
         iWristLeft.setDirection(Servo.Direction.REVERSE);
 
+        // Hubs
         controlHub = map.get(LynxModule.class, "Control Hub");
         controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 
         expansionHub = map.get(LynxModule.class, "Expansion Hub");
-
         expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+
         voltage = map.voltageSensor.iterator().next().getVoltage();
 
-        //if we were to include our mechanisms they would go here
+        // Initialie all mechanisms
         intakeArm = new IntakeArm();
         intakeEnd = new IntakeClaw();
         extendo = new ExtendoSlides();
@@ -130,7 +135,6 @@ public class Robot {
         outtakeEnd = new OuttakeClaw();
 
         TelemetryUtil.setup();
-
     }
 
     public boolean enabled;

@@ -20,7 +20,7 @@ public class OuttakeSlidesTest extends LinearOpMode {
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        Slides slides = new OuttakeSlides(hardwareMap);
+        Slides slides = new OuttakeSlides();
         slides.init();
 
         waitForStart();
