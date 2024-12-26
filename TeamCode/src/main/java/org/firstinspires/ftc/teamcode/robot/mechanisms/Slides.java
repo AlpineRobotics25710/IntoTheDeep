@@ -4,11 +4,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.utils.PID;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public abstract class Slides extends SubsystemBase implements Mechanism {
+    protected Robot robot = Robot.getInstance();
     protected DcMotor leftMotor;
     protected DcMotor rightMotor;
 
@@ -16,7 +18,6 @@ public abstract class Slides extends SubsystemBase implements Mechanism {
     public double targetPosition;
 
     public boolean manualMode = false;
-
 
     public Slides(double Kp, double Ki, double Kd, double Kf) {
         this.pid = new PID(Kp, Ki, Kd, Kf);

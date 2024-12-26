@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
-import org.firstinspires.ftc.teamcode.robot.oldcode.Robot;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 
 
 @Autonomous(name = "4+0 Specimen Preload", group = "Autos")
@@ -318,9 +318,9 @@ public class PreloadedSpecimen4_0Auto extends OpMode {
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
 
-        buildPaths();
+        robot = Robot.getInstance();
 
-        robot.init();
+        buildPaths();
     }
 
     /** This method is called continuously after Init while waiting for "play". **/
