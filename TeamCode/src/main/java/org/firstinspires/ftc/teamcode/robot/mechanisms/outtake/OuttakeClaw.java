@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.outtake;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.MechanismState;
 
 @Config
 public class OuttakeClaw extends Claw {
