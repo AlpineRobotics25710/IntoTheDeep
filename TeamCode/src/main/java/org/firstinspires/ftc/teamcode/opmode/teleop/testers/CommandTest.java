@@ -16,7 +16,7 @@ public class CommandTest extends CommandOpMode {
     public void initialize() {
         super.reset();
         robot.init(hardwareMap);
-        register(robot.intakeArm, robot.extendo, robot.intakeClaw);
+        register(robot.intakeArm, robot.extendo, robot.intakeClaw, robot.outtakeArm, robot.outtakeClaw, robot.outtakeSlides);
 
         // Gamepad
         GamepadEx gp1 = new GamepadEx(gamepad1);
