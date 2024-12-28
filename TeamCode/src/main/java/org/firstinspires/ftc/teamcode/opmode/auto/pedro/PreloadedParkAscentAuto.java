@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -12,6 +13,9 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 
 /**
  * Defines a blue side 3+0+Ascent autonomous
@@ -27,6 +31,9 @@ public class PreloadedParkAscentAuto extends OpMode {
 
     /** Our robot object */
     private Robot robot;
+
+    /** Command scheduler object to schedule FTC Lib commands */
+    private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
 
     /* Create and Define Poses + Paths
      * Poses are built with three constructors: x, y, and heading (in Radians).
@@ -152,47 +159,38 @@ public class PreloadedParkAscentAuto extends OpMode {
         switch (pathState) {
             case 0:
                 follower.followPath(scorePreload);
-                robot.highBasket();
-                robot.transfer();
+                commandScheduler.schedule(new HighBasketCommand(), new TransferCommand(robot));
                 setPathState(1);
                 break;
             case 1:
                 if (isRobotNearPose(currentPose, basketPose, 0.75)) {
-                    robot.intake();
-                    robot.transfer();
+                    commandScheduler.schedule(new IntakeCommand(), new TransferCommand(robot));
                     follower.followPath(sample1);
-                    robot.highBasket();
-                    robot.transfer();
+                    commandScheduler.schedule(new HighBasketCommand(), new TransferCommand(robot));
                     setPathState(2);
                     break;
                 }
             case 2:
                 if (isRobotNearPose(currentPose, basketPose, 0.75)) {
-                    robot.intake();
-                    robot.transfer();
+                    commandScheduler.schedule(new IntakeCommand(), new TransferCommand(robot));
                     follower.followPath(sample2);
-                    robot.highBasket();
-                    robot.transfer();
+                    commandScheduler.schedule(new HighBasketCommand(), new TransferCommand(robot));
                     setPathState(3);
                     break;
                 }
             case 3:
                 if (isRobotNearPose(currentPose, basketPose, 0.75)) {
-                    robot.intake();
-                    robot.transfer();
+                    commandScheduler.schedule(new IntakeCommand(), new TransferCommand(robot));
                     follower.followPath(sample3);
-                    robot.highBasket();
-                    robot.transfer();
+                    commandScheduler.schedule(new HighBasketCommand(), new TransferCommand(robot));
                     setPathState(4);
                     break;
                 }
             case 4:
                 if (isRobotNearPose(currentPose, basketPose, 0.75)) {
-                    robot.intake();
-                    robot.transfer();
+                    commandScheduler.schedule(new IntakeCommand(), new TransferCommand(robot));
                     follower.followPath(ascend);
-                    robot.highBasket();
-                    robot.transfer();
+                    commandScheduler.schedule(new HighBasketCommand(), new TransferCommand(robot));
                     setPathState(-1);
                     break;
                 }
@@ -219,6 +217,9 @@ public class PreloadedParkAscentAuto extends OpMode {
         // These loop the movements of the robot
         follower.update();
         autonomousPathUpdate();
+
+        // Update command calls
+        commandScheduler.run();
 
         // Feedback to Driver Hub
         telemetry.addData("path state", pathState);
