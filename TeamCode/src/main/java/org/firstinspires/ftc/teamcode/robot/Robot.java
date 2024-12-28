@@ -17,66 +17,66 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class Robot {
+    public static OpModeType opModeType;
+    private static Robot instance = new Robot();
     //hubs
-    LynxModule controlHub;
-    LynxModule expansionHub;
-    double voltage;
+    public LynxModule controlHub;
 
     //intake
-
+    public LynxModule expansionHub;
+    public double voltage;
     //extendo
     public DcMotorEx extendoLeft;
     public DcMotorEx extendoRight;
-
     //end effector
     public Servo intakeClawServo;
     public Servo intakeSwivelServo;
-
     //intake arm
     public Servo iArmRight;
     public Servo iArmLeft;
 
+    //outtake
     //intake wrist
     public Servo iWristLeft;
     public Servo iWristRight;
-
-    //outtake
-
     // outtake end effector
     public Servo outtakeClawServo;
     public Servo outtakeSwivelServo;
-
     // outtake arm
     public Servo oArmRight;
     public Servo oArmLeft;
-
     // outtake wrist
     public Servo oWristLeft;
     public Servo oWristRight;
-
     // outtake slides
     public DcMotorEx outtakeSlideLeft;
     public DcMotorEx outtakeSlideRight;
-
     //drivetrain
     public DcMotor frontLeftMotor;
     public DcMotor frontRightMotor;
     public DcMotor backLeftMotor;
     public DcMotor backRightMotor;
-
     public IntakeArm intakeArm; //we want to replace this with an overall intake class but its just an example rn
     public IntakeClaw intakeClaw;
     public ExtendoSlides extendo;
-
     public OuttakeClaw outtakeClaw;
     public OuttakeSlides outtakeSlides;
     public OuttakeArm outtakeArm;
+    public HardwareMap map;
+    public boolean enabled;
+    long lastVoltageUpdatedTime = System.currentTimeMillis();
 
-    private static Robot instance = new Robot();
+    public static Robot getInstance() {
+        if (instance == null) {
+            instance = new Robot();
+        }
+        instance.enabled = true;
+        return instance;
+    }
 
-    public static OpModeType opModeType;
+    public void init(HardwareMap map) {
+        this.map = map;
 
-    public void init(HardwareMap map){
         // Drivetrain motors (but we should be using PedroDrivetrain)
         frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
         backLeftMotor = map.get(DcMotor.class, ("backLeftMotor"));
@@ -193,14 +193,12 @@ public class Robot {
         TelemetryUtil.setup();
     }
 
-    public boolean enabled;
-
-    public static Robot getInstance(){
-        if(instance == null){
-            instance = new Robot();
+    public void updateControlHub() {
+        long currTime = System.currentTimeMillis();
+        double voltageUpdateTime = 1000;
+        if (currTime - lastVoltageUpdatedTime > voltageUpdateTime) {
+            voltage = map.voltageSensor.iterator().next().getVoltage();
         }
-        instance.enabled = true;
-        return instance;
     }
 
     public void ascend() {
@@ -220,7 +218,7 @@ public class Robot {
     }
 
     public void highChamber() {
-
+        
     }
 
     public void lowBasket() {
@@ -231,7 +229,7 @@ public class Robot {
 
     }
 
-    public enum OpModeType{
-        AUTO, TELEOP;
+    public enum OpModeType {
+        AUTO, TELEOP
     }
 }
