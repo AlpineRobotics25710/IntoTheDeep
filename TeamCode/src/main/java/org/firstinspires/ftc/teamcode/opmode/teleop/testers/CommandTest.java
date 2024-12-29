@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.RetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class CommandTest extends CommandOpMode {
@@ -23,7 +23,7 @@ public class CommandTest extends CommandOpMode {
 
         // Test the intake and retract commands
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeCommand());
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RetractCommand());
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(TransferCommand.intakeTransferCommand);
     }
 
     @Override
