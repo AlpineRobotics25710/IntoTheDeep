@@ -16,7 +16,8 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
-public class Robot {
+public class RobotOld {
+    public static OpModeType opModeType;
     //hubs
     public LynxModule controlHub;
 
@@ -62,16 +63,7 @@ public class Robot {
     public OuttakeArm outtakeArm;
     //public HardwareMap map;
     long lastVoltageUpdatedTime = System.currentTimeMillis();
-    private static Robot instance = new Robot();
-    public boolean enabled;
 
-    public static Robot getInstance() {
-        if (instance == null) {
-            instance = new Robot();
-        }
-        instance.enabled = true;
-        return instance;
-    }
     public void init(HardwareMap map) {
         //this.map = map;
 
@@ -123,11 +115,12 @@ public class Robot {
         // Opmode type dependant functions
         //assert opModeType != null;
 
-        //extendoRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        //extendoLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        /*outtakeSlideLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        outtakeSlideRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);*/
-
+        if (opModeType != OpModeType.TELEOP) {
+            extendoRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            extendoLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            /*outtakeSlideLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            outtakeSlideRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);*/
+        }
 
         // Intake
        /* intakeClawServo = map.get(Servo.class, "intakeClawServo");
@@ -182,5 +175,56 @@ public class Robot {
 //        outtakeArm.init();
 
         TelemetryUtil.setup();
+    }
+
+    private static Robot instance = new Robot();
+    public boolean enabled;
+
+    public static Robot getInstance() {
+        if (instance == null) {
+            instance = new Robot();
+        }
+        instance.enabled = true;
+        return instance;
+    }
+
+    public void updateControlHub() {
+        long currTime = System.currentTimeMillis();
+        double voltageUpdateTime = 1000;
+        if (currTime - lastVoltageUpdatedTime > voltageUpdateTime) {
+            //voltage = map.voltageSensor.iterator().next().getVoltage();
+        }
+    }
+
+    public void ascend() {
+
+    }
+
+    public void transfer() {
+
+    }
+
+    public void intake() {
+
+    }
+
+    public void lowChamber() {
+
+    }
+
+    public void highChamber() {
+
+    }
+
+    public void lowBasket() {
+
+    }
+
+    public void highBasket() {
+
+    }
+
+    public enum OpModeType {
+        AUTO, TELEOP
     }
 }

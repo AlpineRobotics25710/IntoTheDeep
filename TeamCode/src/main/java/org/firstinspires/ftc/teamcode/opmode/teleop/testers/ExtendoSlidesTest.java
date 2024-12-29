@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 @TeleOp
 public class ExtendoSlidesTest extends CommandOpMode {
-    private static final Robot robot = Robot.getInstance();
+    private final Robot robot = Robot.getInstance();
     //private static final CommandScheduler cmdScheduler = CommandScheduler.getInstance();
     //public static boolean manualMode = true;
    // public static double targetPosition = 0.0;
@@ -25,7 +25,9 @@ public class ExtendoSlidesTest extends CommandOpMode {
 
         // Cubed to slowly increase speed
         double manualPower = -gamepad1.left_stick_y;
-        robot.extendo.setSlidesPower(manualPower);
+        robot.extendoLeft.setPower(manualPower);
+        robot.extendoRight.setPower(manualPower);
+        //robot.extendo.setSlidesPower(manualPower);
         super.run();
 
         // TelemetryUtil.packet.put("Target Position", robot.extendo.getTargetPosition());

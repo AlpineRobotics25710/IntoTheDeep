@@ -10,8 +10,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class ExtendoSlides extends SubsystemBase {
     private static Robot robot = Robot.getInstance();
-    public static double BASE_POS = 0.0;
-    public static double TRANSFER_POS = 0.0;
     public static double INTAKE_POS = 0.0;
 
     public static double Kp;
@@ -22,9 +20,6 @@ public class ExtendoSlides extends SubsystemBase {
     public double slidesPower = 0.0;
 
     public ExtendoSlides() {
-       // super(Kp, Ki, Kd, Kf);
-        //this.leftMotor = robot.extendoLeft;
-      //  this.rightMotor = robot.extendoRight;
     }
 
     public void setSlidesPower(double slidesPower) {
@@ -32,7 +27,7 @@ public class ExtendoSlides extends SubsystemBase {
     }
 
     public void moveSlides() {
-        TelemetryUtil.packet.put("slidfes power", slidesPower);
+        TelemetryUtil.packet.put("slides power", slidesPower);
         robot.extendoLeft.setPower(slidesPower);
         robot.extendoRight.setPower(slidesPower);
         TelemetryUtil.packet.put("slides power from actual method", robot.extendoLeft.getPower());
@@ -41,10 +36,5 @@ public class ExtendoSlides extends SubsystemBase {
     @Override
     public void periodic() {
         moveSlides();
-    }
-
-    //@Override
-    public void init() {
-        //setTargetPosition(BASE_POS);
     }
 }
