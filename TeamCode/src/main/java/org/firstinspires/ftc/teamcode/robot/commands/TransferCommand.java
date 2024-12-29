@@ -36,5 +36,6 @@ public class TransferCommand extends SequentialCommandGroup {
                 new InstantCommand(() -> robot.outtakeClaw.setClawState(Claw.ClawState.CLOSED)),
                 new InstantCommand(() -> robot.intakeClaw.setClawState(Claw.ClawState.OPEN))
         );
+        addRequirements(robot.outtakeArm, robot.outtakeClaw, robot.outtakeSlides, robot.intakeArm, robot.intakeClaw, robot.extendo);
     }
 }
