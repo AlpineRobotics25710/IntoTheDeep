@@ -32,8 +32,8 @@ public class CommandTest extends CommandOpMode {
         TelemetryUtil.packet.put("Current Arm State", robot.intakeArm.currentState);
         TelemetryUtil.packet.put("Current Claw State", robot.intakeClaw.getClawState());
         TelemetryUtil.packet.put("Current Swivel State", robot.intakeClaw.getSwivelState());
-        TelemetryUtil.packet.put("Current Extendo Position", robot.extendo.getEncoderPosition());
-        TelemetryUtil.packet.put("Extendo target position", robot.extendo.getTargetPosition());
+      //  TelemetryUtil.packet.put("Current Extendo Position", robot.extendo.getEncoderPosition());
+     //   TelemetryUtil.packet.put("Extendo target position", robot.extendo.getTargetPosition());
         TelemetryUtil.sendTelemetry();
     }
 }

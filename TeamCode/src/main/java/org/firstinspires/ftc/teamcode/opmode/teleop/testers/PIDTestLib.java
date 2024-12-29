@@ -20,7 +20,7 @@ public class PIDTestLib extends CommandOpMode {
     }
     public void run(){
         super.run();
-        robot.extendo.setTargetPosition(targetExtendo);
+       // robot.extendo.setTargetPosition(targetExtendo);
         TelemetryUtil.packet.put("Target Extendo", targetExtendo); //this isn't really needed lol
         TelemetryUtil.packet.put("Current Extendo", robot.extendoLeft.getCurrentPosition());
     }

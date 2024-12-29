@@ -18,7 +18,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class Robot {
     public static OpModeType opModeType;
-    private static Robot instance = new Robot();
     //hubs
     public LynxModule controlHub;
 
@@ -26,8 +25,8 @@ public class Robot {
     public LynxModule expansionHub;
     public double voltage;
     //extendo
-    public DcMotorEx extendoLeft;
-    public DcMotorEx extendoRight;
+    public DcMotor extendoLeft;
+    public DcMotor extendoRight;
     //end effector
     public Servo intakeClawServo;
     public Servo intakeSwivelServo;
@@ -49,8 +48,8 @@ public class Robot {
     public Servo oWristLeft;
     public Servo oWristRight;
     // outtake slides
-    public DcMotorEx outtakeSlideLeft;
-    public DcMotorEx outtakeSlideRight;
+    public DcMotor outtakeSlideLeft;
+    public DcMotor outtakeSlideRight;
     //drivetrain
     public DcMotor frontLeftMotor;
     public DcMotor frontRightMotor;
@@ -62,20 +61,12 @@ public class Robot {
     public OuttakeClaw outtakeClaw;
     public OuttakeSlides outtakeSlides;
     public OuttakeArm outtakeArm;
-    public HardwareMap map;
+    //public HardwareMap map;
     public boolean enabled;
     long lastVoltageUpdatedTime = System.currentTimeMillis();
 
-    public static Robot getInstance() {
-        if (instance == null) {
-            instance = new Robot();
-        }
-        instance.enabled = true;
-        return instance;
-    }
-
     public void init(HardwareMap map) {
-        this.map = map;
+        //this.map = map;
 
         // Drivetrain motors (but we should be using PedroDrivetrain)
         frontLeftMotor = map.get(DcMotor.class, ("frontLeftMotor"));
@@ -94,52 +85,46 @@ public class Robot {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Extendo
-        extendoLeft = map.get(DcMotorEx.class, "extendoLeft");
-        extendoRight = map.get(DcMotorEx.class, "extendoRight");
+        extendoLeft = map.get(DcMotor.class, "extendoLeft");
+        extendoRight = map.get(DcMotor.class, "extendoRight");
 
-        extendoLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
-        extendoRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-
+        extendoLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); // this needs to be changed with manual mode but ykw im lazy rn soooooooooo so skibidi sigma ohio rizz ;)
+        extendoRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        TelemetryUtil.packet.put("extendo", "initialized");
         // if teleop then we shouldn't reset encoders
-        extendoLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        extendoRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-
-        extendoLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        extendoRight.setDirection(DcMotorEx.Direction.FORWARD);
+        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
+        extendoRight.setDirection(DcMotor.Direction.FORWARD);
 
         // Outtake slides
-        outtakeSlideLeft = map.get(DcMotorEx.class, "extendoLeft");
-        outtakeSlideRight = map.get(DcMotorEx.class, "extendoRight");
+        /*outtakeSlideLeft = map.get(DcMotor.class, "outtakeLeft");
+        outtakeSlideRight = map.get(DcMotor.class, "outtakeRight");
 
-        outtakeSlideLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        outtakeSlideRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        outtakeSlideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        outtakeSlideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         // if teleop then we shouldn't reset encoders
-        outtakeSlideLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        outtakeSlideRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        outtakeSlideLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        outtakeSlideRight.setDirection(DcMotorEx.Direction.FORWARD);
+        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
+        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);*/
 
         // Opmode type dependant functions
-        assert opModeType != null;
-
-        if (opModeType == OpModeType.AUTO) {
-            extendo.setManualMode(false);
-            outtakeSlides.setManualMode(false);
-        }
+        //assert opModeType != null;
 
         if (opModeType != OpModeType.TELEOP) {
             extendoRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             extendoLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            outtakeSlideLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            outtakeSlideRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            /*outtakeSlideLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            outtakeSlideRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);*/
         }
 
         // Intake
-        intakeClawServo = map.get(Servo.class, "intakeClawServo");
+       /* intakeClawServo = map.get(Servo.class, "intakeClawServo");
         intakeSwivelServo = map.get(Servo.class, "intakeSwivelServo");
 
         iArmLeft = map.get(Servo.class, "iArmLeft");
@@ -148,10 +133,10 @@ public class Robot {
         iWristRight = map.get(Servo.class, "iWristRight");
 
         iArmRight.setDirection(Servo.Direction.REVERSE);
-        iWristLeft.setDirection(Servo.Direction.REVERSE);
+        iWristLeft.setDirection(Servo.Direction.REVERSE);*/
 
         // Outtake
-        outtakeClawServo = map.get(Servo.class, "outtakeClawServo");
+       /* outtakeClawServo = map.get(Servo.class, "outtakeClawServo");
         outtakeSwivelServo = map.get(Servo.class, "outtakeSwivelServo");
 
         oArmLeft = map.get(Servo.class, "oArmLeft");
@@ -160,44 +145,54 @@ public class Robot {
         oWristRight = map.get(Servo.class, "oWristRight");
 
         oArmRight.setDirection(Servo.Direction.REVERSE);
-        oWristLeft.setDirection(Servo.Direction.REVERSE);
+        oWristLeft.setDirection(Servo.Direction.REVERSE);*/
 
         // Hubs
         controlHub = map.get(LynxModule.class, "Control Hub");
-        controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+        controlHub.setBulkCachingMode(LynxModule.BulkCachingMode.OFF);
 
         expansionHub = map.get(LynxModule.class, "Expansion Hub");
-        expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+        expansionHub.setBulkCachingMode(LynxModule.BulkCachingMode.OFF);
 
         voltage = map.voltageSensor.iterator().next().getVoltage();
 
         // Initialize all mechanisms
-        intakeArm = new IntakeArm();
-        intakeClaw = new IntakeClaw();
+//        intakeArm = new IntakeArm();
+//        intakeClaw = new IntakeClaw();
         extendo = new ExtendoSlides();
 
         // Outtake
-        outtakeClaw = new OuttakeClaw();
-        outtakeSlides = new OuttakeSlides();
-        outtakeArm = new OuttakeArm();
+//        outtakeClaw = new OuttakeClaw();
+//        outtakeSlides = new OuttakeSlides();
+//        outtakeArm = new OuttakeArm();
 
         // Follower maybe?
 
-        intakeArm.init();
-        intakeClaw.init();
-        extendo.init();
-        outtakeClaw.init();
-        outtakeSlides.init();
-        outtakeArm.init();
+//        intakeArm.init();
+//        intakeClaw.init();
+       // extendo.init();
+//        outtakeClaw.init();
+//        outtakeSlides.init();
+//        outtakeArm.init();
 
         TelemetryUtil.setup();
+    }
+
+    private static Robot instance = new Robot();
+
+    public static Robot getInstance() {
+        if (instance == null) {
+            instance = new Robot();
+        }
+        instance.enabled = true;
+        return instance;
     }
 
     public void updateControlHub() {
         long currTime = System.currentTimeMillis();
         double voltageUpdateTime = 1000;
         if (currTime - lastVoltageUpdatedTime > voltageUpdateTime) {
-            voltage = map.voltageSensor.iterator().next().getVoltage();
+            //voltage = map.voltageSensor.iterator().next().getVoltage();
         }
     }
 

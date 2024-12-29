@@ -1,47 +1,45 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.ExtendoSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 @TeleOp
 public class ExtendoSlidesTest extends CommandOpMode {
-    public static boolean manualMode = false;
-    public static double targetPosition = 0.0;
-    Robot robot = Robot.getInstance();
+    private static final Robot robot = Robot.getInstance();
+    //private static final CommandScheduler cmdScheduler = CommandScheduler.getInstance();
+    //public static boolean manualMode = true;
+   // public static double targetPosition = 0.0;
 
     @Override
-    public void runOpMode() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+    public void run() {
+        //TelemetryUtil.packet.put("Manual Mode", robot.extendo.manualMode);
+        // cmdScheduler.reset();
 
-        robot.extendo.setTargetPosition(targetPosition);
-        robot.extendo.setManualMode(manualMode);
+        //robot.extendo.setTargetPosition(targetPosition);
+        //robot.extendo.setManualMode(true);
 
         // Cubed to slowly increase speed
-        double manualSlidesPower = Range.clip(Math.pow(-gamepad1.left_stick_y, 3), -1, 1);
-        robot.extendo.moveSlides(manualSlidesPower);
-
-        telemetry.addData("Target Position", robot.extendo.getTargetPosition());
-        telemetry.addData("Encoder Position", robot.extendo.getEncoderPosition());
-        telemetry.addData("Manual Mode", robot.extendo.manualMode);
-
+        double manualPower = -gamepad1.left_stick_y;
+        robot.extendo.setSlidesPower(manualPower);
         super.run();
-        telemetry.update();
+
+        // TelemetryUtil.packet.put("Target Position", robot.extendo.getTargetPosition());
+      //  TelemetryUtil.packet.put("Encoder Position", robot.extendo.getEncoderPosition());
+      //  TelemetryUtil.packet.put("Manual Mode", Slides.manualMode);
+        TelemetryUtil.packet.put("Manual power", manualPower);
+        TelemetryUtil.sendTelemetry();
     }
 
     @Override
     public void initialize() {
         super.reset();
         robot.init(hardwareMap);
+        //robot.extendo.manualMode = true;
         register(robot.extendo);
     }
 }

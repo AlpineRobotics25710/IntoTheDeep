@@ -30,8 +30,7 @@ public class OuttakeSlidesTest extends LinearOpMode {
             slides.setManualMode(manualMode);
 
             // Cubed to slowly increase speed
-            double manualSlidesPower = Range.clip(Math.pow(-gamepad1.left_stick_y, 3), -1, 1);
-            slides.moveSlides(manualSlidesPower);
+            slides.setManualPower(Range.clip(Math.pow(-gamepad1.left_stick_y, 3), -1, 1));
 
             telemetry.addData("Target Position", slides.getTargetPosition());
             telemetry.addData("Encoder Position", slides.getEncoderPosition());
