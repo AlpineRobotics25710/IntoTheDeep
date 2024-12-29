@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
-import org.firstinspires.ftc.teamcode.robot.RobotLib;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class ExtendoSlides extends SubsystemBase {
-    private static RobotLib robot = RobotLib.getInstance();
+    private static Robot robot = Robot.getInstance();
     public static double BASE_POS = 0.0;
     public static double TRANSFER_POS = 0.0;
     public static double INTAKE_POS = 0.0;

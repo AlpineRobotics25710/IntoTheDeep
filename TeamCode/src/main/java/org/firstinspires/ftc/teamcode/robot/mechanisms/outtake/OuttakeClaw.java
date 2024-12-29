@@ -16,8 +16,8 @@ public class OuttakeClaw extends Claw {
     public static double SWIVEL_OUTTAKE_POS = 0.0;
 
     public OuttakeClaw() {
-        //clawServo = robot.outtakeClawServo;
-      //  swivelServo = robot.outtakeSwivelServo;
+        clawServo = robot.outtakeClawServo;
+        swivelServo = robot.outtakeSwivelServo;
     }
 
     @Override

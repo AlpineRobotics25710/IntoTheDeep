@@ -4,12 +4,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.RobotLib;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Slides;
 
 @Config
 public class OuttakeSlides extends Slides {
-    private static final RobotLib robot = RobotLib.getInstance();
+    private static final Robot robot = Robot.getInstance();
 
     public static double BASE_POS = 0.0;
     public static double LOW_BASKET_POS = 0.0;
@@ -25,8 +25,8 @@ public class OuttakeSlides extends Slides {
 
     public OuttakeSlides() {
         super(Kp, Ki, Kd, Kf);
-       // this.leftMotor = robot.outtakeSlideLeft;
-       // this.rightMotor = robot.outtakeSlideRight;
+        this.leftMotor = robot.outtakeSlideLeft;
+        this.rightMotor = robot.outtakeSlideRight;
     }
 
     @Override
