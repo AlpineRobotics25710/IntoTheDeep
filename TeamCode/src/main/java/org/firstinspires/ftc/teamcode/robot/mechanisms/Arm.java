@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.RobotLib;
 
 public abstract class Arm extends SubsystemBase implements Mechanism {
-    protected final Robot robot = Robot.getInstance();
+    protected final RobotLib robot = RobotLib.getInstance();
     protected Servo armServoLeft = robot.iArmLeft;
     protected Servo armServoRight = robot.iArmRight;
     protected Servo wristServoLeft = robot.iWristLeft;

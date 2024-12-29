@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.RobotLib;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Arm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -14,13 +14,13 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @TeleOp(group="test")
 public class LibTeleOp extends CommandOpMode {
     private GamepadEx gp1;
-    private final Robot robot = Robot.getInstance();
+    private final RobotLib robot = RobotLib.getInstance();
 
     @Override
     public void initialize() {
         super.reset();
         robot.init(hardwareMap);
-        register(robot.intakeArm, robot.intakeClaw);
+      //  register(robot.intakeArm, robot.intakeClaw);
         gp1 = new GamepadEx(gamepad1);
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.INTAKE))
@@ -28,12 +28,12 @@ public class LibTeleOp extends CommandOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
                 new InstantCommand(() -> robot.intakeArm.setState(Arm.ArmState.TRANSFER))
         );
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenHeld(
-                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.OUTTAKE))
-        );
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenReleased(
-                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.TRANSFER))
-        );
+//        gp1.getGamepadButton(GamepadKeys.Button.X).whenHeld(
+//                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.OUTTAKE))
+//        );
+//        gp1.getGamepadButton(GamepadKeys.Button.X).whenReleased(
+//                new InstantCommand(() -> robot.intakeClaw.setSwivelState(Claw.SwivelState.TRANSFER))
+//        );
     }
 
     @Override
