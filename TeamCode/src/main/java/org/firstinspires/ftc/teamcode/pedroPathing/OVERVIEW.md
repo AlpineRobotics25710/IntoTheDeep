@@ -97,7 +97,7 @@ junction. Pedro Pathing would be able to recover and correct from a robot collis
 more consistent scoring.
 
 ### TeleOp Enhancements
-Finally, Pedro Pathing can be used in Teleop to enhance driving. With regular mecanum drive, robots
+Finally, Pedro Pathing can be used in TeleOp to enhance driving. With regular mecanum drive, robots
 will tend to swing out when taking corners. Pedro Pathing can account for that, allowing the robot
 to take corners more smoothly and efficiently. Using the same localizer as is used in autonomous, a
 first and second derivative can be estimated from previous positions. Then, with a modified version

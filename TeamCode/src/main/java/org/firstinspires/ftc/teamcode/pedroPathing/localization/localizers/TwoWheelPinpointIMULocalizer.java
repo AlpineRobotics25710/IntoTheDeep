@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  *
  * forward on robot is the x positive direction
  *
- *                         forward (x positive)
+*                         forward (x positive)
  *                                △
  *                                |
  *                                |
@@ -33,7 +33,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  *                         |              |
  *                         |              |
  *                         |           || |
- *  left (y positive) <--- |           || |
+ *  left (y positive) <--- |           || |  
  *                         |     ____     |
  *                         |     ----     |
  *                         \--------------/
@@ -82,8 +82,8 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      */
     public TwoWheelPinpointIMULocalizer(HardwareMap map, Pose setStartPose) {
         // TODO: replace these with your encoder positions
-        forwardEncoderPose = new Pose(-50.8, 127);
-        strafeEncoderPose = new Pose(-107.9/25.4+0.25, -1.1/25.4-0.23, Math.toRadians(90));
+        forwardEncoderPose = new Pose(-0.82, 6.47, 0);
+        strafeEncoderPose = new Pose(-4, -0.273, Math.toRadians(90));
 
         hardwareMap = map;
 
@@ -103,6 +103,7 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
         deltaTimeNano = 1;
         displacementPose = new Pose();
         currentVelocity = new Pose();
+        previousHeading = startPose.getHeading();
         deltaRadians = 0;
     }
 
@@ -293,7 +294,28 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      * This resets the IMU.
      */
 
-    public void resetIMU() {
+    @Override
+    public void resetIMU() throws InterruptedException {
+        pinpoint.recalibrateIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * This resets the pinpoint.
+     */
+    private void resetPinpoint() throws InterruptedException{
         pinpoint.resetPosAndIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+
