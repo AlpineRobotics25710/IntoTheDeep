@@ -35,7 +35,5 @@ public class SampleOpModeNoLib extends LinearOpMode {
                 robot.intakeEnd.setState(IntakeEnd.ActiveState.OFF);
             }
         }
-
-        robot.clearHubCache();
     }
 }

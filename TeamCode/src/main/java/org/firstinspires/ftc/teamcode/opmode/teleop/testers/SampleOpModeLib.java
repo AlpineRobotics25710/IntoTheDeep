@@ -37,7 +37,5 @@ public class SampleOpModeLib extends LinearOpMode {
         while (opModeIsActive()) {
             robot.loop();
         }
-
-        robot.clearHubCache();
     }
 }

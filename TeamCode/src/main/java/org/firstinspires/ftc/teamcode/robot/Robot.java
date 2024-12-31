@@ -107,8 +107,8 @@ public class Robot {
 
         extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Bulk caching mode of hubs
         // Bulk reading enabled!
