@@ -22,13 +22,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import pedroPathing.constants.FConstants;
-import pedroPathing.constants.LConstants;
 
 /**
  * This is the ForwardVelocityTuner autonomous follower OpMode. This runs the robot forwards at max
@@ -48,19 +49,15 @@ import pedroPathing.constants.LConstants;
 @Config
 @Autonomous(name = "Forward Velocity Tuner", group = "Automatic Tuners")
 public class ForwardVelocityTuner extends OpMode {
-    private ArrayList<Double> velocities = new ArrayList<>();
-
+    public static double DISTANCE = 48;
+    public static double RECORD_NUMBER = 10;
+    private final ArrayList<Double> velocities = new ArrayList<>();
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
     private List<DcMotorEx> motors;
-
     private PoseUpdater poseUpdater;
-
-    public static double DISTANCE = 48;
-    public static double RECORD_NUMBER = 10;
-
     private Telemetry telemetryA;
 
     private boolean end;
@@ -161,7 +158,7 @@ public class ForwardVelocityTuner extends OpMode {
             for (Double velocity : velocities) {
                 average += velocity;
             }
-            average /= (double) velocities.size();
+            average /= velocities.size();
 
             telemetryA.addData("forward velocity:", average);
             telemetryA.update();
