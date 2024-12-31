@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.PedroDrivetrain;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class PedroDrivetrainTest extends LinearOpMode {
     @Override
@@ -18,6 +19,7 @@ public class PedroDrivetrainTest extends LinearOpMode {
         Follower follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         PedroDrivetrain drivetrain = new PedroDrivetrain(gamepad1, follower, startPose);
         GamepadEx gp1 = new GamepadEx(gamepad1);
+        TelemetryUtil.setup(telemetry);
 
         waitForStart();
 
@@ -36,6 +38,10 @@ public class PedroDrivetrainTest extends LinearOpMode {
 
             if (gp1.wasJustPressed(GamepadKeys.Button.Y)) {
                 drivetrain.goToWaypointWithTangentialHeading();
+            }
+
+            if (gp1.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+                drivetrain.clearWaypoints();
             }
 
             if (gp1.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
