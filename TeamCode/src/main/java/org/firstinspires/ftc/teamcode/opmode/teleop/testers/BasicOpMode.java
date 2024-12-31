@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.Robot;
-public class BasicTeleOp extends CommandOpMode {
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
+
+public class BasicOpMode extends OpMode {
     private Robot robot;
     DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
+
     @Override
-    public void initialize() {
+    public void init() {
         GamepadEx driver = new GamepadEx(gamepad1);
         GamepadEx operator = new GamepadEx(gamepad2);
 
@@ -27,17 +27,17 @@ public class BasicTeleOp extends CommandOpMode {
         backRightMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        driver.getGamepadButton(GamepadKeys.Button.A).whenHeld(
-            new InstantCommand(()
-        );
+        //operator
+        operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
+                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.ON)));
 
-        //
-        //gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(armIntakeCommand);
-        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(armTransferCommand);
+//        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+//
+//        );
     }
 
     @Override
-    public void run() {
+    public void loop() {
         double y = Math.pow(-gamepad1.left_stick_y, 3);
         double x = Math.pow(gamepad1.left_stick_x * 1.1, 3);
         double rx = Math.pow(gamepad1.right_stick_x, 3);
@@ -52,6 +52,7 @@ public class BasicTeleOp extends CommandOpMode {
         backLeftMotor.setPower(backLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);
+
 
         robot.loop();
     }
