@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 // Bro i literally just copy pasted the extendo class and changed the name of the constructor if this works imma make a super class and test that
 @Config
 public class OuttakeSlides extends SubsystemBase {
-    private static final double kP = 0.0;
-    private static final double kI = 0.0;
-    private static final double kD = 0.0;
-    private static final double kF = 0.0;
+    public static double kP = 0.0;
+    public static double kI = 0.0;
+    public static double kD = 0.0;
+    public static double kF = 0.0;
     private static PIDFController outtakePIDF;
     private final DcMotor left; //we can make left our lead motor in this case
     private final DcMotor right;

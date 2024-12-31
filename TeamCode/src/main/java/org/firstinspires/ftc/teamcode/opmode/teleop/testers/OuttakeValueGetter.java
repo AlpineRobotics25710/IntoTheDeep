@@ -34,7 +34,7 @@ public class OuttakeValueGetter extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        while (opModeIsActive()) {
             outtakeArm.setArmPosition(armPos);
             outtakeArm.setWristPosition(wristPos);
             outtakeClaw.setClawPosition(clawPos);

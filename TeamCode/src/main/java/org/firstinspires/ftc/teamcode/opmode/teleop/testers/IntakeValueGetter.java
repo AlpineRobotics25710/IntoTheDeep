@@ -32,7 +32,7 @@ public class IntakeValueGetter extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        while (opModeIsActive()) {
             intakeArm.setArmPosition(armPos);
             intakeArm.setWristPosition(wristPos);
             intakeEnd.setState(activeState);
