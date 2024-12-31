@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeArm extends SubsystemBase {
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR ARM
-    public static double ARM_WALL_INTAKE_POS = 0.075; // COMPLETE
-    public static double ARM_TRANSFER_POS = 0.95; // COMPLETE
+    public static double ARM_WALL_INTAKE_POS = 0; // COMPLETE
+    public static double ARM_TRANSFER_POS = 0.8; // COMPLETE
     public static double ARM_OUTTAKE_POS = 0.0;
 
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR WRIST

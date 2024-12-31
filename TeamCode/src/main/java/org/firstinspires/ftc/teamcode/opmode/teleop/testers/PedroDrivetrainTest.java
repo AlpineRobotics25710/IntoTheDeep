@@ -2,17 +2,20 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
+
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.PedroDrivetrain;
 
 public class PedroDrivetrainTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose startPose = new Pose(0, 0, 0);
-        Follower follower = new Follower(hardwareMap);
+        Follower follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         PedroDrivetrain drivetrain = new PedroDrivetrain(gamepad1, follower, startPose);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 

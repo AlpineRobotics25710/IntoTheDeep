@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
 public class Extendo extends SubsystemBase {
-    private static final double kP = 0.0;
-    private static final double kI = 0.0;
-    private static final double kD = 0.0;
-    private static final double kF = 0.0;
+    public static double kP = 0.0;
+    public static double kI = 0.0;
+    public static double kD = 0.0;
+    public static double kF = 0.0;
     private static PIDFController extendoPIDF;
     private final DcMotor left; //we can make left our lead motor in this case
     private final DcMotor right;

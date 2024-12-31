@@ -4,11 +4,11 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeClaw extends SubsystemBase {
-    public static double CLAW_OPEN_POS = 0.3; // DONE
-    public static double CLAW_CLOSED_POS = 0.55; // DONE
+    public static double CLAW_OPEN_POS = 0.1; // DONE
+    public static double CLAW_CLOSED_POS = 0.3; // DONE
     public static double SWIVEL_WALL_INTAKE_POS = 0.0;
-    public static double SWIVEL_TRANSFER_POS = 0.0;
-    public static double SWIVEL_OUTTAKE_POS = 0.0;
+    public static double SWIVEL_TRANSFER_POS = 0.3; // DONE
+    public static double SWIVEL_OUTTAKE_POS = 0.65; // DONE
 
     private final Servo clawServo;
     private final Servo swivelServo;

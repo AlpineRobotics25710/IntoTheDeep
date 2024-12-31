@@ -24,7 +24,7 @@ public class OuttakeSlidesValueGetter extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        while (opModeIsActive()) {
             extendo.setTargetPosition(targetPosition);
             extendo.periodic();
         }
