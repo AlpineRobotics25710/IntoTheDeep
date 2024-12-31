@@ -34,7 +34,7 @@ public class PedroDrivetrain {
         } else if (waypoint2 == null) {
             waypoint2 = follower.getPose();
         } else {
-            TelemetryUtil.addData("PedroDrivetrain", "You already have two waypoints set! Clear them to set new ones.");
+            TelemetryUtil.addData("PedroDrivetrain", "Both waypoints are already set. Clear waypoints before setting new ones.");
         }
     }
 
@@ -51,17 +51,27 @@ public class PedroDrivetrain {
     public void goToWaypointWithLinearHeading() {
         Pose currPose = follower.getPose();
 
-        if (waypoint1 != null) {
-            if (waypoint2 != null) {
-                Path path2 = new Path(new BezierLine(new Point(waypoint1), new Point(waypoint2)));
-                path2.setLinearHeadingInterpolation(waypoint1.getHeading(), waypoint2.getHeading());
-                follower.followPath(path2);
-            } else {
-                Path path1 = new Path(new BezierLine(new Point(currPose), new Point(waypoint1)));
-                path1.setLinearHeadingInterpolation(currPose.getHeading(), waypoint1.getHeading());
-                follower.followPath(path1);
+        if (waypoint1 != null && waypoint2 != null) {
+            if (isRobotNearPose(currPose, waypoint1, 1)) {
+                Path path = new Path(new BezierLine(new Point(waypoint1), new Point(waypoint2)));
+                path.setLinearHeadingInterpolation(waypoint1.getHeading(), waypoint2.getHeading());
+                follower.followPath(path);
+            } else if (isRobotNearPose(currPose, waypoint2, 1)) {
+                Path path = new Path(new BezierLine(new Point(waypoint2), new Point(waypoint1)));
+                path.setLinearHeadingInterpolation(waypoint2.getHeading(), waypoint1.getHeading());
+                follower.followPath(path);
             }
+        } else {
+            TelemetryUtil.addData("PedroDrivetrain", "Both waypoints are not set!");
         }
+    }
+
+    // If we like this we can add methods like this for the rest of the heading types
+    public void goToWaypointWithLinearHeadingFromCurrPose(Pose waypoint) {
+        Pose currPose = follower.getPose();
+        Path path = new Path(new BezierLine(new Point(currPose), new Point(waypoint)));
+        path.setLinearHeadingInterpolation(currPose.getHeading(), waypoint.getHeading());
+        follower.followPath(path);
     }
 
     public void goToWaypointWithConstantHeading() {
@@ -99,5 +109,12 @@ public class PedroDrivetrain {
     public void clearWaypoints() {
         waypoint1 = null;
         waypoint2 = null;
+    }
+
+    /** isRobotNearPose() method used for the autonomousPathUpdate and
+     * checking the proximity of the robot, to a specific position. **/
+    private boolean isRobotNearPose(Pose robotPose, Pose targetPose, double tolerance) {
+        return Math.abs(robotPose.getX() - targetPose.getX()) <= tolerance &&
+                Math.abs(robotPose.getY() - targetPose.getY()) <= tolerance;
     }
 }
