@@ -10,6 +10,7 @@ public class GenericTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+
             //robot.update();
         }
     }

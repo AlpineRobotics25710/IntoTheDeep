@@ -17,6 +17,7 @@ public class Extendo extends SubsystemBase {
     public boolean extendoReached;
     private double targetPosition = 0.0;
     private boolean manualMode;
+    public final static double MAX_LENGTH = 0;
 
     public Extendo(DcMotor left, DcMotor right, boolean manualMode) {
         this.left = left;

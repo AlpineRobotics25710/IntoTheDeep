@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 
+import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -319,7 +320,8 @@ public class PreloadedSpecimen4_0Auto extends OpMode {
 
         opmodeTimer.resetTimer();
 
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        Constants.setConstants(FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
 
         robot = new Robot(hardwareMap, true, false);
