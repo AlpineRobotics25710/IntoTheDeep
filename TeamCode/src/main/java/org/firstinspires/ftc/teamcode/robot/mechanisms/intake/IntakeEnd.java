@@ -12,18 +12,24 @@ public class IntakeEnd extends SubsystemBase {
     }
 
     public void toggleState() {
-        if (currentState == ActiveState.ON) {
+        if (currentState == ActiveState.HIGH) {
+            setState(ActiveState.LOW);
+        } else if (currentState == ActiveState.LOW){
             setState(ActiveState.OFF);
         } else {
-            setState(ActiveState.ON);
+            setState(ActiveState.HIGH);
         }
     }
 
     public void setState(ActiveState state) {
         currentState = state;
         switch (state) {
-            case ON:
+            case HIGH:
                 intakeServo.setPower(1);
+                break;
+
+            case LOW:
+                intakeServo.setPower(0.5);
                 break;
 
             case OFF:
@@ -40,7 +46,7 @@ public class IntakeEnd extends SubsystemBase {
         return currentState;
     }
 
-    public enum ActiveState{
-        ON, OFF
+    public enum ActiveState {
+        HIGH, LOW, OFF
     }
 }

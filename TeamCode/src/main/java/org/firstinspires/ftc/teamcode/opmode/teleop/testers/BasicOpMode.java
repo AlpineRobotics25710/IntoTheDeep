@@ -29,7 +29,7 @@ public class BasicOpMode extends OpMode {
 
         //operator
         operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.ON)));
+                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.HIGH)));
 
 //        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
 //

@@ -29,7 +29,7 @@ public class SampleOpModeNoLib extends LinearOpMode {
                 robot.intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER);
             }
             if (gamepad1.x) {
-                robot.intakeEnd.setState(IntakeEnd.ActiveState.ON);
+                robot.intakeEnd.setState(IntakeEnd.ActiveState.HIGH);
             }
             if (gamepad1.y) {
                 robot.intakeEnd.setState(IntakeEnd.ActiveState.OFF);

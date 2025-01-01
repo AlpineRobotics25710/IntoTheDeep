@@ -8,6 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 // Bro i literally just copy pasted the extendo class and changed the name of the constructor if this works imma make a super class and test that
 @Config
 public class OuttakeSlides extends SubsystemBase {
+    // TODO: NEED TO FIND REAL VALUES
+    public static final double TRANSFER_POS = 0.0;
+    public static final double BASKET_ONE = 0.0;
+    public static final double BASKET_TWO = 0.0;
+    public static final double LOW_RUNG = 0.0;
+    public static final double HIGH_RUNG = 0.0;
     public static double kP = 0.0;
     public static double kI = 0.0;
     public static double kD = 0.0;

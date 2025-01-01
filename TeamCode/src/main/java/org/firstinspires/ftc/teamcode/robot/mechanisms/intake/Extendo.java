@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
 public class Extendo extends SubsystemBase {
+    // TODO: NEED TO FIND REAL VALUES
+    public static final double MAX_LENGTH = 0.0;
+    public static final double BASE_POS = 0.0;
     public static double kP = 0.0;
     public static double kI = 0.0;
     public static double kD = 0.0;
@@ -17,7 +20,6 @@ public class Extendo extends SubsystemBase {
     public boolean extendoReached;
     private double targetPosition = 0.0;
     private boolean manualMode;
-    public final static double MAX_LENGTH = 0;
 
     public Extendo(DcMotor left, DcMotor right, boolean manualMode) {
         this.left = left;
