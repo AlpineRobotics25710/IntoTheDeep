@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
@@ -15,7 +16,8 @@ public class PedroDrivetrainTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose startPose = new Pose(0, 0, 0);
-        Follower follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        Constants.setConstants(FConstants.class, LConstants.class);
+        Follower follower = new Follower(hardwareMap);
         PedroDrivetrain drivetrain = new PedroDrivetrain(gamepad1, follower, startPose);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
