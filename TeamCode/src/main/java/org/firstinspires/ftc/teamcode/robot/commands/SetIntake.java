@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 
 @Config
 public class SetIntake extends CommandBase {
-    public static final double armWaitTime = 750.0; //500 ms for now
+    public static final double armWaitTime = 500.0; //500 ms for now
     private final IntakeEnd intakeEnd;
     private final IntakeArm intakeArm;
     private final Extendo extendo;
@@ -38,7 +38,7 @@ public class SetIntake extends CommandBase {
     @Override
     public void initialize(){
         intakeArm.setState(armState);
-        if(activeState.equals(IntakeEnd.ActiveState.HIGH)){
+        if(activeState.equals(IntakeEnd.ActiveState.FORWARD)){
             intakeEnd.setState(activeState);
         }
         extendo.setTargetPosition(target);

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 @Config
 public class SetOuttake extends CommandBase {
-    private static final double armWaitTime = 500.0; // 500ms wait for arm movement
+    private static final double armWaitTime = 700.0; // 500ms wait for arm movement
     private static final double clawWaitTime = 200.0; // 200ms wait for claw movement
 
     private final OuttakeArm outtakeArm;
