@@ -19,7 +19,7 @@ public class OuttakeArm extends SubsystemBase {
     private final Servo wristServoLeft;
     private final Servo wristServoRight;
 
-    public static OuttakeArmState currentState;
+    private OuttakeArmState currentState;
 
     public OuttakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoRight, Servo wristServoLeft) {
         this.armServoRight = armServoRight;
