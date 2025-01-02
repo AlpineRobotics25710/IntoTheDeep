@@ -49,7 +49,7 @@ public class SetIntake extends CommandBase {
     @Override
     public void execute() {
         if (waitForArm) {
-            if (timer.milliseconds() > armWaitTime && activeState.equals(IntakeEnd.ActiveState.REVERSE)) {
+            if (timer.milliseconds() > armWaitTime && activeState.equals(IntakeEnd.ActiveState.REVERSED)) {
                 intakeEnd.setState(activeState);
                 waitForArm = false;
             }
