@@ -12,28 +12,28 @@ public class IntakeEnd extends SubsystemBase {
     }
 
     public void toggleState() {
-        if (currentState == ActiveState.HIGH) {
-            setState(ActiveState.LOW);
-        } else if (currentState == ActiveState.LOW){
+        if (currentState == ActiveState.FORWARD) {
+            setState(ActiveState.REVERSE);
+        } else if (currentState == ActiveState.REVERSE){
             setState(ActiveState.OFF);
         } else {
-            setState(ActiveState.HIGH);
+            setState(ActiveState.FORWARD);
         }
     }
 
     public void setState(ActiveState state) {
         currentState = state;
         switch (state) {
-            case HIGH:
+            case FORWARD:
                 intakeServo.setPower(1);
+                break;
+
+            case REVERSE:
+                intakeServo.setPower(-1);
                 break;
 
             case OFF:
                 intakeServo.setPower(0);
-                break;
-
-            case REVERSED:
-                intakeServo.setPower(-1);
                 break;
         }
     }
@@ -47,6 +47,6 @@ public class IntakeEnd extends SubsystemBase {
     }
 
     public enum ActiveState {
-        HIGH, OFF, REVERSED
+        FORWARD, REVERSE, OFF
     }
 }
