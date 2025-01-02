@@ -124,7 +124,6 @@ public class Robot {
         voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
 
         // Initialize all mechanisms
-        // TODO: The rest need to be done like this
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight, iWristLeft);
         intakeEnd = new IntakeEnd(activeIntake);
         extendo = new Extendo(extendoLeft, extendoRight, manualMode);
