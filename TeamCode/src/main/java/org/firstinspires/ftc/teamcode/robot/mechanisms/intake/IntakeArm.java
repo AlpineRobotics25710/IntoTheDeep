@@ -8,7 +8,7 @@ public class IntakeArm extends SubsystemBase {
     public static double ARM_TRANSFER_POS = 0.0;
     public static double WRIST_INTAKE_POS = 0.0;
     public static double WRIST_TRANSFER_POS = 0.0;
-    private IntakeArmState currentState;
+    public static IntakeArmState currentState;
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServoLeft;

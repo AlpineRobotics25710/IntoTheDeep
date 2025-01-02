@@ -30,7 +30,7 @@ public class SampleOpModeLib extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> robot.intakeEnd.toggleState()));
 
         // Using the IntakeCommand
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new IntakeCommand(robot.intakeArm, robot.extendo));
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new IntakeCommand(robot));
 
         waitForStart();
 

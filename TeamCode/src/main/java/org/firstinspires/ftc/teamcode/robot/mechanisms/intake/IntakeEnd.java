@@ -28,12 +28,12 @@ public class IntakeEnd extends SubsystemBase {
                 intakeServo.setPower(1);
                 break;
 
-            case LOW:
-                intakeServo.setPower(0.5);
-                break;
-
             case OFF:
                 intakeServo.setPower(0);
+                break;
+
+            case REVERSED:
+                intakeServo.setPower(-1);
                 break;
         }
     }
@@ -47,6 +47,6 @@ public class IntakeEnd extends SubsystemBase {
     }
 
     public enum ActiveState {
-        HIGH, LOW, OFF
+        HIGH, OFF, REVERSED
     }
 }
