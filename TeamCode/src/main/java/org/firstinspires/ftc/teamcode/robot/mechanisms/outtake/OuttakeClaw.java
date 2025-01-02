@@ -13,7 +13,7 @@ public class OuttakeClaw extends SubsystemBase {
     private final Servo clawServo;
     private final Servo swivelServo;
 
-    public static OuttakeClawState clawState;
+    private OuttakeClawState clawState;
     private OuttakeSwivelState swivelState;
 
     public OuttakeClaw(Servo clawServo, Servo swivelServo) {
