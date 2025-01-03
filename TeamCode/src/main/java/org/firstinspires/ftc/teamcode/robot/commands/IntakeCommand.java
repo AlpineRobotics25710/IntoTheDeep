@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -13,12 +14,13 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 /**
  * Gets ready to intake a game piece
  */
+@Config
 public class IntakeCommand extends SequentialCommandGroup {
     private final IntakeEnd intakeEnd;
     private final IntakeArm intakeArm;
     private final Extendo extendo;
-    private static final long ARM_WAIT_TIME = 750;
-    private static final long ACTIVE_WAIT_TIME = 300;
+    public static long ARM_WAIT_TIME = 750;
+    public static long ACTIVE_WAIT_TIME = 300;
 
     public IntakeCommand(Robot robot) {
         intakeEnd = robot.intakeEnd;

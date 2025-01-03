@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class OuttakeSlides extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
     public static final double TRANSFER_POS = 0.0;
-    public static final double BASKET_ONE = 0.0;
-    public static final double BASKET_TWO = 0.0;
+    public static final double HIGH_BASKET = 0.0;
+    public static final double LOW_BASKET = 0.0;
     public static final double LOW_RUNG = 0.0;
     public static final double HIGH_RUNG = 0.0;
     public static double kP = 0.0;
