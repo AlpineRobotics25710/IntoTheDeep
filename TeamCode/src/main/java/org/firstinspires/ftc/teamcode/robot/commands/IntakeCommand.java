@@ -16,33 +16,22 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
  */
 @Config
 public class IntakeCommand extends SequentialCommandGroup {
-    private final IntakeEnd intakeEnd;
-    private final IntakeArm intakeArm;
-    private final Extendo extendo;
     public static long ARM_WAIT_TIME = 750;
     public static long ACTIVE_WAIT_TIME = 300;
 
     public IntakeCommand(Robot robot) {
-        intakeEnd = robot.intakeEnd;
-        intakeArm = robot.intakeArm;
-        extendo = robot.extendo;
-        addRequirements(robot.intakeArm, robot.extendo);
-    }
-
-    @Override
-    public void initialize() {
-        addCommands(
+        super(
                 new ParallelCommandGroup(
-                        new InstantCommand(() -> extendo.setTargetPosition(Extendo.MAX_LENGTH)),
-                        new InstantCommand(() -> intakeArm.setState(IntakeArm.IntakeArmState.INTAKE))
+                        new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.MAX_LENGTH)),
+                        new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.INTAKE))
                 ),
                 new WaitCommand(ARM_WAIT_TIME),
-                new InstantCommand(() -> intakeEnd.setState(IntakeEnd.ActiveState.FORWARD)),
+                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD)),
                 new WaitCommand(ACTIVE_WAIT_TIME),
                 new ParallelCommandGroup(
-                        new InstantCommand(() -> intakeEnd.setState(IntakeEnd.ActiveState.OFF)),
-                        new InstantCommand(() -> intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER)),
-                        new InstantCommand(() -> extendo.setTargetPosition(Extendo.BASE_POS))
+                        new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.OFF)),
+                        new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER)),
+                        new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.BASE_POS))
                 )
         );
     }
