@@ -7,12 +7,18 @@ public class OuttakeArm extends SubsystemBase {
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR ARM
     public static double ARM_WALL_INTAKE_POS = 0; // COMPLETE
     public static double ARM_TRANSFER_POS = 0.8; // COMPLETE
-    public static double ARM_OUTTAKE_POS = 0.0;
+    public static double ARM_SAMPLE_FRONT_POS = 0.0;
+    public static double ARM_SAMPLE_BACK_POS = 0.0;
+    public static double ARM_SPECIMEN_FRONT_POS = 0.0;
+    public static double ARM_SPECIMEN_BACK_POS = 0.0;
 
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR WRIST
     public static double WRIST_WALL_INTAKE_POS = 1; // COMPLETE
     public static double WRIST_TRANSFER_POS = 0.0;
-    public static double WRIST_OUTTAKE_POS = 0.0;
+    public static double WRIST_SAMPLE_FRONT_POS = 0.0;
+    public static double WRIST_SAMPLE_BACK_POS = 0.0;
+    public static double WRIST_SPECIMEN_FRONT_POS = 0.0;
+    public static double WRIST_SPECIMEN_BACK_POS = 0.0;
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
@@ -47,9 +53,25 @@ public class OuttakeArm extends SubsystemBase {
                 setArmPosition(ARM_TRANSFER_POS);
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
-            case OUTTAKE:
-                setArmPosition(ARM_OUTTAKE_POS);
-                setWristPosition(WRIST_OUTTAKE_POS);
+
+            case SAMPLE_FRONT:
+                setArmPosition(ARM_SAMPLE_FRONT_POS);
+                setWristPosition(WRIST_SAMPLE_FRONT_POS);
+                break;
+
+            case SAMPLE_BACK:
+                setArmPosition(ARM_SAMPLE_BACK_POS);
+                setWristPosition(WRIST_SAMPLE_BACK_POS);
+                break;
+
+            case SPECIMEN_FRONT:
+                setArmPosition(ARM_SPECIMEN_FRONT_POS);
+                setWristPosition(WRIST_SPECIMEN_FRONT_POS);
+                break;
+
+            case SPECIMEN_BACK:
+                setArmPosition(ARM_SPECIMEN_BACK_POS);
+                setWristPosition(WRIST_SPECIMEN_BACK_POS);
                 break;
         }
     }
@@ -77,6 +99,6 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE, TRANSFER, OUTTAKE,
+        WALL_INTAKE, TRANSFER, SAMPLE_FRONT, SAMPLE_BACK, SPECIMEN_FRONT, SPECIMEN_BACK
     }
 }
