@@ -12,12 +12,10 @@ public class IntakeArm extends SubsystemBase {
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServoLeft;
-    private final Servo wristServoRight;
 
-    public IntakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoRight, Servo wristServoLeft) {
+    public IntakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoLeft) {
         this.armServoRight = armServoRight;
         this.armServoLeft = armServoLeft;
-        this.wristServoRight = wristServoRight;
         this.wristServoLeft = wristServoLeft;
 
         setState(IntakeArmState.TRANSFER);
@@ -40,7 +38,6 @@ public class IntakeArm extends SubsystemBase {
 
     public void setWristPosition(double position) {
         wristServoLeft.setPosition(position);
-        wristServoRight.setPosition(position);
     }
 
     public double getWristPosition() {
