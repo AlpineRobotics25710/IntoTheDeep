@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.CRServo;
 
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
 public class IntakeEnd extends SubsystemBase {
     private final CRServo intakeServo;
-    private ActiveState currentState;
+    private ActiveState currentState = ActiveState.OFF;
 
     public IntakeEnd(CRServo intakeServo) {
         this.intakeServo = intakeServo;
@@ -36,6 +38,7 @@ public class IntakeEnd extends SubsystemBase {
                 intakeServo.setPower(0);
                 break;
         }
+        TelemetryUtil.addData("CASE", currentState);
     }
 
     public void setServoPower(double power) {
@@ -48,5 +51,9 @@ public class IntakeEnd extends SubsystemBase {
 
     public enum ActiveState {
         FORWARD, REVERSED, OFF
+    }
+    @Override
+    public void periodic(){
+        setState(currentState);
     }
 }

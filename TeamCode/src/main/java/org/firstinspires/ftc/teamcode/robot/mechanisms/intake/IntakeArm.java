@@ -1,24 +1,28 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
+@Config
 public class IntakeArm extends SubsystemBase {
-    public static double ARM_INTAKE_POS = 0.0;
-    public static double ARM_TRANSFER_POS = 0.0;
-    public static double WRIST_INTAKE_POS = 0.0;
+    public static double ARM_INTAKE_POS = 0.59;
+    public static double ARM_TRANSFER_POS = 0.15;
+    public static double WRIST_INTAKE_POS = 0.2;
     public static double WRIST_TRANSFER_POS = 0.0;
     private IntakeArmState currentState;
     private final Servo armServoLeft;
     private final Servo armServoRight;
-    private final Servo wristServoLeft;
+    private final Servo wristServoRight;
 
-    public IntakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoLeft) {
+    public IntakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoRight) {
         this.armServoRight = armServoRight;
         this.armServoLeft = armServoLeft;
-        this.wristServoLeft = wristServoLeft;
+        this.wristServoRight = wristServoRight;
 
-        setState(IntakeArmState.TRANSFER);
+       // setState(IntakeArmState.TRANSFER);
     }
 
     public void setState(IntakeArmState state) {
@@ -34,14 +38,15 @@ public class IntakeArm extends SubsystemBase {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
         }
+        TelemetryUtil.addData("CUrrent Arm State", currentState);
     }
 
     public void setWristPosition(double position) {
-        wristServoLeft.setPosition(position);
+        wristServoRight.setPosition(position);
     }
 
     public double getWristPosition() {
-        return wristServoLeft.getPosition();
+        return wristServoRight.getPosition();
     }
 
     public void setArmPosition(double position) {

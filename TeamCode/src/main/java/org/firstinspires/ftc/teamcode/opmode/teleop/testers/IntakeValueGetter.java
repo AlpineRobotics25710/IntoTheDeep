@@ -21,13 +21,12 @@ public class IntakeValueGetter extends LinearOpMode {
         CRServo activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
         Servo iArmLeft = hardwareMap.get(Servo.class, "iArmLeft");
         Servo iArmRight = hardwareMap.get(Servo.class, "iArmRight");
-        Servo iWristLeft = hardwareMap.get(Servo.class, "iWristLeft");
         Servo iWristRight = hardwareMap.get(Servo.class, "iWristRight");
 
         iArmRight.setDirection(Servo.Direction.REVERSE);
-        iWristLeft.setDirection(Servo.Direction.REVERSE);
+//        iWristLeft.setDirection(Servo.Direction.REVERSE);
 
-        IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight, iWristLeft);
+       IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         IntakeEnd intakeEnd = new IntakeEnd(activeIntake);
 
         waitForStart();
