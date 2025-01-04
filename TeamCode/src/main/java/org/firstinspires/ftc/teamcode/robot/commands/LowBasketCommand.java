@@ -10,10 +10,10 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 @Config
-public class HighBasketCommand extends SequentialCommandGroup { //subject to change
+public class LowBasketCommand extends SequentialCommandGroup {
     public static long SLIDES_WAIT_TIME = 500;
 
-    public HighBasketCommand(Robot robot, boolean facingBasket) {
+    public LowBasketCommand(Robot robot, boolean facingBasket) {
         addCommands(
                 new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.HIGH_BASKET)),
                 new WaitCommand(SLIDES_WAIT_TIME),

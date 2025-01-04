@@ -1,25 +1,29 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 @Config
 public class HighChamberCommand extends ParallelCommandGroup { //subject to change
-    public static double slidesHeight = 0.0;
-    public HighChamberCommand(Robot robot, boolean isForward){
-        super(
-                new SlidesCommand(robot, slidesHeight),
-                new SequentialCommandGroup(
-                        new WaitCommand(0),
-                        new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.SPECIMEN_FRONT : OuttakeArm.OuttakeArmState.SPECIMEN_BACK)
-                )
+    public static long SLIDES_WAIT_TIME = 500;
+
+    public HighChamberCommand(Robot robot, boolean facingChamber) {
+        addCommands(
+                new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.HIGH_CHAMBER)),
+                new WaitCommand(SLIDES_WAIT_TIME),
+                new InstantCommand(() -> {
+                    if (facingChamber) {
+                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.SAMPLE_FRONT);
+                    } else {
+                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.SAMPLE_BACK);
+                    }
+                })
         );
     }
 }
