@@ -130,6 +130,7 @@ public class Robot {
         //outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         //outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
         //outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWristRight, oWristLeft);
+
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(
                 intakeArm,
