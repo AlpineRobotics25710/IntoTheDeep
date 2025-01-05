@@ -38,7 +38,6 @@ public class IntakeEnd extends SubsystemBase {
                 intakeServo.setPower(0);
                 break;
         }
-        TelemetryUtil.addData("CASE", currentState);
     }
 
     public void setServoPower(double power) {
@@ -54,6 +53,6 @@ public class IntakeEnd extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        setState(currentState);
+        TelemetryUtil.addData("CASE", currentState);
     }
 }

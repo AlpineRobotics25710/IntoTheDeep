@@ -37,6 +37,11 @@ public class IntakeArmTestOpMode extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenHeld(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
         );
+
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).and(gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)).whenInactive(
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+        );
+
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");
         DcMotor bL = hardwareMap.get(DcMotor.class, "backLeftMotor");
@@ -56,19 +61,19 @@ public class IntakeArmTestOpMode extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
-            // Denominator is the largest motor power (absolute value) or 1
-            // This ensures all the powers maintain the same ratio,
-            // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower = (y + x + rx) / denominator;
-            double backLeftPower = (y - x + rx) / denominator;
-            double frontRightPower = (y - x - rx) / denominator;
-            double backRightPower = (y + x - rx) / denominator;
-
-            fL.setPower(frontLeftPower);
-            bL.setPower(backLeftPower);
-            fR.setPower(frontRightPower);
-            bR.setPower(backRightPower);
+//            // Denominator is the largest motor power (absolute value) or 1
+//            // This ensures all the powers maintain the same ratio,
+//            // but only if at least one is out of the range [-1, 1]
+//            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//            double frontLeftPower = (y + x + rx) / denominator;
+//            double backLeftPower = (y - x + rx) / denominator;
+//            double frontRightPower = (y - x - rx) / denominator;
+//            double backRightPower = (y + x - rx) / denominator;
+//
+//            fL.setPower(frontLeftPower);
+//            bL.setPower(backLeftPower);
+//            fR.setPower(frontRightPower);
+//            bR.setPower(backRightPower);
 
             robot.loop();
             // Check if neither bumper is pressed

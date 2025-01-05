@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -75,10 +76,10 @@ public class Robot {
         iArmRight = hardwareMap.get(Servo.class, "iArmRight");
         iWristRight = hardwareMap.get(Servo.class, "iWristRight");
 
-        outtakeSlideLeft = hardwareMap.get(DcMotor.class, "slidesLeft");
-        outtakeSlideRight = hardwareMap.get(DcMotor.class, "slidesRight");
-        outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClaw");
-        outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
+//        outtakeSlideLeft = hardwareMap.get(DcMotor.class, "slidesLeft");
+//        outtakeSlideRight = hardwareMap.get(DcMotor.class, "slidesRight");
+//        outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClaw");
+//        outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
 //
 //        oArmLeft = hardwareMap.get(Servo.class, "oArmLeft");
 //        oArmRight = hardwareMap.get(Servo.class, "oArmRight");
@@ -90,7 +91,7 @@ public class Robot {
         // Set directions of all motors and servos
 //        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
 //        extendoRight.setDirection(DcMotor.Direction.FORWARD);
-        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
+//          outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
 //        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
           iArmRight.setDirection(Servo.Direction.REVERSE);
  //       iWristLeft.setDirection(Servo.Direction.REVERSE);
@@ -107,8 +108,8 @@ public class Robot {
 //
 //        extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        outtakeSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        outtakeSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+       // outtakeSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //outtakeSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Bulk caching mode of hubs
         // Bulk reading enabled!
@@ -127,19 +128,22 @@ public class Robot {
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
         //extendo = new Extendo(extendoLeft, extendoRight, manualMode);
-        outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
-        outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
+ //       outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
+//        outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
         //outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWristRight, oWristLeft);
 
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(
                 intakeArm,
-                intakeEnd,
+                intakeEnd
 //                extendo,
-                outtakeClaw,
-                outtakeSlides
+//                outtakeClaw,
+ //               outtakeSlides
 //                outtakeArm
         );
+
+        CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
+
     }
 
     public void loop() {
