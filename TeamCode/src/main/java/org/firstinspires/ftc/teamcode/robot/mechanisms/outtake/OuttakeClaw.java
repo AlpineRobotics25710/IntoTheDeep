@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.outtake;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
+@Config
 public class OuttakeClaw extends SubsystemBase {
     public static double CLAW_OPEN_POS = 0.1; // DONE
     public static double CLAW_CLOSED_POS = 0.3; // DONE
@@ -34,7 +38,7 @@ public class OuttakeClaw extends SubsystemBase {
                 break;
 
             case CLOSED:
-                setSwivelPosition(CLAW_CLOSED_POS);
+                setClawPosition(CLAW_CLOSED_POS);
                 break;
         }
     }
@@ -58,24 +62,22 @@ public class OuttakeClaw extends SubsystemBase {
 
     public void setClawPosition(double position) {
         clawServo.setPosition(position);
+        TelemetryUtil.addData("Claw Servo Moving to", position);
     }
 
     public void setSwivelPosition(double position) {
         swivelServo.setPosition(position);
+        TelemetryUtil.addData("Swivel Servo Moving to", position);
     }
-
     public OuttakeClawState getClawState() {
         return clawState;
     }
-
     public OuttakeSwivelState getSwivelState() {
         return swivelState;
     }
-
     public enum OuttakeSwivelState {
         WALL_INTAKE, TRANSFER, OUTTAKE
     }
-
     public enum OuttakeClawState {
         OPEN, CLOSED
     }

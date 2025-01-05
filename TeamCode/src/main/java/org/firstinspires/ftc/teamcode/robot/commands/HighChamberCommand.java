@@ -15,7 +15,7 @@ public class HighChamberCommand extends ParallelCommandGroup { //subject to chan
     public static double slidesHeight = 0.0;
     public HighChamberCommand(Robot robot, boolean isForward){
         super(
-                new SlidesCommand(robot, slidesHeight),
+                new SlidesCommand(robot, slidesHeight, false),
                 new SequentialCommandGroup(
                         new WaitCommand(0),
                         new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.SPECIMEN_FRONT : OuttakeArm.OuttakeArmState.SPECIMEN_BACK)

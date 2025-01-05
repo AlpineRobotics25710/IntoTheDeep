@@ -10,36 +10,23 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 @TeleOp
 public class MotorTest extends OpMode {
-    public static double motorPower = 0.0;
-
-    // Declare motor references
+    public static double motorPower = 0.1;
     DcMotor backRightMotor;
     DcMotor backLeftMotor;
     DcMotor frontRightMotor;
     DcMotor frontLeftMotor;
-
-    // Variable to track which motor is currently selected
     int selectedMotorIndex = 0;
     DcMotor[] motors;
     String[] motorNames = {"backRightMotor", "backLeftMotor", "frontRightMotor", "frontLeftMotor"};
 
     @Override
     public void init() {
-        // Initialize motors
-        backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-        backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
-        frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+        backRightMotor = hardwareMap.get(DcMotor.class, motorNames[0]);
+        backLeftMotor = hardwareMap.get(DcMotor.class, motorNames[1]);
+        frontRightMotor = hardwareMap.get(DcMotor.class, motorNames[2]);
+        frontLeftMotor = hardwareMap.get(DcMotor.class, motorNames[3]);
 
         motors = new DcMotor[]{backRightMotor, backLeftMotor, frontRightMotor, frontLeftMotor};
-
-        // Set up motors
-        for (DcMotor motor : motors) {
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-
         TelemetryUtil.setup(telemetry);
     }
 
@@ -59,7 +46,6 @@ public class MotorTest extends OpMode {
             }
         }
 
-        // Display telemetry data
         TelemetryUtil.addData("Selected Motor", motorNames[selectedMotorIndex]);
         TelemetryUtil.addData("Motor Power", motorPower);
         TelemetryUtil.update();
