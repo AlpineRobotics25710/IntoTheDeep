@@ -1,21 +1,19 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
 @TeleOp
 public class IntakeArmTestOpMode extends LinearOpMode {
     @Override

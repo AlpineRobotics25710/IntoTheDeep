@@ -22,7 +22,7 @@ public class IntakeArm extends SubsystemBase {
         this.armServoLeft = armServoLeft;
         this.wristServoRight = wristServoRight;
 
-       // setState(IntakeArmState.TRANSFER);
+        setState(IntakeArmState.TRANSFER);
     }
 
     public void setState(IntakeArmState state) {
@@ -38,7 +38,7 @@ public class IntakeArm extends SubsystemBase {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
         }
-        TelemetryUtil.addData("CUrrent Arm State", currentState);
+        TelemetryUtil.addData("Current Arm State", currentState);
     }
 
     public void setWristPosition(double position) {

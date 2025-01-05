@@ -12,8 +12,9 @@ public class OuttakeSlides extends SubsystemBase {
     public static final double TRANSFER_POS = 0.0;
     public static final double HIGH_BASKET = 0.0;
     public static final double LOW_BASKET = 0.0;
-    public static final double LOW_RUNG = 0.0;
-    public static final double HIGH_RUNG = 0.0;
+    public static final double LOW_CHAMBER = 0.0;
+    public static final double HIGH_CHAMBER = 0.0;
+    public static final double GRAB_OFF_WALL = 0.0;
     public static double kP = 0.0;
     public static double kI = 0.0;
     public static double kD = 0.0;
