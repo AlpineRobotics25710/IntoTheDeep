@@ -68,7 +68,7 @@ public class Robot {
 
     public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
         // Configuration of all motors and servos
-  //      extendoLeft = hardwareMap.get(DcMotor.class, "extendoLeft");
+        extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
   //      extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
         activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
 
@@ -90,7 +90,8 @@ public class Robot {
 
         // Set directions of all motors and servos
 //        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
-//        extendoRight.setDirection(DcMotor.Direction.FORWARD);
+          extendoRight.setDirection(DcMotor.Direction.FORWARD);
+          extendoRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //          outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
 //        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
           iArmRight.setDirection(Servo.Direction.REVERSE);
@@ -127,7 +128,7 @@ public class Robot {
         // Initialize all mechanisms
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
-        //extendo = new Extendo(extendoLeft, extendoRight, manualMode);
+        extendo = new Extendo(extendoRight, manualMode);
  //       outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
 //        outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
         //outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWristRight, oWristLeft);
@@ -135,14 +136,14 @@ public class Robot {
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(
                 intakeArm,
-                intakeEnd
-//                extendo,
+                intakeEnd,
+                extendo
 //                outtakeClaw,
  //               outtakeSlides
 //                outtakeArm
         );
 
-        CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
+        //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
 
     }
 

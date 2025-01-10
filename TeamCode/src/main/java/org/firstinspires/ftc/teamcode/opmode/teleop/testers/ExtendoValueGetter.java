@@ -17,10 +17,8 @@ public class ExtendoValueGetter extends LinearOpMode {
 
         extendoLeft.setDirection(DcMotor.Direction.REVERSE);
         extendoRight.setDirection(DcMotor.Direction.FORWARD);
-        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
-        extendoRight.setDirection(DcMotor.Direction.FORWARD);
 
-        Extendo extendo = new Extendo(extendoLeft, extendoRight, false);
+        Extendo extendo = new Extendo(extendoLeft, false);
 
         waitForStart();
 

@@ -30,11 +30,11 @@ public class IntakeArmTestOpMode extends LinearOpMode {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenHeld(
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenHeld(
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whileHeld(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
         );
 
@@ -74,7 +74,7 @@ public class IntakeArmTestOpMode extends LinearOpMode {
 //            bL.setPower(backLeftPower);
 //            fR.setPower(frontRightPower);
 //            bR.setPower(backRightPower);
-
+            robot.extendo.setPower(gamepad1.left_stick_y);
             robot.loop();
             // Check if neither bumper is pressed
 

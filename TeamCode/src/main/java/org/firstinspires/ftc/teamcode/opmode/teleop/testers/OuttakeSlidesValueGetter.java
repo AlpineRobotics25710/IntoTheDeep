@@ -20,7 +20,7 @@ public class OuttakeSlidesValueGetter extends LinearOpMode {
         outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
         outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
 
-        Extendo extendo = new Extendo(outtakeSlideLeft, outtakeSlideRight, false);
+        Extendo extendo = new Extendo(outtakeSlideLeft, false);
 
         waitForStart();
 
