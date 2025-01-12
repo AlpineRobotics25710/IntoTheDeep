@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class OuttakeClaw extends SubsystemBase {
-    public static double CLAW_OPEN_POS = 0.1; // DONE
-    public static double CLAW_CLOSED_POS = 0.3; // DONE
-    public static double SWIVEL_WALL_INTAKE_POS = 0.0;
-    public static double SWIVEL_TRANSFER_POS = 0.3; // DONE
-    public static double SWIVEL_OUTTAKE_POS = 0.65; // DONE
+    public static double CLAW_OPEN_POS = 0.3; // DONE
+    public static double CLAW_CLOSED_POS = 0; // DONE
+    public static double SWIVEL_WALL_INTAKE_POS = 0.45; // DONE
+    public static double SWIVEL_TRANSFER_POS = 0.45; // DONE
+    public static double SWIVEL_OUTTAKE_POS = 0.75; // DONE
 
     private final Servo clawServo;
     private final Servo swivelServo;
@@ -23,11 +23,22 @@ public class OuttakeClaw extends SubsystemBase {
     public OuttakeClaw(Servo clawServo, Servo swivelServo) {
         this.clawServo = clawServo;
         this.swivelServo = swivelServo;
-    }
-
-    public void init() {
         setClawState(OuttakeClawState.CLOSED);
         setSwivelState(OuttakeSwivelState.TRANSFER);
+    }
+
+    public void setClawPosition(double position) {
+        clawServo.setPosition(position);
+        TelemetryUtil.addData("Claw Servo Moving to", position);
+    }
+
+    public void setSwivelPosition(double position) {
+        swivelServo.setPosition(position);
+        TelemetryUtil.addData("Swivel Servo Moving to", position);
+    }
+
+    public OuttakeClawState getClawState() {
+        return clawState;
     }
 
     public void setClawState(OuttakeClawState state) {
@@ -41,6 +52,10 @@ public class OuttakeClaw extends SubsystemBase {
                 setClawPosition(CLAW_CLOSED_POS);
                 break;
         }
+    }
+
+    public OuttakeSwivelState getSwivelState() {
+        return swivelState;
     }
 
     public void setSwivelState(OuttakeSwivelState state) {
@@ -60,24 +75,10 @@ public class OuttakeClaw extends SubsystemBase {
         }
     }
 
-    public void setClawPosition(double position) {
-        clawServo.setPosition(position);
-        TelemetryUtil.addData("Claw Servo Moving to", position);
-    }
-
-    public void setSwivelPosition(double position) {
-        swivelServo.setPosition(position);
-        TelemetryUtil.addData("Swivel Servo Moving to", position);
-    }
-    public OuttakeClawState getClawState() {
-        return clawState;
-    }
-    public OuttakeSwivelState getSwivelState() {
-        return swivelState;
-    }
     public enum OuttakeSwivelState {
         WALL_INTAKE, TRANSFER, OUTTAKE
     }
+
     public enum OuttakeClawState {
         OPEN, CLOSED
     }

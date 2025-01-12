@@ -8,6 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class TelemetryUtil {
     private static MultipleTelemetry multipleTelemetry;
 
+    private TelemetryUtil() {}
+
     public static void setup(Telemetry telemetry) {
         multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }

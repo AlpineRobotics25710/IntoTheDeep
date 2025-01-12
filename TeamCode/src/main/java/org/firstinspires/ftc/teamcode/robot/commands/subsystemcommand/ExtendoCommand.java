@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 
 public class ExtendoCommand extends InstantCommand {
-    public ExtendoCommand(Robot robot, int target){
+    public ExtendoCommand(Robot robot, double target){
         super(
                 () ->  robot.extendo.setTargetPosition(target)
         );

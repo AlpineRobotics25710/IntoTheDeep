@@ -19,9 +19,9 @@ public class LowBasketCommand extends SequentialCommandGroup {
                 new WaitCommand(SLIDES_WAIT_TIME),
                 new InstantCommand(() -> {
                     if (facingBasket) {
-                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.SAMPLE_FRONT);
+                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.OUTTAKE_FRONT);
                     } else {
-                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.SAMPLE_BACK);
+                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.OUTTAKE_BACK);
                     }
                 })
         );

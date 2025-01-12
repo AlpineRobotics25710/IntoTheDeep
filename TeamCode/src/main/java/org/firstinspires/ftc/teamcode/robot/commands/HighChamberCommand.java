@@ -18,7 +18,7 @@ public class HighChamberCommand extends ParallelCommandGroup { //subject to chan
                 new SlidesCommand(robot, slidesHeight, false),
                 new SequentialCommandGroup(
                         new WaitCommand(0),
-                        new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.SPECIMEN_FRONT : OuttakeArm.OuttakeArmState.SPECIMEN_BACK)
+                        new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.OUTTAKE_FRONT : OuttakeArm.OuttakeArmState.OUTTAKE_BACK)
                 )
         );
     }

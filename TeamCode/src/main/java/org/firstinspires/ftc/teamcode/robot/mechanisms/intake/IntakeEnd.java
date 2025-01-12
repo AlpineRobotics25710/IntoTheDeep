@@ -7,10 +7,11 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class IntakeEnd extends SubsystemBase {
     private final CRServo intakeServo;
-    private ActiveState currentState = ActiveState.OFF;
+    private ActiveState currentState;
 
     public IntakeEnd(CRServo intakeServo) {
         this.intakeServo = intakeServo;
+        setState(ActiveState.OFF);
     }
 
     public void toggleState() {

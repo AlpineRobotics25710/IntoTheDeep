@@ -29,11 +29,11 @@ public class OuttakeSlides extends SubsystemBase {
     public OuttakeSlides(DcMotor left, DcMotor right, boolean manualMode) {
         this.left = left;
         this.right = right;
-       // setTargetPosition(0);
-       // outtakePIDF.setTolerance(10);
         this.manualMode = manualMode;
         setManualMode(manualMode);
-    //    outtakePIDF = new PIDFController(kP, kI, kD, kF);
+        outtakePIDF = new PIDFController(kP, kI, kD, kF);
+        outtakePIDF.setTolerance(10);
+        setTargetPosition(TRANSFER_POS);
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later

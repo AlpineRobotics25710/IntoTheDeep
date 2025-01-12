@@ -8,25 +8,27 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 @TeleOp
 public class IntakeValueGetter extends LinearOpMode {
     public static double armPos;
     public static double wristPos;
-    public static IntakeEnd.ActiveState activeState;
+    public static IntakeEnd.ActiveState activeState = IntakeEnd.ActiveState.OFF;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TelemetryUtil.setup(telemetry);
+
         CRServo activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
         Servo iArmLeft = hardwareMap.get(Servo.class, "iArmLeft");
         Servo iArmRight = hardwareMap.get(Servo.class, "iArmRight");
         Servo iWristRight = hardwareMap.get(Servo.class, "iWristRight");
 
         iArmRight.setDirection(Servo.Direction.REVERSE);
-//        iWristLeft.setDirection(Servo.Direction.REVERSE);
 
-       IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
+        IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         IntakeEnd intakeEnd = new IntakeEnd(activeIntake);
 
         waitForStart();

@@ -6,38 +6,26 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class OuttakeArm extends SubsystemBase {
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR ARM
     public static double ARM_WALL_INTAKE_POS = 0; // COMPLETE
-    public static double ARM_TRANSFER_POS = 0.8; // COMPLETE
-    public static double ARM_SAMPLE_FRONT_POS = 0.0;
-    public static double ARM_SAMPLE_BACK_POS = 0.0;
-    public static double ARM_SPECIMEN_FRONT_POS = 0.0;
-    public static double ARM_SPECIMEN_BACK_POS = 0.0;
+    public static double ARM_TRANSFER_POS = 0.5; // COMPLETE
+    public static double ARM_OUTTAKE_FRONT_POS = 0.0;
+    public static double ARM_OUTTAKE_BACK_POS = 0.0; // COMPLETE
 
     // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR WRIST
     public static double WRIST_WALL_INTAKE_POS = 1; // COMPLETE
-    public static double WRIST_TRANSFER_POS = 0.0;
-    public static double WRIST_SAMPLE_FRONT_POS = 0.0;
-    public static double WRIST_SAMPLE_BACK_POS = 0.0;
-    public static double WRIST_SPECIMEN_FRONT_POS = 0.0;
-    public static double WRIST_SPECIMEN_BACK_POS = 0.0;
+    public static double WRIST_TRANSFER_POS = 0.0; // COMPLETE
+    public static double WRIST_OUTTAKE_FRONT_POS = 0.0;
+    public static double WRIST_OUTTAKE_BACK_POS = 0.5; // COMPLETE
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
-    private final Servo wristServoLeft;
-    private final Servo wristServoRight;
+    private final Servo wristServo;
 
     private OuttakeArmState currentState;
 
-    public OuttakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServoRight, Servo wristServoLeft) {
+    public OuttakeArm(Servo armServoRight, Servo armServoLeft, Servo wristServo) {
         this.armServoRight = armServoRight;
         this.armServoLeft = armServoLeft;
-        this.wristServoRight = wristServoRight;
-        this.wristServoLeft = wristServoLeft;
-    }
-
-    public void init() {
-        armServoRight.setDirection(Servo.Direction.REVERSE);
-        wristServoLeft.setDirection(Servo.Direction.REVERSE);
-
+        this.wristServo = wristServo;
         setState(OuttakeArmState.TRANSFER);
     }
 
@@ -54,35 +42,24 @@ public class OuttakeArm extends SubsystemBase {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
 
-            case SAMPLE_FRONT:
-                setArmPosition(ARM_SAMPLE_FRONT_POS);
-                setWristPosition(WRIST_SAMPLE_FRONT_POS);
+            case OUTTAKE_FRONT:
+                setArmPosition(ARM_OUTTAKE_FRONT_POS);
+                setWristPosition(WRIST_OUTTAKE_FRONT_POS);
                 break;
 
-            case SAMPLE_BACK:
-                setArmPosition(ARM_SAMPLE_BACK_POS);
-                setWristPosition(WRIST_SAMPLE_BACK_POS);
-                break;
-
-            case SPECIMEN_FRONT:
-                setArmPosition(ARM_SPECIMEN_FRONT_POS);
-                setWristPosition(WRIST_SPECIMEN_FRONT_POS);
-                break;
-
-            case SPECIMEN_BACK:
-                setArmPosition(ARM_SPECIMEN_BACK_POS);
-                setWristPosition(WRIST_SPECIMEN_BACK_POS);
+            case OUTTAKE_BACK:
+                setArmPosition(ARM_OUTTAKE_BACK_POS);
+                setWristPosition(WRIST_OUTTAKE_BACK_POS);
                 break;
         }
     }
 
     public void setWristPosition(double position) {
-        wristServoLeft.setPosition(position);
-        wristServoRight.setPosition(position);
+        wristServo.setPosition(position);
     }
 
     public double getWristPosition() {
-        return wristServoLeft.getPosition();
+        return wristServo.getPosition();
     }
 
     public void setArmPosition(double position) {
@@ -99,6 +76,6 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE, TRANSFER, SAMPLE_FRONT, SAMPLE_BACK, SPECIMEN_FRONT, SPECIMEN_BACK
+        WALL_INTAKE, TRANSFER, OUTTAKE_FRONT, OUTTAKE_BACK
     }
 }

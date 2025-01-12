@@ -10,7 +10,7 @@ public class LConstants {
         PinpointConstants.forwardY = -50.8;
         PinpointConstants.strafeX = 127;
         PinpointConstants.distanceUnit = DistanceUnit.MM;
-        PinpointConstants.hardwareMapName = "odo";
+        PinpointConstants.hardwareMapName = "pinpoint";
         PinpointConstants.useYawScalar = false;
         PinpointConstants.yawScalar = 1.0;
         PinpointConstants.useCustomEncoderResolution = false;

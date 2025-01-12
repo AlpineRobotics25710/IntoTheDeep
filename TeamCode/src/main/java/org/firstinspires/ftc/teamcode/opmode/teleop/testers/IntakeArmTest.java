@@ -24,7 +24,7 @@ public class IntakeArmTest extends CommandOpMode {
         wristServoRight.setDirection(Servo.Direction.FORWARD);
         wristServoLeft.setDirection(Servo.Direction.REVERSE);
 
-        //intakeArm = new IntakeArm(armServoRight, armServoLeft, wristServoRight, wristServoLeft);
+        intakeArm = new IntakeArm(armServoRight, armServoLeft, wristServoRight);
         register(intakeArm);
 
         InstantCommand armIntakeCommand = new InstantCommand(() -> intakeArm.setState(IntakeArm.IntakeArmState.INTAKE));

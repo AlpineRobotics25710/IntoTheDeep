@@ -8,8 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -30,17 +32,24 @@ public class IntakeArmTestOpMode extends LinearOpMode {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whileHeld(
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+        );
+
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).and(gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)).whenInactive(
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
         );
+
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ExtendoCommand(robot, Extendo.BASE_POS));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ExtendoCommand(robot, Extendo.MAX_LENGTH));
 
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");
@@ -61,20 +70,19 @@ public class IntakeArmTestOpMode extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
-//            // Denominator is the largest motor power (absolute value) or 1
-//            // This ensures all the powers maintain the same ratio,
-//            // but only if at least one is out of the range [-1, 1]
-//            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-//            double frontLeftPower = (y + x + rx) / denominator;
-//            double backLeftPower = (y - x + rx) / denominator;
-//            double frontRightPower = (y - x - rx) / denominator;
-//            double backRightPower = (y + x - rx) / denominator;
-//
-//            fL.setPower(frontLeftPower);
-//            bL.setPower(backLeftPower);
-//            fR.setPower(frontRightPower);
-//            bR.setPower(backRightPower);
-            robot.extendo.setPower(gamepad1.left_stick_y);
+            // Denominator is the largest motor power (absolute value) or 1
+            // This ensures all the powers maintain the same ratio,
+            // but only if at least one is out of the range [-1, 1]
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
+
+            fL.setPower(frontLeftPower);
+            bL.setPower(backLeftPower);
+            fR.setPower(frontRightPower);
+            bR.setPower(backRightPower);
             robot.loop();
             // Check if neither bumper is pressed
 

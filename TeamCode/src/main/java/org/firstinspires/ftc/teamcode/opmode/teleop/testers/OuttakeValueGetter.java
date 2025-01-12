@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 @TeleOp
@@ -18,18 +19,17 @@ public class OuttakeValueGetter extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TelemetryUtil.setup(telemetry);
         Servo oArmLeft = hardwareMap.get(Servo.class, "oArmLeft");
         Servo oArmRight = hardwareMap.get(Servo.class, "oArmRight");
-        Servo oWristLeft = hardwareMap.get(Servo.class, "oWristLeft");
-        Servo oWristRight = hardwareMap.get(Servo.class, "oWristRight");
+        Servo oWrist = hardwareMap.get(Servo.class, "oWrist");
 
         Servo outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
         Servo outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
 
         oArmRight.setDirection(Servo.Direction.REVERSE);
-        oWristLeft.setDirection(Servo.Direction.REVERSE);
 
-        OuttakeArm outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWristRight, oWristLeft);
+        OuttakeArm outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
         OuttakeClaw outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
 
         waitForStart();
@@ -39,6 +39,7 @@ public class OuttakeValueGetter extends LinearOpMode {
             outtakeArm.setWristPosition(wristPos);
             outtakeClaw.setClawPosition(clawPos);
             outtakeClaw.setSwivelPosition(swivelPos);
+            TelemetryUtil.update();
         }
     }
 }

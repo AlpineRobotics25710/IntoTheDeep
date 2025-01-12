@@ -2,31 +2,29 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
-    public static final double MAX_LENGTH = 0.0;
-    public static final double BASE_POS = 0.0;
-    public static double kP = 0.0;
+    public static final double MAX_LENGTH = 650.0;
+    public static final double BASE_POS = 100.0;
+    public static double kP = 0.01;
     public static double kI = 0.0;
     public static double kD = 0.0;
-    public static double kF = 0.0;
-    private static PIDFController extendoPIDF;
+    private static PIDController extendoPID;
     private final DcMotor right;
-    public boolean extendoReached;
     private double targetPosition = 0.0;
     private boolean manualMode;
 
     public Extendo(DcMotor right, boolean manualMode) {
         this.right = right;
-       // setTargetPosition(0);
-        //extendoPIDF.setTolerance(10);
         this.manualMode = manualMode;
         setManualMode(manualMode);
-        extendoPIDF = new PIDFController(kP, kI, kD, kF);
+        extendoPID = new PIDController(kP, kI, kD);
+        extendoPID.setTolerance(10);
+        setTargetPosition(BASE_POS);
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
@@ -41,8 +39,8 @@ public class Extendo extends SubsystemBase {
     @Override
     public void periodic() {
         if (!manualMode) {
-            double power = extendoPIDF.calculate(right.getCurrentPosition(), targetPosition);
-            extendoReached = (targetPosition > 0 && extendoPIDF.atSetPoint()) || (right.getCurrentPosition() <= 5 && targetPosition == 0);
+            extendoPID.setPID(kP, kI, kD);
+            double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
             setPower(power);
         }
     }
