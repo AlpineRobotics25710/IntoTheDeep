@@ -25,7 +25,6 @@ public class ExtendoTest extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         Robot robot = new Robot(hardwareMap, true, false);
         GamepadEx gp1 = new GamepadEx(gamepad1);
-
         waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
             CommandScheduler.getInstance().schedule(new ExtendoCommand(robot, targetPosition));

@@ -26,7 +26,7 @@ public class TransferCommand extends SequentialCommandGroup {
         CommandGroupBase intakeTransferCommand = new ParallelCommandGroup(
                 new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.BASE_POS)),
                 new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER)),
-                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.OFF))
+                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))
         );
 
         addRequirements(robot.outtakeArm, robot.outtakeClaw, robot.outtakeSlides, robot.intakeArm, robot.intakeEnd, robot.extendo);

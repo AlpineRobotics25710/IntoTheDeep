@@ -29,14 +29,6 @@ public class GenericTeleOp extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, false, false);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER)
-        );
-
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
         );
@@ -52,11 +44,11 @@ public class GenericTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
         );
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
+                new TransferCommand(robot)
+        );
 
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER));
-
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ExtendoCommand(robot, Extendo.BASE_POS));
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ExtendoCommand(robot, Extendo.MAX_LENGTH));
 
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");
