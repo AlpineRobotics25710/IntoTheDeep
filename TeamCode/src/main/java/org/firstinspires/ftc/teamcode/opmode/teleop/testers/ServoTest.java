@@ -11,7 +11,7 @@ public class ServoTest extends OpMode {
     public static double testValue = 0.0;
     @Override
     public void init() {
-        test = hardwareMap.get(Servo.class, "outtakeClaw");
+        test = hardwareMap.get(Servo.class, "oWrist");
     }
 
     @Override

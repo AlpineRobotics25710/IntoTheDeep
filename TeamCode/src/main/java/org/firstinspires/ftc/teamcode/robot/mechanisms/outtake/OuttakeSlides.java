@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms.outtake;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 // Bro i literally just copy pasted the extendo class and changed the name of the constructor if this works imma make a super class and test that
 @Config
@@ -15,32 +18,37 @@ public class OuttakeSlides extends SubsystemBase {
     public static final double LOW_CHAMBER = 0.0;
     public static final double HIGH_CHAMBER = 0.0;
     public static final double GRAB_OFF_WALL = 0.0;
-    public static double kP = 0.0;
-    public static double kI = 0.0;
-    public static double kD = 0.0;
+    public static double kP = 0.032;
+    public static double kI = 0.003;
+    public static double kD = 0.0002;
     public static double kF = 0.0;
-    private static PIDFController outtakePIDF;
+    private static PIDController outtakePIDF;
     private final DcMotor left; //we can make left our lead motor in this case
     private final DcMotor right;
-    public boolean extendoReached;
+    public boolean slidesReached;
     private double targetPosition = 0.0;
     private boolean manualMode;
+    private double power = 0;
 
     public OuttakeSlides(DcMotor left, DcMotor right, boolean manualMode) {
         this.left = left;
         this.right = right;
         this.manualMode = manualMode;
         setManualMode(manualMode);
-        outtakePIDF = new PIDFController(kP, kI, kD, kF);
-        outtakePIDF.setTolerance(10);
-        setTargetPosition(TRANSFER_POS);
+        if (!manualMode) {
+            outtakePIDF = new PIDController(kP, kI, kD);
+            outtakePIDF.setTolerance(10);
+            //setTargetPosition(TRANSFER_POS);
+        }
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
     public void setTargetPosition(double position) {
         targetPosition = position;
     }
-
+    public double getTargetPosition(){
+        return targetPosition;
+    }
     public void setSlidesPower(double power) {
         left.setPower(power);
         right.setPower(power);
@@ -49,12 +57,21 @@ public class OuttakeSlides extends SubsystemBase {
     @Override
     public void periodic() {
         if (!manualMode) {
-            double power = outtakePIDF.calculate(left.getCurrentPosition(), targetPosition);
-            extendoReached = (targetPosition > 0 && outtakePIDF.atSetPoint()) || (left.getCurrentPosition() <= 5 && targetPosition == 0);
-            setSlidesPower(power);
+            outtakePIDF.setPID(kP, kI, kD);
+            power = outtakePIDF.calculate(right.getCurrentPosition(), targetPosition);
+            slidesReached = (targetPosition > 0 && outtakePIDF.atSetPoint()) || (right.getCurrentPosition() <= 5 && targetPosition == 0);
+            setSlidesPower(power + kF);
+            TelemetryUtil.addData("power", power);
         }
     }
 
+    public double getPower() {
+        return power;
+    }
+
+    public double getCurrentPosition() {
+        return right.getCurrentPosition();
+    }
     public boolean isManualMode() {
         return manualMode;
     }

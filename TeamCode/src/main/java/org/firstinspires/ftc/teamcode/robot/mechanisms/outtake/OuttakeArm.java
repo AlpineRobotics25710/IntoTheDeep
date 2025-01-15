@@ -1,20 +1,26 @@
 package org.firstinspires.ftc.teamcode.robot.mechanisms.outtake;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
+@Config
 
 public class OuttakeArm extends SubsystemBase {
-    // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR ARM
-    public static double ARM_WALL_INTAKE_POS = 0; // COMPLETE
+    // Arm positions
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.75; // Adjust as needed
+    public static double ARM_WALL_INTAKE_BACK_POS = 0.2; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.5; // COMPLETE
-    public static double ARM_OUTTAKE_FRONT_POS = 0.0;
-    public static double ARM_OUTTAKE_BACK_POS = 0.0; // COMPLETE
+    public static double ARM_OUTTAKE_FRONT_POS = 0.5;
+    public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
+    public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
 
-    // TODO: NEED TO FIND THE CORRECT OPEN AND CLOSE POSITIONS FOR WRIST
-    public static double WRIST_WALL_INTAKE_POS = 1; // COMPLETE
+    // Wrist positions
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.9; // Adjust as needed
+    public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
     public static double WRIST_TRANSFER_POS = 0.0; // COMPLETE
     public static double WRIST_OUTTAKE_FRONT_POS = 0.0;
     public static double WRIST_OUTTAKE_BACK_POS = 0.5; // COMPLETE
+    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
@@ -33,8 +39,16 @@ public class OuttakeArm extends SubsystemBase {
         currentState = state;
         switch (currentState) {
             case WALL_INTAKE:
-                setArmPosition(ARM_WALL_INTAKE_POS);
-                setWristPosition(WRIST_WALL_INTAKE_POS);
+                setArmPosition(ARM_WALL_INTAKE_FRONT_POS);
+                setArmPosition(ARM_WALL_INTAKE_BACK_POS);
+            case WALL_INTAKE_FRONT:
+                setArmPosition(ARM_WALL_INTAKE_FRONT_POS);
+                setWristPosition(WRIST_WALL_INTAKE_FRONT_POS);
+                break;
+
+            case WALL_INTAKE_BACK:
+                setArmPosition(ARM_WALL_INTAKE_BACK_POS);
+                setWristPosition(WRIST_WALL_INTAKE_BACK_POS);
                 break;
 
             case TRANSFER:
@@ -50,6 +64,11 @@ public class OuttakeArm extends SubsystemBase {
             case OUTTAKE_BACK:
                 setArmPosition(ARM_OUTTAKE_BACK_POS);
                 setWristPosition(WRIST_OUTTAKE_BACK_POS);
+                break;
+
+            case DEPOSIT_SAMPLE:
+                setArmPosition(ARM_DEPOSIT_SAMPLE_POS);
+                setWristPosition(WRIST_DEPOSIT_SAMPLE_POS);
                 break;
         }
     }
@@ -76,6 +95,12 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE, TRANSFER, OUTTAKE_FRONT, OUTTAKE_BACK
+        WALL_INTAKE,
+        WALL_INTAKE_FRONT,
+        WALL_INTAKE_BACK,
+        TRANSFER,
+        OUTTAKE_FRONT,
+        OUTTAKE_BACK,
+        DEPOSIT_SAMPLE
     }
 }

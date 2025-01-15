@@ -29,8 +29,6 @@ public class ExtendoValueGetter extends LinearOpMode {
         while (opModeIsActive()) {
             extendo.setTargetPosition(targetPosition);
             extendo.periodic();
-            TelemetryUtil.addData("Target pos", targetPosition);
-            TelemetryUtil.addData("Curr pos", extendoRight.getCurrentPosition());
             TelemetryUtil.update();
         }
     }
