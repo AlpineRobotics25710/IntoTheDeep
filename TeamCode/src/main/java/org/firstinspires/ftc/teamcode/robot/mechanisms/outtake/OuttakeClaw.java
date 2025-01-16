@@ -10,8 +10,9 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class OuttakeClaw extends SubsystemBase {
     public static double CLAW_OPEN_POS = 0.3; // DONE
     public static double CLAW_CLOSED_POS = 0; // DONE
-    public static double SWIVEL_VERTICAL_POS = 0.13;
-    public static double SWIVEL_HORIZONTAL_POS = 0.45;
+    public static double SWIVEL_SIDEWAYS_POS = 0.13;
+    public static double SWIVEL_BOTTOM_POS = 0.45;
+    public static double SWIVEL_TOP_POS = 1; //tbc
 
     private final Servo clawServo;
     private final Servo swivelServo;
@@ -23,17 +24,15 @@ public class OuttakeClaw extends SubsystemBase {
         this.clawServo = clawServo;
         this.swivelServo = swivelServo;
         setClawState(OuttakeClawState.CLOSED);
-        setSwivelState(OuttakeSwivelState.VERTICAL);
+        setSwivelState(OuttakeSwivelState.BOTTOM);
     }
 
     public void setClawPosition(double position) {
         clawServo.setPosition(position);
-        TelemetryUtil.addData("Claw Servo Moving to", position);
     }
 
     public void setSwivelPosition(double position) {
         swivelServo.setPosition(position);
-        TelemetryUtil.addData("Swivel Servo Moving to", position);
     }
 
     public OuttakeClawState getClawState() {
@@ -60,18 +59,22 @@ public class OuttakeClaw extends SubsystemBase {
     public void setSwivelState(OuttakeSwivelState state) {
         swivelState = state;
         switch (swivelState) {
-            case VERTICAL:
-                setSwivelPosition(SWIVEL_VERTICAL_POS);
+            case SIDEWAYS:
+                setSwivelPosition(SWIVEL_SIDEWAYS_POS);
                 break;
 
-            case HORIZONTAL:
-                setSwivelPosition(SWIVEL_HORIZONTAL_POS);
+            case TOP:
+                setSwivelPosition(SWIVEL_TOP_POS);
+                break;
+
+            case BOTTOM:
+                setSwivelPosition(SWIVEL_BOTTOM_POS);
                 break;
         }
     }
 
     public enum OuttakeSwivelState {
-        VERTICAL, HORIZONTAL
+        SIDEWAYS, TOP, BOTTOM
     }
 
     public enum OuttakeClawState {

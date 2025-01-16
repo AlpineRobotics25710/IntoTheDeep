@@ -16,10 +16,13 @@ import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCom
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
@@ -30,34 +33,35 @@ public class GenericTeleOp extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, false, false);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
-        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
-        );
+//        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+//                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
+//        );
+//
+//        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(
+//                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+//        );
+//
+//        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
+//                new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
+//        );
+//
+//        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(
+//                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+//        );
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
                 new TransferCommand(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED));
+        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN));
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
+
 
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");
         DcMotor bL = hardwareMap.get(DcMotor.class, "backLeftMotor");
         DcMotor bR = hardwareMap.get(DcMotor.class, "backRightMotor");
 
-        fL.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
 
         fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -18,8 +18,8 @@ public class OuttakeArm extends SubsystemBase {
     public static double WRIST_WALL_INTAKE_FRONT_POS = 0.9; // Adjust as needed
     public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
     public static double WRIST_TRANSFER_POS = 0.0; // COMPLETE
-    public static double WRIST_OUTTAKE_FRONT_POS = 0.0;
-    public static double WRIST_OUTTAKE_BACK_POS = 0.5; // COMPLETE
+    public static double WRIST_OUTTAKE_FRONT_POS = 1;
+    public static double WRIST_OUTTAKE_BACK_POS = 1; // COMPLETE
     public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
 
     private final Servo armServoLeft;
@@ -40,7 +40,7 @@ public class OuttakeArm extends SubsystemBase {
         switch (currentState) {
             case WALL_INTAKE:
                 setArmPosition(ARM_WALL_INTAKE_FRONT_POS);
-                setArmPosition(ARM_WALL_INTAKE_BACK_POS);
+             //   setArmPosition(ARM_WALL_INTAKE_BACK_POS);
             case WALL_INTAKE_FRONT:
                 setArmPosition(ARM_WALL_INTAKE_FRONT_POS);
                 setWristPosition(WRIST_WALL_INTAKE_FRONT_POS);

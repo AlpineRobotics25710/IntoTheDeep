@@ -36,11 +36,11 @@ public class OuttakeTest extends LinearOpMode {
 
         // Test swivel
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.VERTICAL)
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS)
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.HORIZONTAL)
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP)
         );
 
         // Test outtakeArm

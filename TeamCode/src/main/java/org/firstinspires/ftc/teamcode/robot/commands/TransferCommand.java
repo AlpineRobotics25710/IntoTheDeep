@@ -20,7 +20,7 @@ public class TransferCommand extends SequentialCommandGroup {
         CommandGroupBase outtakeTransferCommand = new ParallelCommandGroup(
                 new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.TRANSFER_POS)),
                 new InstantCommand(() -> robot.outtakeClaw.setClawState(OuttakeClaw.OuttakeClawState.OPEN)),
-                new InstantCommand(() -> robot.outtakeClaw.setSwivelState(OuttakeClaw.OuttakeSwivelState.HORIZONTAL)),
+                new InstantCommand(() -> robot.outtakeClaw.setSwivelState(OuttakeClaw.OuttakeSwivelState.SIDEWAYS)),
                 new InstantCommand(() -> robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.TRANSFER))
         );
 
