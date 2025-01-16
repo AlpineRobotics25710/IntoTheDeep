@@ -8,12 +8,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.List;
 
@@ -130,7 +132,13 @@ public class Robot {
                 outtakeArm
         );
 
+        TelemetryUtil.addData("Robot", "initialized");
+
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
+    }
+
+    public void resetExtendoEncoders() {
+        extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void loop() {
@@ -149,6 +157,11 @@ public class Robot {
 
     public void reset() {
         CommandScheduler.getInstance().reset();
+    }
+
+    public void end() {
+        reset();
+        clearHubCache();
     }
 
     public double getVoltage() {

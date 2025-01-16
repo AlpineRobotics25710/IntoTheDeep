@@ -13,18 +13,19 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 public class TransferCommand extends SequentialCommandGroup {
     public TransferCommand(Robot robot) {
         CommandGroupBase outtakeTransferCommand = new ParallelCommandGroup(
-                //new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.TRANSFER_POS)),
+                new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.TRANSFER_POS)),
                 new InstantCommand(() -> robot.outtakeClaw.setClawState(OuttakeClaw.OuttakeClawState.OPEN)),
-                new InstantCommand(() -> robot.outtakeClaw.setSwivelState(OuttakeClaw.OuttakeSwivelState.TRANSFER)),
+                new InstantCommand(() -> robot.outtakeClaw.setSwivelState(OuttakeClaw.OuttakeSwivelState.HORIZONTAL)),
                 new InstantCommand(() -> robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.TRANSFER))
         );
 
         CommandGroupBase intakeTransferCommand = new ParallelCommandGroup(
-                new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.BASE_POS)),
+                new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.TRANSFER_POS)),
                 new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER)),
                 new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))
         );

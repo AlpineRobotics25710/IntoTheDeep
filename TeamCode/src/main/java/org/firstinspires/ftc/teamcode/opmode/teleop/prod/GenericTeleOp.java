@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
@@ -48,7 +49,8 @@ public class GenericTeleOp extends LinearOpMode {
                 new TransferCommand(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER));
+        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
 
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");

@@ -11,10 +11,9 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 // Bro i literally just copy pasted the extendo class and changed the name of the constructor if this works imma make a super class and test that
 @Config
 public class OuttakeSlides extends SubsystemBase {
-    // TODO: NEED TO FIND REAL VALUES
     public static final double TRANSFER_POS = 0.0;
-    public static final double HIGH_BASKET = 0.0;
-    public static final double LOW_BASKET = 0.0;
+    public static final double HIGH_BASKET = -1250.0;
+    public static final double LOW_BASKET = -425.0;
     public static final double LOW_CHAMBER = 0.0;
     public static final double HIGH_CHAMBER = 0.0;
     public static final double GRAB_OFF_WALL = 0.0;
@@ -37,7 +36,7 @@ public class OuttakeSlides extends SubsystemBase {
         setManualMode(manualMode);
         if (!manualMode) {
             outtakePIDF = new PIDController(kP, kI, kD);
-            outtakePIDF.setTolerance(10);
+            outtakePIDF.setTolerance(3);
             //setTargetPosition(TRANSFER_POS);
         }
     }

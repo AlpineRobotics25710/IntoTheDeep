@@ -10,9 +10,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class OuttakeClaw extends SubsystemBase {
     public static double CLAW_OPEN_POS = 0.3; // DONE
     public static double CLAW_CLOSED_POS = 0; // DONE
-    public static double SWIVEL_WALL_INTAKE_POS = 0.45; // DONE
-    public static double SWIVEL_TRANSFER_POS = 0.45; // DONE
-    public static double SWIVEL_OUTTAKE_POS = 0.75; // DONE
+    public static double SWIVEL_VERTICAL_POS = 0.13;
+    public static double SWIVEL_HORIZONTAL_POS = 0.45;
 
     private final Servo clawServo;
     private final Servo swivelServo;
@@ -24,7 +23,7 @@ public class OuttakeClaw extends SubsystemBase {
         this.clawServo = clawServo;
         this.swivelServo = swivelServo;
         setClawState(OuttakeClawState.CLOSED);
-        setSwivelState(OuttakeSwivelState.TRANSFER);
+        setSwivelState(OuttakeSwivelState.VERTICAL);
     }
 
     public void setClawPosition(double position) {
@@ -61,22 +60,18 @@ public class OuttakeClaw extends SubsystemBase {
     public void setSwivelState(OuttakeSwivelState state) {
         swivelState = state;
         switch (swivelState) {
-            case WALL_INTAKE:
-                setSwivelPosition(SWIVEL_WALL_INTAKE_POS);
+            case VERTICAL:
+                setSwivelPosition(SWIVEL_VERTICAL_POS);
                 break;
 
-            case TRANSFER:
-                setSwivelPosition(SWIVEL_TRANSFER_POS);
-                break;
-
-            case OUTTAKE:
-                setSwivelPosition(SWIVEL_OUTTAKE_POS);
+            case HORIZONTAL:
+                setSwivelPosition(SWIVEL_HORIZONTAL_POS);
                 break;
         }
     }
 
     public enum OuttakeSwivelState {
-        WALL_INTAKE, TRANSFER, OUTTAKE
+        VERTICAL, HORIZONTAL
     }
 
     public enum OuttakeClawState {

@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 public class SwivelToggleCommand extends ConditionalCommand {
     public SwivelToggleCommand(Robot robot) {
         super(
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.WALL_INTAKE),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TRANSFER),
-                () -> robot.outtakeClaw.getSwivelState() == OuttakeClaw.OuttakeSwivelState.TRANSFER
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.HORIZONTAL),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.VERTICAL),
+                () -> robot.outtakeClaw.getSwivelState() == OuttakeClaw.OuttakeSwivelState.HORIZONTAL
         );
     }
 }
