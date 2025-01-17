@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
+import static org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd.ActiveState.FORWARD;
+import static org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd.ActiveState.OFF;
+import static org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd.ActiveState.REVERSED;
+
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -29,16 +33,21 @@ public class RealTeleOp extends LinearOpMode {
         GamepadEx gp1 = new GamepadEx(gamepad1);
         GamepadEx gp2 = new GamepadEx(gamepad2);
 
-        if(gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-            CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED));
-        }
-        if(gp1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-            CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD));
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
+                new IntakeEndCommand(robot, FORWARD)
+        );
 
-        }
-        if(gp1.isDown(GamepadKeys.Button.RIGHT_BUMPER) && gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-               CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
-        }
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whileHeld(
+                new IntakeEndCommand(robot, REVERSED)
+        );
+
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).and(gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)).whenInactive(
+                new IntakeEndCommand(robot, OFF)
+        );
+
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).and(gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)).whileActiveContinuous(
+                new IntakeEndCommand(robot, FORWARD)
+        );
         gp2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
             new ClawToggleCommand(robot)
         );

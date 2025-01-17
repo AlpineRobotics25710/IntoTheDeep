@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
     public static final double MAX_LENGTH = 300;
-    public static final double BASE_POS = -100;
+    public static final double BASE_POS = 0;
     public static final double TRANSFER_POS = 50;
     public static double kP = 0.03;
     public static double kI = 0.0;
@@ -28,7 +29,7 @@ public class Extendo extends SubsystemBase {
         extendoPID = new PIDController(kP, kI, kD);
         extendoPID.setTolerance(3);
         if(!manualMode) {
-            setTargetPosition(BASE_POS);
+            setTargetPosition(0);
         }
     }
 
@@ -46,7 +47,15 @@ public class Extendo extends SubsystemBase {
         if (!manualMode) {
             extendoPID.setPID(kP, kI, kD);
             double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
-            setPower(power);
+            if(targetPosition == BASE_POS){
+                power -= 0.2;
+            }
+            else{
+                power += 0.2;
+            }
+
+
+          //  setPower(power);
         }
         TelemetryUtil.addData("current position", right.getCurrentPosition());
         TelemetryUtil.addData("target position", targetPosition);
@@ -54,7 +63,7 @@ public class Extendo extends SubsystemBase {
     }
 
     public boolean extendoReached(){
-        return (extendoPID.atSetPoint() && targetPosition > 0) || (right.getCurrentPosition() <= 3 && targetPosition == 0);
+        return (extendoPID.atSetPoint() && targetPosition > 0) || (right.getCurrentPosition() <= 3 && targetPosition == BASE_POS);
     }
 
     public boolean isManualMode() {
@@ -66,7 +75,8 @@ public class Extendo extends SubsystemBase {
         if (manualMode) {
             right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } else {
-            right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            //right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //testing something
         }
     }
 }

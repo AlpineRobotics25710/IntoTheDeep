@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.localizers.PinpointLocalizer;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -62,6 +66,8 @@ public class Robot {
     public OuttakeSlides outtakeSlides;
     public OuttakeArm outtakeArm;
 
+    public Follower follower;
+
     public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
         // Configuration of all motors and servos
         extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
@@ -121,7 +127,7 @@ public class Robot {
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
-
+        follower = new Follower(hardwareMap);
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(
                 intakeArm,
@@ -131,9 +137,6 @@ public class Robot {
                 outtakeSlides,
                 outtakeArm
         );
-
-        TelemetryUtil.addData("Robot", "initialized");
-
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }
 
