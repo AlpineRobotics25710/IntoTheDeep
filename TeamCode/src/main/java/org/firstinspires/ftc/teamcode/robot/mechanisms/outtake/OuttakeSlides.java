@@ -37,7 +37,7 @@ public class OuttakeSlides extends SubsystemBase {
         if (!manualMode) {
             outtakePIDF = new PIDController(kP, kI, kD);
             outtakePIDF.setTolerance(3);
-            //setTargetPosition(TRANSFER_POS);
+            setTargetPosition(0);
         }
     }
 

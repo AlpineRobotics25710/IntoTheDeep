@@ -25,7 +25,6 @@ public class FieldCentricTeleOp extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -34,7 +33,7 @@ public class FieldCentricTeleOp extends LinearOpMode {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Retrieve the IMU from the hardware map
-        GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+        GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         // Adjust the orientation parameters to match your robot
         pinpoint.resetPosAndIMU();
 

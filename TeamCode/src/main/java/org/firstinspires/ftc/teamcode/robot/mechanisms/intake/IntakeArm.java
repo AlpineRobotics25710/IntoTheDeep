@@ -8,10 +8,12 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class IntakeArm extends SubsystemBase {
-    public static double ARM_INTAKE_POS = 0.56;
+    public static double ARM_INTAKE_POS = 0.4;
     public static double ARM_TRANSFER_POS = 0.15;
-    public static double WRIST_INTAKE_POS = 0.1;
-    public static double WRIST_TRANSFER_POS = 0.0;
+    public static double WRIST_INTAKE_POS = 0.6;
+    public static double WRIST_TRANSFER_POS = 0.05;
+    public static double ARM_INIT_POS = 0.0;
+    public static double WRIST_INIT_POS = 0.0;
     private IntakeArmState currentState;
     private final Servo armServoLeft;
     private final Servo armServoRight;
@@ -22,7 +24,7 @@ public class IntakeArm extends SubsystemBase {
         this.armServoLeft = armServoLeft;
         this.wristServoRight = wristServoRight;
 
-        //setState(IntakeArmState.TRANSFER);
+        setState(IntakeArmState.INIT);
     }
 
     public void setState(IntakeArmState state) {
@@ -37,6 +39,9 @@ public class IntakeArm extends SubsystemBase {
                 setArmPosition(ARM_TRANSFER_POS);
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
+            case INIT:
+                setArmPosition(ARM_INIT_POS);
+                setWristPosition(WRIST_INIT_POS);
         }
         //TelemetryUtil.addData("Current Arm State", currentState);
     }
@@ -63,6 +68,6 @@ public class IntakeArm extends SubsystemBase {
     }
 
     public enum IntakeArmState {
-        INTAKE, TRANSFER,
+        INTAKE, TRANSFER, INIT
     }
 }
