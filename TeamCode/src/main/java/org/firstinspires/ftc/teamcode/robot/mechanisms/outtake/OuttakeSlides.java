@@ -34,11 +34,8 @@ public class OuttakeSlides extends SubsystemBase {
         this.right = right;
         this.manualMode = manualMode;
         setManualMode(manualMode);
-        if (!manualMode) {
-            outtakePIDF = new PIDController(kP, kI, kD);
-            outtakePIDF.setTolerance(3);
-            setTargetPosition(0);
-        }
+        outtakePIDF = new PIDController(kP, kI, kD);
+        outtakePIDF.setTolerance(3);
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later

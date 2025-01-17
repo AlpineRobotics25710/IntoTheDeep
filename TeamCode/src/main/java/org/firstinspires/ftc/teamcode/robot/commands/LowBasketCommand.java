@@ -15,7 +15,7 @@ public class LowBasketCommand extends SequentialCommandGroup {
 
     public LowBasketCommand(Robot robot, boolean facingBasket) {
         addCommands(
-                new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.HIGH_BASKET)),
+                new InstantCommand(() -> robot.outtakeSlides.setTargetPosition(OuttakeSlides.LOW_BASKET)),
                 new WaitCommand(SLIDES_WAIT_TIME),
                 new InstantCommand(() -> {
                     if (facingBasket) {

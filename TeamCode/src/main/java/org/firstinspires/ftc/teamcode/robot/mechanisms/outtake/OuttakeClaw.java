@@ -23,8 +23,6 @@ public class OuttakeClaw extends SubsystemBase {
     public OuttakeClaw(Servo clawServo, Servo swivelServo) {
         this.clawServo = clawServo;
         this.swivelServo = swivelServo;
-        setClawState(OuttakeClawState.CLOSED);
-        setSwivelState(OuttakeSwivelState.BOTTOM);
     }
 
     public void setClawPosition(double position) {

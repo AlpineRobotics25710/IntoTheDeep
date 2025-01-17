@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -28,9 +27,6 @@ public class Extendo extends SubsystemBase {
         setManualMode(manualMode);
         extendoPID = new PIDController(kP, kI, kD);
         extendoPID.setTolerance(3);
-        if(!manualMode) {
-            setTargetPosition(0);
-        }
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
@@ -47,22 +43,20 @@ public class Extendo extends SubsystemBase {
         if (!manualMode) {
             extendoPID.setPID(kP, kI, kD);
             double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
-            if(targetPosition == BASE_POS){
+            if (targetPosition == BASE_POS) {
                 power -= 0.2;
-            }
-            else{
+            } else {
                 power += 0.2;
             }
 
-
-          //  setPower(power);
+            setPower(power);
         }
         TelemetryUtil.addData("current position", right.getCurrentPosition());
         TelemetryUtil.addData("target position", targetPosition);
         TelemetryUtil.addData("Extendo Reached", extendoReached());
     }
 
-    public boolean extendoReached(){
+    public boolean extendoReached() {
         return (extendoPID.atSetPoint() && targetPosition > 0) || (right.getCurrentPosition() <= 3 && targetPosition == BASE_POS);
     }
 

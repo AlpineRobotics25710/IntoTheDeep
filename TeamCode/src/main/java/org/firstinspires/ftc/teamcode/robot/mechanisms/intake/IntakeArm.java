@@ -23,8 +23,6 @@ public class IntakeArm extends SubsystemBase {
         this.armServoRight = armServoRight;
         this.armServoLeft = armServoLeft;
         this.wristServoRight = wristServoRight;
-
-        //setState(IntakeArmState.INIT);
     }
 
     public void setState(IntakeArmState state) {

@@ -34,7 +34,6 @@ public class OuttakeArm extends SubsystemBase {
         this.armServoRight = armServoRight;
         this.armServoLeft = armServoLeft;
         this.wristServo = wristServo;
-        setState(OuttakeArmState.TRANSFER);
     }
 
     public void setState(OuttakeArmState state) {
