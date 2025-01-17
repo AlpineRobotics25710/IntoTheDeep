@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
@@ -21,13 +20,14 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
-public class GenericTeleOp extends LinearOpMode {
+public class RealTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
         Robot robot = new Robot(hardwareMap, false, false);
-        
+
         GamepadEx gp1 = new GamepadEx(gamepad1);
+        GamepadEx gp2 = new GamepadEx(gamepad2);
 
         if(gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
             CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED));
@@ -37,29 +37,28 @@ public class GenericTeleOp extends LinearOpMode {
 
         }
         if(gp1.isDown(GamepadKeys.Button.RIGHT_BUMPER) && gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-            CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
+               CommandScheduler.getInstance().schedule(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
         }
-        gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                new ClawToggleCommand(robot)
+        gp2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+            new ClawToggleCommand(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
                 new IntakeCommand(robot)
         );
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
                 new RetractCommand(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+        gp2.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new HighChamberCommand(robot, false)
         );
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
+        gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE)
         );
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
+        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(
                 new GrabOffWallCommand(robot)
         );
-
 
         DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");

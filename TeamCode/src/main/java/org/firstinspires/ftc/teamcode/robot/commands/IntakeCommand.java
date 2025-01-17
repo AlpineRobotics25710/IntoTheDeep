@@ -25,14 +25,8 @@ public class IntakeCommand extends SequentialCommandGroup {
                         new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.MAX_LENGTH)),
                         new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.INTAKE))
                 ),
-                new WaitCommand(ARM_WAIT_TIME),
-                new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD)),
-                new WaitCommand(ACTIVE_WAIT_TIME),
-                new ParallelCommandGroup(
-                        new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.OFF)),
-                        new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.TRANSFER)),
-                        new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.BASE_POS))
-                )
+                new WaitCommand(ARM_WAIT_TIME)
+                //new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))
         );
     }
 }

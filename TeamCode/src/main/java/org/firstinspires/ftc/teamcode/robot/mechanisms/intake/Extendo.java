@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
-    public static final double MAX_LENGTH = 350.0;
-    public static final double BASE_POS = -2;
+    public static final double MAX_LENGTH = 300;
+    public static final double BASE_POS = -100;
     public static final double TRANSFER_POS = 50;
-    public static double kP = 0.01;
+    public static double kP = 0.03;
     public static double kI = 0.0;
-    public static double kD = 0.0;
+    public static double kD = 0.0001;
     private static PIDController extendoPID;
     private final DcMotor right;
     private double targetPosition = 0.0;
@@ -26,7 +26,7 @@ public class Extendo extends SubsystemBase {
         this.manualMode = manualMode;
         setManualMode(manualMode);
         extendoPID = new PIDController(kP, kI, kD);
-        //extendoPID.setTolerance(3);
+        extendoPID.setTolerance(3);
         if(!manualMode) {
             setTargetPosition(BASE_POS);
         }
