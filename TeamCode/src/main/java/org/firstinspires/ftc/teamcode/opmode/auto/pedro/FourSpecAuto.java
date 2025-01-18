@@ -202,9 +202,9 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new SequentialCommandGroup( //deposit preload
                                 new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
+                                new WaitCommand(1000),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(250)
+                                new WaitCommand(500)
                         ),
 
                         new ParallelCommandGroup( //obsolete
@@ -278,9 +278,6 @@ public class FourSpecAuto extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(10)), //pick up sample 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         )
-
-
-
                 )
         );
 
