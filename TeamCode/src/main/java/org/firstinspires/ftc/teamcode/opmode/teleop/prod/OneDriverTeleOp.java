@@ -4,7 +4,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -12,7 +11,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
@@ -24,12 +22,10 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
 public class OneDriverTeleOp extends LinearOpMode {
-    private boolean grabbingOffWall = false;
-
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false, true);
 
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
@@ -65,8 +61,9 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         robot.follower.startTeleopDrive();
         while (opModeInInit()) {
-            robot.loop();
-            Extendo.BASE_POS = robot.extendo.right.getCurrentPosition();
+            robot.extendoRight.setPower(-0.3);
+            TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
+            TelemetryUtil.update();
         }
 
         waitForStart();

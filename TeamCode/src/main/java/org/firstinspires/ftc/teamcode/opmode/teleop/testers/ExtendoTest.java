@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
@@ -23,6 +24,13 @@ public class ExtendoTest extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         Robot robot = new Robot(hardwareMap, true, false);
         GamepadEx gp1 = new GamepadEx(gamepad1);
+
+        while (opModeInInit()) {
+            robot.extendoRight.setPower(-0.3);
+            Extendo.BASE_POS = robot.extendoRight.getCurrentPosition();
+            TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
+            TelemetryUtil.update();
+        }
 
         waitForStart();
 

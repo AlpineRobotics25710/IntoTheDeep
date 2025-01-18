@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 public class TransferCommand extends ParallelCommandGroup {
     public TransferCommand(Robot robot) {
         addCommands(
-                new RetractCommand(robot),
+                new IntakeRetractCommand(robot),
                 new OuttakeRetractCommand(robot),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)

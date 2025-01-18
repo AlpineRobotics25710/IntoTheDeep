@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
-import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -13,23 +11,21 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
 public class TwoDriverTeleOp extends LinearOpMode {
-    private boolean grabbingOffWall = false;
-
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false, true);
 
         GamepadEx gp1 = new GamepadEx(gamepad1);
         GamepadEx gp2 = new GamepadEx(gamepad2);
@@ -42,16 +38,17 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         // Outtake commands
         gp2.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            if (grabbingOffWall) {
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE);
-                grabbingOffWall = false;
-            } else {
-                new GrabOffWallCommand(robot);
-                grabbingOffWall = true;
+            if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT){
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE).schedule();
+            } else if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE){
+                new HighChamberCommand(robot, false).schedule();
+            }
+            else if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK){
+                new GrabOffWallCommand(robot).schedule();
             }
         });
         gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
-        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
+        //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
@@ -62,40 +59,18 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
-        DcMotor fL = hardwareMap.get(DcMotor.class, "frontLeftMotor");
-        DcMotor fR = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        DcMotor bL = hardwareMap.get(DcMotor.class, "backLeftMotor");
-        DcMotor bR = hardwareMap.get(DcMotor.class, "backRightMotor");
-
-        bL.setDirection(DcMotor.Direction.REVERSE);
-
-        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.follower.startTeleopDrive();
+        while (opModeInInit()) {
+            robot.extendoRight.setPower(-0.3);
+            TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
+            TelemetryUtil.update();
+        }
 
         waitForStart();
+
         while (!isStopRequested() && opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
-
-            // Denominator is the largest motor power (absolute value) or 1
-            // This ensures all the powers maintain the same ratio,
-            // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower = (y + x + rx) / denominator;
-            double backLeftPower = (y - x + rx) / denominator;
-            double frontRightPower = (y - x - rx) / denominator;
-            double backRightPower = (y + x - rx) / denominator;
-
-            fL.setPower(frontLeftPower);
-            bL.setPower(backLeftPower);
-            fR.setPower(frontRightPower);
-            bR.setPower(backRightPower);
+            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
             robot.loop();
-            // Check if neither bumper is pressed
-
             TelemetryUtil.update();
         }
         robot.end();

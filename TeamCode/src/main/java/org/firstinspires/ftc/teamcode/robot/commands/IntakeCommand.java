@@ -7,6 +7,8 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -22,8 +24,8 @@ public class IntakeCommand extends SequentialCommandGroup {
     public IntakeCommand(Robot robot) {
         super(
                 new ParallelCommandGroup(
-                        new InstantCommand(() -> robot.extendo.setTargetPosition(Extendo.MAX_LENGTH)),
-                        new InstantCommand(() -> robot.intakeArm.setState(IntakeArm.IntakeArmState.INTAKE))
+                        new ExtendoCommand(robot, Extendo.MAX_LENGTH),
+                        new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
                 ),
                 new WaitCommand(ARM_WAIT_TIME)
                 //new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))

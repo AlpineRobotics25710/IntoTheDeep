@@ -8,7 +8,13 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 public class ExtendoCommand extends InstantCommand {
     public ExtendoCommand(Robot robot, double target){
         super(
-                () ->  robot.extendo.setTargetPosition(target)
+                () ->  {
+                    if (target == Extendo.BASE_POS) {
+                        robot.extendoRight.setPower(-0.5);
+                    } else if (target == Extendo.MAX_LENGTH) {
+                        robot.extendoRight.setPower(0.5);
+                    }
+                }
         );
     }
 }

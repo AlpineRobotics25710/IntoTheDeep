@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
-import static org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo.BASE_POS;
+import static org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo.TRANSFER_POS;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 public class OuttakeRetractCommand extends ParallelCommandGroup {
     public OuttakeRetractCommand(Robot robot) {
         super(
-                new OuttakeSlidesCommand(robot, BASE_POS),
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
+                new OuttakeSlidesCommand(robot, TRANSFER_POS),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
         );
     }

@@ -10,10 +10,10 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
-    public static double MAX_LENGTH = 200;
-    public static double BASE_POS = 0;
+    public static double MAX_LENGTH = 300;
+    public static double BASE_POS = 0.0;
     public static final double TRANSFER_POS = 50;
-    public static double kP = 0.03;
+    public static double kP = 0.02;
     public static double kI = 0.0;
     public static double kD = 0.0001;
     private static PIDController extendoPID;
@@ -26,7 +26,7 @@ public class Extendo extends SubsystemBase {
         this.manualMode = manualMode;
         setManualMode(manualMode);
         extendoPID = new PIDController(kP, kI, kD);
-        extendoPID.setTolerance(3);
+        extendoPID.setTolerance(0);
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
@@ -43,11 +43,12 @@ public class Extendo extends SubsystemBase {
         if (!manualMode) {
             extendoPID.setPID(kP, kI, kD);
             double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
-            if (targetPosition == BASE_POS && extendoReached()) {
+            if (targetPosition == BASE_POS) {
                 power = -0.3;
             }
 
             setPower(power);
+            TelemetryUtil.addData("power", power);
         }
         TelemetryUtil.addData("current position", right.getCurrentPosition());
         TelemetryUtil.addData("target position", targetPosition);
@@ -67,8 +68,7 @@ public class Extendo extends SubsystemBase {
         if (manualMode) {
             right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } else {
-            //right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //testing something
+            right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }
 }
