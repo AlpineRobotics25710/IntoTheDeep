@@ -4,14 +4,15 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
@@ -38,28 +39,42 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         // Outtake commands
         gp2.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT){
+            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE).schedule();
-            } else if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE){
-                new HighChamberCommand(robot, false).schedule();
-            }
-            else if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK){
+            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
+                new GrabOffWallCommand(robot).schedule();
+            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
         gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
-        //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
+        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot));
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeRetractCommand(robot));
 
         // Outtake slides commands
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
-        robot.follower.startTeleopDrive();
+        // Declare our motors
+        // Make sure your ID's match your configuration
+        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
+        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
+        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
+        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
+
+        // Reverse the right side motors. This may be wrong for your setup.
+        // If your robot moves backwards when commanded to go forwards,
+        // reverse the left side instead.
+        // See the note about this earlier on this page.
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.3);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
@@ -69,7 +84,24 @@ public class TwoDriverTeleOp extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
-            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
+            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+            double rx = gamepad1.right_stick_x;
+
+            // Denominator is the largest motor power (absolute value) or 1
+            // This ensures all the powers maintain the same ratio,
+            // but only if at least one is out of the range [-1, 1]
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
+
+            frontLeftMotor.setPower(frontLeftPower);
+            backLeftMotor.setPower(backLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backRightMotor.setPower(backRightPower);
+
             robot.loop();
             TelemetryUtil.update();
         }

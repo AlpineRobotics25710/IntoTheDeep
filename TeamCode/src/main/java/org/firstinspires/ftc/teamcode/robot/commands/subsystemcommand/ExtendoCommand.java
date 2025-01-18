@@ -10,9 +10,9 @@ public class ExtendoCommand extends InstantCommand {
         super(
                 () ->  {
                     if (target == Extendo.BASE_POS) {
-                        robot.extendoRight.setPower(-0.5);
+                        robot.extendoRight.setPower(-0.35);
                     } else if (target == Extendo.MAX_LENGTH) {
-                        robot.extendoRight.setPower(0.5);
+                        robot.extendoRight.setPower(0.35);
                     }
                 }
         );
