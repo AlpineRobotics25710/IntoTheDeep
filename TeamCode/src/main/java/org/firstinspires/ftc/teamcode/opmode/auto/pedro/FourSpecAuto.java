@@ -230,9 +230,9 @@ public class FourSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(5)), //pickup sample 2
 
                         new SequentialCommandGroup(
-                                new WaitCommand(100), //WE CAN REMOVE THIS LATER
+                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(150),
+                                new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
                         ),
@@ -251,12 +251,14 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new SequentialCommandGroup(
-                                new WaitCommand(100), //WE CAN REMOVE THIS LATER
+                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(150),
+                                new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
                         ),
+
+
 
                         new FollowPathCommand(robot.follower, paths.get(8)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit sample 3
@@ -272,9 +274,9 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new SequentialCommandGroup(
-                                new WaitCommand(100), //WE CAN REMOVE THIS LATER
+                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(150),
+                                new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
                         ),
