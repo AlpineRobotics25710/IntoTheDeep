@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.ArrayList;
@@ -43,8 +45,8 @@ public class TwoSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 1
                                 new BezierLine(
-                                        new Point(8.000, 60.000, Point.CARTESIAN),
-                                        new Point(38.000, 60.000, Point.CARTESIAN)
+                                        new Point(8.000, 65.500, Point.CARTESIAN),
+                                        new Point(38.000, 65.500, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -56,7 +58,7 @@ public class TwoSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
-                                        new Point(38.000, 60.000, Point.CARTESIAN),
+                                        new Point(38.000, 65.500, Point.CARTESIAN),
                                         new Point(29.000, 26.000, Point.CARTESIAN),
                                         new Point(12.000, 24.000, Point.CARTESIAN)
                                 )
@@ -71,7 +73,7 @@ public class TwoSpecAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(12.000, 24.000, Point.CARTESIAN),
                                         new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(38.000, 64.000, Point.CARTESIAN)
+                                        new Point(38.000, 70.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -106,10 +108,13 @@ public class TwoSpecAuto extends LinearOpMode {
                 new RunCommand(() -> robot.follower.update()),
                 new SequentialCommandGroup(
                         new FollowPathCommand(robot.follower, paths.get(0)),
+                        new SequentialCommandGroup(
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(500)
+                        ),
                         new FollowPathCommand(robot.follower, paths.get(1)),
                         new FollowPathCommand(robot.follower, paths.get(2)),
-                        new FollowPathCommand(robot.follower, paths.get(3)),
-                        new FollowPathCommand(robot.follower, paths.get(4))
+                        new FollowPathCommand(robot.follower, paths.get(3))
                 )
         );
 

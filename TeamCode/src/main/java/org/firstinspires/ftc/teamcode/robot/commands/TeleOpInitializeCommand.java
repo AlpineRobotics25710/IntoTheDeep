@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
-public class InitializeCommand extends ParallelCommandGroup {
-    public InitializeCommand(Robot robot, boolean manualMode) {
+public class TeleOpInitializeCommand extends ParallelCommandGroup {
+    public TeleOpInitializeCommand(Robot robot, boolean manualMode) {
         if (!manualMode) {
             addCommands(new ExtendoCommand(robot, 0));
         }
