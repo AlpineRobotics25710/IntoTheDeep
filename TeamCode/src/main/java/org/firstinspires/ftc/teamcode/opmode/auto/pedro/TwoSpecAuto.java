@@ -114,7 +114,7 @@ public class TwoSpecAuto extends LinearOpMode {
                 new RunCommand(() -> robot.follower.update()),
                 new SequentialCommandGroup(
                         new FollowPathCommand(robot.follower, paths.get(0)),
-                        new SequentialCommandGroup(
+                        new SequentialCommandGroup( //
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(700),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
