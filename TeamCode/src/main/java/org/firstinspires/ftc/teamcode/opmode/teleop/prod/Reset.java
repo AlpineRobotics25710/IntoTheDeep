@@ -17,7 +17,6 @@ public class Reset extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
-
             robot.loop();
         }
         // Cancels all commands.

@@ -98,7 +98,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
             TelemetryUtil.update();
         }
-        CommandScheduler.getInstance().reset();
-        robot.clearHubCache();
+        robot.end();
     }
 }

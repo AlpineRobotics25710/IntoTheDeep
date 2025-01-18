@@ -19,7 +19,7 @@ public class HighChamberCommand extends ParallelCommandGroup { //subject to chan
                 new SlidesCommand(robot, OuttakeSlides.HIGH_CHAMBER, false),
                 new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.OUTTAKE_FRONT : OuttakeArm.OuttakeArmState.OUTTAKE_BACK),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP)
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM)
         );
     }
 }

@@ -1,5 +1,6 @@
-package pedroPathing.examples;
+package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.util.Constants;
@@ -16,8 +17,10 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
  * @version 2.0, 12/30/2024
  */
 
+@Config
 @TeleOp(name = "FieldCentricPedro", group = "Examples")
-public class FieldCentricPedro extends OpMode {
+public class PedroDrive extends OpMode {
+    public static boolean robotCentric = true;
     private Follower follower;
     private final Pose startPose = new Pose(0,0,0);
 
@@ -51,7 +54,7 @@ public class FieldCentricPedro extends OpMode {
         - Robot-Centric Mode: true
         */
 
-        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
+        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
         follower.update();
 
         /* Telemetry Outputs of our Follower */

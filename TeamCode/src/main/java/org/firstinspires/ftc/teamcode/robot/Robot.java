@@ -3,15 +3,19 @@ package org.firstinspires.ftc.teamcode.robot;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.localizers.PinpointLocalizer;
+import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.InitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
@@ -70,6 +74,9 @@ public class Robot {
     public Follower follower;
 
     public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
+        // Pedro
+        Constants.setConstants(FConstants.class, LConstants.class);
+
         // Configuration of all motors and servos
         extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
 
@@ -138,7 +145,7 @@ public class Robot {
                 outtakeSlides,
                 outtakeArm
         );
-        new InitializeCommand(this, manualMode);
+        CommandScheduler.getInstance().schedule(new InitializeCommand(this, manualMode));
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }
 
@@ -148,19 +155,20 @@ public class Robot {
 
     public void loop() {
         CommandScheduler.getInstance().run();
+        follower.update();
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
         }
     }
 
-    public void clearHubCache() {
+    private void clearHubCache() {
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
         }
     }
 
-    public void reset() {
+    private void reset() {
         CommandScheduler.getInstance().reset();
     }
 

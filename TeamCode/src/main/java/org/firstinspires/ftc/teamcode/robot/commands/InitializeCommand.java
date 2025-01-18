@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -25,9 +24,9 @@ public class InitializeCommand extends ParallelCommandGroup {
         addCommands(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }

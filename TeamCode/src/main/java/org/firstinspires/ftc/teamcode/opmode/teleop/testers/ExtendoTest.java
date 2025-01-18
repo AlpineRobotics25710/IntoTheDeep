@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @TeleOp
 public class ExtendoTest extends LinearOpMode {
     public static double targetPosition = 0;
-
+    public static boolean firstIter = true;
 
     @Override
     public void runOpMode() throws InterruptedException {

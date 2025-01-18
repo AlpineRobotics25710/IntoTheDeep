@@ -22,8 +22,8 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
                 new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
                 new WaitCommand(slidesTimeout),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),
-                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
+                //new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                 new WaitCommand(200)
                 //new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
         );
