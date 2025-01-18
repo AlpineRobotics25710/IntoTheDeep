@@ -138,7 +138,7 @@ public class PreloadedSpecimen4_0Auto extends OpMode {
                 .setConstantHeadingInterpolation(pushedSample2Pose.getHeading())
                 .build();
 
-        /* This is our scorePickup2 PathChain. We are using a single path with a BezierLine, which is a straight line. */
+        /* This is our scorePickup2 PathChain. We are using a single path with a BezierLie, which is a straight line. */
         //green/blue
         pushingSample2 = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(pushSample2Pose), new Point(pushedSample2Pose)))
