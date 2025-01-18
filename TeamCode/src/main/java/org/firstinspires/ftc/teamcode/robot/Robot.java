@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
+import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
@@ -139,7 +140,12 @@ public class Robot {
                 outtakeSlides,
                 outtakeArm
         );
-        CommandScheduler.getInstance().schedule(new TeleOpInitializeCommand(this, manualMode));
+
+        if (isAuto) {
+            new AutonInitializeCommand(this, manualMode).schedule();
+        } else {
+            new TeleOpInitializeCommand(this, manualMode).schedule();
+        }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }
 

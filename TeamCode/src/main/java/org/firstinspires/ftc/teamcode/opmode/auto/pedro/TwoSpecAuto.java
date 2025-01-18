@@ -22,7 +22,13 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.ArrayList;
@@ -46,7 +52,7 @@ public class TwoSpecAuto extends LinearOpMode {
                                 // Line 1
                                 new BezierLine(
                                         new Point(8.000, 65.500, Point.CARTESIAN),
-                                        new Point(38.000, 65.500, Point.CARTESIAN)
+                                        new Point(39.500, 68.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -58,9 +64,9 @@ public class TwoSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
-                                        new Point(38.000, 65.500, Point.CARTESIAN),
+                                        new Point(39.500, 68.000, Point.CARTESIAN),
                                         new Point(29.000, 26.000, Point.CARTESIAN),
-                                        new Point(12.000, 24.000, Point.CARTESIAN)
+                                        new Point(9.500, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -71,9 +77,9 @@ public class TwoSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 3
                                 new BezierCurve(
-                                        new Point(12.000, 24.000, Point.CARTESIAN),
+                                        new Point(9.500, 23.000, Point.CARTESIAN),
                                         new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(38.000, 70.000, Point.CARTESIAN)
+                                        new Point(39.500, 70.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -84,7 +90,7 @@ public class TwoSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 4
                                 new BezierCurve(
-                                        new Point(38.000, 64.000, Point.CARTESIAN),
+                                        new Point(39.500, 70.000, Point.CARTESIAN),
                                         new Point(30.000, 28.000, Point.CARTESIAN),
                                         new Point(9.500, 10.000, Point.CARTESIAN)
                                 )
@@ -110,10 +116,25 @@ public class TwoSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(0)),
                         new SequentialCommandGroup(
                                 new HighChamberCommand(robot, false),
-                                new WaitCommand(500)
+                                new WaitCommand(700),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                                new WaitCommand(500),
+                                new GrabOffWallCommand(robot)
                         ),
                         new FollowPathCommand(robot.follower, paths.get(1)),
+                        new SequentialCommandGroup(
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
+                                new WaitCommand(500),
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
+                                new WaitCommand(500)
+                        ),
                         new FollowPathCommand(robot.follower, paths.get(2)),
+                        new SequentialCommandGroup(
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(700),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                                new WaitCommand(500)
+                        ),
                         new FollowPathCommand(robot.follower, paths.get(3))
                 )
         );
@@ -137,6 +158,7 @@ public class TwoSpecAuto extends LinearOpMode {
             Drawing.drawRobot(robot.follower.poseUpdater.getPose(), "#4CAF50");
             Drawing.sendPacket();
         }
+        new TeleOpInitializeCommand(robot, false).schedule();
         // Cancels all commands.
         CommandScheduler.getInstance().reset();
     }

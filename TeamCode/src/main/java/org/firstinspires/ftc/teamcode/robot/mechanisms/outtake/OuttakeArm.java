@@ -14,7 +14,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
     public static double ARM_INTERMEDIATE_POS = 0.4;
     public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
-    public static double ARM_INIT_POS = 0.0;
+    public static double ARM_INIT_POS = 0.57;
 
     // Wrist positions
     public static double WRIST_WALL_INTAKE_FRONT_POS = 0.3; // Adjust as needed
@@ -23,7 +23,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double WRIST_OUTTAKE_FRONT_POS = 1;
     public static double WRIST_OUTTAKE_BACK_POS = 0.5; // COMPLETE
     public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
-    public static double WRIST_INIT_POS = 0.0;
+    public static double WRIST_INIT_POS = 1.0;
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
@@ -75,6 +75,7 @@ public class OuttakeArm extends SubsystemBase {
             case INIT:
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);
+                break;
         }
     }
 
