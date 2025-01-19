@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
-@TeleOp
+@TeleOp(group="production")
 public class TwoDriverTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

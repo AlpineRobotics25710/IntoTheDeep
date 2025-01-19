@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
@@ -40,7 +39,7 @@ public class FourSpecAuto extends LinearOpMode {
     public static double testY = 65.5;
     public static double testHeading = 180;
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
-    Robot robot;
+    private Robot robot;
     private ElapsedTime timer;
     private DashboardPoseTracker dashboardPoseTracker;
 
@@ -207,7 +206,8 @@ public class FourSpecAuto extends LinearOpMode {
         generatePath();
 
         CommandScheduler.getInstance().schedule(
-                new RunCommand(() -> robot.follower.update()),
+                // Shouldn't need this because it's called in robot.loop()
+                //new RunCommand(() -> robot.follower.update()),
                 new SequentialCommandGroup(
                         new FollowPathCommand(robot.follower, paths.get(0)), //preload
 
@@ -259,7 +259,6 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
 
-
                         new FollowPathCommand(robot.follower, paths.get(8)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit sample 3
                                 new HighChamberCommand(robot, false),
@@ -309,7 +308,6 @@ public class FourSpecAuto extends LinearOpMode {
 
             TelemetryUtil.addData("POSE", robot.follower.getPose());
             TelemetryUtil.addData("TIMER", timer.milliseconds());
-
             TelemetryUtil.update();
 
             dashboardPoseTracker.update();

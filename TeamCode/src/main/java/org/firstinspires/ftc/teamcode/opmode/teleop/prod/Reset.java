@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
-@TeleOp
+@TeleOp(group="production")
 public class Reset extends LinearOpMode {
     @Override
     public void runOpMode() {
