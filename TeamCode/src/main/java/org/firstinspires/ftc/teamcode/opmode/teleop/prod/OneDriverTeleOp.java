@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
@@ -56,7 +55,7 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ParallelCommandGroup(new OuttakeRetractCommand(robot), new IntakeCommand(robot)));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new SequentialCommandGroup(new IntakeCommand(robot), new OuttakeRetractCommand(robot)));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands

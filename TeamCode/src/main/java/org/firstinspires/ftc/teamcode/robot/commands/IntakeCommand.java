@@ -25,7 +25,7 @@ public class IntakeCommand extends SequentialCommandGroup {
 
     public IntakeCommand(Robot robot) {
         super(
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.57)),
+                //new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS - 0.02)), // Might need, might not need, we'll see
                 new ParallelCommandGroup(
                         new ExtendoCommand(robot, Extendo.MAX_LENGTH),
                         new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
