@@ -4,6 +4,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
@@ -48,9 +50,13 @@ public class TransferValueGetter extends LinearOpMode {
         IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         IntakeEnd intakeEnd = new IntakeEnd(activeIntake);
 
+        DcMotor extendo = hardwareMap.get(DcMotor.class, "extendoRight");
+        extendo.setDirection(DcMotorSimple.Direction.REVERSE);
+
         waitForStart();
 
         while (opModeIsActive()) {
+            extendo.setPower(-0.3);
             outtakeArm.setArmPosition(outtakeArmPos);
             outtakeArm.setWristPosition(outtakeWristPos);
             outtakeClaw.setClawPosition(outtakeClawPos);

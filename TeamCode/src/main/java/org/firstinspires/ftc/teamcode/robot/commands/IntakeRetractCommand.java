@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 public class IntakeRetractCommand extends ParallelCommandGroup {
     public IntakeRetractCommand(Robot robot) {
         super(
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
                 new SequentialCommandGroup(
                         new WaitCommand(200),
                         new ExtendoCommand(robot, BASE_POS)

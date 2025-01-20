@@ -9,10 +9,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
@@ -52,11 +56,11 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot));
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeRetractCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands
-        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
-        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
         // Declare our motors
         // Make sure your ID's match your configuration
@@ -74,8 +78,10 @@ public class OneDriverTeleOp extends LinearOpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        new TeleOpInitializeCommand(robot, false).schedule();
+
         while (opModeInInit()) {
-            robot.extendoRight.setPower(-0.3);
+            robot.extendoRight.setPower(-0.35);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
             TelemetryUtil.update();
         }
