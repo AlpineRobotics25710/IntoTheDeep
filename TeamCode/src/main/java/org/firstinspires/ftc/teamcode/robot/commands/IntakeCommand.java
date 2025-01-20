@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArm
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 /**
  * Gets ready to intake a game piece
@@ -24,11 +25,12 @@ public class IntakeCommand extends SequentialCommandGroup {
 
     public IntakeCommand(Robot robot) {
         super(
+                new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.57)),
                 new ParallelCommandGroup(
                         new ExtendoCommand(robot, Extendo.MAX_LENGTH),
                         new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
-                ),
-                new WaitCommand(ARM_WAIT_TIME)
+                )
+                //new WaitCommand(ARM_WAIT_TIME),
                 //new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))
         );
     }

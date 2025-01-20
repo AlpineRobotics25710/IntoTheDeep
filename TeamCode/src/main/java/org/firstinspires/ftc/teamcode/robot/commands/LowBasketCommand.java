@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeSlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
@@ -20,9 +21,9 @@ public class LowBasketCommand extends SequentialCommandGroup {
                 new WaitCommand(SLIDES_WAIT_TIME),
                 new InstantCommand(() -> {
                     if (facingBasket) {
-                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.OUTTAKE_FRONT);
+                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.OUTTAKE_FRONT);
                     } else {
-                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.OUTTAKE_BACK);
+                        new OuttakeArmCommand(robot, (OuttakeArm.OuttakeArmState.OUTTAKE_BACK));
                     }
                 })
         );

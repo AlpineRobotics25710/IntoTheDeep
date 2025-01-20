@@ -74,6 +74,7 @@ public class OuttakeArm extends SubsystemBase {
                 setArmPosition(ARM_DEPOSIT_SAMPLE_POS);
                 setWristPosition(WRIST_DEPOSIT_SAMPLE_POS);
                 break;
+
             case INIT:
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);

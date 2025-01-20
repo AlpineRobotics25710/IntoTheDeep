@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,9 +13,9 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
@@ -25,7 +26,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
-@TeleOp(group="production")
+@TeleOp(group = "production")
 public class OneDriverTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -55,7 +56,7 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ParallelCommandGroup(new OuttakeRetractCommand(robot), new IntakeCommand(robot)));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands
@@ -77,8 +78,6 @@ public class OneDriverTeleOp extends LinearOpMode {
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        new TeleOpInitializeCommand(robot, false).schedule();
 
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
