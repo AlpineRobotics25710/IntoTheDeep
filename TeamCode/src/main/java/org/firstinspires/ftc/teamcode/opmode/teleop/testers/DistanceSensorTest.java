@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
-import android.annotation.SuppressLint;
-
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
