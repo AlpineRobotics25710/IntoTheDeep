@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.pedropathing.localization.Pose;
@@ -19,6 +20,14 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.ArrayList;
@@ -36,7 +45,7 @@ public class NetSideAuto extends LinearOpMode {
 
         paths.add(
                 robot.follower.pathBuilder().addPath(
-                                // Line 1 - Preload
+                                // Line 1
                                 new BezierCurve(
                                         new Point(8.000, 90.500, Point.CARTESIAN),
                                         new Point(28.480, 105.600, Point.CARTESIAN),
@@ -45,18 +54,6 @@ public class NetSideAuto extends LinearOpMode {
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
                         .setReversed(true)
-                        .build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 2
-                                new BezierLine(
-                                        new Point(17.120, 126.080, Point.CARTESIAN),
-                                        new Point(31.520, 134.080, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(210))
                         .build()
         );
 
@@ -156,9 +153,36 @@ public class NetSideAuto extends LinearOpMode {
         robot = new Robot(hardwareMap, true, false);
         generatePaths();
 
+        CommandGroupBase intakeAndTransfer = new SequentialCommandGroup(
+                new IntakeCommand(robot),
+                new TransferCommand(robot),
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+        );
+
+        CommandGroupBase deposit = new SequentialCommandGroup(
+                new HighBasketCommand(robot, false),
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new OuttakeRetractCommand(robot)
+        );
+
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)) //preload
+                        new FollowPathCommand(robot.follower, paths.get(0)), // preload
+                        deposit,    // deposit preload
+                        new FollowPathCommand(robot.follower, paths.get(1)), // sample 1
+                        intakeAndTransfer,
+                        new FollowPathCommand(robot.follower, paths.get(2)), // deposit sample 1
+                        deposit,
+                        new FollowPathCommand(robot.follower, paths.get(3)), // sample 2
+                        intakeAndTransfer,
+                        new FollowPathCommand(robot.follower, paths.get(4)), // deposit sample 2
+                        deposit,
+                        new FollowPathCommand(robot.follower, paths.get(5)), // sample 3
+                        intakeAndTransfer,
+                        new FollowPathCommand(robot.follower, paths.get(6)), // deposit sample 3
+                        deposit,
+                        new FollowPathCommand(robot.follower, paths.get(7)) // park
                 )
         );
 
