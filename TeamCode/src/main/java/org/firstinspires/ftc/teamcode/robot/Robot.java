@@ -2,12 +2,18 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
+import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -25,19 +31,16 @@ public class Robot {
 
     // Intake
     // Extendo motors
-    public DcMotor extendoLeft;
     public DcMotor extendoRight;
 
     // Intake end effectors servos
     public CRServo activeIntake;
-    public Servo intakeSwivelServo;
 
     // Intake arm servos
     public Servo iArmRight;
     public Servo iArmLeft;
 
     // Intake wrist servos
-    public Servo iWristLeft;
     public Servo iWristRight;
 
     // Outtake
@@ -54,8 +57,7 @@ public class Robot {
     public Servo oArmLeft;
 
     // Outtake wrist servos
-    public Servo oWristLeft;
-    public Servo oWristRight;
+    public Servo oWrist;
 
     public IntakeArm intakeArm;
     public IntakeEnd intakeEnd;
@@ -64,51 +66,49 @@ public class Robot {
     public OuttakeSlides outtakeSlides;
     public OuttakeArm outtakeArm;
 
+    public Follower follower;
+
     public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
+        // Pedro
+        Constants.setConstants(FConstants.class, LConstants.class);
+
         // Configuration of all motors and servos
-        extendoLeft = hardwareMap.get(DcMotor.class, "extendoLeft");
         extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
-        activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
 
         iArmLeft = hardwareMap.get(Servo.class, "iArmLeft");
         iArmRight = hardwareMap.get(Servo.class, "iArmRight");
-        iWristLeft = hardwareMap.get(Servo.class, "iWristLeft");
         iWristRight = hardwareMap.get(Servo.class, "iWristRight");
+        activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
 
-        outtakeSlideLeft = hardwareMap.get(DcMotor.class, "outtakeLeft");
-        outtakeSlideRight = hardwareMap.get(DcMotor.class, "outtakeRight");
-        outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
-        outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
+        outtakeSlideLeft = hardwareMap.get(DcMotor.class, "slidesLeft");
+        outtakeSlideRight = hardwareMap.get(DcMotor.class, "slidesRight");
 
         oArmLeft = hardwareMap.get(Servo.class, "oArmLeft");
         oArmRight = hardwareMap.get(Servo.class, "oArmRight");
-        oWristLeft = hardwareMap.get(Servo.class, "oWristLeft");
-        oWristRight = hardwareMap.get(Servo.class, "oWristRight");
+        oWrist = hardwareMap.get(Servo.class, "oWrist");
+        outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
+        outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
 
         allHubs = hardwareMap.getAll(LynxModule.class);
 
         // Set directions of all motors and servos
-        extendoLeft.setDirection(DcMotor.Direction.REVERSE);
-        extendoRight.setDirection(DcMotor.Direction.FORWARD);
+        extendoRight.setDirection(DcMotor.Direction.REVERSE);
         outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
         outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
         iArmRight.setDirection(Servo.Direction.REVERSE);
-        iWristLeft.setDirection(Servo.Direction.REVERSE);
         oArmRight.setDirection(Servo.Direction.REVERSE);
-        oWristLeft.setDirection(Servo.Direction.REVERSE);
+        oWrist.setDirection(Servo.Direction.FORWARD);
 
         // Resetting encoders
         if (isAuto) {
-            extendoLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             outtakeSlideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             outtakeSlideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
 
-        extendoLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Bulk caching mode of hubs
         // Bulk reading enabled!
@@ -124,14 +124,13 @@ public class Robot {
         voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();
 
         // Initialize all mechanisms
-        // TODO: The rest need to be done like this
-        intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight, iWristLeft);
+        intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
-        extendo = new Extendo(extendoLeft, extendoRight, manualMode);
+        extendo = new Extendo(extendoRight, true);
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
-        outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, manualMode);
-        outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWristRight, oWristLeft);
-
+        outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
+        outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
+        follower = new Follower(hardwareMap);
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(
                 intakeArm,
@@ -141,24 +140,41 @@ public class Robot {
                 outtakeSlides,
                 outtakeArm
         );
+
+        if (isAuto) {
+            new AutonInitializeCommand(this, manualMode).schedule();
+        } else {
+            new TeleOpInitializeCommand(this, manualMode).schedule();
+        }
+        //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
+    }
+
+    public void resetExtendoEncoders() {
+        extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void loop() {
         CommandScheduler.getInstance().run();
+        follower.update();
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
         }
     }
 
-    public void clearHubCache() {
+    private void clearHubCache() {
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
         }
     }
 
-    public void reset() {
+    private void reset() {
         CommandScheduler.getInstance().reset();
+    }
+
+    public void end() {
+        reset();
+        clearHubCache();
     }
 
     public double getVoltage() {

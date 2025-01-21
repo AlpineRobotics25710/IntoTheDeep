@@ -2,31 +2,31 @@ package org.firstinspires.ftc.teamcode.robot.mechanisms.intake;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class Extendo extends SubsystemBase {
-    public static double kP = 0.0;
+    // TODO: NEED TO FIND REAL VALUES
+    public static double MAX_LENGTH = 300;
+    public static double BASE_POS = 0.0;
+    public static final double TRANSFER_POS = 50;
+    public static double kP = 0.02;
     public static double kI = 0.0;
-    public static double kD = 0.0;
-    public static double kF = 0.0;
-    private static PIDFController extendoPIDF;
-    private final DcMotor left; //we can make left our lead motor in this case
-    private final DcMotor right;
-    public boolean extendoReached;
+    public static double kD = 0.0001;
+    private static PIDController extendoPID;
+    public final DcMotor right;
     private double targetPosition = 0.0;
     private boolean manualMode;
-    public final static double MAX_LENGTH = 0;
 
-    public Extendo(DcMotor left, DcMotor right, boolean manualMode) {
-        this.left = left;
+    public Extendo(DcMotor right, boolean manualMode) {
         this.right = right;
-        setTargetPosition(0);
-        extendoPIDF.setTolerance(10);
         this.manualMode = manualMode;
         setManualMode(manualMode);
-        extendoPIDF = new PIDFController(kP, kI, kD, kF);
+        extendoPID = new PIDController(kP, kI, kD);
+        extendoPID.setTolerance(0);
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
@@ -34,18 +34,29 @@ public class Extendo extends SubsystemBase {
         targetPosition = position;
     }
 
-    public void setSlidesPower(double power) {
-        left.setPower(power);
+    public void setPower(double power) {
         right.setPower(power);
     }
 
     @Override
     public void periodic() {
         if (!manualMode) {
-            double power = extendoPIDF.calculate(left.getCurrentPosition(), targetPosition);
-            extendoReached = (targetPosition > 0 && extendoPIDF.atSetPoint()) || (left.getCurrentPosition() <= 5 && targetPosition == 0);
-            setSlidesPower(power);
+            extendoPID.setPID(kP, kI, kD);
+            double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
+            if (targetPosition == BASE_POS) {
+                power = -0.3;
+            }
+
+            setPower(power);
+            TelemetryUtil.addData("power", power);
         }
+        TelemetryUtil.addData("current position", right.getCurrentPosition());
+        TelemetryUtil.addData("target position", targetPosition);
+        TelemetryUtil.addData("Extendo Reached", extendoReached());
+    }
+
+    public boolean extendoReached() {
+        return (extendoPID.atSetPoint() && targetPosition > 0) || (right.getCurrentPosition() <= 20 && targetPosition == BASE_POS);
     }
 
     public boolean isManualMode() {
@@ -55,10 +66,8 @@ public class Extendo extends SubsystemBase {
     public void setManualMode(boolean manualMode) {
         this.manualMode = manualMode;
         if (manualMode) {
-            left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } else {
-            left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }

@@ -4,10 +4,11 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
-
+@TeleOp
 public class IntakeArmTest extends CommandOpMode {
     private IntakeArm intakeArm;
 
@@ -23,7 +24,7 @@ public class IntakeArmTest extends CommandOpMode {
         wristServoRight.setDirection(Servo.Direction.FORWARD);
         wristServoLeft.setDirection(Servo.Direction.REVERSE);
 
-        intakeArm = new IntakeArm(armServoRight, armServoLeft, wristServoRight, wristServoLeft);
+        intakeArm = new IntakeArm(armServoRight, armServoLeft, wristServoRight);
         register(intakeArm);
 
         InstantCommand armIntakeCommand = new InstantCommand(() -> intakeArm.setState(IntakeArm.IntakeArmState.INTAKE));
