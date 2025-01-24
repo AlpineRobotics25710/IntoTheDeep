@@ -243,7 +243,6 @@ public class FiveSpecAuto extends LinearOpMode {
             Drawing.drawRobot(robot.follower.poseUpdater.getPose(), "#4CAF50");
             Drawing.sendPacket();
         }
-        // Cancels all commands.
-        CommandScheduler.getInstance().reset();
+        robot.end();
     }
 }
