@@ -168,8 +168,8 @@ public class NetSideAuto extends LinearOpMode {
 
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)), // preload
-                        deposit,    // deposit preload
+                        new FollowPathCommand(robot.follower, paths.get(0)) // preload
+                        /*deposit,    // deposit preload
                         new FollowPathCommand(robot.follower, paths.get(1)), // sample 1
                         intakeAndTransfer,
                         new FollowPathCommand(robot.follower, paths.get(2)), // deposit sample 1
@@ -182,7 +182,7 @@ public class NetSideAuto extends LinearOpMode {
                         intakeAndTransfer,
                         new FollowPathCommand(robot.follower, paths.get(6)), // deposit sample 3
                         deposit,
-                        new FollowPathCommand(robot.follower, paths.get(7)) // park
+                        new FollowPathCommand(robot.follower, paths.get(7)) // park*/
                 )
         );
 

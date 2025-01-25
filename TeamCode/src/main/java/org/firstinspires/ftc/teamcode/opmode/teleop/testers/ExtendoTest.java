@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -26,7 +27,7 @@ public class ExtendoTest extends LinearOpMode {
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
         while (opModeInInit()) {
-            robot.extendoRight.setPower(-0.3);
+//            robot.extendoRight.setPower(-0.3);
             Extendo.BASE_POS = robot.extendoRight.getCurrentPosition();
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
             TelemetryUtil.update();
@@ -34,8 +35,14 @@ public class ExtendoTest extends LinearOpMode {
 
         waitForStart();
 
+        if(isStarted()){
+            robot.extendoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            TelemetryUtil.addData("Started program and reset encoder", true);
+        }
+
         while (!isStopRequested() && opModeIsActive()) {
-            CommandScheduler.getInstance().schedule(new ExtendoCommand(robot, targetPosition));
+            robot.extendo.setTargetPosition(targetPosition);
+            TelemetryUtil.addData("Extendo Power", robot.extendoRight.getPower());
             robot.loop();
             TelemetryUtil.update();
         }

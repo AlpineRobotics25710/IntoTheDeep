@@ -17,6 +17,8 @@ public class LibExtendoTest extends LinearOpMode {
         extendoMotor.setRunMode(Motor.RunMode.PositionControl);
         extendoMotor.setPositionCoefficient(posCoefficient);
 
+        waitForStart();
+
         while (opModeIsActive()) {
             extendoMotor.setTargetPosition(targetPosition);
             extendoMotor.setInverted(true);
