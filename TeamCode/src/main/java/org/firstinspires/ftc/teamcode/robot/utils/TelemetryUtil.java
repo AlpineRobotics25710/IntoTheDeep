@@ -25,4 +25,8 @@ public class TelemetryUtil {
     public static void clear() {
         multipleTelemetry.clear();
     }
+
+    public static void addData(String value){
+        multipleTelemetry.addData(value, true);
+    }
 }
