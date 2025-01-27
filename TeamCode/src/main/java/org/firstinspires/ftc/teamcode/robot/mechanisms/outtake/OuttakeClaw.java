@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class OuttakeClaw extends SubsystemBase {
     public static double CLAW_OPEN_POS = 1; // DONE
     public static double CLAW_CLOSED_POS = 0.65; // DONE
-    public static double SWIVEL_SIDEWAYS_POS = 0.54;
-    public static double SWIVEL_BOTTOM_POS = 0.7;
-    public static double SWIVEL_TOP_POS = 0.02; //tbc
+    public static double SWIVEL_SIDEWAYS_POS = 0.35; // DONE
+    public static double SWIVEL_BOTTOM_POS = 0.7; // DONE
+    public static double SWIVEL_TOP_POS = 0.03; // DONE
 
     private final Servo clawServo;
     private final Servo swivelServo;
