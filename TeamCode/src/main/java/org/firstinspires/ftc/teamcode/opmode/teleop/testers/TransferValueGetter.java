@@ -36,6 +36,7 @@ public class TransferValueGetter extends LinearOpMode {
         Servo outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
 
         oArmRight.setDirection(Servo.Direction.REVERSE);
+        oWrist.setDirection(Servo.Direction.REVERSE);
 
         OuttakeArm outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
         OuttakeClaw outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
