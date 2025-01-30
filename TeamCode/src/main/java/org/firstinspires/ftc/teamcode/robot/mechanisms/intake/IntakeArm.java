@@ -8,12 +8,12 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class IntakeArm extends SubsystemBase {
-    public static double ARM_INTAKE_POS = 0.33;
+    public static double ARM_INTAKE_POS = 0.37;
     public static double ARM_TRANSFER_POS = 0.2;
-    public static double WRIST_INTAKE_POS = 0.53;
+    public static double WRIST_INTAKE_POS = 0.35;
     public static double WRIST_TRANSFER_POS = 0.3;
     public static double ARM_INIT_POS = 0.0;
-    public static double WRIST_INIT_POS = 0.05;
+    public static double WRIST_INIT_POS = 0.0;
     private IntakeArmState currentState;
     private final Servo armServoLeft;
     private final Servo armServoRight;

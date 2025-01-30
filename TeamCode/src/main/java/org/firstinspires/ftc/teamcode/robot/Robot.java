@@ -97,7 +97,7 @@ public class Robot {
         outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
         iArmRight.setDirection(Servo.Direction.REVERSE);
         oArmRight.setDirection(Servo.Direction.REVERSE);
-        oWrist.setDirection(Servo.Direction.REVERSE);
+        oWrist.setDirection(Servo.Direction.FORWARD);
 
         // Resetting encoders
         if (isAuto) {
