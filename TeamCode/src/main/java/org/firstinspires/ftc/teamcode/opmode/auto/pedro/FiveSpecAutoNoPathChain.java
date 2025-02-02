@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.pedropathing.localization.Pose;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group="production")
-public class FiveSpecAutoPathOnly extends LinearOpMode {
+public class FiveSpecAutoNoPathChain extends LinearOpMode {
     private ElapsedTime timer;
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
@@ -62,7 +61,9 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                         new Point(57.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 2
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 3
                                 new BezierLine(
@@ -70,7 +71,9 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                         new Point(20.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 3
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 4
                                 new BezierCurve(
@@ -79,7 +82,9 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                         new Point(57.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 4
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 5
                                 new BezierLine(
@@ -87,7 +92,9 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                         new Point(20.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 5
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
                                 new BezierCurve(
@@ -96,7 +103,9 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                         new Point(57.000, 10.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 6
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 7
                                 new BezierCurve(
@@ -109,7 +118,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
         );
 
-        paths.add( //index 2
+        paths.add( //index 7
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 8
@@ -122,7 +131,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
         );
 
-        paths.add( //index 3
+        paths.add( //index 8
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 9
@@ -136,7 +145,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
         );
 
-        paths.add( //index 4
+        paths.add( //index 9
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 10
@@ -148,7 +157,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
 
-        paths.add( //index 5
+        paths.add( //index 10
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 11
@@ -160,7 +169,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 6
+        paths.add( //index 11
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 12
@@ -171,7 +180,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 7
+        paths.add( //index 12
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 13
@@ -183,7 +192,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 8
+        paths.add( //index 13
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 14
@@ -194,7 +203,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 9
+        paths.add( //index 14
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 15
@@ -237,10 +246,16 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(8)),
 
-                        new ParallelCommandGroup(
-                            new FollowPathCommand(robot.follower, paths.get(9)), //park position/location
-                            new IntakeCommand(robot) //extending intake to get the IntakeArm in the observation zone for park
-                        )
+                        //maybe we should put this stuff in a parallel command:
+                        new FollowPathCommand(robot.follower, paths.get(9)), //park position/location
+                        new FollowPathCommand(robot.follower, paths.get(10)),
+                        new FollowPathCommand(robot.follower, paths.get(11)),
+                        new FollowPathCommand(robot.follower, paths.get(12)),
+
+                        new FollowPathCommand(robot.follower, paths.get(13)),
+
+                        new FollowPathCommand(robot.follower, paths.get(14)),
+                        new IntakeCommand(robot) //extending intake to get the IntakeArm in the observation zone for park
                 )
         );
 

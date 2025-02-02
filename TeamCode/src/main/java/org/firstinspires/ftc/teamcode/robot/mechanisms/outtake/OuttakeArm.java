@@ -24,7 +24,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double WRIST_OUTTAKE_BACK_POS = 0.7; // COMPLETE
     public static double WRIST_INTERIM_POS = 0.65;
     public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
-    public static double WRIST_INIT_POS = 1.0;
+    public static double WRIST_INIT_POS = 0.3;
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
