@@ -46,7 +46,7 @@ public class FourSpecAuto extends LinearOpMode {
     public void generatePath() {
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
 
-        paths.add( //index 2
+        paths.add( //index 0
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 1
@@ -109,7 +109,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
         );
 
-        paths.add( //index 3
+        paths.add( //index 2
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
@@ -120,7 +120,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 4
+        paths.add( //index 3
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 7
@@ -132,7 +132,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 5
+        paths.add( //index 4
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 8
@@ -143,7 +143,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 6
+        paths.add( //index 5
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 9
@@ -155,7 +155,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 7
+        paths.add( //index 6
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 10
@@ -166,7 +166,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 8
+        paths.add( //index 7
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 11
