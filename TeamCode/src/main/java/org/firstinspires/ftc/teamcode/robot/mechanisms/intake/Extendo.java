@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -15,7 +16,7 @@ public class Extendo extends SubsystemBase {
     public static final double TRANSFER_POS = 50;
     public static double kP = 0.02;
     public static double kI = 0.0;
-    public static double kD = 0.0001;
+    public static double kD = 0.00015;
     private static PIDController extendoPID;
     public final DcMotor right;
     private double targetPosition = 0.0;
@@ -44,10 +45,11 @@ public class Extendo extends SubsystemBase {
             extendoPID.setPID(kP, kI, kD);
             double currentPos = right.getCurrentPosition();
             double power = extendoPID.calculate(currentPos, targetPosition);
-            if (Math.abs(currentPos - targetPosition) <= 30) {
-                power = Math.signum(currentPos - targetPosition) * -0.3;
+            if (currentPos - targetPosition <= 100 && targetPosition == Extendo.BASE_POS) {
+                power = -0.2;
             }
 
+            power = Range.clip(power, -0.8, 0.8);
             setPower(power);
             TelemetryUtil.addData("power", power);
         }

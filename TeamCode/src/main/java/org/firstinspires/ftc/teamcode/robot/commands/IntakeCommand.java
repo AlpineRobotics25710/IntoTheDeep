@@ -20,18 +20,14 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
  */
 @Config
 public class IntakeCommand extends SequentialCommandGroup {
-    public static long ARM_WAIT_TIME = 750;
-    public static long ACTIVE_WAIT_TIME = 300;
-
     public IntakeCommand(Robot robot) {
         super(
-                //new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS - 0.02)), // Might need, might not need, we'll see
-                new ParallelCommandGroup(
+                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS - 0.05)), // Might need, might not need, we'll see
+                new WaitCommand(400),
+                new SequentialCommandGroup(
                         new ExtendoCommand(robot, Extendo.MAX_LENGTH),
                         new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
                 )
-                //new WaitCommand(ARM_WAIT_TIME),
-                //new InstantCommand(() -> robot.intakeEnd.setState(IntakeEnd.ActiveState.FORWARD))
         );
     }
 }

@@ -51,17 +51,17 @@ public class OneDriverTeleOp extends LinearOpMode {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot));
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRetractCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
         // Declare our motors
         // Make sure your ID's match your configuration
