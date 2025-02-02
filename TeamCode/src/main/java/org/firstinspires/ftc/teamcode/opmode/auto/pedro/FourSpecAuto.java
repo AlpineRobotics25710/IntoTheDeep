@@ -46,7 +46,7 @@ public class FourSpecAuto extends LinearOpMode {
     public void generatePath() {
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
 
-        paths.add(
+        paths.add( //index 2
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 1
@@ -59,7 +59,7 @@ public class FourSpecAuto extends LinearOpMode {
         );
 
 
-        paths.add(
+        paths.add( //index 1
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 2
@@ -70,11 +70,7 @@ public class FourSpecAuto extends LinearOpMode {
                                         new Point(60.000, 23.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
                         .addPath(
                                 // Line 3
                                 new BezierCurve(
@@ -83,11 +79,7 @@ public class FourSpecAuto extends LinearOpMode {
                                         new Point(20.000, 23.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
                         .addPath(
                                 // Line 4
                                 new BezierCurve(
@@ -96,11 +88,7 @@ public class FourSpecAuto extends LinearOpMode {
                                         new Point(60.000, 16, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
                         .addPath(
                                 //line 5
                                 new BezierCurve(
@@ -109,11 +97,7 @@ public class FourSpecAuto extends LinearOpMode {
                                         new Point(18.157, 10.965, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
                         .addPath(
                                 // something i'm liteally high on smth
                                 new BezierCurve(
@@ -125,7 +109,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
         );
 
-        paths.add(
+        paths.add( //index 3
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
@@ -136,7 +120,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+        paths.add( //index 4
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 7
@@ -148,7 +132,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+        paths.add( //index 5
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 8
@@ -159,7 +143,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+        paths.add( //index 6
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 9
@@ -171,7 +155,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+        paths.add( //index 7
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 10
@@ -182,7 +166,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+        paths.add( //index 8
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 11
@@ -223,12 +207,6 @@ public class FourSpecAuto extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(1)) //behind sample 1 and outtake in front
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(2)), //push sample 1
-                        new FollowPathCommand(robot.follower, paths.get(3)), //behind sample 2
-
-                        new FollowPathCommand(robot.follower, paths.get(4)), //push sample 2
-                        new FollowPathCommand(robot.follower, paths.get(5)), //pickup sample 2
-
                         new SequentialCommandGroup(
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
@@ -237,7 +215,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(300)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber
+                        new FollowPathCommand(robot.follower, paths.get(2)), //go to chamber
                         new SequentialCommandGroup( //deposit sample 2
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -246,7 +224,7 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)), //pick up sample 3
+                                new FollowPathCommand(robot.follower, paths.get(3)), //pick up sample 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
@@ -259,7 +237,7 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
 
-                        new FollowPathCommand(robot.follower, paths.get(8)), //go to chamber + deposit
+                        new FollowPathCommand(robot.follower, paths.get(4)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit sample 3
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -268,7 +246,7 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(9)), //pick up sample 3
+                                new FollowPathCommand(robot.follower, paths.get(5)), //pick up sample 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
@@ -280,7 +258,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(300)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(10)), //go to chamber + deposit
+                        new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit sample 4
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -289,7 +267,7 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(11)), //pick up sample 3
+                                new FollowPathCommand(robot.follower, paths.get(7)), //pick up sample 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
