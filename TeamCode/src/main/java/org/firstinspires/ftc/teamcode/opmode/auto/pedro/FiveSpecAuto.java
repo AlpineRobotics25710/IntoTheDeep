@@ -325,7 +325,7 @@ public class FiveSpecAuto extends LinearOpMode {
 
                         //maybe we should put this stuff in a parallel command:
                         new FollowPathCommand(robot.follower, paths.get(9)), //park position/location
-                        new IntakeCommand(robot)
+                        new IntakeCommand(robot) //extending intake to get the IntakeArm in the observation zone for park
                 )
         );
 
