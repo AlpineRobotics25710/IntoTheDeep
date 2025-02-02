@@ -61,7 +61,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(12.000, 21.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(0)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180)).build()
         );
 
         paths.add(
@@ -218,9 +218,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(9)),
                         new FollowPathCommand(robot.follower, paths.get(10)),
                         new FollowPathCommand(robot.follower, paths.get(11)),
-                        new FollowPathCommand(robot.follower, paths.get(12)),
-                        new FollowPathCommand(robot.follower, paths.get(13))
-
+                        new FollowPathCommand(robot.follower, paths.get(12))
                 )
         );
 

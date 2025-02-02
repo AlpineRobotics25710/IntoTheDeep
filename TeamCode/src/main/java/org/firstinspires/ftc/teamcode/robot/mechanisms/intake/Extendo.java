@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
-    public static double MAX_LENGTH = 300;
+    public static double MAX_LENGTH = 310;
     public static double BASE_POS = 0.0;
     public static final double TRANSFER_POS = 50;
     public static double kP = 0.02;
@@ -42,9 +42,10 @@ public class Extendo extends SubsystemBase {
     public void periodic() {
         if (!manualMode) {
             extendoPID.setPID(kP, kI, kD);
-            double power = extendoPID.calculate(right.getCurrentPosition(), targetPosition);
-            if (targetPosition == BASE_POS) {
-                power = -0.3;
+            double currentPos = right.getCurrentPosition();
+            double power = extendoPID.calculate(currentPos, targetPosition);
+            if (Math.abs(currentPos - targetPosition) <= 30) {
+                power = Math.signum(currentPos - targetPosition) * -0.3;
             }
 
             setPower(power);

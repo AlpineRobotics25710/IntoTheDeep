@@ -41,18 +41,17 @@ public class NetSideAuto extends LinearOpMode {
     private DashboardPoseTracker dashboardPoseTracker;
 
     public void generatePaths() {
-        robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
+        robot.follower.setStartingPose(new Pose(6.5, 112.000, Math.toRadians(270)));
 
         paths.add(
                 robot.follower.pathBuilder().addPath(
                                 // Line 1
-                                new BezierCurve(
-                                        new Point(8.000, 90.500, Point.CARTESIAN),
-                                        new Point(28.480, 105.600, Point.CARTESIAN),
+                                new BezierLine(
+                                        new Point(6.500, 112.000, Point.CARTESIAN),
                                         new Point(17.120, 126.080, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(315))
                         .setReversed(true)
                         .build()
         );
@@ -65,7 +64,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(31.520, 134.080, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(210))
+                        .setLinearHeadingInterpolation(Math.toRadians(315), Math.toRadians(30))
                         .build()
         );
 
@@ -77,7 +76,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(17.120, 126.080, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(210), Math.toRadians(135))
+                        .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(-45))
                         .build()
         );
 
@@ -89,7 +88,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(34.240, 131.040, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
                         .build()
         );
 
@@ -101,7 +100,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(17.120, 126.080, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
                         .build()
         );
 
@@ -113,7 +112,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(34.240, 121.440, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
                         .build()
         );
 
@@ -125,7 +124,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(17.120, 126.080, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
                         .build()
         );
 
@@ -138,7 +137,7 @@ public class NetSideAuto extends LinearOpMode {
                                         new Point(62.880, 97.440, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(90))
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(270))
                         .build()
         );
     }
