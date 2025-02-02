@@ -7,22 +7,22 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
-    public static double ARM_WALL_INTAKE_FRONT_POS = 0.81; // Adjust as needed
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.83; // Adjust as needed
     public static double ARM_WALL_INTAKE_BACK_POS = 0.2; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.55; // COMPLETE
     public static double ARM_OUTTAKE_FRONT_POS = 0.5;
-    public static double ARM_OUTTAKE_BACK_POS = 0.35; // COMPLETE
-    public static double ARM_INTERMEDIATE_POS = 0.45;
+    public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
+    public static double ARM_INTERMEDIATE_POS = 0.65;
     public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
     public static double ARM_INIT_POS = 0.57;
 
     // Wrist positions
-    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.45; // Adjust as needed
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.65; // Adjust as needed
     public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
     public static double WRIST_TRANSFER_POS = 0.92; // COMPLETE
     public static double WRIST_OUTTAKE_FRONT_POS = 1;
     public static double WRIST_OUTTAKE_BACK_POS = 0.7; // COMPLETE
-    public static double WRIST_INTERIM_POS = 0.55;
+    public static double WRIST_INTERIM_POS = 0.65;
     public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
     public static double WRIST_INIT_POS = 1.0;
 

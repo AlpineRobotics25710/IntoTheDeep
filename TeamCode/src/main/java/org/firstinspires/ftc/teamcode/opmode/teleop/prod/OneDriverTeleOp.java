@@ -82,6 +82,9 @@ public class OneDriverTeleOp extends LinearOpMode {
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
+            TelemetryUtil.addData("intake arm pos", robot.intakeArm.getArmPosition());
+            TelemetryUtil.addData("intake wrist pos", robot.intakeArm.getWristPosition());
+            TelemetryUtil.addData("Current Arm State", robot.intakeArm.currentState);
             TelemetryUtil.update();
         }
 
