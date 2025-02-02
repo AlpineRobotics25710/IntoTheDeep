@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -23,8 +24,13 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -223,33 +229,103 @@ public class FiveSpecAuto extends LinearOpMode {
         CommandScheduler.getInstance().schedule(
                 new RunCommand(() -> robot.follower.update()),
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)), //preload
+                        new FollowPathCommand(robot.follower, paths.get(0)), //going to deposit preload(high chamber)
 
                         new SequentialCommandGroup( //deposit preload
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(1000),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN), //letting go of specimen 1(preload)
                                 new WaitCommand(500)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(1)),
+                        new ParallelCommandGroup( //obsolete(doesn't really need to be parallel because GrabOffWallCommand will return true immediately)
+                                new GrabOffWallCommand(robot), //set up for next spec pickup
+                                new FollowPathCommand(robot.follower, paths.get(1)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(2)),
+                        new SequentialCommandGroup(
+                                new WaitCommand(300), //giving human player time to adjust to robot?
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 2
+                                new WaitCommand(150),
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new WaitCommand(300)
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(3)),
+                        new FollowPathCommand(robot.follower, paths.get(2)), //go to high chamber
+                        new SequentialCommandGroup( //deposit specimen 2
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(500),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN), //letting go of specimen
+                                new WaitCommand(200)
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(4)),
+                        new ParallelCommandGroup(
+                                new FollowPathCommand(robot.follower, paths.get(3)), //going to pick up specimen 3
+                                new GrabOffWallCommand(robot) //set up for next spec pickup
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(5)),
+                        new SequentialCommandGroup(
+                                new WaitCommand(300), //giving human player time to adjust to robot
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
+                                new WaitCommand(150),
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new WaitCommand(300)
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(6)),
 
-                        new FollowPathCommand(robot.follower, paths.get(7)),
+                        new FollowPathCommand(robot.follower, paths.get(4)), //go to high chamber + deposit
+                        new SequentialCommandGroup( //deposit specimen 3
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(500),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN), //letting go of specimen
+                                new WaitCommand(200)
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(8)),
+                        new ParallelCommandGroup(
+                                new FollowPathCommand(robot.follower, paths.get(5)), //going to pick up specimen 4
+                                new GrabOffWallCommand(robot) //set up for next spec pickup
+                        ),
 
-                        new FollowPathCommand(robot.follower, paths.get(9))
+                        new SequentialCommandGroup(
+                                new WaitCommand(300), //giving human player time to adjust to robot?
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 4
+                                new WaitCommand(150),
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new WaitCommand(300)
+                        ),
 
+                        new FollowPathCommand(robot.follower, paths.get(6)), //go to high chamber + deposit
+                        new SequentialCommandGroup( //deposit specimen 4
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(500),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN), //letting go of specimen
+                                new WaitCommand(350)
+                        ),
+
+                        new ParallelCommandGroup(
+                                new FollowPathCommand(robot.follower, paths.get(7)), //going to pick up specimen 5
+                                new GrabOffWallCommand(robot) //set up for next spec pickup
+                        ),
+
+                        new SequentialCommandGroup(
+                                new WaitCommand(300), //giving human player time to adjust to robot?
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 5
+                                new WaitCommand(150),
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new WaitCommand(300)
+                        ),
+
+                        new FollowPathCommand(robot.follower, paths.get(8)), //go to high chamber + deposit
+                        new SequentialCommandGroup( //deposit specimen 5
+                                new HighChamberCommand(robot, false),
+                                new WaitCommand(500),
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN), //letting go of specimen
+                                new WaitCommand(350)
+                        ),
+
+                        //maybe we should put this stuff in a parallel command:
+                        new FollowPathCommand(robot.follower, paths.get(9)), //park position/location
+                        new IntakeCommand(robot)
                 )
         );
 

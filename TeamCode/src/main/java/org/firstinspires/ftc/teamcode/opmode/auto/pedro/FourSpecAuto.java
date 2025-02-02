@@ -202,21 +202,21 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(500)
                         ),
 
-                        new ParallelCommandGroup( //obsolete
+                        new ParallelCommandGroup( //obsolete(doesn't really need to be parallel because GrabOffWallCommand will return true immediately)
                                 new GrabOffWallCommand(robot), //set up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(1)) //behind sample 1 and outtake in front
+                                new FollowPathCommand(robot.follower, paths.get(1)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
                         new SequentialCommandGroup(
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 1
                                 new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
                         ),
 
                         new FollowPathCommand(robot.follower, paths.get(2)), //go to chamber
-                        new SequentialCommandGroup( //deposit sample 2
+                        new SequentialCommandGroup( //deposit specimen 1
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
@@ -224,13 +224,13 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(3)), //pick up sample 3
+                                new FollowPathCommand(robot.follower, paths.get(3)), //going to pick up specimen 2
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
                         new SequentialCommandGroup(
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 2
                                 new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
@@ -238,7 +238,7 @@ public class FourSpecAuto extends LinearOpMode {
 
 
                         new FollowPathCommand(robot.follower, paths.get(4)), //go to chamber + deposit
-                        new SequentialCommandGroup( //deposit sample 3
+                        new SequentialCommandGroup( //deposit specimen 3
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
@@ -246,20 +246,20 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(5)), //pick up sample 3
+                                new FollowPathCommand(robot.follower, paths.get(5)), //going to pick up specimen 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
                         new SequentialCommandGroup(
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
+                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 4
                                 new WaitCommand(225),
                                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
                                 new WaitCommand(300)
                         ),
 
                         new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber + deposit
-                        new SequentialCommandGroup( //deposit sample 4
+                        new SequentialCommandGroup( //deposit specimen 4
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
@@ -267,8 +267,8 @@ public class FourSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)), //pick up sample 3
-                                new GrabOffWallCommand(robot) //set up for next spec pickup
+                                new FollowPathCommand(robot.follower, paths.get(7)), //park
+                                new GrabOffWallCommand(robot) //set up for tele op ig?
                         ),
 
                         new TeleOpInitializeCommand(robot, false)
