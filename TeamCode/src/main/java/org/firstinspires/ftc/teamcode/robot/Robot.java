@@ -126,7 +126,7 @@ public class Robot {
         // Initialize all mechanisms
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
-        extendo = new Extendo(extendoRight, true);
+        extendo = new Extendo(extendoRight, manualMode);
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
