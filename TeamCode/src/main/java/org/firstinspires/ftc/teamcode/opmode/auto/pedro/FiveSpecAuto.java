@@ -55,7 +55,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 // Line 1
                                 new BezierLine(
                                         new Point(8.000, 65.500, Point.CARTESIAN),
-                                        new Point(39.500, 65.000, Point.CARTESIAN)
+                                        new Point(38.500, 77.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -66,13 +66,15 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
-                                        new Point(39.500, 65.000, Point.CARTESIAN),
-                                        new Point(19.000, 23.000, Point.CARTESIAN),
+                                        new Point(38.500, 77.000, Point.CARTESIAN),
+                                        new Point(12.500, 16.500, Point.CARTESIAN),
                                         new Point(64.000, 44.500, Point.CARTESIAN),
                                         new Point(57.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 2
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 3
                                 new BezierLine(
@@ -80,16 +82,20 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(10).build());
+        paths.add( //index 3
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 4
                                 new BezierCurve(
                                         new Point(20.000, 24.000, Point.CARTESIAN),
-                                        new Point(62.000, 35.000, Point.CARTESIAN),
+                                        new Point(62.500, 35.000, Point.CARTESIAN),
                                         new Point(57.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 4
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 5
                                 new BezierLine(
@@ -97,123 +103,128 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(10).build());
+        paths.add( //index 5
+                robot.follower.pathBuilder()
                         .addPath(
                                 // Line 6
                                 new BezierCurve(
                                         new Point(20.000, 13.000, Point.CARTESIAN),
                                         new Point(61.000, 17.500, Point.CARTESIAN),
-                                        new Point(57.000, 6.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
-                        .addPath(
-                                // Line 7
-                                new BezierCurve(
-                                        new Point(57.000, 6.000, Point.CARTESIAN),
-                                        new Point(-8.000, -1.000, Point.CARTESIAN),
-                                        new Point(29.000, 23.000, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 2
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 8
-                                new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(22.000, 74.500, Point.CARTESIAN),
-                                        new Point(39.500, 68.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 3
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 9
-                                new BezierCurve(
-                                        new Point(39.500, 68.000, Point.CARTESIAN),
-                                        new Point(8.000, 70.000, Point.CARTESIAN),
-                                        new Point(42.000, 20.000, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 4
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 10
-                                new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(21.000, 75.500, Point.CARTESIAN),
-                                        new Point(39.500, 71.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-
-        paths.add( //index 5
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 11
-                                new BezierCurve(
-                                        new Point(39.500, 71.000, Point.CARTESIAN),
-                                        new Point(8.000, 70.000, Point.CARTESIAN),
-                                        new Point(42.000, 20.000, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(57.000, 8.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
         paths.add( //index 6
                 robot.follower.pathBuilder()
                         .addPath(
-                                // Line 12
+                                // Line 7
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(20.000, 77.000, Point.CARTESIAN),
-                                        new Point(39.500, 74.000, Point.CARTESIAN)
+                                        new Point(57.000, 8.000, Point.CARTESIAN),
+                                        new Point(45.000, 10.000, Point.CARTESIAN),
+                                        new Point(-2.000, 0.000, Point.CARTESIAN),
+                                        new Point(20.500, 19.500, Point.CARTESIAN),
+                                        new Point(9.675, 23.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+        );
+
         paths.add( //index 7
                 robot.follower.pathBuilder()
                         .addPath(
-                                // Line 13
+                                // Line 8
                                 new BezierCurve(
-                                        new Point(39.500, 74.000, Point.CARTESIAN),
-                                        new Point(8.000, 70.000, Point.CARTESIAN),
-                                        new Point(42.000, 20.000, Point.CARTESIAN),
+                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(22.000, 74.500, Point.CARTESIAN),
+                                        new Point(37.500, 74.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+        );
+
+        paths.add( //index 8
+                robot.follower.pathBuilder()
+                        .addPath(
+                                // Line 9
+                                new BezierCurve(
+                                        new Point(37.500, 74.000, Point.CARTESIAN),
+                                        new Point(11.000, 66.000, Point.CARTESIAN),
+                                        new Point(30.000, 25.500, Point.CARTESIAN),
+                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+        );
+
+        paths.add( //index 9
+                robot.follower.pathBuilder()
+                        .addPath(
+                                // Line 10
+                                new BezierCurve(
+                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(17.500, 70.500, Point.CARTESIAN),
+                                        new Point(37.500, 71.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+
+        paths.add( //index 10
+                robot.follower.pathBuilder()
+                        .addPath(
+                                // Line 11
+                                new BezierCurve(
+                                        new Point(37.500, 71.000, Point.CARTESIAN),
+                                        new Point(10.000, 65.000, Point.CARTESIAN),
+                                        new Point(30.000, 25.500, Point.CARTESIAN),
                                         new Point(9.675, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 8
+        paths.add( //index 11
+                robot.follower.pathBuilder()
+                        .addPath(
+                                // Line 12
+                                new BezierCurve(
+                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(17.500, 75.000, Point.CARTESIAN),
+                                        new Point(37.500, 68.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 12
+                robot.follower.pathBuilder()
+                        .addPath(
+                                // Line 13
+                                new BezierCurve(
+                                        new Point(37.500, 68.000, Point.CARTESIAN),
+                                        new Point(11.500, 65.600, Point.CARTESIAN),
+                                        new Point(30.000, 25.000, Point.CARTESIAN),
+                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+        paths.add( //index 13
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 14
                                 new BezierCurve(
                                         new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(20.000, 77.000, Point.CARTESIAN),
-                                        new Point(39.500, 77.000, Point.CARTESIAN)
+                                        new Point(17.250, 64.250, Point.CARTESIAN),
+                                        new Point(37.500, 65.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add( //index 9
+        paths.add( //index 14
                 robot.follower.pathBuilder()
                         .addPath(
                                 // Line 15
                                 new BezierLine(
-                                        new Point(39.500, 77.000, Point.CARTESIAN),
-                                        new Point(28.000, 56.000, Point.CARTESIAN)
+                                        new Point(37.500, 65.000, Point.CARTESIAN),
+                                        new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(218)).build());
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230)).build());
     }
 
     @Override
@@ -243,6 +254,16 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(1)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
+                        new FollowPathCommand(robot.follower, paths.get(2)),
+
+                        new FollowPathCommand(robot.follower, paths.get(3)),
+
+                        new FollowPathCommand(robot.follower, paths.get(4)),
+
+                        new FollowPathCommand(robot.follower, paths.get(5)),
+
+                        new FollowPathCommand(robot.follower, paths.get(6)),
+
                         new SequentialCommandGroup(
                                 new WaitCommand(300), //giving human player time to adjust to robot?
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 2
@@ -251,7 +272,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new WaitCommand(300)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(2)), //go to high chamber
+                        new FollowPathCommand(robot.follower, paths.get(7)), //go to high chamber
                         new SequentialCommandGroup( //deposit specimen 2
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -260,7 +281,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(3)), //going to pick up specimen 3
+                                new FollowPathCommand(robot.follower, paths.get(8)), //going to pick up specimen 3
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
@@ -273,7 +294,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         ),
 
 
-                        new FollowPathCommand(robot.follower, paths.get(4)), //go to high chamber + deposit
+                        new FollowPathCommand(robot.follower, paths.get(9)), //go to high chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 3
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -282,7 +303,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(5)), //going to pick up specimen 4
+                                new FollowPathCommand(robot.follower, paths.get(10)), //going to pick up specimen 4
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
@@ -294,7 +315,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new WaitCommand(300)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(6)), //go to high chamber + deposit
+                        new FollowPathCommand(robot.follower, paths.get(11)), //go to high chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 4
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -303,7 +324,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         ),
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)), //going to pick up specimen 5
+                                new FollowPathCommand(robot.follower, paths.get(12)), //going to pick up specimen 5
                                 new GrabOffWallCommand(robot) //set up for next spec pickup
                         ),
 
@@ -315,7 +336,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new WaitCommand(300)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(8)), //go to high chamber + deposit
+                        new FollowPathCommand(robot.follower, paths.get(13)), //go to high chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 5
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
@@ -324,7 +345,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         ),
 
                         //maybe we should put this stuff in a parallel command:
-                        new FollowPathCommand(robot.follower, paths.get(9)), //park position/location
+                        new FollowPathCommand(robot.follower, paths.get(14)), //park position/location
                         new IntakeCommand(robot) //extending intake to get the IntakeArm in the observation zone for park
                 )
         );
