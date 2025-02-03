@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.List;
 
@@ -156,6 +157,9 @@ public class Robot {
     public void loop() {
         CommandScheduler.getInstance().run();
         follower.update();
+        TelemetryUtil.addData("intake arm pos", intakeArm.getArmPosition());
+        TelemetryUtil.addData("intake wrist pos", intakeArm.getWristPosition());
+        TelemetryUtil.addData("Current Arm State", intakeArm.currentState);
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
