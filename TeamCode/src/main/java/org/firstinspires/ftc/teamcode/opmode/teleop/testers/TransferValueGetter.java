@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
@@ -30,30 +31,7 @@ public class TransferValueGetter extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Servo oArmLeft = hardwareMap.get(Servo.class, "oArmLeft");
-        Servo oArmRight = hardwareMap.get(Servo.class, "oArmRight");
-        Servo oWrist = hardwareMap.get(Servo.class, "oWrist");
-
-        Servo outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
-        Servo outtakeSwivelServo = hardwareMap.get(Servo.class, "outtakeSwivelServo");
-
-        oArmRight.setDirection(Servo.Direction.REVERSE);
-
-        OuttakeArm outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
-        OuttakeClaw outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
-
-        CRServo activeIntake = hardwareMap.get(CRServo.class, "activeIntake");
-        Servo iArmLeft = hardwareMap.get(Servo.class, "iArmLeft");
-        Servo iArmRight = hardwareMap.get(Servo.class, "iArmRight");
-        Servo iWristRight = hardwareMap.get(Servo.class, "iWristRight");
-
-        iArmRight.setDirection(Servo.Direction.REVERSE);
-
-        IntakeArm intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
-        IntakeEnd intakeEnd = new IntakeEnd(activeIntake);
-
-        DcMotor extendo = hardwareMap.get(DcMotor.class, "extendoRight");
-        extendo.setDirection(DcMotorSimple.Direction.REVERSE);
+        Robot robot = new Robot(this.hardwareMap, false, false);
 
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
@@ -76,14 +54,14 @@ public class TransferValueGetter extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            extendo.setPower(-0.2);
-            outtakeArm.setArmPosition(outtakeArmPos);
-            outtakeArm.setWristPosition(outtakeWristPos);
-            outtakeClaw.setClawPosition(outtakeClawPos);
-            outtakeClaw.setSwivelPosition(outtakeSwivelPos);
-            intakeArm.setArmPosition(intakeArmPos);
-            intakeArm.setWristPosition(intakeWristPos);
-            intakeEnd.setState(activeState);
+            robot.extendo.setPower(-0.2);
+            robot.outtakeArm.setArmPosition(outtakeArmPos);
+            robot.outtakeArm.setWristPosition(outtakeWristPos);
+            robot.outtakeClaw.setClawPosition(outtakeClawPos);
+            robot.outtakeClaw.setSwivelPosition(outtakeSwivelPos);
+            robot.intakeArm.setArmPosition(intakeArmPos);
+            robot.intakeArm.setWristPosition(intakeWristPos);
+            robot.intakeEnd.setState(activeState);
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing

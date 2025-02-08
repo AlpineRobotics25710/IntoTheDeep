@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,10 +12,8 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowChamberCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
@@ -44,11 +41,10 @@ public class OneDriverTeleOp extends LinearOpMode {
         // Outtake commands
 
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            if(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT){
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT);
-            }
-            else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE).schedule();
+            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT || robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT).schedule();
+            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
+                new OuttakeIntermediateCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
                 new GrabOffWallCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {

@@ -98,7 +98,9 @@ public class Robot {
         outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
         iArmRight.setDirection(Servo.Direction.REVERSE);
         oArmRight.setDirection(Servo.Direction.REVERSE);
+        oArmLeft.setDirection(Servo.Direction.FORWARD);
         oWrist.setDirection(Servo.Direction.FORWARD);
+        outtakeSwivelServo.setDirection(Servo.Direction.REVERSE);
 
         // Resetting encoders
         if (isAuto) {
@@ -160,6 +162,9 @@ public class Robot {
         TelemetryUtil.addData("intake arm pos", intakeArm.getArmPosition());
         TelemetryUtil.addData("intake wrist pos", intakeArm.getWristPosition());
         TelemetryUtil.addData("Current Arm State", intakeArm.currentState);
+        TelemetryUtil.addData("outtake arm pos", outtakeArm.getArmPosition());
+        TelemetryUtil.addData("outtake wrist pos", oWrist.getPosition());
+        TelemetryUtil.addData("Current outtake state", outtakeArm.getCurrentState());
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();

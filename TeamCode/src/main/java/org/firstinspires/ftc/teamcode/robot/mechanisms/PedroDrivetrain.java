@@ -7,13 +7,12 @@ import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
-
 public class PedroDrivetrain {
+    private static Pose BASKET_POSE = new Pose();
+    private static Pose SUBMERSIBLE_POSE = new Pose(110.24,72.8,0);
+    private static Pose GRAB_OFF_WALL_POSE = new Pose();
     private final Follower follower;
     private final Gamepad gamepad;
-    private Pose waypoint1;
-    private Pose waypoint2;
 
     public PedroDrivetrain(Gamepad gamepad, Follower follower, Pose startPose) {
         this.follower = follower;
@@ -23,98 +22,93 @@ public class PedroDrivetrain {
         this.gamepad = gamepad;
     }
 
+    public static Pose getGrabOffWallPose() {
+        return GRAB_OFF_WALL_POSE;
+    }
+
+    public static void setGrabOffWallPose(Pose grabOffWallPose) {
+        GRAB_OFF_WALL_POSE = grabOffWallPose;
+    }
+
+    public static Pose getSubmersiblePose() {
+        return SUBMERSIBLE_POSE;
+    }
+
+    public static void setSubmersiblePose(Pose submersiblePose) {
+        SUBMERSIBLE_POSE = submersiblePose;
+    }
+
+    public static Pose getBasketPose() {
+        return BASKET_POSE;
+    }
+
+    public static void setBasketPose(Pose basketPose) {
+        BASKET_POSE = basketPose;
+    }
+
+    public void goToBasket(HEADING_TYPE headingType) {
+        if (headingType == HEADING_TYPE.TANGENTIAL) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setTangentHeadingInterpolation();
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.LINEAR) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), BASKET_POSE.getHeading());
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.CONSTANT) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setConstantHeadingInterpolation(follower.getPose().getHeading());
+            follower.followPath(path);
+        }
+    }
+
+    public void goToSubmersible(HEADING_TYPE headingType) {
+        if (headingType == HEADING_TYPE.TANGENTIAL) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
+            path.setTangentHeadingInterpolation();
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.LINEAR) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
+            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), SUBMERSIBLE_POSE.getHeading());
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.CONSTANT) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
+            path.setConstantHeadingInterpolation(follower.getPose().getHeading());
+            follower.followPath(path);
+        }
+    }
+
+    public void goToGrabOffWall(HEADING_TYPE headingType) {
+        if (headingType == HEADING_TYPE.TANGENTIAL) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(GRAB_OFF_WALL_POSE)));
+            path.setTangentHeadingInterpolation();
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.LINEAR) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(GRAB_OFF_WALL_POSE)));
+            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), GRAB_OFF_WALL_POSE.getHeading());
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.CONSTANT) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(GRAB_OFF_WALL_POSE)));
+            path.setConstantHeadingInterpolation(follower.getPose().getHeading());
+            follower.followPath(path);
+        }
+    }
+
     public void update() {
         follower.setTeleOpMovementVectors(-gamepad.left_stick_y, gamepad.left_stick_x, gamepad.right_stick_y);
         follower.update();
     }
 
-    public void saveWaypoint() {
-        if (waypoint1 == null) {
-            waypoint1 = follower.getPose();
-        } else if (waypoint2 == null) {
-            waypoint2 = follower.getPose();
-        } else {
-            TelemetryUtil.addData("PedroDrivetrain", "Both waypoints are already set. Clear waypoints before setting new ones.");
-        }
-    }
-
-    public void saveWaypoint(Pose waypoint) {
-        if (waypoint1 == null) {
-            waypoint1 = waypoint;
-        } else if (waypoint2 == null) {
-            waypoint2 = waypoint;
-        } else {
-            TelemetryUtil.addData("PedroDrivetrain", "Both waypoints are already set. Clear waypoints before setting new ones.");
-        }
-    }
-
-    public void goToWaypointWithLinearHeading() {
-        Pose currPose = follower.getPose();
-
-        if (waypoint1 != null && waypoint2 != null) {
-            if (isRobotNearPose(currPose, waypoint1, 1)) {
-                Path path = new Path(new BezierLine(new Point(waypoint1), new Point(waypoint2)));
-                path.setLinearHeadingInterpolation(waypoint1.getHeading(), waypoint2.getHeading());
-                follower.followPath(path);
-            } else if (isRobotNearPose(currPose, waypoint2, 1)) {
-                Path path = new Path(new BezierLine(new Point(waypoint2), new Point(waypoint1)));
-                path.setLinearHeadingInterpolation(waypoint2.getHeading(), waypoint1.getHeading());
-                follower.followPath(path);
-            }
-        } else {
-            TelemetryUtil.addData("PedroDrivetrain", "Both waypoints are not set!");
-        }
-    }
-
-    // If we like this we can add methods like this for the rest of the heading types
-    public void goToWaypointWithLinearHeadingFromCurrPose(Pose waypoint) {
-        Pose currPose = follower.getPose();
-        Path path = new Path(new BezierLine(new Point(currPose), new Point(waypoint)));
-        path.setLinearHeadingInterpolation(currPose.getHeading(), waypoint.getHeading());
-        follower.followPath(path);
-    }
-
-    public void goToWaypointWithConstantHeading() {
-        Pose currPose = follower.getPose();
-
-        if (waypoint1 != null) {
-            if (waypoint2 != null) {
-                Path path2 = new Path(new BezierLine(new Point(waypoint1), new Point(waypoint2)));
-                path2.setConstantHeadingInterpolation(waypoint2.getHeading());
-                follower.followPath(path2);
-            } else {
-                Path path1 = new Path(new BezierLine(new Point(currPose), new Point(waypoint1)));
-                path1.setConstantHeadingInterpolation(waypoint1.getHeading());
-                follower.followPath(path1);
-            }
-        }
-    }
-
-    public void goToWaypointWithTangentialHeading() {
-        Pose currPose = follower.getPose();
-
-        if (waypoint1 != null) {
-            if (waypoint2 != null) {
-                Path path2 = new Path(new BezierLine(new Point(waypoint1), new Point(waypoint2)));
-                path2.setTangentHeadingInterpolation();
-                follower.followPath(path2);
-            } else {
-                Path path1 = new Path(new BezierLine(new Point(currPose), new Point(waypoint1)));
-                path1.setTangentHeadingInterpolation();
-                follower.followPath(path1);
-            }
-        }
-    }
-
-    public void clearWaypoints() {
-        waypoint1 = null;
-        waypoint2 = null;
-    }
-
-    /** isRobotNearPose() method used for the autonomousPathUpdate and
-     * checking the proximity of the robot, to a specific position. **/
+    /**
+     * isRobotNearPose() method used for the autonomousPathUpdate and
+     * checking the proximity of the robot, to a specific position.
+     **/
     private boolean isRobotNearPose(Pose robotPose, Pose targetPose, double tolerance) {
         return Math.abs(robotPose.getX() - targetPose.getX()) <= tolerance &&
                 Math.abs(robotPose.getY() - targetPose.getY()) <= tolerance;
+    }
+
+    public enum HEADING_TYPE {
+        TANGENTIAL, LINEAR, CONSTANT
     }
 }
