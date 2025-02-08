@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class Extendo extends SubsystemBase {
     // TODO: NEED TO FIND REAL VALUES
-    public static double MAX_LENGTH = 310;
+    public static double MAX_LENGTH = 310.0;
+    public static double HALFWAY = 175.0;
     public static double BASE_POS = 0.0;
     public static final double TRANSFER_POS = 50;
     public static double kP = 0.015;
@@ -33,6 +34,10 @@ public class Extendo extends SubsystemBase {
     //in this case the position is inputted in ticks of the motor, can be changed later
     public void setTargetPosition(double position) {
         targetPosition = position;
+    }
+
+    public double getTargetPosition() {
+        return targetPosition;
     }
 
     public void setPower(double power) {

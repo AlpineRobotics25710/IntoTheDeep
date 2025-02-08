@@ -1,20 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
-import static org.firstinspires.ftc.teamcode.opmode.teleop.testers.OuttakeValueGetter.drive;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @TeleOp
@@ -27,6 +20,7 @@ public class TransferValueGetter extends LinearOpMode {
     public static double intakeArmPos = 0.0;
     public static double intakeWristPos = 0.0;
     public static IntakeEnd.ActiveState activeState = IntakeEnd.ActiveState.OFF;
+    public static boolean drive = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -71,6 +65,7 @@ public class TransferValueGetter extends LinearOpMode {
             double backLeftPower = (y - x + rx) / denominator;
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
+
             if(drive) {
                 frontLeftMotor.setPower(frontLeftPower);
                 backLeftMotor.setPower(backLeftPower);

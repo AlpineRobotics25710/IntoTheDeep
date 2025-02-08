@@ -20,9 +20,20 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
  */
 @Config
 public class IntakeCommand extends SequentialCommandGroup {
+    public IntakeCommand(Robot robot, double extendoPos) {
+        super(
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE), // Might need, might not need, we'll see
+                new WaitCommand(400),
+                new SequentialCommandGroup(
+                        new ExtendoCommand(robot, extendoPos),
+                        new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
+                )
+        );
+    }
+
     public IntakeCommand(Robot robot) {
         super(
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS - 0.1)), // Might need, might not need, we'll see
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE), // Might need, might not need, we'll see
                 new WaitCommand(400),
                 new SequentialCommandGroup(
                         new ExtendoCommand(robot, Extendo.MAX_LENGTH),

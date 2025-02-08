@@ -27,7 +27,7 @@ public class ExtendoTest extends LinearOpMode {
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
         while (opModeInInit()) {
-//            robot.extendoRight.setPower(-0.3);
+            robot.extendoRight.setPower(-0.3);
             Extendo.BASE_POS = robot.extendoRight.getCurrentPosition();
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
             TelemetryUtil.update();

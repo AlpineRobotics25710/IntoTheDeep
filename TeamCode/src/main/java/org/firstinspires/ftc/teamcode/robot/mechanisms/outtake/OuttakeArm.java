@@ -7,24 +7,25 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
-    public static double ARM_WALL_INTAKE_FRONT_POS = 0.76; // Adjust as needed
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.65; // Adjust as needed
     public static double ARM_WALL_INTAKE_BACK_POS = 0.2; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.55; // COMPLETE
     public static double ARM_OUTTAKE_FRONT_POS = 0.8;
-    public static double ARM_OUTTAKE_BACK_POS = 0.0; // COMPLETE
-    public static double ARM_INTERMEDIATE_POS = 0.6;
+    public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
+    public static double ARM_INTERMEDIATE_POS = 0.4;
     public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
     public static double ARM_INIT_POS = ARM_WALL_INTAKE_FRONT_POS;
+    public static double GIVE_SPACE_FOR_INTAKE = 0.5;
 
     // Wrist positions
-    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.38; // Adjust as needed
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.2; // Adjust as needed
     public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
     public static double WRIST_TRANSFER_POS = 0.92; // COMPLETE
     public static double WRIST_OUTTAKE_FRONT_POS = 1;
-    public static double WRIST_OUTTAKE_BACK_POS = 0.39; // COMPLETE
-    public static double WRIST_INTERIM_POS = 0.35;
-    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.35; // Adjust as needed
-    public static double WRIST_INIT_POS = 0.7;
+    public static double WRIST_OUTTAKE_BACK_POS = 0.17; // COMPLETE
+    public static double WRIST_INTERIM_POS = 0.17;
+    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.17; // why the hell is this here
+    public static double WRIST_INIT_POS = WRIST_WALL_INTAKE_FRONT_POS;
 
     private final Servo armServoLeft;
     private final Servo armServoRight;
@@ -80,6 +81,9 @@ public class OuttakeArm extends SubsystemBase {
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);
                 break;
+            case GIVE_SPACE_FOR_INTAKE:
+                setArmPosition(GIVE_SPACE_FOR_INTAKE);
+                break;
         }
     }
 
@@ -113,5 +117,6 @@ public class OuttakeArm extends SubsystemBase {
         OUTTAKE_BACK,
         DEPOSIT_SAMPLE,
         INIT,
+        GIVE_SPACE_FOR_INTAKE
     }
 }

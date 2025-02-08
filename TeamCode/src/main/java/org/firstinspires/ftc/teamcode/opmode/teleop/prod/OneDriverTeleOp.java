@@ -15,10 +15,13 @@ import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -56,12 +59,32 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> {
+            if (robot.extendo.getTargetPosition() == Extendo.BASE_POS) {
+                new IntakeCommand(robot, Extendo.HALFWAY);
+                TelemetryUtil.addData("Extendo", "Going halfway");
+            } else if (robot.extendo.getTargetPosition() == Extendo.HALFWAY) {
+                new ExtendoCommand(robot, Extendo.MAX_LENGTH);
+                TelemetryUtil.addData("Extendo", "Going max");
+            } else if (robot.extendo.getTargetPosition() == Extendo.MAX_LENGTH) {
+                new ExtendoCommand(robot, Extendo.HALFWAY);
+                TelemetryUtil.addData("Extendo", "Going halfway");
+            }
+        });
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+
+        // Intake commands
+        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+            if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE);
+            } else {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM);
+            }
+        });
 
         // Declare our motors
         // Make sure your ID's match your configuration
