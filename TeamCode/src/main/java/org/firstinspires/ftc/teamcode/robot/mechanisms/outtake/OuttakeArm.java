@@ -7,26 +7,25 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
-    public static double ARM_WALL_INTAKE_FRONT_POS = 0.65; // Adjust as needed
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.92; // Adjust as needed
     public static double ARM_WALL_INTAKE_BACK_POS = 0.2; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.55; // COMPLETE
     public static double ARM_OUTTAKE_FRONT_POS = 0.8;
-    public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
-    public static double ARM_INTERMEDIATE_POS = 0.4;
+    public static double ARM_OUTTAKE_BACK_POS = 0.37; // COMPLETE
+    public static double ARM_INTERMEDIATE_POS = 0.6;
     public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
-    public static double ARM_INIT_POS = ARM_WALL_INTAKE_FRONT_POS;
-    public static double GIVE_SPACE_FOR_INTAKE = 0.5;
+    public static double ARM_INIT_POS = 0.8;
 
     // Wrist positions
-    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.2; // Adjust as needed
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.3; // Adjust as needed
     public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
     public static double WRIST_TRANSFER_POS = 0.92; // COMPLETE
     public static double WRIST_OUTTAKE_FRONT_POS = 1;
-    public static double WRIST_OUTTAKE_BACK_POS = 0.17; // COMPLETE
-    public static double WRIST_INTERIM_POS = 0.17;
-    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.17; // why the hell is this here
-    public static double WRIST_INIT_POS = WRIST_WALL_INTAKE_FRONT_POS;
-
+    public static double WRIST_OUTTAKE_BACK_POS = 0.39; // COMPLETE
+    public static double WRIST_INTERMEDIATE_POS = 0.2;
+    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
+    public static double WRIST_INIT_POS = 0.1;
+    public static double GIVE_SPACE_FOR_INTAKE = 0.55;
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServo;
@@ -54,7 +53,7 @@ public class OuttakeArm extends SubsystemBase {
 
             case INTERMEDIATE:
                 setArmPosition(ARM_INTERMEDIATE_POS);
-                setWristPosition(WRIST_INTERIM_POS);
+                setWristPosition(WRIST_INTERMEDIATE_POS);
                 break;
 
             case TRANSFER:

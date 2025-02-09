@@ -100,7 +100,7 @@ public class Robot {
         oArmRight.setDirection(Servo.Direction.REVERSE);
         oArmLeft.setDirection(Servo.Direction.FORWARD);
         oWrist.setDirection(Servo.Direction.FORWARD);
-        outtakeSwivelServo.setDirection(Servo.Direction.REVERSE);
+        //outtakeSwivelServo.setDirection(Servo.Direction.REVERSE);
 
         // Resetting encoders
         if (isAuto) {
