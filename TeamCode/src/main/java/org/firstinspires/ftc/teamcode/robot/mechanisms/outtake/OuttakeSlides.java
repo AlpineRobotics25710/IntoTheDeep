@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class OuttakeSlides extends SubsystemBase {
     public static final double TRANSFER_POS = 0.0;
-    public static final double HIGH_BASKET = -1250.0;
-    public static final double LOW_BASKET = -425.0;
+    public static final double HIGH_BASKET = 1250.0;
+    public static final double LOW_BASKET = 425.0;
     public static final double LOW_CHAMBER = 0.0;
     public static final double HIGH_CHAMBER = 0.0;
     public static final double GRAB_OFF_WALL = 0.0;
@@ -53,11 +53,12 @@ public class OuttakeSlides extends SubsystemBase {
     public void periodic() {
         if (!manualMode) {
             outtakePIDF.setPID(kP, kI, kD);
-            power = outtakePIDF.calculate(right.getCurrentPosition(), targetPosition);
-            slidesReached = (targetPosition > 0 && outtakePIDF.atSetPoint()) || (right.getCurrentPosition() <= 5 && targetPosition == 0);
+            power = outtakePIDF.calculate(left.getCurrentPosition(), targetPosition);
+            slidesReached = (targetPosition > 0 && outtakePIDF.atSetPoint()) || (left.getCurrentPosition() <= 5 && targetPosition == 0);
             setSlidesPower(power + kF);
-            TelemetryUtil.addData("power", power);
+           // TelemetryUtil.addData("power", power);
         }
+        TelemetryUtil.addData("Slides Position", left.getCurrentPosition());
     }
 
     public double getPower() {
@@ -65,7 +66,7 @@ public class OuttakeSlides extends SubsystemBase {
     }
 
     public double getCurrentPosition() {
-        return right.getCurrentPosition();
+        return left.getCurrentPosition();
     }
     public boolean isManualMode() {
         return manualMode;

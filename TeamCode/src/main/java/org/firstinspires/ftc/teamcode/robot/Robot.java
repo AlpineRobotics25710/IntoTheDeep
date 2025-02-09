@@ -144,6 +144,8 @@ public class Robot {
                 outtakeArm
         );
 
+
+
         if (isAuto) {
             new AutonInitializeCommand(this, manualMode).schedule();
         } else {

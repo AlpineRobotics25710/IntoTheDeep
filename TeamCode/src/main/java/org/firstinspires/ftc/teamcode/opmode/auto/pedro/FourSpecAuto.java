@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
@@ -211,7 +212,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 1
                                 new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new OuttakeIntermediateCommand(robot),
                                 new WaitCommand(300)
                         ),
 
@@ -232,7 +233,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 2
                                 new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new OuttakeIntermediateCommand(robot),
                                 new WaitCommand(300)
                         ),
 
@@ -254,7 +255,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 4
                                 new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
+                                new OuttakeIntermediateCommand(robot),
                                 new WaitCommand(300)
                         ),
 
