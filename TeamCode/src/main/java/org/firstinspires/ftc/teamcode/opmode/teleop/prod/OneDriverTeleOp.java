@@ -64,9 +64,6 @@ public class OneDriverTeleOp extends LinearOpMode {
         //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new TeleOpInitializeCommand(robot, false)
-        );
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> {
             new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
@@ -75,7 +72,7 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Outtake slides commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
-       // gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
         // Intake commands
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
