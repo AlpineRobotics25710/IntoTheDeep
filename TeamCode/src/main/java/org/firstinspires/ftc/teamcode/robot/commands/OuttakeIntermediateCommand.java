@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SwivelCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
@@ -17,6 +18,10 @@ public class OuttakeIntermediateCommand extends SequentialCommandGroup {
 
     public OuttakeIntermediateCommand(Robot robot) {
         addCommands(
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
+                new WaitCommand(500),
+                new InstantCommand(() -> robot.outtakeArm.setWristPosition(0.2)),
+                new WaitCommand(450),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
                 new WaitCommand(SWIVEL_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),

@@ -7,6 +7,7 @@ import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -94,11 +95,11 @@ public class Robot {
 
         // Set directions of all motors and servos
         extendoRight.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideLeft.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideRight.setDirection(DcMotor.Direction.REVERSE);
         iArmRight.setDirection(Servo.Direction.REVERSE);
-        oArmRight.setDirection(Servo.Direction.REVERSE);
-        oArmLeft.setDirection(Servo.Direction.FORWARD);
+        oArmRight.setDirection(Servo.Direction.FORWARD);
+        oArmLeft.setDirection(Servo.Direction.REVERSE);
         oWrist.setDirection(Servo.Direction.FORWARD);
         //outtakeSwivelServo.setDirection(Servo.Direction.REVERSE);
 
@@ -134,17 +135,9 @@ public class Robot {
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
         follower = new Follower(hardwareMap);
+
         // Register all subsystems
-        CommandScheduler.getInstance().registerSubsystem(
-                intakeArm,
-                intakeEnd,
-                extendo,
-                outtakeClaw,
-                outtakeSlides,
-                outtakeArm
-        );
-
-
+        CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);
 
         if (isAuto) {
             new AutonInitializeCommand(this, manualMode).schedule();
@@ -163,10 +156,13 @@ public class Robot {
         follower.update();
         TelemetryUtil.addData("intake arm pos", intakeArm.getArmPosition());
         TelemetryUtil.addData("intake wrist pos", intakeArm.getWristPosition());
+        TelemetryUtil.addData("Intake state", intakeArm.currentState);
         TelemetryUtil.addData("Current Arm State", intakeArm.currentState);
         TelemetryUtil.addData("outtake arm pos", outtakeArm.getArmPosition());
         TelemetryUtil.addData("outtake wrist pos", oWrist.getPosition());
         TelemetryUtil.addData("Current outtake state", outtakeArm.getCurrentState());
+        TelemetryUtil.addData("Outtake slides pos", outtakeSlides.getCurrentPosition());
+        TelemetryUtil.addData("outtake slides target pos", outtakeSlides.getTargetPosition());
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();

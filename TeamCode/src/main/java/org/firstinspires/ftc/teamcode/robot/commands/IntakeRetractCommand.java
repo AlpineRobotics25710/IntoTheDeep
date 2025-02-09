@@ -14,11 +14,8 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 public class IntakeRetractCommand extends SequentialCommandGroup {
     public IntakeRetractCommand(Robot robot) {
         super(
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS - 0.1)), // Might need, might not need, we'll see
-                new WaitCommand(400),
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
-                new ExtendoCommand(robot, Extendo.BASE_POS),
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_TRANSFER_POS)) // Might need, might not need, we'll see
+                new ExtendoCommand(robot, Extendo.BASE_POS)
         );
     }
 

@@ -1,25 +1,21 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
@@ -34,7 +30,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class OneDriverTeleOp extends LinearOpMode {
 
     public static boolean robotCentric = true;
-    private static Pose startPose = new Pose(0,0,0);
+    private static Pose startPose = new Pose(0, 0, 0);
+
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
@@ -68,64 +65,30 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-            new TeleOpInitializeCommand(robot, false)
+                new TeleOpInitializeCommand(robot, false)
         );
         // Extendo commands
-//        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> {
-//            if (robot.extendo.getTargetPosition() == Extendo.BASE_POS) {
-//                new IntakeCommand(robot, Extendo.MAX_LENGTH);
-//                TelemetryUtil.addData("Extendo", "Going halfway");
-//            } else if (robot.extendo.getTargetPosition() == Extendo.MAX_LENGTH) {
-//                new ExtendoCommand(robot, Extendo.BASE_POS);
-//                TelemetryUtil.addData("Extendo", "Going halfway");
-//            }
-//        });
-     //   gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> {
+            new IntakeCommand(robot, Extendo.MAX_LENGTH).schedule();
+            new WaitCommand(700).schedule();
+            new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
+            TelemetryUtil.addData("Extendo", "Going halfway");
+        });
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
         // Outtake slides commands
-     //   gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
-       // gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new HighBasketCommand(robot, false));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
 
         // Intake commands
-//        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
-//            if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
-//                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE);
-//            } else {
-//                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM);
-//            }
-//        });
-
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(() -> {
-            if (robot.extendo.getTargetPosition() == Extendo.MAX_LENGTH) {
-                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
-                TelemetryUtil.addData("Extending Out");
-            }
-            else {
-                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
-                TelemetryUtil.addData("Extending Out");
+        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+            TelemetryUtil.addData("BUTTON X", "PRESSED");
+            if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE);
+            } else {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM);
             }
         });
-
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INTERIM)
-        );
-
-
-        // Declare our motors
-        // Make sure your ID's match your configuration
-//        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-//        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-//        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-//        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-//
-//        // Reverse the right side motors. This may be wrong for your setup.
-//        // If your robot moves backwards when commanded to go forwards,
-//        // reverse the left side instead.
-//        // See the note about this earlier on this page.
-//        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-//        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-//        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-//        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         while (opModeInInit()) {
@@ -138,29 +101,13 @@ public class OneDriverTeleOp extends LinearOpMode {
         }
 
         waitForStart();
-        if(isStarted()){
+
+        if (isStarted()) {
             robot.follower.startTeleopDrive();
         }
+
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
-            //            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-//            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-//            double rx = gamepad1.right_stick_x;
-//
-//            // Denominator is the largest motor power (absolute value) or 1
-//            // This ensures all the powers maintain the same ratio,
-//            // but only if at least one is out of the range [-1, 1]
-//            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-//            double frontLeftPower = (y + x + rx) / denominator;
-//            double backLeftPower = (y - x + rx) / denominator;
-//            double frontRightPower = (y - x - rx) / denominator;
-//            double backRightPower = (y + x - rx) / denominator;
-//
-//            frontLeftMotor.setPower(frontLeftPower);
-//            backLeftMotor.setPower(backLeftPower);
-//            frontRightMotor.setPower(frontRightPower);
-//            backRightMotor.setPower(backRightPower);
-
             robot.loop();
             TelemetryUtil.update();
         }

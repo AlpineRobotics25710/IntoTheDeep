@@ -19,13 +19,7 @@ public class TransferCommand extends SequentialCommandGroup {
         addCommands(
                 new IntakeRetractCommand(robot),
                 new OuttakeRetractCommand(robot),
-                new ParallelCommandGroup(
-                        new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
-                        new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
-                        new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
-                )
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
         );
     }
 }
