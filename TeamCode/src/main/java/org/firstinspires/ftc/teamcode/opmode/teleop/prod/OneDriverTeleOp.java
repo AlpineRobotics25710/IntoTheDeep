@@ -64,15 +64,9 @@ public class OneDriverTeleOp extends LinearOpMode {
         //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new TeleOpInitializeCommand(robot, false)
-        );
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> {
-            new IntakeCommand(robot, Extendo.MAX_LENGTH).schedule();
-            new WaitCommand(700).schedule();
-            new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
-            TelemetryUtil.addData("Extendo", "Going halfway");
+            new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
         });
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new TransferCommand(robot));
 
@@ -82,11 +76,11 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Intake commands
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
-            TelemetryUtil.addData("BUTTON X", "PRESSED");
+           // TelemetryUtil.addData("BUTTON X", "PRESSED");
             if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE);
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
             } else {
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM);
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
             }
         });
 
