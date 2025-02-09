@@ -16,20 +16,23 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 @Config
 public class GrabOffWallCommand extends SequentialCommandGroup {
-    public static long slidesTimeout = 0;
+    public static long SLIDES_DELAY = 0;
+    public static long WRIST_DELAY = 200;
+    public static long ARM_DELAY = 600;
+    public static long ARM_DELAY2 =  200;
 
     // 🤫🧏
     public GrabOffWallCommand(Robot robot) {
         super(
                 new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
-                new WaitCommand(slidesTimeout),
+                new WaitCommand(SLIDES_DELAY),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
-                new WaitCommand(200),
+                new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.83)),
-                new WaitCommand(900),
+                new WaitCommand(ARM_DELAY),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
-                new WaitCommand(200),
+                new WaitCommand(ARM_DELAY2),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
         );
     }

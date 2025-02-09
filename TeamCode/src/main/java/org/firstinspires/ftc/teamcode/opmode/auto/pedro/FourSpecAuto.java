@@ -53,7 +53,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 // Line 1
                                 new BezierLine(
                                         new Point(8.000, 65.500, Point.CARTESIAN),
-                                        new Point(39.500, 68.000, Point.CARTESIAN)
+                                        new Point(37.500, 68.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -65,7 +65,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
-                                        new Point(39.500, 68.000, Point.CARTESIAN),
+                                        new Point(37.500, 68.000, Point.CARTESIAN),
                                         new Point(3.000, 33.000, Point.CARTESIAN),
                                         new Point(67.000, 43.000, Point.CARTESIAN),
                                         new Point(60.000, 23.000, Point.CARTESIAN)
@@ -117,7 +117,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(9.675, 12.000, Point.CARTESIAN),
                                         new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 71, Point.CARTESIAN)
+                                        new Point(37.500, 71, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
@@ -126,7 +126,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 7
                                 new BezierCurve(
-                                        new Point(39.500, 71, Point.CARTESIAN),
+                                        new Point(37.500, 71, Point.CARTESIAN),
                                         new Point(4.000, 67.000, Point.CARTESIAN),
                                         new Point(46.000, 20.000, Point.CARTESIAN),
                                         new Point(9.675, 23.000, Point.CARTESIAN)
@@ -140,7 +140,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(9.675, 23.000, Point.CARTESIAN),
                                         new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 74, Point.CARTESIAN)
+                                        new Point(37.500, 74, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
@@ -149,7 +149,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 9
                                 new BezierCurve(
-                                        new Point(39.500, 74, Point.CARTESIAN),
+                                        new Point(37.500, 74, Point.CARTESIAN),
                                         new Point(2.500, 71.000, Point.CARTESIAN),
                                         new Point(50.000, 21.500, Point.CARTESIAN),
                                         new Point(9.675, 23.000, Point.CARTESIAN)
@@ -163,7 +163,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(9.675, 23.000, Point.CARTESIAN),
                                         new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 77, Point.CARTESIAN)
+                                        new Point(37.500, 77, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build());
@@ -172,7 +172,7 @@ public class FourSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 11
                                 new BezierCurve(
-                                        new Point(39.500, 77, Point.CARTESIAN),
+                                        new Point(37.500, 77, Point.CARTESIAN),
                                         new Point(12.000, 73.000, Point.CARTESIAN),
                                         new Point(10.000, 10.000, Point.CARTESIAN)
                                 )
@@ -210,8 +210,6 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new SequentialCommandGroup(
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen 1
-                                new WaitCommand(225),
                                 new OuttakeIntermediateCommand(robot),
                                 new WaitCommand(300)
                         ),

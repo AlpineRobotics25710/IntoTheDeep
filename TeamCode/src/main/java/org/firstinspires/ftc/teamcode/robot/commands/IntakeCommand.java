@@ -43,10 +43,8 @@ public class IntakeCommand extends SequentialCommandGroup {
                                 robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
                             }
                         }),
-                        new WaitCommand(500),
-                        new ExtendoCommand(robot, Extendo.MAX_LENGTH),
-                        new WaitCommand(700),
-                        new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE)
+                        new WaitCommand(300),
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE)
                 )
         );
     }

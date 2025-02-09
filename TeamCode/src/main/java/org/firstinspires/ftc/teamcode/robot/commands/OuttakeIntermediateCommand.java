@@ -14,16 +14,18 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 
 public class OuttakeIntermediateCommand extends SequentialCommandGroup {
-    public static final long SWIVEL_DELAY = 450; // ms
+    public static final long CLAW_DELAY = 150; //ms
+    public static final long WRIST_DELAY = 200; //ms
+    public static final long ARM_DELAY = 250; //ms
 
     public OuttakeIntermediateCommand(Robot robot) {
         addCommands(
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new WaitCommand(500),
+                new WaitCommand(CLAW_DELAY),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(0.2)),
-                new WaitCommand(450),
+                new WaitCommand(WRIST_DELAY),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
-                new WaitCommand(SWIVEL_DELAY),
+                new WaitCommand(ARM_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(WRIST_OUTTAKE_BACK_POS))
         );
