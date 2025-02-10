@@ -83,7 +83,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(28.600, 43.600, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(320)).build()
         );
 
         //EXTEND INTAKE
@@ -98,7 +98,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(28.600, 43.600, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(40)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(220)).build()
         );
 
         paths.add(
@@ -110,7 +110,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(28.600, 43.600, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(140)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(220), Math.toRadians(320)).build()
         );
 
         paths.add(
@@ -122,7 +122,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(31.600, 36.200, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(140)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(320)).build()
         );
         //INTAKE
 
@@ -136,7 +136,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(31.200, 36.200, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(40)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(220)).build()
         );
 
         paths.add(
@@ -148,7 +148,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(31.200, 36.200, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(140)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(220), Math.toRadians(320)).build()
         );
 
         paths.add(
@@ -160,7 +160,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(31.600, 28.400, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(140)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(320)).build()
         );
 
         paths.add(
@@ -172,7 +172,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(31.2, 36.2, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(40)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(220)).build()
         );
         paths.add(
                 robot.follower.pathBuilder()
@@ -184,7 +184,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(9.500, 34.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(180)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(220), Math.toRadians(180)).build()
         );
         paths.add( //index 6
                 robot.follower.pathBuilder()
@@ -332,29 +332,23 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 new WaitCommand(200) //dont need this i think?
                         ),
 
-                        new ParallelCommandGroup(
-                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
-                                new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
-                        ),
-
+                        new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
                         new SequentialCommandGroup(
                                 new FollowPathCommand(robot.follower, paths.get(2)), //deposit sample one
                                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
                         ),
+
                         new WaitCommand(200),
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(3)),
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD) //go turn back and turn intake on
-                        ),
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
+                        new FollowPathCommand(robot.follower, paths.get(3)),
 
                         new FollowPathCommand(robot.follower, paths.get(4)),
 
-                        new ParallelCommandGroup(
-                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
-                                new FollowPathCommand(robot.follower, paths.get(5)), //intake sample 2
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
-                        ),
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+                        new FollowPathCommand(robot.follower, paths.get(5)), //intake sample 2
 
                         new SequentialCommandGroup(
                                 new FollowPathCommand(robot.follower, paths.get(6)), //drop sample 2
@@ -362,10 +356,8 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         ),
 
                         new WaitCommand(200),
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)),
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD) //go turn back and turn intake on
-                        ),
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
+                        new FollowPathCommand(robot.follower, paths.get(7)),
 
                         new FollowPathCommand(robot.follower, paths.get(8)),
 
