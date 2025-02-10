@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 
 public class OuttakeIntermediateCommand extends SequentialCommandGroup {
-    public static final long CLAW_DELAY = 150; //ms
+    public static final long CLAW_DELAY = 200; //ms
     public static final long WRIST_DELAY = 200; //ms
     public static final long ARM_DELAY = 250; //ms
 

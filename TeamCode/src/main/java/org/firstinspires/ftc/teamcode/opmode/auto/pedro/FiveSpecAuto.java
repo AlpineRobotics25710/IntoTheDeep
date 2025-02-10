@@ -261,11 +261,13 @@ public class FiveSpecAuto extends LinearOpMode {
         CommandScheduler.getInstance().schedule(
                 new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here fo rnow
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)), //go to deposit preload
-
+                        new ParallelCommandGroup(
+                            new OuttakeIntermediateCommand(robot),
+                            new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
+                        ),
                         new SequentialCommandGroup( //deposit preload
                                 new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
+                                new WaitCommand(250),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
                                 //new WaitCommand(500) //dont need this i think?
                         ),
