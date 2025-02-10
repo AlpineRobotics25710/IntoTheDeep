@@ -21,4 +21,13 @@ public class OuttakeRetractCommand extends ParallelCommandGroup {
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
         );
     }
+
+    public OuttakeRetractCommand(Robot robot, int pos) {
+        super(
+                new OuttakeSlidesCommand(robot, pos),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
+        );
+    }
 }

@@ -135,7 +135,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(45.000, 10.000, Point.CARTESIAN),
                                         new Point(-3.000, 3.000, Point.CARTESIAN),
                                         new Point(20.500, 19.500, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(9, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -146,7 +146,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 8
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(9, 23.000, Point.CARTESIAN),
                                         new Point(22.000, 74.500, Point.CARTESIAN),
                                         new Point(38.500, 74.500, Point.CARTESIAN)
                                 )
@@ -162,7 +162,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(38.500, 74.500, Point.CARTESIAN),
                                         new Point(11.000, 66.000, Point.CARTESIAN),
                                         new Point(30.000, 25.500, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(9, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -173,7 +173,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 10
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(9, 23.000, Point.CARTESIAN),
                                         new Point(17.500, 73.000, Point.CARTESIAN),
                                         new Point(38.500, 72.000, Point.CARTESIAN)
                                 )
@@ -189,7 +189,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(38.500, 72.000, Point.CARTESIAN),
                                         new Point(10.000, 65.000, Point.CARTESIAN),
                                         new Point(30.000, 25.500, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(9, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -200,7 +200,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 12
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(9, 23.000, Point.CARTESIAN),
                                         new Point(17.500, 70.500, Point.CARTESIAN),
                                         new Point(38.500, 69.500, Point.CARTESIAN)
                                 )
@@ -216,7 +216,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(38.500, 69.500, Point.CARTESIAN),
                                         new Point(11.500, 65.600, Point.CARTESIAN),
                                         new Point(30.000, 25.000, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(9, 23.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180)).build()
@@ -227,7 +227,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 14
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
+                                        new Point(9, 23.000, Point.CARTESIAN),
                                         new Point(17.250, 64.250, Point.CARTESIAN),
                                         new Point(38.500, 67.000, Point.CARTESIAN)
                                 )
