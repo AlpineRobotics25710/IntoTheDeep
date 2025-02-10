@@ -19,6 +19,6 @@ public class TurnCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(follower.getPose().getHeading() - follower.getPose().getHeading();
+        return Math.abs(follower.getPose().getHeading() - follower.getPose().getHeading()) <= 0.01;
     }
 }
