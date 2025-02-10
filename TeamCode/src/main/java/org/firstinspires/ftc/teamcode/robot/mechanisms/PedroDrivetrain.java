@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class PedroDrivetrain {
     private static Pose BASKET_POSE = new Pose();
-    private static Pose SUBMERSIBLE_POSE = new Pose(110.24,72.8,0);
-    private static Pose GRAB_OFF_WALL_POSE = new Pose();
+    private static Pose SUBMERSIBLE_POSE = new Pose(8.000, 65.500, 180); // From 4 spec auto
+    private static Pose GRAB_OFF_WALL_POSE = new Pose(9.675, 26.607, 180); //  From 4 spec auto
     private final Follower follower;
     private final Gamepad gamepad;
 
