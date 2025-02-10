@@ -1,12 +1,9 @@
-package org.firstinspires.ftc.teamcode.robot.commands.teleopcommands;
+package org.firstinspires.ftc.teamcode.robot.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.Path;
-import com.pedropathing.pathgen.PathChain;
 
-import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 //im so cool aren't i
 public class TurnCommand extends CommandBase {
     private final Follower follower;
@@ -22,6 +19,6 @@ public class TurnCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return !follower.isBusy();
+        return Math.abs(follower.getPose().getHeading() - follower.getPose().getHeading();
     }
 }
