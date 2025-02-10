@@ -28,7 +28,7 @@ public class AutonInitializeCommand extends ParallelCommandGroup {
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INIT),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }
