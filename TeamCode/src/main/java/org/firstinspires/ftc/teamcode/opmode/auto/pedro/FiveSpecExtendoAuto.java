@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
@@ -19,7 +16,6 @@ import com.pedropathing.util.DashboardPoseTracker;
 import com.pedropathing.util.Drawing;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
@@ -31,13 +27,11 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TurnCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -49,6 +43,9 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
     public static double testScore = 39.25;
     public static double testGrab = 35;
     public static double testGrabDistance = 10;
+
+    public static double facingSampleAngle = 320;
+    public static double depositSampleAngle = 220;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
     public static final long DEPOSIT_DELAY = 150;
@@ -83,13 +80,13 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(28.600, 43.600, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(320)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(facingSampleAngle)).build()
         );
 
         //EXTEND INTAKE
 
         //TURN
-        paths.add(
+        paths.add( //TURN TO SAMPLE
                 robot.follower.pathBuilder()
                         .addPath(
                                 // turn
@@ -98,7 +95,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                         new Point(28.600, 43.600, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(320), Math.toRadians(220)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(facingSampleAngle), Math.toRadians(depositSampleAngle)).build()
         );
 
         paths.add(
@@ -333,42 +330,36 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         ),
 
                         new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
-                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
                         new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
+
                         new SequentialCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(2)), //deposit sample one
+                                new TurnCommand(robot.follower, depositSampleAngle), //deposit sample one: 2
                                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
                         ),
 
                         new WaitCommand(200),
                         new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
-                        new FollowPathCommand(robot.follower, paths.get(3)),
+                        new TurnCommand(robot.follower, facingSampleAngle), //turn towards sample two: 3
 
                         new FollowPathCommand(robot.follower, paths.get(4)),
 
                         new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
                         new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-                        new FollowPathCommand(robot.follower, paths.get(5)), //intake sample 2
 
                         new SequentialCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(6)), //drop sample 2
+                                new TurnCommand(robot.follower, depositSampleAngle), //drop sample two: 5
                                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
                         ),
 
                         new WaitCommand(200),
                         new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
-                        new FollowPathCommand(robot.follower, paths.get(7)),
+                        new TurnCommand(robot.follower, facingSampleAngle), //turn back for sample 3: 6
 
-                        new FollowPathCommand(robot.follower, paths.get(8)),
-
-                        new ParallelCommandGroup(
-                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
-                                new FollowPathCommand(robot.follower, paths.get(5)), //intake sample 3
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
-                        ),
+                        new FollowPathCommand(robot.follower, paths.get(7)), //intake sample 3
 
                         new SequentialCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(6)), //drop sample 3
+                                new FollowPathCommand(robot.follower, paths.get(8)), //drop sample 3
                                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
                         ),
                         new WaitCommand(200),
@@ -377,7 +368,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new GrabOffWallCommand(robot),
                         new WaitCommand(500),
 
-                        new FollowPathCommand(robot.follower, paths.get(7)),
+                        new FollowPathCommand(robot.follower, paths.get(9)),
 
 
                         new SequentialCommandGroup( //grabbing specimen and preparing to deposit
@@ -386,7 +377,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 //new WaitCommand(350) //dont need this i think?
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(8)), //going to high chamber to deposit specimen 2
+                        new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 2
 
                         new SequentialCommandGroup( //depositing specimen 2
                                 new HighChamberCommand(robot, false),
@@ -397,7 +388,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
 
                         new ParallelCommandGroup( //going back to pick up specimen 3
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(9)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(11)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
                         new SequentialCommandGroup( //grabbing specimen and preparing to deposit
@@ -406,7 +397,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 //new WaitCommand(350) //dont need this i think?
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 3
+                        new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 3
 
                         new SequentialCommandGroup( //depositing specimen 3
                                 new HighChamberCommand(robot, false),
@@ -417,7 +408,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
 
                         new ParallelCommandGroup( //going back to pick up specimen 4
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(11)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(13)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
                         new SequentialCommandGroup( //grabbing specimen and preparing to deposit
@@ -426,7 +417,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 //new WaitCommand(350) //dont need this i think?
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 4
+                        new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 4
 
                         new SequentialCommandGroup( //depositing specimen 4
                                 new HighChamberCommand(robot, false),
@@ -437,7 +428,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
 
                         new ParallelCommandGroup( //going back to pick up specimen 5
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(13)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(15)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
                         new SequentialCommandGroup( //grabbing specimen and preparing to deposit
@@ -446,7 +437,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 //new WaitCommand(350) //dont need this i think?
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 5
+                        new FollowPathCommand(robot.follower, paths.get(16)), //going to high chamber to deposit specimen 5
 
                         new SequentialCommandGroup( //depositing specimen 4
                                 new HighChamberCommand(robot, false),
@@ -457,19 +448,13 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
 
                         new ParallelCommandGroup(
                                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
-                                new FollowPathCommand(robot.follower, paths.get(15)) //park position/location
+                                new FollowPathCommand(robot.follower, paths.get(17)) //park position/location
                         )
                 )
         );
 
-        dashboardPoseTracker = new DashboardPoseTracker(robot.follower.poseUpdater);
-        Drawing.drawRobot(robot.follower.poseUpdater.getPose(), "#4CAF50");
-        Drawing.sendPacket();
-
-        waitForStart();
-
-        dashboardPoseTracker = new DashboardPoseTracker(robot.follower.poseUpdater);
-        Drawing.drawRobot(robot.follower.poseUpdater.getPose(), "#4CAF50");
+        dashboardPoseTracker = robot.follower.getDashboardPoseTracker();
+        Drawing.drawRobot(robot.follower.getPose(), "#4CAF50");
         Drawing.sendPacket();
 
         waitForStart();
@@ -484,7 +469,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
 
             dashboardPoseTracker.update();
             Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
-            Drawing.drawRobot(robot.follower.poseUpdater.getPose(), "#4CAF50");
+            Drawing.drawRobot(robot.follower.getPose(), "#4CAF50");
             Drawing.sendPacket();
         }
         robot.end();
