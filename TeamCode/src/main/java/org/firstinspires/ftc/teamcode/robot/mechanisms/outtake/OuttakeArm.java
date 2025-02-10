@@ -44,14 +44,9 @@ public class OuttakeArm extends SubsystemBase {
     public void setState(OuttakeArmState state) {
         currentState = state;
         switch (currentState) {
-            case WALL_INTAKE_FRONT:
+            case GRAB_OFF_WALL:
                 setArmPosition(ARM_WALL_INTAKE_FRONT_POS);
                 setWristPosition(WRIST_WALL_INTAKE_FRONT_POS);
-                break;
-
-            case WALL_INTAKE_BACK:
-                setArmPosition(ARM_WALL_INTAKE_BACK_POS);
-                setWristPosition(WRIST_WALL_INTAKE_BACK_POS);
                 break;
 
             case INTERMEDIATE:
@@ -64,25 +59,16 @@ public class OuttakeArm extends SubsystemBase {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
 
-            case OUTTAKE_FRONT:
-                setArmPosition(ARM_OUTTAKE_FRONT_POS);
-                setWristPosition(WRIST_OUTTAKE_FRONT_POS);
-                break;
-
-            case OUTTAKE_BACK:
+            case HIGH_CHAMBER:
                 setArmPosition(ARM_OUTTAKE_BACK_POS);
                 setWristPosition(WRIST_OUTTAKE_BACK_POS);
-                break;
-
-            case DEPOSIT_SAMPLE:
-                setArmPosition(ARM_DEPOSIT_SAMPLE_POS);
-                setWristPosition(WRIST_DEPOSIT_SAMPLE_POS);
                 break;
 
             case INIT:
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);
                 break;
+
             case GIVE_SPACE_FOR_INTAKE:
                 setWristPosition(WRIST_GIVE_SPACE_FOR_INTAKE);
                 setArmPosition(ARM_GIVE_SPACE_FOR_INTAKE);
@@ -112,6 +98,6 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE_FRONT, WALL_INTAKE_BACK, TRANSFER, INTERMEDIATE, OUTTAKE_FRONT, OUTTAKE_BACK, DEPOSIT_SAMPLE, INIT, GIVE_SPACE_FOR_INTAKE
+        GRAB_OFF_WALL, TRANSFER, INTERMEDIATE, HIGH_CHAMBER, INIT, GIVE_SPACE_FOR_INTAKE, BASKET_OUTTAKE
     }
 }

@@ -160,7 +160,7 @@ public class NetSideAuto extends LinearOpMode {
         );
 
         CommandGroupBase deposit = new SequentialCommandGroup(
-                new HighBasketCommand(robot, false),
+                new HighBasketCommand(robot),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                 new OuttakeRetractCommand(robot)
         );
