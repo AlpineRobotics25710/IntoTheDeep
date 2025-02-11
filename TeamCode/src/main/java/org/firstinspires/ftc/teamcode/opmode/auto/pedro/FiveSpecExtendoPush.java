@@ -44,8 +44,8 @@ public class FiveSpecExtendoPush extends LinearOpMode {
     public static double testGrab = 35;
     public static double testGrabDistance = 10;
 
-    public static double facingSampleAngle = 320;
-    public static double depositSampleAngle = 220;
+    public static double facingSampleAngle = 300;
+    public static double depositSampleAngle = 225;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
     public static final long DEPOSIT_DELAY = 150;
@@ -59,7 +59,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 0
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 1
                                 new BezierLine(
                                         new Point(8.500, 65.500, Point.CARTESIAN),
                                         new Point(38.500, 77.000, Point.CARTESIAN)
@@ -71,52 +71,53 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 1
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 2
                                 new BezierLine(
                                         new Point(38.500, 77.000, Point.CARTESIAN),
                                         new Point(30.000, 50.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(300))
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(facingSampleAngle))
                         .build()
         );
 
         //EXTEND INTAKE
 
-        //TURN
+        //TURN - dont call this in code, doesn't work so skip this index and use turn command
         paths.add( //index 2
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 3
                                 new BezierLine(
                                         new Point(30.000, 50.000, Point.CARTESIAN),
-                                        new Point(30.000, 40.000, Point.CARTESIAN)
+                                        new Point(30.000, 50.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(235), Math.toRadians(300))
+                        .setLinearHeadingInterpolation(Math.toRadians(facingSampleAngle), Math.toRadians(depositSampleAngle))
                         .build()
         );
 
         paths.add( //index 3
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 4
                                 new BezierLine(
                                         new Point(30.000, 50.000, Point.CARTESIAN),
                                         new Point(30.000, 40.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(235), Math.toRadians(300))
+                        .setLinearHeadingInterpolation(Math.toRadians(depositSampleAngle), Math.toRadians(facingSampleAngle))
                         .build()
         );
 
+        //TURN - dont call this in code, doesn't work so skip this index and use turn command
         paths.add( //index 4
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 5
                                 new BezierLine(
                                         new Point(30.000, 40.000, Point.CARTESIAN),
                                         new Point(30.000, 40.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(300), Math.toRadians(235))
+                        .setLinearHeadingInterpolation(Math.toRadians(facingSampleAngle), Math.toRadians(depositSampleAngle))
                         .build()
         );
         //INTAKE
@@ -125,8 +126,9 @@ public class FiveSpecExtendoPush extends LinearOpMode {
         paths.add( //index 5
                 robot.follower.pathBuilder()
                         .addPath(
-                                new BezierLine(
+                                new BezierCurve(
                                         new Point(30.000, 40.000, Point.CARTESIAN),
+                                        new Point(34.000, 36.000, Point.CARTESIAN),
                                         new Point(54.000, 36.000, Point.CARTESIAN)
                                 )
                         )
@@ -136,7 +138,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 6
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 7
                                 new BezierLine(
                                         new Point(54.000, 36.000, Point.CARTESIAN),
                                         new Point(20.000, 36.000, Point.CARTESIAN)
@@ -148,7 +150,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 7
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 8
                                 new BezierLine(
                                         new Point(20.000, 36.000, Point.CARTESIAN),
                                         new Point(9.000, 36.000, Point.CARTESIAN)
@@ -160,7 +162,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 8
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 9
                                 new BezierLine(
                                         new Point(9.000, 36.000, Point.CARTESIAN),
                                         new Point(38.500, 74.500, Point.CARTESIAN)
@@ -222,81 +224,40 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 13
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 10
+                        .addPath( //line 14
                                 new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.500, 73.000, Point.CARTESIAN),
-                                        new Point(testScore, 72.000, Point.CARTESIAN)
+                                        new Point(38.500, 69.500, Point.CARTESIAN),
+                                        new Point(20.500, 64.500, Point.CARTESIAN),
+                                        new Point(30.000, 36.000, Point.CARTESIAN),
+                                        new Point(9.000, 36.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 14
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 11
-                                new BezierCurve(
-                                        new Point(testScore, 72.000, Point.CARTESIAN),
-                                        new Point(10.000, 65.000, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1, Point.CARTESIAN),
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN)
+                        .addPath( //line 15
+                                new BezierLine(
+                                        new Point(9.000, 36.000, Point.CARTESIAN),
+                                        new Point(38.500, 67.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 15
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 12
-                                new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.500, 70.500, Point.CARTESIAN),
-                                        new Point(testScore, 69.500, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 16
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 13
-                                new BezierCurve(
-                                        new Point(testScore, 69.500, Point.CARTESIAN),
-                                        new Point(11.500, 65.600, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1, Point.CARTESIAN),
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 17
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 14
-                                new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.250, 64.250, Point.CARTESIAN),
-                                        new Point(testScore, 67.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 18
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 15
+                        .addPath( //line 16
                                 new BezierLine(
-                                        new Point(testScore, 67.000, Point.CARTESIAN),
+                                        new Point(38.500, 67.000, Point.CARTESIAN),
                                         new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230))
+                        .build()
         );
     }
 
@@ -311,71 +272,68 @@ public class FiveSpecExtendoPush extends LinearOpMode {
         generatePath();
 
         CommandScheduler.getInstance().schedule(
-                new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here fo rnow
+                new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here for now
                 new SequentialCommandGroup(
-                        new ParallelCommandGroup(
+                        new ParallelCommandGroup( //moving to deposit
                                 new OuttakeIntermediateCommand(robot, true),
-                                new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
+                                new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload (specimen 1)
                         ),
-                        new SequentialCommandGroup( //deposit preload
+                        new SequentialCommandGroup( //moving arm to deposit preload
                                 new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
+                                new WaitCommand(250),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
                         ),
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
+
+                        new ParallelCommandGroup( //going to push samples
+                                new FollowPathCommand(robot.follower, paths.get(1)), //go to position to push sample 1
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTERIM)
+                        ),
+
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //need to change this to state to sweep(intake state is a temporary placeholder)
+                        //TODO: add intake arm sweeping state and get values for it and change it in path
+                        new WaitCommand(50),
+
+                        new TurnCommand(robot.follower, depositSampleAngle), //pushed/pushing sample one by turning: ignore index 2 in arraylist of pathchains
+
+                        new ParallelCommandGroup(//going to position to push sample 2
+                                new FollowPathCommand(robot.follower, paths.get(3)), //go to position to push sample 2
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTERIM)
+                        ),
+
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //need to change this to state to sweep(intake state is a temporary placeholder)
+                        //TODO: add intake arm sweeping state and get values for it and change it in path
+                        new WaitCommand(50),
+
+                        new TurnCommand(robot.follower, depositSampleAngle), //pushed/pushing sample one by turning: ignore index 4 in arraylist of pathchains
+
+                        new ParallelCommandGroup(//going to position to push sample 2
+                                new FollowPathCommand(robot.follower, paths.get(5)), //go to position to push sample 3
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTERIM)
+                        ),
+
+                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //need to change this to state to sweep(intake state is a temporary placeholder)
+                        //TODO: add intake arm sweeping state and get values for it and change it in path
+                        new WaitCommand(50),
+
+                        new FollowPathCommand(robot.follower, paths.get(6)), //pushing sample 3
+
+                        new ParallelCommandGroup( //getting in position for specimen pick up
+                                new FollowPathCommand(robot.follower, paths.get(7)), //going to wall for specimen 1 pick up
                                 new SequentialCommandGroup(
-                                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-                                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE)
+                                    new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INIT), //retracting intake
+                                    new WaitCommand(250), //waiting for intake to retract
+                                    new GrabOffWallCommand(robot) //getting ready to pick up specimen 2 off wall
                                 )
                         ),
 
-                        new SequentialCommandGroup(
-                                new TurnCommand(robot.follower, depositSampleAngle), //deposit sample one: 2
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
-                        ),
-
-                        new WaitCommand(200),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
-                        new TurnCommand(robot.follower, facingSampleAngle), //turn towards sample two: 3
-
-                        new FollowPathCommand(robot.follower, paths.get(4)),
-
-                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-
-                        new SequentialCommandGroup(
-                                new TurnCommand(robot.follower, depositSampleAngle), //drop sample two: 5
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
-                        ),
-
-                        new WaitCommand(200),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD), //go turn back and turn intake on
-                        new TurnCommand(robot.follower, facingSampleAngle), //turn back for sample 3: 6
-
-                        new FollowPathCommand(robot.follower, paths.get(7)), //intake sample 3
-
-                        new SequentialCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(8)), //drop sample 3
-                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED)
-                        ),
-                        new WaitCommand(200),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
-                        new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INIT),
-                        new GrabOffWallCommand(robot),
-                        new WaitCommand(250),
-
-                        new FollowPathCommand(robot.follower, paths.get(9)),
-
-
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
+                        new SequentialCommandGroup( //grabbing specimen 2 and preparing to deposit
+                                new WaitCommand(150), //giving human player time to adjust
                                 new OuttakeIntermediateCommand(robot),
-                                new WaitCommand(150) //WE CAN REMOVE THIS LATER
-                                //new WaitCommand(350) //dont need this i think?
+                                new WaitCommand(250) //WE CAN REMOVE THIS LATER
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 2
+                        new FollowPathCommand(robot.follower, paths.get(8)), //going to deposit specimen 2
 
                         new SequentialCommandGroup( //depositing specimen 2
                                 new HighChamberCommand(robot, false),
@@ -384,18 +342,18 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
                         ),
 
-                        new ParallelCommandGroup( //going back to pick up specimen 3
+                        new ParallelCommandGroup( //going to pick up specimen 3
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(11)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(9)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
+                        new SequentialCommandGroup( //grabbing specimen 3 and preparing to deposit
+                                new WaitCommand(150), //giving human player time to adjust
+                                new OuttakeIntermediateCommand(robot),
+                                new WaitCommand(250)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 3
+                        new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 3
 
                         new SequentialCommandGroup( //depositing specimen 3
                                 new HighChamberCommand(robot, false),
@@ -406,16 +364,16 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
                         new ParallelCommandGroup( //going back to pick up specimen 4
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(13)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(11)) //going to pick up specimen 3
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
+                        new SequentialCommandGroup( //grabbing specimen 4 and preparing to deposit
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
+                                new OuttakeIntermediateCommand(robot),
+                                new WaitCommand(250)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 4
+                        new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 4
 
                         new SequentialCommandGroup( //depositing specimen 4
                                 new HighChamberCommand(robot, false),
@@ -426,27 +384,27 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
                         new ParallelCommandGroup( //going back to pick up specimen 5
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(15)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(13)) //going to pick up specimen 5
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
+                        new SequentialCommandGroup( //grabbing specimen 5 and preparing to deposit
                                 new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
+                                new OuttakeIntermediateCommand(robot),
+                                new WaitCommand(250)
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(16)), //going to high chamber to deposit specimen 5
+                        new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 5
 
-                        new SequentialCommandGroup( //depositing specimen 4
+                        new SequentialCommandGroup( //depositing specimen 5
                                 new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
                         ),
 
-                        new ParallelCommandGroup(
+                        new ParallelCommandGroup( //parking
                                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
-                                new FollowPathCommand(robot.follower, paths.get(17)) //park position/location
+                                new FollowPathCommand(robot.follower, paths.get(15)) //park position/location
                         )
                 )
         );
