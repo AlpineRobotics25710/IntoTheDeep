@@ -19,7 +19,7 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
     public static long SLIDES_DELAY = 0;
     public static long WRIST_DELAY = 200;
     public static long ARM_DELAY = 600;
-    public static long ARM_DELAY_2 =  200;
+    public static long ARM_DELAY2 =  200;
 
     // 🤫🧏
     public GrabOffWallCommand(Robot robot) {
@@ -31,8 +31,8 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.83)),
                 new WaitCommand(ARM_DELAY),
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.GRAB_OFF_WALL),
-                new WaitCommand(ARM_DELAY_2),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
+                new WaitCommand(ARM_DELAY2),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN)
         );
     }

@@ -324,7 +324,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
                         ),
                         new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
@@ -384,7 +384,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 2
 
                         new SequentialCommandGroup( //depositing specimen 2
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -404,7 +404,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 3
 
                         new SequentialCommandGroup( //depositing specimen 3
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -424,7 +424,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 4
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -444,7 +444,7 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(16)), //going to high chamber to deposit specimen 5
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
