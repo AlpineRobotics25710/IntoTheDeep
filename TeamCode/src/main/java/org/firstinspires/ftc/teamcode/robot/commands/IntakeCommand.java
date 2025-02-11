@@ -8,9 +8,12 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeSlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 /**
  * Gets ready to intake a game piece
@@ -21,8 +24,7 @@ public class IntakeCommand extends SequentialCommandGroup {
         super(
                 new InstantCommand(() -> {  // Might need, might not need, we'll see
                     if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT ||
-                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
-                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT
                     ) {
                         robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
                     }
@@ -34,10 +36,11 @@ public class IntakeCommand extends SequentialCommandGroup {
 
     public IntakeCommand(Robot robot, double extendoPos, IntakeArm.IntakeArmState state) {
         super(
+                new OuttakeRetractCommand(robot),
+                new WaitCommand(500),
                 new InstantCommand(() -> {  // Might need, might not need, we'll see
                     if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT ||
-                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
-                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT
                     ) {
                         robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
                     }
@@ -54,8 +57,7 @@ public class IntakeCommand extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {  // Might need, might not need, we'll see
                             if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT ||
-                                    robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
-                                    robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
+                                    robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT
                             ) {
                                 robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
                             }

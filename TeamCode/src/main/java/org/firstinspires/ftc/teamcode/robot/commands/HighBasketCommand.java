@@ -19,7 +19,7 @@ public class HighBasketCommand extends SequentialCommandGroup { //subject to cha
         addCommands(
                 new OuttakeSlidesCommand(robot, OuttakeSlides.HIGH_BASKET),
                 new WaitCommand(SLIDES_WAIT_TIME),
-                new InstantCommand(() -> new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK))
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK)
         );
     }
 }

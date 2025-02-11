@@ -71,7 +71,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new TeleOpInitializeCommand(robot, false) //PRATHYUSH ITS TO RETRACT EVERYTHING DONT DELETE IT
+                new TeleOpInitializeCommand(robot) //PRATHYUSH ITS TO RETRACT EVERYTHING DONT DELETE IT
         );
 
         // Outtake slides commands

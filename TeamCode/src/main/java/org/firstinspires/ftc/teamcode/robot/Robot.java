@@ -139,9 +139,9 @@ public class Robot {
         CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);
 
         if (isAuto) {
-            new AutonInitializeCommand(this, manualMode).schedule();
+            new AutonInitializeCommand(this).schedule();
         } else {
-            new TeleOpInitializeCommand(this, manualMode).schedule();
+            new TeleOpInitializeCommand(this).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }

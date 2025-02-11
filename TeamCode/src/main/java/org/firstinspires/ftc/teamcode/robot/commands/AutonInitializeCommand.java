@@ -18,10 +18,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 public class AutonInitializeCommand extends ParallelCommandGroup {
-    public AutonInitializeCommand(Robot robot, boolean manualMode) {
-        /*if (!manualMode) {
-            addCommands(new ExtendoCommand(robot, 0));
-        }*/
+    public AutonInitializeCommand(Robot robot) {
         addCommands(
                 new ExtendoCommand(robot, Extendo.BASE_POS),
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),

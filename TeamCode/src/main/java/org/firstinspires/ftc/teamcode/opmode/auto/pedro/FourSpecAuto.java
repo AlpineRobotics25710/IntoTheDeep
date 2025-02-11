@@ -268,7 +268,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new GrabOffWallCommand(robot) //set up for tele op ig?
                         ),
 
-                        new TeleOpInitializeCommand(robot, false)
+                        new TeleOpInitializeCommand(robot)
                 )
         );
 

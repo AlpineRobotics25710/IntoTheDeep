@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
@@ -22,10 +23,10 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
-
+@Config
 @TeleOp(group = "production")
 public class OneDriverTeleOp extends LinearOpMode {
-    public static boolean robotCentric = true;
+    public static boolean robotCentric = false;
     private static Pose startPose = new Pose(0, 0, 0);
 
     @Override
