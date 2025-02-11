@@ -9,7 +9,7 @@ public class ExtendoCommand extends InstantCommand {
     public ExtendoCommand(Robot robot, double target){
         super(
                 () -> robot.extendo.setTargetPosition(target)
-//                () ->  {
+//                () -> {
 //                    if (target == Extendo.BASE_POS) {
 //                        robot.extendoRight.setPower(-0.4);
 //                    } else if (target == Extendo.MAX_LENGTH) {

@@ -25,9 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -187,7 +185,7 @@ public class FourSpecAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePath();
 
         CommandScheduler.getInstance().schedule(

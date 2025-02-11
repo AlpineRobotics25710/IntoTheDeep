@@ -7,7 +7,6 @@ import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -70,7 +69,7 @@ public class Robot {
 
     public Follower follower;
 
-    public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
+    public Robot(HardwareMap hardwareMap, boolean isAuto) {
         // Pedro
         Constants.setConstants(FConstants.class, LConstants.class);
 
@@ -130,7 +129,7 @@ public class Robot {
         // Initialize all mechanisms
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
-        extendo = new Extendo(extendoRight, manualMode);
+        extendo = new Extendo(extendoRight, false);
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);

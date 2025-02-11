@@ -149,7 +149,7 @@ public class NetSideAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePaths();
 
         CommandGroupBase intakeAndTransfer = new SequentialCommandGroup(

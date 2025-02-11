@@ -13,7 +13,7 @@ public class Extendo extends SubsystemBase {
     public static double MAX_LENGTH = 310.0;
     public static double HALFWAY = 150.0;
     public static double BASE_POS = 0.0;
-    public static final double TRANSFER_POS = 50;
+    public static double TRANSFER_POS = 50;
     public static double kP = 0.015;
     public static double kI = 0.0;
     public static double kD = 0.0001;

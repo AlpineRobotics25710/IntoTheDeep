@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
@@ -37,7 +36,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false);
 
         GamepadEx gp1 = new GamepadEx(gamepad2);
 

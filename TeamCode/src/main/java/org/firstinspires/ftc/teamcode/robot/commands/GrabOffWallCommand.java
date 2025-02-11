@@ -35,7 +35,7 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
                 new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.82)),
+                new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.84)),
                 new WaitCommand(ARM_DELAY),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
                 new WaitCommand(ARM_DELAY2),

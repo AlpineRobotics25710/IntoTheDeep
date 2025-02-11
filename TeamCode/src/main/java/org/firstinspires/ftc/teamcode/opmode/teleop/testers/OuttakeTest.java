@@ -21,7 +21,7 @@ public class OuttakeTest extends LinearOpMode {
     public void runOpMode() {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
-        Robot robot = new Robot(hardwareMap, false, true);
+        Robot robot = new Robot(hardwareMap, false);
 
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
