@@ -224,7 +224,7 @@ public class FiveSpecAutoPathOnly extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePath();
         CommandScheduler.getInstance().schedule(
                 new RunCommand(() -> robot.follower.update()),
