@@ -48,14 +48,6 @@ public class OuttakeTest extends LinearOpMode {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_BACK)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.DEPOSIT_SAMPLE)
-        );
-
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER)
         );

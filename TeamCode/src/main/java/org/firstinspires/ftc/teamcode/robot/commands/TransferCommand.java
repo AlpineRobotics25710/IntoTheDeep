@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.commands;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndC
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SwivelCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.teleopcommands.ClawToggleCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
@@ -19,7 +21,10 @@ public class TransferCommand extends SequentialCommandGroup {
         addCommands(
                 new IntakeRetractCommand(robot),
                 new OuttakeRetractCommand(robot),
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD)
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+                new WaitCommand(750),
+                new ClawToggleCommand(robot),
+                new WaitCommand(250)
         );
     }
 }

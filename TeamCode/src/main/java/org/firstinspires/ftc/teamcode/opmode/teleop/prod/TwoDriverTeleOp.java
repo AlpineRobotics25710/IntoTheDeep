@@ -57,12 +57,12 @@ public class TwoDriverTeleOp extends LinearOpMode {
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeIntermediateCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
-                new HighChamberCommand(robot, false).schedule();
+                new HighChamberCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
-        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
         //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
@@ -82,7 +82,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                         new WaitCommand(750),
                         new ClawToggleCommand(robot),
                         new WaitCommand(250),
-                        new HighBasketCommand(robot,false)
+                        new HighBasketCommand(robot)
                 )
         );
         //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));

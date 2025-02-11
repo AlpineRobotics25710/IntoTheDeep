@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 @Config
 public class HighChamberCommand extends ParallelCommandGroup { //subject to change
-    public HighChamberCommand(Robot robot, boolean isForward) {
+    public HighChamberCommand(Robot robot) {
         super(
                 new SlidesCommand(robot, OuttakeSlides.HIGH_CHAMBER, false),
-                new OuttakeArmCommand(robot, isForward ? OuttakeArm.OuttakeArmState.OUTTAKE_FRONT : OuttakeArm.OuttakeArmState.OUTTAKE_BACK),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.OUTTAKE_BACK),
                 //new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM)
         );
