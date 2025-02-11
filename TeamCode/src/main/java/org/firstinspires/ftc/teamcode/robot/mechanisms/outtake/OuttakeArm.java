@@ -16,6 +16,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
     public static double ARM_INIT_POS = 0.85;
     public static double ARM_GIVE_SPACE_FOR_INTAKE = 0.7;
+    public static double ARM_HIGH_BASKET_BACK = 0.35;
 
     // Wrist positions
     public static double WRIST_WALL_INTAKE_FRONT_POS = 0.38; // Avoid slamming the intake
@@ -28,7 +29,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
     public static double WRIST_INIT_POS = 0.25;
     public static double WRIST_GIVE_SPACE_FOR_INTAKE = 0.55;
-
+    public static double WRIST_HIGH_BASKET_BACK = 0.37;
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServo;
@@ -87,6 +88,10 @@ public class OuttakeArm extends SubsystemBase {
                 setWristPosition(WRIST_GIVE_SPACE_FOR_INTAKE);
                 setArmPosition(ARM_GIVE_SPACE_FOR_INTAKE);
                 break;
+            case HIGH_BASKET_BACK:
+                setWristPosition(WRIST_HIGH_BASKET_BACK);
+                setArmPosition(ARM_HIGH_BASKET_BACK);
+                break;
         }
     }
 
@@ -112,6 +117,6 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE_FRONT, WALL_INTAKE_BACK, TRANSFER, INTERMEDIATE, OUTTAKE_FRONT, OUTTAKE_BACK, DEPOSIT_SAMPLE, INIT, GIVE_SPACE_FOR_INTAKE
+        HIGH_BASKET_BACK, WALL_INTAKE_FRONT, WALL_INTAKE_BACK, TRANSFER, INTERMEDIATE, OUTTAKE_FRONT, OUTTAKE_BACK, DEPOSIT_SAMPLE, INIT, GIVE_SPACE_FOR_INTAKE
     }
 }

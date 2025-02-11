@@ -53,7 +53,7 @@ public class IntakeCommand extends SequentialCommandGroup {
         super(
                 new SequentialCommandGroup(
                         new ExtendoCommand(robot, Extendo.MAX_LENGTH),
-                        new WaitCommand(500),
+                        new WaitCommand(350),
                         new IntakeArmCommand(robot, state)
                 )
         );

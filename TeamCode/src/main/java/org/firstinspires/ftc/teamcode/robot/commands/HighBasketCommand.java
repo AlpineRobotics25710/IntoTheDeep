@@ -23,7 +23,7 @@ public class HighBasketCommand extends SequentialCommandGroup { //subject to cha
                     if (facingBasket) {
                         new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.OUTTAKE_FRONT);
                     } else {
-                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.OUTTAKE_BACK);
+                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK);
                     }
                 })
         );
