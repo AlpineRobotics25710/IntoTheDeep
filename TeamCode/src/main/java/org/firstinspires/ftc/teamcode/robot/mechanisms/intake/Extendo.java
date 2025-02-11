@@ -60,7 +60,7 @@ public class Extendo extends SubsystemBase {
         }
         TelemetryUtil.addData("current position", right.getCurrentPosition());
         TelemetryUtil.addData("target position", targetPosition);
-        TelemetryUtil.addData("Extendo Reached", extendoReached());
+        TelemetryUtil.addData("extendo reached", extendoReached());
     }
 
     public boolean extendoReached() {
