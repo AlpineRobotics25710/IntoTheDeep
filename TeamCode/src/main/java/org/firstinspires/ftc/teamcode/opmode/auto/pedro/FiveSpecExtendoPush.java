@@ -45,7 +45,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
     public static double testGrabDistance = 10;
 
     public static double facingSampleAngle = 300;
-    public static double depositSampleAngle = 230;
+    public static double depositSampleAngle = 225;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
     public static final long DEPOSIT_DELAY = 150;
