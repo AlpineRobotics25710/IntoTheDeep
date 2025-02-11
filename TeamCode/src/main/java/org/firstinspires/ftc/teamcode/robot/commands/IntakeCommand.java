@@ -20,7 +20,7 @@ public class IntakeCommand extends SequentialCommandGroup {
     public IntakeCommand(Robot robot, double extendoPos) {
         super(
                 new InstantCommand(() -> {  // Might need, might not need, we'll see
-                    if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT ||
+                    if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.GRAB_OFF_WALL ||
                             robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
                             robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
                     ) {
@@ -32,11 +32,28 @@ public class IntakeCommand extends SequentialCommandGroup {
         );
     }
 
+    public IntakeCommand(Robot robot, double extendoPos, IntakeArm.IntakeArmState state) {
+        super(
+                new InstantCommand(() -> {  // Might need, might not need, we'll see
+                    if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.GRAB_OFF_WALL ||
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
+                    ) {
+                        robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
+                    }
+                }),
+                new WaitCommand(500),
+                new ExtendoCommand(robot, extendoPos),
+                new WaitCommand(300),
+                new IntakeArmCommand(robot, state)
+        );
+    }
+
     public IntakeCommand(Robot robot) {
         super(
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {  // Might need, might not need, we'll see
-                            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT ||
+                            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.GRAB_OFF_WALL ||
                                     robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT ||
                                     robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER
                             ) {

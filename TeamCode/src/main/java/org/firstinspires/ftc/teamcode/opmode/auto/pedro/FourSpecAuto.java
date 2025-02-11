@@ -197,7 +197,7 @@ public class FourSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(0)), //preload
 
                         new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(1000),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(500)
@@ -216,7 +216,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(2)), //go to chamber
                         new SequentialCommandGroup( //deposit specimen 1
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(250)
@@ -238,7 +238,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(4)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 3
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(250)
@@ -259,7 +259,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 4
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(350)
