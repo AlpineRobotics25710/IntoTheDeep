@@ -21,13 +21,13 @@ public class FConstants {
         FollowerConstants.rightRearMotorDirection = DcMotorSimple.Direction.FORWARD;
 
         FollowerConstants.useBrakeModeInTeleOp = true;
-        FollowerConstants.mass = 11.793;
+        FollowerConstants.mass = 12.40;
 
-        FollowerConstants.xMovement = 79.74268459731843;
-        FollowerConstants.yMovement = 60.661737016872266;
+        FollowerConstants.xMovement = 68.9;
+        FollowerConstants.yMovement = 54;
 
-        FollowerConstants.forwardZeroPowerAcceleration = -46.98032747975089;
-        FollowerConstants.lateralZeroPowerAcceleration = -78.04919634945179;
+        FollowerConstants.forwardZeroPowerAcceleration = -43;
+        FollowerConstants.lateralZeroPowerAcceleration = -73.56;
 
         FollowerConstants.translationalPIDFCoefficients.setCoefficients(0.1,0,0.01,0);
         FollowerConstants.useSecondaryTranslationalPID = true;
@@ -35,14 +35,14 @@ public class FConstants {
 
         FollowerConstants.headingPIDFCoefficients.setCoefficients(2,0,0.1,0);
         FollowerConstants.useSecondaryHeadingPID = true;
-        FollowerConstants.secondaryHeadingPIDFCoefficients.setCoefficients(1.9,0,0.15,0); // Not being used, @see useSecondaryHeadingPID
+        FollowerConstants.secondaryHeadingPIDFCoefficients.setCoefficients(1.9,0,0.16,0); // Not being used, @see useSecondaryHeadingPID
 
         FollowerConstants.drivePIDFCoefficients.setCoefficients(0.015,0,0.0015,0.6,0);
         FollowerConstants.useSecondaryDrivePID = false;
         FollowerConstants.secondaryDrivePIDFCoefficients.setCoefficients(0.1,0,0,0.6,0); // Not being used, @see useSecondaryDrivePID
 
         FollowerConstants.zeroPowerAccelerationMultiplier = 4;
-        FollowerConstants.centripetalScaling = 0.0004;
+        FollowerConstants.centripetalScaling = 0.0003;
 
         FollowerConstants.pathEndTimeoutConstraint = 50;
         FollowerConstants.pathEndTValueConstraint = 0.995;
