@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -328,12 +329,12 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
                         ),
-                        new ParallelCommandGroup(
-                            new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
-                            new SequentialCommandGroup(
+                        new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
+                        new SequentialCommandGroup(
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
                                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE)
-                            )
+                                new InstantCommand(() -> TelemetryUtil.addData("Waiting")),
+                                new WaitCommand(500)
                         ),
 
                         new SequentialCommandGroup(
