@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class Extendo extends SubsystemBase {
-    // TODO: NEED TO FIND REAL VALUES
     public static double MAX_LENGTH = 310.0;
     public static double HALFWAY = 150.0;
     public static double BASE_POS = 0.0;
