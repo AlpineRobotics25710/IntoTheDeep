@@ -222,81 +222,40 @@ public class FiveSpecExtendoPush extends LinearOpMode {
 
         paths.add( //index 13
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 10
+                        .addPath( //line 14
                                 new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.500, 73.000, Point.CARTESIAN),
-                                        new Point(testScore, 72.000, Point.CARTESIAN)
+                                        new Point(38.500, 69.500, Point.CARTESIAN),
+                                        new Point(20.500, 64.500, Point.CARTESIAN),
+                                        new Point(30.000, 36.000, Point.CARTESIAN),
+                                        new Point(9.000, 36.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 14
                 robot.follower.pathBuilder()
                         .addPath(
-                                // Line 11
-                                new BezierCurve(
-                                        new Point(testScore, 72.000, Point.CARTESIAN),
-                                        new Point(10.000, 65.000, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1, Point.CARTESIAN),
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN)
+                                new BezierLine(
+                                        new Point(9.000, 36.000, Point.CARTESIAN),
+                                        new Point(38.500, 67.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 15
                 robot.follower.pathBuilder()
                         .addPath(
-                                // Line 12
-                                new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.500, 70.500, Point.CARTESIAN),
-                                        new Point(testScore, 69.500, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 16
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 13
-                                new BezierCurve(
-                                        new Point(testScore, 69.500, Point.CARTESIAN),
-                                        new Point(11.500, 65.600, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1, Point.CARTESIAN),
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 17
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 14
-                                new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
-                                        new Point(17.250, 64.250, Point.CARTESIAN),
-                                        new Point(testScore, 67.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
-        );
-
-        paths.add( //index 18
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 15
                                 new BezierLine(
-                                        new Point(testScore, 67.000, Point.CARTESIAN),
+                                        new Point(38.500, 67.000, Point.CARTESIAN),
                                         new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230))
+                        .build()
         );
     }
 
@@ -318,7 +277,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
                         ),
                         new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
@@ -378,7 +337,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 2
 
                         new SequentialCommandGroup( //depositing specimen 2
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -398,7 +357,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(12)), //going to high chamber to deposit specimen 3
 
                         new SequentialCommandGroup( //depositing specimen 3
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -418,7 +377,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(14)), //going to high chamber to deposit specimen 4
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -438,7 +397,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(16)), //going to high chamber to deposit specimen 5
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
+                                new HighChamberCommand(robot, false),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
