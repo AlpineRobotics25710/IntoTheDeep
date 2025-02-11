@@ -21,7 +21,7 @@ public class IntakeRetractCommand extends SequentialCommandGroup {
 
     public IntakeRetractCommand(Robot robot, IntakeArm.IntakeArmState state){
         super(
-                new InstantCommand(() -> robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.INIT)), // Might need, might not need, we'll see
+                new InstantCommand(() -> robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.TRANSFER)), // Might need, might not need, we'll see
                 new IntakeArmCommand(robot, state),
                 new WaitCommand(400),
                 new ExtendoCommand(robot, Extendo.BASE_POS)
