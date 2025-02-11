@@ -328,10 +328,13 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
                         ),
-
-                        new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
+                        new ParallelCommandGroup(
+                            new FollowPathCommand(robot.follower, paths.get(1)), //go and intake first sample
+                            new SequentialCommandGroup(
+                                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE)
+                            )
+                        ),
 
                         new SequentialCommandGroup(
                                 new TurnCommand(robot.follower, depositSampleAngle), //deposit sample one: 2
@@ -366,15 +369,15 @@ public class FiveSpecExtendoAuto extends LinearOpMode {
                         new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
                         new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INIT),
                         new GrabOffWallCommand(robot),
-                        new WaitCommand(500),
+                        new WaitCommand(250),
 
                         new FollowPathCommand(robot.follower, paths.get(9)),
 
 
                         new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
+                                new OuttakeIntermediateCommand(robot),
+                                new WaitCommand(150) //WE CAN REMOVE THIS LATER
+        //new WaitCommand(350) //dont need this i think?
                         ),
 
                         new FollowPathCommand(robot.follower, paths.get(10)), //going to high chamber to deposit specimen 2
