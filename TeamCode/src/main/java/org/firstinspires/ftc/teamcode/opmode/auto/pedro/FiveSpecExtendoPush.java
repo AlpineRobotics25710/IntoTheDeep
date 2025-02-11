@@ -125,7 +125,7 @@ public class FiveSpecExtendoPush extends LinearOpMode {
         //TURN
         paths.add( //index 5
                 robot.follower.pathBuilder()
-                        .addPath(
+                        .addPath( //line 6
                                 new BezierCurve(
                                         new Point(30.000, 40.000, Point.CARTESIAN),
                                         new Point(34.000, 36.000, Point.CARTESIAN),
@@ -141,22 +141,23 @@ public class FiveSpecExtendoPush extends LinearOpMode {
                         .addPath( //line 7
                                 new BezierLine(
                                         new Point(54.000, 36.000, Point.CARTESIAN),
-                                        new Point(20.000, 36.000, Point.CARTESIAN)
+                                        new Point(12.000, 36.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(180))
+                        .setConstantHeadingInterpolation(Math.toRadians(270))
                         .build()
         );
 
         paths.add( //index 7
                 robot.follower.pathBuilder()
                         .addPath( //line 8
-                                new BezierLine(
-                                        new Point(20.000, 36.000, Point.CARTESIAN),
+                                new BezierCurve(
+                                        new Point(12.000, 36.000, Point.CARTESIAN),
+                                        new Point(38.000, 36.000, Point.CARTESIAN),
                                         new Point(9.000, 36.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(180))
                         .build()
         );
 
