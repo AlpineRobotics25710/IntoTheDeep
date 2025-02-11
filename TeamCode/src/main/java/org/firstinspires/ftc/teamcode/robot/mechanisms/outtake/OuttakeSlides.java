@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class OuttakeSlides extends SubsystemBase {
     public static final double TRANSFER_POS = 0.0;
-    public static final double HIGH_BASKET = 1250.0;
+    public static final double HIGH_BASKET = 1000;
     public static final double LOW_BASKET = 150.0;
     public static final double LOW_CHAMBER = 0.0;
     public static final double HIGH_CHAMBER = 0.0;
