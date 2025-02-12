@@ -41,103 +41,102 @@ public class NetSideAuto extends LinearOpMode {
     private DashboardPoseTracker dashboardPoseTracker;
 
     public void generatePaths() {
-        robot.follower.setStartingPose(new Pose(6.5, 112.000, Math.toRadians(270)));
+        robot.follower.setStartingPose(new Pose(8, 113.500, Math.toRadians(0)));
 
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 1
+        paths.add( //index 1
+                robot.follower.pathBuilder()
+                        .addPath( //line 1
                                 new BezierLine(
-                                        new Point(6.500, 112.000, Point.CARTESIAN),
-                                        new Point(17.120, 126.080, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(315))
-                        .setReversed(true)
-                        .build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 2
-                                new BezierLine(
-                                        new Point(17.120, 126.080, Point.CARTESIAN),
-                                        new Point(31.520, 134.080, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(315), Math.toRadians(30))
-                        .build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 3
-                                new BezierLine(
-                                        new Point(31.520, 134.080, Point.CARTESIAN),
-                                        new Point(17.120, 126.080, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(30), Math.toRadians(-45))
-                        .build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 4
-                                new BezierLine(
-                                        new Point(17.120, 126.080, Point.CARTESIAN),
-                                        new Point(34.240, 131.040, Point.CARTESIAN)
-                                )
-                        )
-                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
-                        .build()
-        );
-
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 5
-                                new BezierLine(
-                                        new Point(34.240, 131.040, Point.CARTESIAN),
-                                        new Point(17.120, 126.080, Point.CARTESIAN)
+                                        new Point(8.000, 113.500, Point.CARTESIAN),
+                                        new Point(17.000, 127.000, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
                         .build()
         );
 
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 6
+        paths.add( //index 1
+                robot.follower.pathBuilder()
+                        .addPath( //line 2
                                 new BezierLine(
-                                        new Point(17.120, 126.080, Point.CARTESIAN),
-                                        new Point(34.240, 121.440, Point.CARTESIAN)
+                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(17.000, 134.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(-30))
                         .build()
         );
 
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 7
+        paths.add( //index 2
+                robot.follower.pathBuilder()
+                        .addPath( //line 3
                                 new BezierLine(
-                                        new Point(34.240, 121.440, Point.CARTESIAN),
-                                        new Point(17.120, 126.080, Point.CARTESIAN)
+                                        new Point(17.000, 134.000, Point.CARTESIAN),
+                                        new Point(17.000, 127.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
+                        .setLinearHeadingInterpolation(Math.toRadians(-30), Math.toRadians(-45))
                         .build()
         );
 
-        paths.add(
-                robot.follower.pathBuilder().addPath(
-                                // Line 8
+        paths.add( //index 3
+                robot.follower.pathBuilder()
+                        .addPath( //line 4
+                                new BezierLine(
+                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(17.000, 112.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(34))
+                        .build()
+        );
+
+        paths.add( //index 4
+                robot.follower.pathBuilder()
+                        .addPath( //line 5
+                                new BezierLine(
+                                        new Point(17.000, 112.000, Point.CARTESIAN),
+                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setLinearHeadingInterpolation(Math.toRadians(34), Math.toRadians(-45))
+                        .build()
+        );
+
+        paths.add( //index 5
+                robot.follower.pathBuilder()
+                        .addPath( //line 6
+                                new BezierLine(
+                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(17.000, 120.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(35))
+                        .build()
+        );
+
+        paths.add( //index 6
+                robot.follower.pathBuilder()
+                        .addPath( //line 7
+                                new BezierLine(
+                                        new Point(17.000, 120.000, Point.CARTESIAN),
+                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                )
+                        )
+                        .setLinearHeadingInterpolation(Math.toRadians(35), Math.toRadians(-45))
+                        .build()
+        );
+
+        paths.add( //index 7
+                robot.follower.pathBuilder()
+                        .addPath( //line 8
                                 new BezierCurve(
-                                        new Point(17.120, 126.080, Point.CARTESIAN),
-                                        new Point(55.520, 127.040, Point.CARTESIAN),
-                                        new Point(62.880, 97.440, Point.CARTESIAN)
+                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(60.000, 120.000, Point.CARTESIAN),
+                                        new Point(60.000, 95.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(270))
+                        .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(90))
                         .build()
         );
     }
@@ -167,8 +166,7 @@ public class NetSideAuto extends LinearOpMode {
 
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)) // preload
-                        /*deposit,    // deposit preload
+                        new FollowPathCommand(robot.follower, paths.get(0)), // deposit preload
                         new FollowPathCommand(robot.follower, paths.get(1)), // sample 1
                         intakeAndTransfer,
                         new FollowPathCommand(robot.follower, paths.get(2)), // deposit sample 1
