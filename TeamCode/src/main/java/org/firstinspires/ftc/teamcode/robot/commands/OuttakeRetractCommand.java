@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -18,7 +19,12 @@ public class OuttakeRetractCommand extends SequentialCommandGroup {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                new WaitCommand(700),
+                new WaitCommand(200),
+                new InstantCommand(() -> {
+                    if(robot.outtakeSlides.getCurrentPosition() > 500){
+                        new WaitCommand(500);
+                    }}
+                ),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }
