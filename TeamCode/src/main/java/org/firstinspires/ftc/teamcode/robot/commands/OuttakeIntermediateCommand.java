@@ -25,7 +25,7 @@ public class OuttakeIntermediateCommand extends SequentialCommandGroup {
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(0.17)),
                 new WaitCommand(WRIST_DELAY),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
-                //new WaitCommand(ARM_DELAY),
+                new WaitCommand(ARM_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(WRIST_OUTTAKE_BACK_POS))
         );
