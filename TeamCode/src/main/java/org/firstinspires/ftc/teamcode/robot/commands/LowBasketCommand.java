@@ -15,17 +15,11 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 public class LowBasketCommand extends SequentialCommandGroup {
     public static long SLIDES_WAIT_TIME = 500;
 
-    public LowBasketCommand(Robot robot, boolean facingBasket) {
+    public LowBasketCommand(Robot robot) {
         addCommands(
                 new OuttakeSlidesCommand(robot, OuttakeSlides.LOW_BASKET),
                 new WaitCommand(SLIDES_WAIT_TIME),
-                new InstantCommand(() -> {
-                    if (facingBasket) {
-                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.OUTTAKE_FRONT);
-                    } else {
-                        new OuttakeArmCommand(robot, (OuttakeArm.OuttakeArmState.OUTTAKE_BACK));
-                    }
-                })
+                new InstantCommand(() -> new OuttakeArmCommand(robot, (OuttakeArm.OuttakeArmState.OUTTAKE_BACK)))
         );
     }
 }

@@ -7,10 +7,12 @@ import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
 public class PedroDrivetrain {
     private static Pose BASKET_POSE = new Pose();
-    private static Pose SUBMERSIBLE_POSE = new Pose(8.000, 65.500, 180); // From 4 spec auto
-    private static Pose GRAB_OFF_WALL_POSE = new Pose(9.675, 26.607, 180); //  From 4 spec auto
+    private static Pose SUBMERSIBLE_POSE = new Pose(39.25, 65.500, 180); // From 4 spec auto
+    private static Pose GRAB_OFF_WALL_POSE = new Pose(10, 35, 180); //  From 4 spec auto
     private final Follower follower;
     private final Gamepad gamepad;
 
@@ -63,6 +65,8 @@ public class PedroDrivetrain {
     }
 
     public void goToSubmersible(HEADING_TYPE headingType) {
+        Point subPose = new Point(new Pose2D(follower.getPose().getX()+30, follower.);
+
         if (headingType == HEADING_TYPE.TANGENTIAL) {
             Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
             path.setTangentHeadingInterpolation();

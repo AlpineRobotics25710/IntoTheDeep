@@ -21,7 +21,7 @@ public class OuttakeTest extends LinearOpMode {
     public void runOpMode() {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
-        Robot robot = new Robot(hardwareMap, false, true);
+        Robot robot = new Robot(hardwareMap, false);
 
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
@@ -46,14 +46,6 @@ public class OuttakeTest extends LinearOpMode {
         // Test outtakeArm
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_BACK)
-        );
-
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.DEPOSIT_SAMPLE)
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(

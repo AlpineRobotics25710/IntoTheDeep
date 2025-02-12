@@ -55,18 +55,14 @@ public class OuttakeSlides extends SubsystemBase {
     @Override
     public void periodic() {
         if (!manualMode) {
-            if (targetPosition == 0) {
-                if (getCurrentPosition() > 0) {
-                    setSlidesPower(-0.3);
-                } else {
-                    setSlidesPower(0);
-                }
+            if (targetPosition == 0 && getCurrentPosition() < 100) {
+                setSlidesPower(-0.3);
             } else {
                 outtakePID.setPID(kP, kI, kD);
                 power = outtakePID.calculate(left.getCurrentPosition(), targetPosition);
                 slidesReached = (targetPosition > 0 && outtakePID.atSetPoint()) || (left.getCurrentPosition() <= 5 && targetPosition == 0);
-                double ff = Math.cos(Math.toRadians(targetPosition / ticksInDegrees)) * kF;
-                setSlidesPower(power + ff);
+//                double ff = Math.cos(Math.toRadians(targetPosition / ticksInDegrees)) * kF;
+                setSlidesPower(power + kF);
             }
         }
         TelemetryUtil.addData("Outtake slides power", power);

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -255,7 +254,7 @@ public class FiveSpecAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePath();
 
         CommandScheduler.getInstance().schedule(
@@ -266,7 +265,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
                         ),
                         new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(200) //dont need this i think?
@@ -296,7 +295,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(7)), //going to high chamber to deposit specimen 2
 
                         new SequentialCommandGroup( //depositing specimen 2
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -316,7 +315,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(9)), //going to high chamber to deposit specimen 3
 
                         new SequentialCommandGroup( //depositing specimen 3
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -336,7 +335,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(11)), //going to high chamber to deposit specimen 4
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
@@ -356,7 +355,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(13)), //going to high chamber to deposit specimen 5
 
                         new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open

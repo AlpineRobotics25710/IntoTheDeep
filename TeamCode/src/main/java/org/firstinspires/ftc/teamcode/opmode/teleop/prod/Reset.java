@@ -12,7 +12,7 @@ public class Reset extends LinearOpMode {
     @Override
     public void runOpMode() {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, true, true);
+        Robot robot = new Robot(hardwareMap, true);
 
         waitForStart();
 

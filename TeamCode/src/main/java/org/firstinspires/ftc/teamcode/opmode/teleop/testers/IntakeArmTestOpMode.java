@@ -8,10 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -21,7 +19,7 @@ public class IntakeArmTestOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(

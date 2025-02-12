@@ -198,7 +198,7 @@ public class PreloadedSpecimen2_0Auto extends OpMode {
 
         buildPaths();
 
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
     }
 
     /** This method is called continuously after Init while waiting for "play". **/

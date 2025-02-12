@@ -25,7 +25,7 @@ public class TransferValueGetter extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(this.hardwareMap, false, false);
+        Robot robot = new Robot(this.hardwareMap, false);
 
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");

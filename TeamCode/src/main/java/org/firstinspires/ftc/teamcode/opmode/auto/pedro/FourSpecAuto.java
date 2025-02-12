@@ -25,9 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -187,7 +185,7 @@ public class FourSpecAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePath();
 
         CommandScheduler.getInstance().schedule(
@@ -197,7 +195,7 @@ public class FourSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(0)), //preload
 
                         new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(1000),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(500)
@@ -216,7 +214,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(2)), //go to chamber
                         new SequentialCommandGroup( //deposit specimen 1
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(250)
@@ -238,7 +236,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(4)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 3
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(250)
@@ -259,7 +257,7 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber + deposit
                         new SequentialCommandGroup( //deposit specimen 4
-                                new HighChamberCommand(robot, false),
+                                new HighChamberCommand(robot),
                                 new WaitCommand(500),
                                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                                 new WaitCommand(350)
@@ -270,7 +268,7 @@ public class FourSpecAuto extends LinearOpMode {
                                 new GrabOffWallCommand(robot) //set up for tele op ig?
                         ),
 
-                        new TeleOpInitializeCommand(robot, false)
+                        new TeleOpInitializeCommand(robot)
                 )
         );
 

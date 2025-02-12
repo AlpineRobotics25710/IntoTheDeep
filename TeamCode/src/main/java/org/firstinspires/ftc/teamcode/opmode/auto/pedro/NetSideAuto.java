@@ -149,7 +149,7 @@ public class NetSideAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePaths();
 
         CommandGroupBase intakeAndTransfer = new SequentialCommandGroup(
@@ -160,7 +160,7 @@ public class NetSideAuto extends LinearOpMode {
         );
 
         CommandGroupBase deposit = new SequentialCommandGroup(
-                new HighBasketCommand(robot, false),
+                new HighBasketCommand(robot),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                 new OuttakeRetractCommand(robot)
         );

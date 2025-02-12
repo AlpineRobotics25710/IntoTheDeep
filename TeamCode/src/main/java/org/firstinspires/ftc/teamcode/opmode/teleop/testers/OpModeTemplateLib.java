@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 public class OpModeTemplateLib extends LinearOpMode {
     @Override
     public void runOpMode() {
-        Robot robot = new Robot(hardwareMap, false, true);
+        Robot robot = new Robot(hardwareMap, false);
 
         waitForStart();
 

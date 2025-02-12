@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.LowBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
@@ -37,7 +36,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false);
 
         GamepadEx gp1 = new GamepadEx(gamepad2);
 
@@ -57,12 +56,12 @@ public class TwoDriverTeleOp extends LinearOpMode {
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeIntermediateCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
-                new HighChamberCommand(robot, false).schedule();
+                new HighChamberCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
-        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot, false));
+        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
         //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
@@ -72,7 +71,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new TeleOpInitializeCommand(robot, false) //PRATHYUSH ITS TO RETRACT EVERYTHING DONT DELETE IT
+                new TeleOpInitializeCommand(robot) //PRATHYUSH ITS TO RETRACT EVERYTHING DONT DELETE IT
         );
 
         // Outtake slides commands
@@ -82,7 +81,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                         new WaitCommand(750),
                         new ClawToggleCommand(robot),
                         new WaitCommand(250),
-                        new HighBasketCommand(robot,false)
+                        new HighBasketCommand(robot)
                 )
         );
         //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));

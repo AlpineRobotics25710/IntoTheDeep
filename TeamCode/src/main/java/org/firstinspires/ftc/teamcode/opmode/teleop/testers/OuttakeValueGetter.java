@@ -3,13 +3,8 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
@@ -24,7 +19,7 @@ public class OuttakeValueGetter extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
-        Robot robot = new Robot(hardwareMap, false, false);
+        Robot robot = new Robot(hardwareMap, false);
         waitForStart();
 
         while (opModeIsActive()) {
