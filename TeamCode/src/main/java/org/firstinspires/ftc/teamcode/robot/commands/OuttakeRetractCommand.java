@@ -5,10 +5,13 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeSlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SwivelCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
@@ -21,10 +24,11 @@ public class OuttakeRetractCommand extends SequentialCommandGroup {
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                 new WaitCommand(200),
                 new InstantCommand(() -> {
-                    if(robot.outtakeSlides.getCurrentPosition() > 500){
+                    if(robot.outtakeSlides.getCurrentPosition() > 500 || robot.extendo.getTargetPosition() == Extendo.MAX_LENGTH){
                         new WaitCommand(500);
                     }}
                 ),
+                new IntakeCommand(robot, 0, IntakeArm.IntakeArmState.INTERIM),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }
