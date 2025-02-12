@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
+import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
@@ -13,9 +13,8 @@ import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
@@ -26,10 +25,9 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
-
+@Config
 @TeleOp(group = "production")
 public class TwoDriverTeleOp extends LinearOpMode {
-
     public static boolean robotCentric = true;
     private static Pose startPose = new Pose(0, 0, 0);
 
@@ -38,7 +36,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         Robot robot = new Robot(hardwareMap, false);
 
-        GamepadEx gp1 = new GamepadEx(gamepad2);
+        GamepadEx gp1 = new GamepadEx(gamepad1);
+        GamepadEx gp2 = new GamepadEx(gamepad2);
 
         robot.follower.setStartingPose(startPose);
 
@@ -49,47 +48,38 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
 
         // Outtake commands
-
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
+        gp2.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
             if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT || robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeIntermediateCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
-                new HighChamberCommand(robot).schedule();
+                new GrabOffWallCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
-        //gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
-        //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
-        gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
+        //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
+        gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
-                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTERIM)
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+                new OuttakeRetractCommand(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new TeleOpInitializeCommand(robot) //PRATHYUSH ITS TO RETRACT EVERYTHING DONT DELETE IT
+        gp2.getGamepadButton(GamepadKeys.Button.START).whenPressed(
+                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
         );
-
         // Outtake slides commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new SequentialCommandGroup(
-                        new TransferCommand(robot),
-                        new WaitCommand(750),
-                        new ClawToggleCommand(robot),
-                        new WaitCommand(250),
-                        new HighBasketCommand(robot)
-                )
-        );
-        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INTERIM)
-        );
+        //gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
+
         // Intake commands
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // TelemetryUtil.addData("BUTTON X", "PRESSED");
             if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
@@ -97,7 +87,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
             }
         });
-
 
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
@@ -112,6 +101,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         if (isStarted()) {
             robot.follower.startTeleopDrive();
+            new GrabOffWallCommand(robot).schedule();
         }
 
         while (!isStopRequested() && opModeIsActive()) {
