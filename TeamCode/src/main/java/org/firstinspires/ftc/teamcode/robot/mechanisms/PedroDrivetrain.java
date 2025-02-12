@@ -65,7 +65,7 @@ public class PedroDrivetrain {
     }
 
     public void goToSubmersible(HEADING_TYPE headingType) {
-        Point subPose = new Point(new Pose2D(follower.getPose().getX()+30, follower.);
+        //Point subPose = new Point(new Pose2D(follower.getPose().getX()+30, follower.);
 
         if (headingType == HEADING_TYPE.TANGENTIAL) {
             Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
