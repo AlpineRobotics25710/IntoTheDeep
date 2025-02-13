@@ -22,6 +22,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
@@ -161,6 +162,7 @@ public class NetSideAuto extends LinearOpMode {
         CommandGroupBase deposit = new SequentialCommandGroup(
                 new HighBasketCommand(robot),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new IntakeRetractCommand(robot),
                 new OuttakeRetractCommand(robot)
         );
 

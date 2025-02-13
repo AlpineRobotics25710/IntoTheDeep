@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 public class TransferCommand extends SequentialCommandGroup {
     public TransferCommand(Robot robot) {
+        robot.isTransferring = true;
         addCommands(
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
                 new IntakeRetractCommand(robot),

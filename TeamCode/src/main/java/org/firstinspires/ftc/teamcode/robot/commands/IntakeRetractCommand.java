@@ -19,7 +19,6 @@ public class IntakeRetractCommand extends SequentialCommandGroup {
         super(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
                 new ExtendoCommand(robot, Extendo.BASE_POS)
-
         );
     }
 
