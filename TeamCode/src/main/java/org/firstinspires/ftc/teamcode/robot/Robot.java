@@ -29,6 +29,7 @@ public class Robot {
     //hubs
     public List<LynxModule> allHubs;
     public double voltage;
+    public boolean isTransferring = false;
 
     // Intake
     // Extendo motors
