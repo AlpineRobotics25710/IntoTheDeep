@@ -31,7 +31,7 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
                 new ExtendoCommand(robot, Extendo.BASE_POS),
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new InstantCommand(() -> {
-                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL || robot.extendo.getTargetPosition() > Extendo.BASE_POS) {
+                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL || robot.extendo.getTargetPosition() > Extendo.BASE_POS || robot.intakeArm.getArmPosition() == IntakeArm.ARM_INTERIM_POS) {
                         new WaitCommand(SLIDES_DELAY);
                     }
                 }),

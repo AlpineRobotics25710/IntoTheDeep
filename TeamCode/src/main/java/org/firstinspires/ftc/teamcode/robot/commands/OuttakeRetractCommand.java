@@ -25,7 +25,7 @@ public class OuttakeRetractCommand extends SequentialCommandGroup {
                         new WaitCommand(500);
                     }}
                 ),
-                new IntakeRetractCommand(robot),
+               // new IntakeRetractCommand(robot),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }

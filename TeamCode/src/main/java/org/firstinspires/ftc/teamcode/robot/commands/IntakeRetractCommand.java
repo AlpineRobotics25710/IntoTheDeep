@@ -14,12 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 public class IntakeRetractCommand extends SequentialCommandGroup {
-    IntakeEnd.ActiveState state;
     public IntakeRetractCommand(Robot robot) {
         super(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
                 new ExtendoCommand(robot, Extendo.BASE_POS)
-
         );
     }
 
