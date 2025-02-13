@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
@@ -27,7 +25,6 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
-
 @Config
 @TeleOp(group = "production")
 public class OneDriverTeleOp extends LinearOpMode {
@@ -44,21 +41,9 @@ public class OneDriverTeleOp extends LinearOpMode {
         robot.follower.setStartingPose(startPose);
 
         // Active intake controls
-        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new ConditionalCommand(
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
-                        () -> robot.isTransferring
-                )
-        );
+        gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD));
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new ConditionalCommand(
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED),
-                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
-                        () -> robot.isTransferring
-                )
-        );
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED));
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenReleased(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
 
         // Outtake commands
@@ -80,13 +65,10 @@ public class OneDriverTeleOp extends LinearOpMode {
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(
-                new SequentialCommandGroup(
-                        new TransferCommand(robot),
-                        new InstantCommand(() -> robot.isTransferring = false)
-                )
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+            new RetractNoTransfer(robot)
         );
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
 
         // Outtake slides commands
         //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
