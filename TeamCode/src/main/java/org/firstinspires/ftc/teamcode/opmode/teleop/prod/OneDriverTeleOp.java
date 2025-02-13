@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 @TeleOp(group = "production")
 public class OneDriverTeleOp extends LinearOpMode {
-    public static boolean robotCentric = false;
+    public static boolean robotCentric = true;
     private static Pose startPose = new Pose(0, 0, 0);
 
     @Override
@@ -67,12 +67,9 @@ public class OneDriverTeleOp extends LinearOpMode {
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-            new OuttakeRetractCommand(robot)
+            new RetractNoTransfer(robot)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.START).whenPressed(
-                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
-        );
         // Outtake slides commands
         //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));

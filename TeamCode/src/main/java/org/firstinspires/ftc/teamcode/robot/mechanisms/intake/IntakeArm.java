@@ -12,7 +12,7 @@ public class IntakeArm extends SubsystemBase {
     public static double ARM_INTAKE_POS = 0.41;
     public static double ARM_TRANSFER_POS = 0.17;
     public static double ARM_INIT_POS = 0.08;
-    public static double ARM_INTERIM_POS = 0.35;
+    public static double ARM_INTERIM_POS = 0.3;
 
     // Wrist commands
     public static double WRIST_INTAKE_POS = 0.45;

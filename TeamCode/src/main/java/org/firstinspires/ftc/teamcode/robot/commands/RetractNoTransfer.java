@@ -9,12 +9,13 @@ import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArm
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeSlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SwivelCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
-public class OuttakeRetractCommand extends SequentialCommandGroup {
-    public OuttakeRetractCommand(Robot robot) {
+public class RetractNoTransfer extends SequentialCommandGroup {
+    public RetractNoTransfer(Robot robot) {
         super(
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
@@ -25,7 +26,7 @@ public class OuttakeRetractCommand extends SequentialCommandGroup {
                         new WaitCommand(500);
                     }}
                 ),
-                new IntakeRetractCommand(robot),
+                new IntakeRetractCommand(robot, IntakeArm.IntakeArmState.INTERIM),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }

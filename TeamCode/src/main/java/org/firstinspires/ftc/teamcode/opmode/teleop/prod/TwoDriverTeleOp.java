@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
@@ -64,11 +65,15 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+                new RetractNoTransfer(robot)
+        );
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new OuttakeRetractCommand(robot)
+                new RetractNoTransfer(robot)
         );
 
         gp2.getGamepadButton(GamepadKeys.Button.START).whenPressed(
@@ -79,7 +84,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
 
         // Intake commands
-        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // TelemetryUtil.addData("BUTTON X", "PRESSED");
             if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();

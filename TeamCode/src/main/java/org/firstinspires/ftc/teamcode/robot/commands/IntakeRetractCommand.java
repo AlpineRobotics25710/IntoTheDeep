@@ -7,15 +7,19 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 
 public class IntakeRetractCommand extends SequentialCommandGroup {
+    IntakeEnd.ActiveState state;
     public IntakeRetractCommand(Robot robot) {
         super(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.TRANSFER),
                 new ExtendoCommand(robot, Extendo.BASE_POS)
+
         );
     }
 
