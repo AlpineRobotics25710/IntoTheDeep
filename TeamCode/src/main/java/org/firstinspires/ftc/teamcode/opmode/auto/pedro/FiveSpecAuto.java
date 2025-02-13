@@ -42,10 +42,10 @@ public class FiveSpecAuto extends LinearOpMode {
     Robot robot;
     public static double testScore = 39.25;
     public static double testGrab = 35;
-    public static double testGrabDistance = 10;
+    public static double testGrabDistance = 11;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
-    public static final long DEPOSIT_DELAY = 150;
+    public static final long DEPOSIT_DELAY = 200;
     public void generatePath(){
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
 
@@ -72,7 +72,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(57.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(15).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
         );
 
         paths.add( //index 2
@@ -84,7 +84,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(15).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
         );
 
         paths.add( //index 3
@@ -109,7 +109,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(15).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
         );
 
         paths.add( //index 5
@@ -150,7 +150,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 74.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(10).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(4).build()
         );
 
         paths.add( //index 8
