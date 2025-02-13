@@ -29,8 +29,6 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @TeleOp(group = "production")
 public class TwoDriverTeleOp extends LinearOpMode {
     public static boolean robotCentric = true;
-
-    public static boolean turtleMode = false;
     private static Pose startPose = new Pose(0, 0, 0);
 
     @Override
@@ -66,7 +64,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
@@ -74,7 +72,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         );
 
         gp2.getGamepadButton(GamepadKeys.Button.START).whenPressed(
-                new InstantCommand(() -> robot.follower.setStartingPose(new Pose(0, 0, 0)))
+                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
         );
         // Outtake slides commands
         //gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
@@ -90,12 +88,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
             }
         });
 
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            turtleMode = true;
-        });
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenReleased(() -> {
-            turtleMode = false;
-        });
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
@@ -113,12 +105,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
 
         while (!isStopRequested() && opModeIsActive()) {
-            if(turtleMode){
-                robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y*0.5, -gamepad1.left_stick_x*0.5, -gamepad1.right_stick_x*0.5, robotCentric);
-            }
-            else{
-                robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
-            }
+            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
             robot.loop();
             TelemetryUtil.update();
         }
