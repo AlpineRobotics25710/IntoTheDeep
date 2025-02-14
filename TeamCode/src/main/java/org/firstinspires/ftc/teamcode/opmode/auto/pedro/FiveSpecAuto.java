@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
@@ -40,9 +41,9 @@ public class FiveSpecAuto extends LinearOpMode {
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
     Robot robot;
-    public static double testScore = 39.25;
+    public static double testScore = 40;
     public static double testGrab = 35;
-    public static double testGrabDistance = 11;
+    public static double testGrabDistance = 10.5;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
     public static final long DEPOSIT_DELAY = 200;
@@ -257,6 +258,21 @@ public class FiveSpecAuto extends LinearOpMode {
         robot = new Robot(hardwareMap, true);
         generatePath();
 
+        CommandGroupBase deposit = new SequentialCommandGroup(
+                //depositing specimen at high chamber
+                new HighChamberCommand(robot),
+                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
+
+        );
+
+        CommandGroupBase pickUp = new SequentialCommandGroup( //grabbing specimen and preparing to deposit
+                new WaitCommand(150), //WE CAN REMOVE THIS LATER
+                new OuttakeIntermediateCommand(robot)
+                //new WaitCommand(350) //dont need this i think?
+        );
+
         CommandScheduler.getInstance().schedule(
                 new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here fo rnow
                 new SequentialCommandGroup(
@@ -264,12 +280,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new OuttakeIntermediateCommand(robot, true),
                                 new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
                         ),
-                        new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot),
-                                new WaitCommand(500),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(200) //dont need this i think?
-                        ),
+
+                        deposit,
 
                         new ParallelCommandGroup( //preping for next spec pick up and going to push sample 1
                                 new GrabOffWallCommand(robot), //set up for next spec pickup
@@ -286,80 +298,44 @@ public class FiveSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(6)), //pushing sample 3 and going to pick up specimen 2
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
-                        ),
+                        pickUp,
 
                         new FollowPathCommand(robot.follower, paths.get(7)), //going to high chamber to deposit specimen 2
 
-                        new SequentialCommandGroup( //depositing specimen 2
-                                new HighChamberCommand(robot),
-                                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
-                        ),
+                        deposit,
 
                         new ParallelCommandGroup( //going back to pick up specimen 3
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
                                 new FollowPathCommand(robot.follower, paths.get(8)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
-                        ),
+                        pickUp,
 
                         new FollowPathCommand(robot.follower, paths.get(9)), //going to high chamber to deposit specimen 3
 
-                        new SequentialCommandGroup( //depositing specimen 3
-                                new HighChamberCommand(robot),
-                                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
-                        ),
+                        deposit,
 
                         new ParallelCommandGroup( //going back to pick up specimen 4
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
                                 new FollowPathCommand(robot.follower, paths.get(10)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
-                        ),
+                        pickUp,
 
                         new FollowPathCommand(robot.follower, paths.get(11)), //going to high chamber to deposit specimen 4
 
-                        new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
-                                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
-                        ),
+                        deposit,
 
                         new ParallelCommandGroup( //going back to pick up specimen 5
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
                                 new FollowPathCommand(robot.follower, paths.get(10)) //do a lot of things(pushing all samples) and then going to pick up first specimen
                         ),
 
-                        new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeIntermediateCommand(robot)
-                                //new WaitCommand(350) //dont need this i think?
-                        ),
+                        pickUp,
 
                         new FollowPathCommand(robot.follower, paths.get(13)), //going to high chamber to deposit specimen 5
 
-                        new SequentialCommandGroup( //depositing specimen 4
-                                new HighChamberCommand(robot),
-                                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
-                        ),
+                        deposit,
 
                         new ParallelCommandGroup(
                                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
