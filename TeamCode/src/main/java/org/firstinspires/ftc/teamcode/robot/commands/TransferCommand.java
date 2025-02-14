@@ -17,11 +17,11 @@ public class TransferCommand extends SequentialCommandGroup {
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
                 new IntakeRetractCommand(robot),
                 new OuttakeRetractCommand(robot),
-                new WaitCommand(600),
+                new WaitCommand(550),
                 new ClawToggleCommand(robot),
-                new WaitCommand(200),
+                new WaitCommand(300),
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.REVERSED),
-                new WaitCommand(100),
+                new WaitCommand(400),
                 new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.5)), // Value needs to be tuned
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
                 //new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK)

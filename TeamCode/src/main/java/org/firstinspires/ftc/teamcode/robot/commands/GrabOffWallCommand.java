@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class GrabOffWallCommand extends SequentialCommandGroup {
@@ -29,12 +30,12 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
         super(
                 new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
                 new ExtendoCommand(robot, Extendo.BASE_POS),
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new InstantCommand(() -> {
-                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL || robot.extendo.getTargetPosition() > Extendo.BASE_POS || robot.intakeArm.getArmPosition() == IntakeArm.ARM_INTERIM_POS) {
+                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL || robot.extendo.getTargetPosition() > Extendo.BASE_POS || robot.intakeArm.getCurrentState() == IntakeArm.IntakeArmState.INTERIM) {
                         new WaitCommand(SLIDES_DELAY);
                     }
                 }),
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
                 new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),

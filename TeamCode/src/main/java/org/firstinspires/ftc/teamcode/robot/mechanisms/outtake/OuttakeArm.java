@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
     public static double ARM_WALL_INTAKE_FRONT_POS = 0.86; // Adjust as needed
-    public static double ARM_TRANSFER_POS = 0.55; // COMPLETE
+    public static double ARM_TRANSFER_POS = 0.565; // COMPLETE
     public static double ARM_OUTTAKE_BACK_POS = 0.35; // COMPLETE
     public static double ARM_INTERMEDIATE_POS = 0.6;
     public static double ARM_INIT_POS = 0.85;

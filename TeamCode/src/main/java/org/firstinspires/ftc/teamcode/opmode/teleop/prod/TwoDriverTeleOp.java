@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.sun.source.doctree.StartElementTree;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -65,13 +66,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
 
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new RetractNoTransfer(robot)
-        );
+//        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+//                new RetractNoTransfer(robot)
+//        );
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
                 new RetractNoTransfer(robot)
         );
@@ -84,7 +85,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
 
         // Intake commands
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // TelemetryUtil.addData("BUTTON X", "PRESSED");
             if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
@@ -93,6 +94,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
             }
         });
 
+        if(Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) >0){
+            new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM);
+        }
+
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
+                new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
+        );
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
@@ -112,6 +120,10 @@ public class TwoDriverTeleOp extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
             robot.loop();
+
+
+
+            TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
             TelemetryUtil.update();
         }
         robot.end();
