@@ -72,7 +72,7 @@ public class TwoSpec extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(testScore, 75.00, Point.CARTESIAN),
                                         new Point(11.000, 66.000, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1.5, Point.CARTESIAN),
+                                        new Point(30.000, testGrab, Point.CARTESIAN),
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
