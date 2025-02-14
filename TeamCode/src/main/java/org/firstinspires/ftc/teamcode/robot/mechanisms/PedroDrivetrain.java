@@ -24,30 +24,6 @@ public class PedroDrivetrain {
         this.gamepad = gamepad;
     }
 
-    public static Pose getGrabOffWallPose() {
-        return GRAB_OFF_WALL_POSE;
-    }
-
-    public static void setGrabOffWallPose(Pose grabOffWallPose) {
-        GRAB_OFF_WALL_POSE = grabOffWallPose;
-    }
-
-    public static Pose getSubmersiblePose() {
-        return SUBMERSIBLE_POSE;
-    }
-
-    public static void setSubmersiblePose(Pose submersiblePose) {
-        SUBMERSIBLE_POSE = submersiblePose;
-    }
-
-    public static Pose getBasketPose() {
-        return BASKET_POSE;
-    }
-
-    public static void setBasketPose(Pose basketPose) {
-        BASKET_POSE = basketPose;
-    }
-
     public void goToBasket(HEADING_TYPE headingType) {
         if (headingType == HEADING_TYPE.TANGENTIAL) {
             Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));

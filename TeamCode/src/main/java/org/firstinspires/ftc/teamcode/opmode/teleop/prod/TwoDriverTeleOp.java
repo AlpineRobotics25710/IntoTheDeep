@@ -7,7 +7,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.sun.source.doctree.StartElementTree;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -15,7 +14,6 @@ import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
@@ -57,7 +55,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 new OuttakeIntermediateCommand(robot).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
                 new GrabOffWallCommand(robot).schedule();
-            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
+            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.SUBMERSIBLE_OUTTAKE_BACK) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
@@ -70,9 +68,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
 
-//        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-//                new RetractNoTransfer(robot)
-//        );
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
                 new RetractNoTransfer(robot)
         );
@@ -120,8 +115,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
             robot.loop();
-
-
 
             TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
             TelemetryUtil.update();

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
-    public static double ARM_WALL_INTAKE_FRONT_POS = 0.86; // Adjust as needed
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.8; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.565; // COMPLETE
     public static double ARM_OUTTAKE_BACK_POS = 0.3; // COMPLETE
     public static double ARM_INTERMEDIATE_POS = 0.6;
@@ -16,7 +16,7 @@ public class OuttakeArm extends SubsystemBase {
     public static double ARM_HIGH_BASKET_BACK = 0.35;
 
     // Wrist positions
-    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.38; // Avoid slamming the intake
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.4; // Avoid slamming the intake
     public static double WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS = 0.25;
     public static double WRIST_TRANSFER_POS = 0.82; // COMPLETE
     public static double WRIST_OUTTAKE_BACK_POS = 0.37; // COMPLETE
@@ -54,7 +54,7 @@ public class OuttakeArm extends SubsystemBase {
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
 
-            case OUTTAKE_BACK:
+            case SUBMERSIBLE_OUTTAKE_BACK:
                 setArmPosition(ARM_OUTTAKE_BACK_POS);
                 setWristPosition(WRIST_OUTTAKE_BACK_POS);
                 break;
@@ -98,6 +98,6 @@ public class OuttakeArm extends SubsystemBase {
     }
 
     public enum OuttakeArmState {
-        HIGH_BASKET_BACK, WALL_INTAKE_FRONT, TRANSFER, INTERMEDIATE, OUTTAKE_BACK, INIT, GIVE_SPACE_FOR_INTAKE
+        HIGH_BASKET_BACK, WALL_INTAKE_FRONT, TRANSFER, INTERMEDIATE, SUBMERSIBLE_OUTTAKE_BACK, INIT, GIVE_SPACE_FOR_INTAKE
     }
 }

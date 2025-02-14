@@ -25,11 +25,12 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
 @Config
 @TeleOp(group = "production")
 public class OneDriverTeleOp extends LinearOpMode {
     public static boolean robotCentric = true;
-    private static Pose startPose = new Pose(0, 0, 0);
+    private static final Pose startPose = new Pose(0, 0, 0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -48,30 +49,32 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Outtake commands
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT || robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
+            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT) {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeIntermediateCommand(robot).schedule();
-            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
-                new GrabOffWallCommand(robot).schedule();
-            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.OUTTAKE_BACK) {
+            } else if (
+                    robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE ||
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK ||
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.SUBMERSIBLE_OUTTAKE_BACK ||
+                            robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
                 new GrabOffWallCommand(robot).schedule();
             }
         });
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
-        //gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
+        //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-            new RetractNoTransfer(robot)
-        );
 
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
+
+        gp1.getGamepadButton(GamepadKeys.Button.START).whenPressed(new InstantCommand(() -> robot.follower.setHeadingOffset(0)));
         // Outtake slides commands
-        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
+        //gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
 
         // Intake commands
@@ -84,6 +87,11 @@ public class OneDriverTeleOp extends LinearOpMode {
             }
         });
 
+        if (Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) > 0) {
+            new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM);
+        }
+
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         while (opModeInInit()) {
             robot.extendoRight.setPower(-0.35);
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
@@ -103,6 +111,8 @@ public class OneDriverTeleOp extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
             robot.loop();
+
+            TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
             TelemetryUtil.update();
         }
         robot.end();
