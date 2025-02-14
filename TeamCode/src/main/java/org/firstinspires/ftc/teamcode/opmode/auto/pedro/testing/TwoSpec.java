@@ -41,11 +41,11 @@ public class TwoSpec extends LinearOpMode {
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
     Robot robot;
-    public static double testScore = 40;
+    public static double testScore = 40.5;
     public static double testGrab = 35;
     public static double testGrabDistance = 11;
 
-    public static final long CLAW_DEPOSIT_DELAY = 100;
+    public static final long CLAW_DEPOSIT_DELAY = 150;
     public static final long DEPOSIT_DELAY = 200;
 
     public void generatePath(){
