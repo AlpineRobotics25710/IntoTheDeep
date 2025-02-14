@@ -41,7 +41,7 @@ public class CyclingAuto extends LinearOpMode {
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
     Robot robot;
-    public static double testScore = 40.5;
+    public static double testScore = 41;
     public static double testGrab = 35;
     public static double testGrabDistance = 10.5;
     public static final long CLAW_DEPOSIT_DELAY = 150;
@@ -72,7 +72,7 @@ public class CyclingAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(testScore, 75.000, Point.CARTESIAN),
                                         new Point(11.000, 66.000, Point.CARTESIAN),
-                                        new Point(30.000, testGrab + 1.5, Point.CARTESIAN),
+                                        new Point(30.000, testGrab, Point.CARTESIAN),
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
