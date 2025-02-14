@@ -59,7 +59,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 75.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 1
@@ -73,7 +75,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(57.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        //.setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 2
@@ -85,7 +89,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        //.setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 3
@@ -98,7 +104,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(57.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 4
@@ -110,7 +117,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(5).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        //.setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 5
@@ -123,7 +132,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(57.000, 9.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 6
@@ -138,7 +148,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 7
@@ -151,7 +162,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 74.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).setZeroPowerAccelerationMultiplier(4).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 8
@@ -165,7 +178,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 9
@@ -178,7 +192,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 72.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 10
@@ -192,7 +208,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 11
@@ -205,7 +222,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 69.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 12
@@ -219,7 +238,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
         paths.add( //index 13
@@ -232,7 +252,9 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, 67.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
         paths.add( //index 14
@@ -244,7 +266,8 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
-                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230)).build()
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230))
+                        .build()
         );
     }
 

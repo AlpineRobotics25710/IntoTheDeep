@@ -43,7 +43,7 @@ public class CyclingAuto extends LinearOpMode {
     Robot robot;
     public static double testScore = 40.5;
     public static double testGrab = 35;
-    public static double testGrabDistance = 11;
+    public static double testGrabDistance = 10.5;
     public static final long CLAW_DEPOSIT_DELAY = 150;
     public static final long DEPOSIT_DELAY = 200;
 

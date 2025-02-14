@@ -61,6 +61,7 @@ public class TwoSpec extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
                         .build()
         );
 
@@ -86,11 +87,11 @@ public class TwoSpec extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN),
                                         new Point(22.000, 74.500, Point.CARTESIAN),
-                                        new Point(testScore, 74.500, Point.CARTESIAN)
+                                        new Point(testScore, 72.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
-                        .setZeroPowerAccelerationMultiplier(4)
+                        .setZeroPowerAccelerationMultiplier(3)
                         .build()
         );
     }

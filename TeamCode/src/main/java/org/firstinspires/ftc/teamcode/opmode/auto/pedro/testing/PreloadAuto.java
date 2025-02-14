@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro.testing;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
@@ -22,12 +22,9 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
@@ -35,12 +32,14 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group="testing")
-public class DepositAuto extends LinearOpMode {
+public class PreloadAuto extends LinearOpMode {
     private ElapsedTime timer;
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
     Robot robot;
     public static double testScore = 40;
+    public static final long CLAW_DEPOSIT_DELAY = 150;
+    public static final long DEPOSIT_DELAY = 200;
 
     public void generatePath(){
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
@@ -54,7 +53,9 @@ public class DepositAuto extends LinearOpMode {
                                         new Point(testScore, 75.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
     }
 
@@ -68,6 +69,14 @@ public class DepositAuto extends LinearOpMode {
         robot = new Robot(hardwareMap, true);
         generatePath();
 
+        CommandGroupBase deposit = new SequentialCommandGroup(
+                //depositing specimen at high chamber
+                new HighChamberCommand(robot),
+                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
+        );
+
         CommandScheduler.getInstance().schedule(
                 new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here fo rnow
                 new SequentialCommandGroup(
@@ -75,12 +84,8 @@ public class DepositAuto extends LinearOpMode {
                                 new OuttakeIntermediateCommand(robot, true),
                                 new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
                         ),
-                        new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot),
-                                new WaitCommand(500),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(200) //dont need this i think?
-                        )
+
+                        deposit
                 )
         );
 
