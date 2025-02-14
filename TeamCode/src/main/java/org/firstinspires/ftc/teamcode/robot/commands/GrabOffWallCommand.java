@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 @Config
 public class GrabOffWallCommand extends SequentialCommandGroup {
+    public static long EXTENDO_DELAY = 500;
     public static long SLIDES_DELAY = 800;
     public static long WRIST_DELAY = 250;
     public static long ARM_DELAY1 = 750;
@@ -27,22 +28,27 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
     // 🤫🧏
     public GrabOffWallCommand(Robot robot) {
         super(
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
+                new InstantCommand(() -> {
+                    if (robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT) {
+                        new WaitCommand(300);
+                    }
+                }),
+                new ExtendoCommand(robot, Extendo.BASE_POS),
+                new InstantCommand(() -> {
+                    if (robot.extendo.getTargetPosition() > Extendo.BASE_POS) {
+                        new WaitCommand(EXTENDO_DELAY);
+                    }
+                }),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
                 new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new InstantCommand(() -> robot.outtakeArm.setArmPosition(0.73)),
                 new WaitCommand(ARM_DELAY1),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
-                new ExtendoCommand(robot, Extendo.BASE_POS),
                 new InstantCommand(() -> {
-                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL || robot.extendo.getTargetPosition() > Extendo.BASE_POS) {
+                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL) {
                         new WaitCommand(SLIDES_DELAY);
-                    }
-                }),
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
-                new InstantCommand(() -> {
-                    if (robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT) {
-                        new WaitCommand(300);
                     }
                 }),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
