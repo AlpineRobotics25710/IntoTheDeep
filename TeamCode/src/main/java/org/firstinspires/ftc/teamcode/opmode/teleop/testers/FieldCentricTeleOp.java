@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.robot.utils.GoBildaPinpointDriver;
+import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver;
 
 @TeleOp
 public class FieldCentricTeleOp extends LinearOpMode {
