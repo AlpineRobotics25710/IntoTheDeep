@@ -189,7 +189,7 @@ public class NetsideAuto extends LinearOpMode {
         robot = new Robot(hardwareMap, true);
         generatePaths();
 
-        CommandGroupBase intakeAndTransfer = new SequentialCommandGroup(
+        CommandGroupBase intakeAndTransfer = new SequentialCommandGroup( //redundant apparantly so just use TransferCommand()
                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
                 new WaitCommand(500),
@@ -199,9 +199,9 @@ public class NetsideAuto extends LinearOpMode {
 
         CommandGroupBase deposit = new SequentialCommandGroup(
                 new HighBasketCommand(robot),
-                new WaitCommand(1000),
+                new WaitCommand(800),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                new WaitCommand(1000),
+                new WaitCommand(300),
                 new OuttakeRetractCommand(robot)
         );
 
@@ -216,20 +216,35 @@ public class NetsideAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(2)), // moving forward to intake sample 1
 
-                        intakeAndTransfer,
+                        new TransferCommand(robot),
 
                         new FollowPathCommand(robot.follower, paths.get(3)), // going to deposit sample 1
 
                         deposit,
 
-                        intakeAndTransfer,
-                        new FollowPathCommand(robot.follower, paths.get(4)), // deposit sample 2
+                        new FollowPathCommand(robot.follower, paths.get(4)), // going to pos to intake sample 2
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+
+                        new FollowPathCommand(robot.follower, paths.get(5)), // moving forward to intake sample 2
+
+                        new TransferCommand(robot),
+
+                        new FollowPathCommand(robot.follower, paths.get(6)), // going to deposit sample 2
+
                         deposit,
-                        new FollowPathCommand(robot.follower, paths.get(5)), // sample 3
-                        intakeAndTransfer,
-                        new FollowPathCommand(robot.follower, paths.get(6)), // deposit sample 3
+
+                        new FollowPathCommand(robot.follower, paths.get(7)), // going to pos to intake sample 3
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+
+                        new FollowPathCommand(robot.follower, paths.get(8)), // moving forward to intake sample 3
+
+                        new TransferCommand(robot),
+
+                        new FollowPathCommand(robot.follower, paths.get(9)), // going to deposit sample 3
+
                         deposit,
-                        new FollowPathCommand(robot.follower, paths.get(7)) // park*/
+
+                        new FollowPathCommand(robot.follower, paths.get(10)) // park
                 )
         );
 
