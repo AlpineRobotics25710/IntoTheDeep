@@ -56,7 +56,7 @@ public class OuttakeSlides extends SubsystemBase {
     public void periodic() {
         if (!manualMode) {
             if (targetPosition == 0 && getCurrentPosition() < 100) {
-                setSlidesPower(-0.3);
+                setSlidesPower(-0.45);
             } else {
                 outtakePID.setPID(kP, kI, kD);
                 power = outtakePID.calculate(left.getCurrentPosition(), targetPosition);
