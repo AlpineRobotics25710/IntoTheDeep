@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class IntakeArm extends SubsystemBase {
     // Arm commands
-    public static double ARM_INTAKE_POS = 0.41;
+    public static double ARM_INTAKE_POS = 0.39;
     public static double ARM_TRANSFER_POS = 0.17;
     public static double ARM_INIT_POS = 0.08;
     public static double ARM_INTERIM_POS = 0.3;

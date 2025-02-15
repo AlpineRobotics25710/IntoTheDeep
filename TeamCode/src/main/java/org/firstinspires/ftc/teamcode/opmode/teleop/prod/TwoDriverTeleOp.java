@@ -97,7 +97,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
         );
         while (opModeInInit()) {
-            robot.extendoRight.setPower(-0.35);
+            //robot.extendoRight.setPower(-0.35);
+            robot.loop();
             TelemetryUtil.addData("extendo base pos", Extendo.BASE_POS);
             TelemetryUtil.addData("intake arm pos", robot.intakeArm.getArmPosition());
             TelemetryUtil.addData("intake wrist pos", robot.intakeArm.getWristPosition());
@@ -116,7 +117,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
             robot.loop();
 
-            TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+            if ((gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0 || gamepad1.right_stick_x != 0 || gamepad1.right_stick_y != 0) && robot.follower.isBusy()) {
+                robot.follower.breakFollowing();
+                robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
+                robot.follower.startTeleopDrive();
+            }
+
+         //   TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
             TelemetryUtil.update();
         }
         robot.end();

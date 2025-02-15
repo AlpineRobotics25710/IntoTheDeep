@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -13,7 +14,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -141,7 +143,9 @@ public class Robot {
         if (isAuto) {
             new AutonInitializeCommand(this).schedule();
         } else {
-            new TeleOpInitializeCommand(this).schedule();
+            new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
+            new WaitCommand(1000).schedule();
+            new GrabOffWallCommand(this).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }

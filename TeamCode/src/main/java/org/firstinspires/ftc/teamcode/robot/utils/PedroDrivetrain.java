@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.mechanisms;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
@@ -6,8 +6,6 @@ import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 public class PedroDrivetrain {
     private static Pose BASKET_POSE = new Pose();
