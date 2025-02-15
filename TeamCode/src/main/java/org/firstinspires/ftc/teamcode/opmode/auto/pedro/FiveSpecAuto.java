@@ -19,6 +19,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -147,7 +148,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(45.000, 10.000, Point.CARTESIAN),
                                         new Point(0, 3.000, Point.CARTESIAN),
                                         new Point(20.500, 19.500, Point.CARTESIAN),
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN)
+                                        new Point(testGrabDistance-0.5, testGrab, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -159,7 +160,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 8
                                 new BezierCurve(
-                                        new Point(testGrabDistance, testGrab, Point.CARTESIAN),
+                                        new Point(testGrabDistance-0.5, testGrab, Point.CARTESIAN),
                                         new Point(22.000, 74.500, Point.CARTESIAN),
                                         new Point(testScore, specScore-2.750, Point.CARTESIAN)
                                 )
@@ -247,7 +248,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 new BezierCurve(
                                         new Point(testGrabDistance, testGrab, Point.CARTESIAN),
                                         new Point(17.250, 64.250, Point.CARTESIAN),
-                                        new Point(testScore, specScore-10, Point.CARTESIAN)
+                                        new Point(testScore+1, specScore-10, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -259,7 +260,7 @@ public class FiveSpecAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( // Line 15
                                 new BezierLine(
-                                        new Point(testScore, specScore-10, Point.CARTESIAN),
+                                        new Point(testScore+1, specScore-10, Point.CARTESIAN),
                                         new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
@@ -281,7 +282,7 @@ public class FiveSpecAuto extends LinearOpMode {
         CommandGroupBase deposit = new SequentialCommandGroup(
                 //depositing specimen at high chamber
                 new HighChamberCommand(robot),
-                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
+                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
 
@@ -358,10 +359,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         deposit,
 
                         new ParallelCommandGroup(
-                                new SequentialCommandGroup(
-                                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
-                                        new WaitCommand(100)
-                                ),
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
                                 new FollowPathCommand(robot.follower, paths.get(14)) //park position/location
                         )
                 )
@@ -376,6 +374,8 @@ public class FiveSpecAuto extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             robot.loop();
 
+
+//            TelemetryUtil.addData("Localization Nan", robot.follower.)
             TelemetryUtil.addData("POSE", robot.follower.getPose());
             TelemetryUtil.addData("TIMER", timer.milliseconds());
 
