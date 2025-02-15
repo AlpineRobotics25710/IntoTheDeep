@@ -94,7 +94,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
-                        //.setZeroPowerAccelerationMultiplier(3)
+                        .setZeroPowerAccelerationMultiplier(6)
                         .build()
         );
 
@@ -122,6 +122,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(6)
                         .build()
         );
 
