@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+import org.firstinspires.ftc.teamcode.robot.utils.WaypointConstants;
 
 import java.util.List;
 
@@ -134,6 +135,7 @@ public class Robot {
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
         follower = new Follower(hardwareMap);
+        WaypointConstants.follower = follower;
 
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);

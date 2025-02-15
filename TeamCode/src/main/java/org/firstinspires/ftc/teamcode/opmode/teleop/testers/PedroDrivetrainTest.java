@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.PedroDrivetrain;
+import org.firstinspires.ftc.teamcode.robot.utils.PedroDrivetrain;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 public class PedroDrivetrainTest extends LinearOpMode {

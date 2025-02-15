@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.mechanisms;
+package org.firstinspires.ftc.teamcode.robot.utils;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
@@ -7,12 +7,11 @@ import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-
 public class PedroDrivetrain {
     private static Pose BASKET_POSE = new Pose();
-    private static Pose SUBMERSIBLE_POSE = new Pose(39.25, 65.500, 180); // From 4 spec auto
-    private static Pose GRAB_OFF_WALL_POSE = new Pose(10, 35, 180); //  From 4 spec auto
+    private static Pose SPEC_SUBMERSIBLE_POSE = new Pose(39.25, 65.500, Math.toRadians(180)); // From 4 spec auto
+    private static Pose SAMPLE_SUBMERSIBLE_POSE = new Pose(59.5, 92.5, Math.toRadians(270));
+    private static Pose GRAB_OFF_WALL_POSE = new Pose(10, 35, Math.toRadians(180)); //  From 4 spec auto
     private final Follower follower;
     private final Gamepad gamepad;
 
@@ -24,7 +23,39 @@ public class PedroDrivetrain {
         this.gamepad = gamepad;
     }
 
+    public static void setBasketPose(Pose basketPose) {
+        BASKET_POSE = basketPose;
+    }
+
+    public static void setSpecSubmersiblePose(Pose specSubmersiblePose) {
+        SPEC_SUBMERSIBLE_POSE = specSubmersiblePose;
+    }
+
+    public static void setSampleSubmersiblePose(Pose specSubmersiblePose) {
+        SAMPLE_SUBMERSIBLE_POSE = specSubmersiblePose;
+    }
+
+    public static void setGrabOffWallPose(Pose grabOffWallPose) {
+        GRAB_OFF_WALL_POSE = grabOffWallPose;
+    }
+
     public void goToBasket(HEADING_TYPE headingType) {
+        if (headingType == HEADING_TYPE.TANGENTIAL) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setTangentHeadingInterpolation();
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.LINEAR) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), BASKET_POSE.getHeading());
+            follower.followPath(path);
+        } else if (headingType == HEADING_TYPE.CONSTANT) {
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
+            path.setConstantHeadingInterpolation(follower.getPose().getHeading());
+            follower.followPath(path);
+        }
+    }
+
+    public void goTo(HEADING_TYPE headingType) {
         if (headingType == HEADING_TYPE.TANGENTIAL) {
             Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(BASKET_POSE)));
             path.setTangentHeadingInterpolation();
@@ -44,15 +75,15 @@ public class PedroDrivetrain {
         //Point subPose = new Point(new Pose2D(follower.getPose().getX()+30, follower.);
 
         if (headingType == HEADING_TYPE.TANGENTIAL) {
-            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SPEC_SUBMERSIBLE_POSE)));
             path.setTangentHeadingInterpolation();
             follower.followPath(path);
         } else if (headingType == HEADING_TYPE.LINEAR) {
-            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
-            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), SUBMERSIBLE_POSE.getHeading());
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SPEC_SUBMERSIBLE_POSE)));
+            path.setLinearHeadingInterpolation(follower.getPose().getHeading(), SPEC_SUBMERSIBLE_POSE.getHeading());
             follower.followPath(path);
         } else if (headingType == HEADING_TYPE.CONSTANT) {
-            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SUBMERSIBLE_POSE)));
+            Path path = new Path(new BezierLine(new Point(follower.getPose()), new Point(SPEC_SUBMERSIBLE_POSE)));
             path.setConstantHeadingInterpolation(follower.getPose().getHeading());
             follower.followPath(path);
         }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
@@ -25,6 +27,8 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+import org.firstinspires.ftc.teamcode.robot.utils.WaypointConstants;
+
 @Config
 @TeleOp(group = "production")
 public class TwoDriverTeleOp extends LinearOpMode {
@@ -40,6 +44,24 @@ public class TwoDriverTeleOp extends LinearOpMode {
         GamepadEx gp2 = new GamepadEx(gamepad2);
 
         robot.follower.setStartingPose(startPose);
+
+        // Waypointing controls
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new SequentialCommandGroup(
+                new FollowPathCommand(robot.follower, WaypointConstants.highChamberPath),
+                new InstantCommand(() -> WaypointConstants.setHighChamberPose(robot.follower.getPose()))
+        ));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new SequentialCommandGroup(
+                new FollowPathCommand(robot.follower, WaypointConstants.grabOffWallPath),
+                new InstantCommand(() -> WaypointConstants.setGrabOffWallPose(robot.follower.getPose()))
+        ));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new SequentialCommandGroup(
+                new FollowPathCommand(robot.follower, WaypointConstants.sampleIntakePath),
+                new InstantCommand(() -> WaypointConstants.setSampleIntakePose(robot.follower.getPose()))
+        ));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new SequentialCommandGroup(
+                new FollowPathCommand(robot.follower, WaypointConstants.basketPath),
+                new InstantCommand(() -> WaypointConstants.setBasketPose(robot.follower.getPose()))
+        ));
 
         // Active intake controls
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD));
@@ -89,7 +111,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
             }
         });
 
-        if(Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) >0){
+        if (Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) > 0) {
             new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM);
         }
 
