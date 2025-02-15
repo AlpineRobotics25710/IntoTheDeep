@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
@@ -51,7 +52,7 @@ public class NetsidePreloadPark extends LinearOpMode {
                         .addPath( //line 1
                                 new BezierLine(
                                         new Point(8.000, 113.500, Point.CARTESIAN),
-                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                        new Point(15.5000, 128.500, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
@@ -62,7 +63,7 @@ public class NetsidePreloadPark extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath(
                                 new BezierCurve(
-                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(15.500, 128.500, Point.CARTESIAN),
                                         new Point(60.000, 120.000, Point.CARTESIAN),
                                         new Point(60.000, 95.000, Point.CARTESIAN)
                                 )
@@ -91,7 +92,9 @@ public class NetsidePreloadPark extends LinearOpMode {
 
         CommandGroupBase deposit = new SequentialCommandGroup(
                 new HighBasketCommand(robot),
+                new WaitCommand(1000),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new WaitCommand(500),
                 new OuttakeRetractCommand(robot)
         );
 
@@ -103,7 +106,7 @@ public class NetsidePreloadPark extends LinearOpMode {
 
                         new ParallelCommandGroup(
                                 new FollowPathCommand(robot.follower, paths.get(1)), // park
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE)
+                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.HIGH_BASKET_BACK)
                         )
                 )
         );

@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
@@ -26,6 +27,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.OuttakeRetractCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
@@ -48,7 +50,7 @@ public class NetsideAuto extends LinearOpMode {
                         .addPath( //line 1
                                 new BezierLine(
                                         new Point(8.000, 113.500, Point.CARTESIAN),
-                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                        new Point(15.5, 128.5, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
@@ -59,7 +61,7 @@ public class NetsideAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( //line 2
                                 new BezierLine(
-                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(15.5, 128.5, Point.CARTESIAN),
                                         new Point(35.000, 87.500, Point.CARTESIAN)
                                 )
                         )
@@ -84,7 +86,7 @@ public class NetsideAuto extends LinearOpMode {
                         .addPath( //line 4
                                 new BezierLine(
                                         new Point(39.000, 97.500, Point.CARTESIAN),
-                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                        new Point(15.5, 128.5, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(73), Math.toRadians(-45))
@@ -95,7 +97,7 @@ public class NetsideAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( //line 5
                                 new BezierLine(
-                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(15.5, 128.5, Point.CARTESIAN),
                                         new Point(35.000, 93.500, Point.CARTESIAN)
                                 )
                         )
@@ -120,7 +122,7 @@ public class NetsideAuto extends LinearOpMode {
                         .addPath( //line 7
                                 new BezierLine(
                                         new Point(39.000, 103.500, Point.CARTESIAN),
-                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                        new Point(15.5, 128.5, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(73), Math.toRadians(-45))
@@ -131,7 +133,7 @@ public class NetsideAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( //line 8
                                 new BezierLine(
-                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(15.5, 128.5, Point.CARTESIAN),
                                         new Point(35.000, 99.500, Point.CARTESIAN)
                                 )
                         )
@@ -156,7 +158,7 @@ public class NetsideAuto extends LinearOpMode {
                         .addPath( //line 10
                                 new BezierLine(
                                         new Point(39.000, 109.500, Point.CARTESIAN),
-                                        new Point(17.000, 127.000, Point.CARTESIAN)
+                                        new Point(15.5, 128.5, Point.CARTESIAN)
                                 )
                         )
                         .setLinearHeadingInterpolation(Math.toRadians(73), Math.toRadians(-45))
@@ -167,7 +169,7 @@ public class NetsideAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( //line 11
                                 new BezierCurve(
-                                        new Point(17.000, 127.000, Point.CARTESIAN),
+                                        new Point(15.5, 128.5, Point.CARTESIAN),
                                         new Point(60.000, 120.000, Point.CARTESIAN),
                                         new Point(60.000, 95.000, Point.CARTESIAN)
                                 )
@@ -188,26 +190,38 @@ public class NetsideAuto extends LinearOpMode {
         generatePaths();
 
         CommandGroupBase intakeAndTransfer = new SequentialCommandGroup(
-                new IntakeCommand(robot),
+                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE),
+                new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+                new WaitCommand(500),
                 new TransferCommand(robot),
-                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF)
+                new WaitCommand(500)
         );
 
         CommandGroupBase deposit = new SequentialCommandGroup(
                 new HighBasketCommand(robot),
+                new WaitCommand(1000),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new WaitCommand(1000),
                 new OuttakeRetractCommand(robot)
         );
 
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
                         new FollowPathCommand(robot.follower, paths.get(0)), // deposit preload
-                        new FollowPathCommand(robot.follower, paths.get(1)), // sample 1
-                        intakeAndTransfer,
-                        new FollowPathCommand(robot.follower, paths.get(2)), // deposit sample 1
+
                         deposit,
-                        new FollowPathCommand(robot.follower, paths.get(3)), // sample 2
+
+                        new FollowPathCommand(robot.follower, paths.get(1)), // going to pos to intake sample 1
+                        new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD),
+
+                        new FollowPathCommand(robot.follower, paths.get(2)), // moving forward to intake sample 1
+
+                        intakeAndTransfer,
+
+                        new FollowPathCommand(robot.follower, paths.get(3)), // going to deposit sample 1
+
+                        deposit,
+
                         intakeAndTransfer,
                         new FollowPathCommand(robot.follower, paths.get(4)), // deposit sample 2
                         deposit,
