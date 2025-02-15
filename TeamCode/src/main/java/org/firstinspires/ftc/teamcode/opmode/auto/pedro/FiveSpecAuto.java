@@ -358,7 +358,10 @@ public class FiveSpecAuto extends LinearOpMode {
                         deposit,
 
                         new ParallelCommandGroup(
-                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
+                                new SequentialCommandGroup(
+                                        new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
+                                        new WaitCommand(100)
+                                ),
                                 new FollowPathCommand(robot.follower, paths.get(14)) //park position/location
                         )
                 )
