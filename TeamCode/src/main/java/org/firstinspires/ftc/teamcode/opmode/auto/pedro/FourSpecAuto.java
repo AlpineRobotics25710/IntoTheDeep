@@ -96,7 +96,7 @@ public class FourSpecAuto extends LinearOpMode {
                                         new Point(20.000, 24.000, Point.CARTESIAN),
                                         new Point(62.750, 27.000, Point.CARTESIAN),
                                         new Point(80.000, 7.500, Point.CARTESIAN),
-                                        new Point(20.000, 13.000, Point.CARTESIAN)
+                                        new Point(22.500, 13.000, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -107,7 +107,7 @@ public class FourSpecAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( //line 5
                                 new BezierCurve(
-                                        new Point(20.000, 13.000, Point.CARTESIAN),
+                                        new Point(22.500, 13.000, Point.CARTESIAN),
                                         new Point(11.500, 15.000, Point.CARTESIAN),
                                         new Point(17.000, 35.500, Point.CARTESIAN),
                                         new Point(10.500, testGrab, Point.CARTESIAN)
@@ -190,34 +190,6 @@ public class FourSpecAuto extends LinearOpMode {
         paths.add( //index 10
                 robot.follower.pathBuilder()
                         .addPath( //line 11
-                                new BezierCurve(
-                                        new Point(testScore, 69.500, Point.CARTESIAN),
-                                        new Point(11.500, 65.600, Point.CARTESIAN),
-                                        new Point(27.000, 36.000, Point.CARTESIAN),
-                                        new Point(10.500, testGrab, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
-                        .build()
-        );
-
-        paths.add( //index 11
-                robot.follower.pathBuilder()
-                        .addPath( //line 12
-                                new BezierCurve(
-                                        new Point(10.500, testGrab, Point.CARTESIAN),
-                                        new Point(19.500, 60.000, Point.CARTESIAN),
-                                        new Point(testScore, 67.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180))
-                        .setZeroPowerAccelerationMultiplier(3)
-                        .build()
-        );
-
-        paths.add( //index 12
-                robot.follower.pathBuilder()
-                        .addPath( //line 13
                                 new BezierLine(
                                         new Point(testScore, 67.000, Point.CARTESIAN),
                                         new Point(20.000, 54.000, Point.CARTESIAN)
@@ -258,7 +230,7 @@ public class FourSpecAuto extends LinearOpMode {
                 new SequentialCommandGroup(
                         new ParallelCommandGroup(
                                 new OuttakeIntermediateCommand(robot, true),
-                                new FollowPathCommand(robot.follower, paths.get(0))//go to deposit preload
+                                new FollowPathCommand(robot.follower, paths.get(0)) //go to deposit preload(specimen 1)
                         ),
 
                         deposit,
@@ -270,54 +242,42 @@ public class FourSpecAuto extends LinearOpMode {
 
                         new FollowPathCommand(robot.follower, paths.get(2)), //pushing sample 1
 
-                        new FollowPathCommand(robot.follower, paths.get(3)), //going to position to push sample 2
+                        new FollowPathCommand(robot.follower, paths.get(3)), //pushing sample 2
 
-                        new FollowPathCommand(robot.follower, paths.get(4)), //pushing sample 2
+                        new FollowPathCommand(robot.follower, paths.get(4)), //going to pick up specimen 2
 
-                        new FollowPathCommand(robot.follower, paths.get(6)), //pushing sample 3 and going to pick up specimen 2
-
+                        new WaitCommand(200), //idk maybe this will work
                         pickUp,
 
-                        new FollowPathCommand(robot.follower, paths.get(7)), //going to high chamber to deposit specimen 2
+                        new FollowPathCommand(robot.follower, paths.get(5)), //going to high chamber to deposit specimen 2
 
                         deposit,
 
                         new ParallelCommandGroup( //going back to pick up specimen 3
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(8)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(6)) //going to pick up specimen 3
                         ),
 
                         pickUp,
 
-                        new FollowPathCommand(robot.follower, paths.get(9)), //going to high chamber to deposit specimen 3
+                        new FollowPathCommand(robot.follower, paths.get(7)), //going to high chamber to deposit specimen 3
 
                         deposit,
 
                         new ParallelCommandGroup( //going back to pick up specimen 4
                                 new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(10)) //do a lot of things(pushing all samples) and then going to pick up first specimen
+                                new FollowPathCommand(robot.follower, paths.get(8)) //going to pick up specimen 4
                         ),
 
                         pickUp,
 
-                        new FollowPathCommand(robot.follower, paths.get(11)), //going to high chamber to deposit specimen 4
-
-                        deposit,
-
-                        new ParallelCommandGroup( //going back to pick up specimen 5
-                                new GrabOffWallCommand(robot), //set outtake up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(10)) //do a lot of things(pushing all samples) and then going to pick up first specimen
-                        ),
-
-                        pickUp,
-
-                        new FollowPathCommand(robot.follower, paths.get(13)), //going to high chamber to deposit specimen 5
+                        new FollowPathCommand(robot.follower, paths.get(9)), //going to high chamber to deposit specimen 4
 
                         deposit,
 
                         new ParallelCommandGroup(
                                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
-                                new FollowPathCommand(robot.follower, paths.get(14)) //park position/location
+                                new FollowPathCommand(robot.follower, paths.get(10)) //park position/location
                         )
                 )
         );
