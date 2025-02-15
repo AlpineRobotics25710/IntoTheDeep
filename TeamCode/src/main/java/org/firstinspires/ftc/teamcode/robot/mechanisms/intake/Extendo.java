@@ -50,7 +50,7 @@ public class Extendo extends SubsystemBase {
             double currentPos = right.getCurrentPosition();
             double power = extendoPID.calculate(currentPos, targetPosition);
             if (currentPos - targetPosition <= 10 && targetPosition == Extendo.BASE_POS) {
-                power = -0.3;
+                power = -0.45;
             }
 
             power = Range.clip(power, -1, 0.7);
