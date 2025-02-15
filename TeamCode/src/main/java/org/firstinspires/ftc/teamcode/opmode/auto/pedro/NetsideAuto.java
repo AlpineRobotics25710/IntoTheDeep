@@ -43,7 +43,7 @@ public class NetsideAuto extends LinearOpMode {
     private DashboardPoseTracker dashboardPoseTracker;
 
     public void generatePaths() {
-        robot.follower.setStartingPose(new Pose(8, 113.500, Math.toRadians(0)));
+        robot.follower.setStartingPose(new Pose(8, 113.500, Math.toRadians(-90)));
 
         paths.add( //index 0
                 robot.follower.pathBuilder()
