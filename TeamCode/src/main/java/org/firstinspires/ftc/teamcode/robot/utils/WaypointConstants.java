@@ -11,22 +11,51 @@ import com.pedropathing.pathgen.Point;
 @Config
 public class WaypointConstants {
     public static Pose grabOffWall = new Pose(10, 35, Math.toRadians(180));
-    public static Pose submersible = new Pose(41, 65.500, Math.toRadians(180));
-    public static Point toSubmersibleControlPoint = new Point(22.000, 74.500, Point.CARTESIAN);
-    public Follower follower;
+    public static Pose submersible = new Pose(41, 65.5, Math.toRadians(180));
+    public static Point toSubmersibleControlPoint = new Point(22.0, 74.5, Point.CARTESIAN);
+    private final Follower follower;
 
-    public WaypointConstants(Follower follower){
+    public WaypointConstants(Follower follower) {
         this.follower = follower;
-        generatePath();
     }
 
-    public PathChain getGrabOffWallPath(){
-        Point targetPoint = new Point(new Pose(follower.getPose().getX() + submersible.getX() - grabOffWall.getX(), follower.getPose().getY() + submersible.getY() - grabOffWall.getY(), Math.toRadians(180)));
-        Point controlPoint = new Point(new Pose(follower.getPose().getX() + toSubmersibleControlPoint.getX() - grabOffWall.getX(), follower.getPose().getY() + toSubmersibleControlPoint.getY() - 35, Math.toRadians(180)));
+    public PathChain getGrabOffWallPath() {
+        Pose currentPose = follower.getPose();
 
-        return new PathChain(new Path(new BezierCurve(new Point(follower.getPose()), controlPoint, targetPoint)));
+        // Move towards submersible from current position
+        Point targetPoint = new Point(new Pose(
+                currentPose.getX() + (submersible.getX() - grabOffWall.getX()),
+                currentPose.getY() + (submersible.getY() - grabOffWall.getY()),
+                Math.toRadians(180)
+        ));
+
+        // Control point for smooth transition
+        Point controlPoint = new Point(new Pose(
+                currentPose.getX() + (toSubmersibleControlPoint.getX() - grabOffWall.getX()),
+                currentPose.getY() + (toSubmersibleControlPoint.getY() - grabOffWall.getY()),
+                Math.toRadians(180)
+        ));
+
+        return new PathChain(new Path(new BezierCurve(new Point(currentPose), controlPoint, targetPoint)));
     }
 
-    public void generatePath(){
+    public PathChain getSubmersiblePath() {
+        Pose currentPose = follower.getPose();
+
+        // Move backward from submersible to grabOffWall
+        Point targetPoint = new Point(new Pose(
+                currentPose.getX() + (grabOffWall.getX() - submersible.getX()),
+                currentPose.getY() + (grabOffWall.getY() - submersible.getY()),
+                Math.toRadians(180)
+        ));
+
+        // Control point for smooth transition
+        Point controlPoint = new Point(new Pose(
+                currentPose.getX() + (toSubmersibleControlPoint.getX() - submersible.getX()),
+                currentPose.getY() + (toSubmersibleControlPoint.getY() - submersible.getY()),
+                Math.toRadians(180)
+        ));
+
+        return new PathChain(new Path(new BezierCurve(new Point(currentPose), controlPoint, targetPoint)));
     }
 }
