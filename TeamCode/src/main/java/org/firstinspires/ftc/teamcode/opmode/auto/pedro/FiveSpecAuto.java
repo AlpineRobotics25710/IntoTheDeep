@@ -290,7 +290,7 @@ public class FiveSpecAuto extends LinearOpMode {
         );
 
         CommandGroupBase pickUp = new SequentialCommandGroup( //grabbing specimen and preparing to deposit
-                new WaitCommand(150), //WE CAN REMOVE THIS LATER
+                //new WaitCommand(150), //WE CAN REMOVE THIS LATER
                 new OuttakeIntermediateCommand(robot)
                 //new WaitCommand(350) //dont need this i think?
         );
