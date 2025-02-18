@@ -114,12 +114,11 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
 
         while (!isStopRequested() && opModeIsActive()) {
-            //robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
+            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
 
-            if(Math.abs(gamepad1.left_stick_x) >= 0.05 || Math.abs(gamepad1.left_stick_y) >= 0.05 && Math.abs(gamepad1.right_stick_x) >= 0.05)
-                robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
-            else{
-                robot.follower.holdPoint(robot.follower.getPose()); //unpushable robot
+            if ((gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0 || gamepad1.right_stick_x != 0 || gamepad1.right_stick_y != 0) && robot.follower.isBusy()) {
+                robot.follower.breakFollowing();
+                robot.follower.startTeleopDrive();
             }
 
             robot.loop();
