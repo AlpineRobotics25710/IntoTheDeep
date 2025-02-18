@@ -11,7 +11,6 @@ import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.utils.WaypointConstants;
 import org.firstinspires.ftc.teamcode.robot.utils.WaypointGenerator;
 
 

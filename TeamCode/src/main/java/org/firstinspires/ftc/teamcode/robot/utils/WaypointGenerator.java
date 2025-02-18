@@ -26,8 +26,7 @@ public class WaypointGenerator {
     }
     public static PathChain getGrabOffWallPath(Follower follower) {
         Pose currentPose = follower.getPose();
-
-        // Move towards submersible from current position
+        grabOffWall = currentPose;  //wont this fix it
         Point targetPoint = new Point(new Pose(
                 currentPose.getX() + (submersible.getX() - grabOffWall.getX()),
                 currentPose.getY() + (submersible.getY() - grabOffWall.getY()),
@@ -39,7 +38,6 @@ public class WaypointGenerator {
                 currentPose.getY() + (toSubmersibleControlPoint.getY() - grabOffWall.getY()),
                 Math.toRadians(180)
         ));
-
         return new PathChain(new Path(new BezierCurve(new Point(currentPose), controlPoint, targetPoint)));
     }
 
