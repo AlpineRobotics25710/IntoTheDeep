@@ -50,7 +50,7 @@ public class StrafeBackAndForth extends OpMode {
     @Override
     public void init() {
         Constants.setConstants(FConstants.class, LConstants.class);
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap);
 
         forwards = new Path(new BezierLine(new Point(0,0, Point.CARTESIAN), new Point(0, DISTANCE, Point.CARTESIAN)));
         forwards.setConstantHeadingInterpolation(0);
