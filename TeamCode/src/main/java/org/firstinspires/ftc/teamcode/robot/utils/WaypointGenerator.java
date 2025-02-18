@@ -9,13 +9,13 @@ import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 
 @Config
-public class WaypointConstants {
+public class WaypointGenerator {
     public static Pose grabOffWall = new Pose(10, 35, Math.toRadians(180));
-    public static Pose submersible = new Pose(41, 65.5, Math.toRadians(180));
+    public static Pose submersible = new Pose(41.500, 78.500, Math.toRadians(180));
     public static Point toSubmersibleControlPoint = new Point(22.0, 74.5, Point.CARTESIAN);
     private final Follower follower;
 
-    public WaypointConstants(Follower follower) {
+    public WaypointGenerator(Follower follower) {
         this.follower = follower;
     }
 
@@ -29,7 +29,6 @@ public class WaypointConstants {
                 Math.toRadians(180)
         ));
 
-        // Control point for smooth transition
         Point controlPoint = new Point(new Pose(
                 currentPose.getX() + (toSubmersibleControlPoint.getX() - grabOffWall.getX()),
                 currentPose.getY() + (toSubmersibleControlPoint.getY() - grabOffWall.getY()),
@@ -49,7 +48,6 @@ public class WaypointConstants {
                 Math.toRadians(180)
         ));
 
-        // Control point for smooth transition
         Point controlPoint = new Point(new Pose(
                 currentPose.getX() + (toSubmersibleControlPoint.getX() - submersible.getX()),
                 currentPose.getY() + (toSubmersibleControlPoint.getY() - submersible.getY()),

@@ -115,15 +115,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
-            robot.loop();
 
             if ((gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0 || gamepad1.right_stick_x != 0 || gamepad1.right_stick_y != 0) && robot.follower.isBusy()) {
                 robot.follower.breakFollowing();
-                robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
                 robot.follower.startTeleopDrive();
             }
 
-         //   TelemetryUtil.addData("trigger value", gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+            robot.loop();
             TelemetryUtil.update();
         }
         robot.end();
