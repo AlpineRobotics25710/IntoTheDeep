@@ -73,7 +73,7 @@ public class Robot {
 
     public Robot(HardwareMap hardwareMap, boolean isAuto) {
         // Pedro
-        //Constants.setConstants(FConstants.class, LConstants.class);
+        Constants.setConstants(FConstants.class, LConstants.class);
 
         // Configuration of all motors and servos
         extendoRight = hardwareMap.get(DcMotor.class, "extendoRight");
@@ -135,7 +135,7 @@ public class Robot {
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap);
 
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);
