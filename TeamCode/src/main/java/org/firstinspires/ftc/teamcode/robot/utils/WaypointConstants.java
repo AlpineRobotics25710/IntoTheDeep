@@ -13,13 +13,7 @@ public class WaypointConstants {
     public static Pose grabOffWall = new Pose(10, 35, Math.toRadians(180));
     public static Pose submersible = new Pose(41, 65.5, Math.toRadians(180));
     public static Point toSubmersibleControlPoint = new Point(22.0, 74.5, Point.CARTESIAN);
-    private final Follower follower;
-
-    public WaypointConstants(Follower follower) {
-        this.follower = follower;
-    }
-
-    public PathChain getGrabOffWallPath() {
+    public static PathChain getGrabOffWallPath(Follower follower) {
         Pose currentPose = follower.getPose();
 
         // Move towards submersible from current position
@@ -39,7 +33,7 @@ public class WaypointConstants {
         return new PathChain(new Path(new BezierCurve(new Point(currentPose), controlPoint, targetPoint)));
     }
 
-    public PathChain getSubmersiblePath() {
+    public static PathChain getSubmersiblePath(Follower follower) {
         Pose currentPose = follower.getPose();
 
         // Move backward from submersible to grabOffWall
