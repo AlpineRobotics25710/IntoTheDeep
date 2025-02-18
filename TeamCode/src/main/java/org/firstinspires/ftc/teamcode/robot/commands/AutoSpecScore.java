@@ -12,13 +12,14 @@ import com.pedropathing.pathgen.PathChain;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.utils.WaypointConstants;
+import org.firstinspires.ftc.teamcode.robot.utils.WaypointGenerator;
 
 
 public class AutoSpecScore extends SequentialCommandGroup {
     public AutoSpecScore(Robot robot) {
         super(
              new ParallelCommandGroup(
-                     new FollowPathCommand(robot.follower, WaypointConstants.getSubmersiblePath(robot.follower)),
+                     new FollowPathCommand(robot.follower, WaypointGenerator.getSubmersiblePath(robot.follower)),
                      new SequentialCommandGroup(
                              new WaitCommand(100),
                              new OuttakeIntermediateCommand(robot)
