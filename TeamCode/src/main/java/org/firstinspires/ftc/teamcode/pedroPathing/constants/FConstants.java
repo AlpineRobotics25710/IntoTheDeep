@@ -37,8 +37,9 @@ public class FConstants {
         FollowerConstants.useSecondaryHeadingPID = true;
         FollowerConstants.secondaryHeadingPIDFCoefficients.setCoefficients(1.9,0,0.117,0.001); // Not being used, @see useSecondaryHeadingPID
 
-        FollowerConstants.drivePIDFCoefficients.setCoefficients(0.02,0,0.0006,0.6,0);        FollowerConstants.useSecondaryDrivePID = false;
-        FollowerConstants.secondaryDrivePIDFCoefficients.setCoefficients(0.02,0,0,0.0016    ,0); // Not being used, @see useSecondaryDrivePID
+        FollowerConstants.drivePIDFCoefficients.setCoefficients(0.02,0,0.0006,0.6,0);
+        FollowerConstants.useSecondaryDrivePID = false;
+        FollowerConstants.secondaryDrivePIDFCoefficients.setCoefficients(0.02,0,0,0.0016,0); // Not being used, @see useSecondaryDrivePID
 
         FollowerConstants.zeroPowerAccelerationMultiplier = 4;
         FollowerConstants.centripetalScaling = 0.0004;
