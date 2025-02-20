@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -31,6 +33,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 public class OneDriverTeleOp extends LinearOpMode {
     public static boolean robotCentric = true;
     private static final Pose startPose = new Pose(0, 0, 0);
+    private static final Gamepad.LedEffect outtakeArmLedEffect = new Gamepad.LedEffect.Builder().addStep(1.0, 0.0, 0.0, 750).build();
+    private static final Gamepad.LedEffect regularLedEffect = new Gamepad.LedEffect.Builder().addStep(0.0, 0.75, 0.0, Gamepad.LED_DURATION_CONTINUOUS).build();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -60,6 +64,8 @@ public class OneDriverTeleOp extends LinearOpMode {
                             robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
                 new GrabOffWallCommand(robot).schedule();
             }
+            gamepad1.rumble(0.5, 0.5, 500);
+            gamepad1.runLedEffect(outtakeArmLedEffect);
         });
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
         //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
@@ -68,7 +74,10 @@ public class OneDriverTeleOp extends LinearOpMode {
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new SequentialCommandGroup(
+                new TransferCommand(robot),
+                new InstantCommand(() -> gamepad1.rumble(0.5, 0.5, 500))
+        ));
 
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
 
@@ -106,6 +115,7 @@ public class OneDriverTeleOp extends LinearOpMode {
         if (isStarted()) {
             robot.follower.startTeleopDrive();
             new GrabOffWallCommand(robot).schedule();
+            gamepad1.runLedEffect(regularLedEffect);
         }
 
         while (!isStopRequested() && opModeIsActive()) {
