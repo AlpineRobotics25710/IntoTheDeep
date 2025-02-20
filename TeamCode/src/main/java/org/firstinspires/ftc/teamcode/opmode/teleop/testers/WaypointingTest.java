@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.testers;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
@@ -11,11 +12,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
+import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.robot.utils.PedroDrivetrain;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 import org.firstinspires.ftc.teamcode.robot.utils.WaypointGenerator;
 
 @TeleOp
+@Config
 public class WaypointingTest extends LinearOpMode {
     public static boolean robotCentric = true;
 
@@ -27,8 +30,8 @@ public class WaypointingTest extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
 
         GamepadEx gp1 = new GamepadEx(gamepad1);
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> robot.follower.followPath(waypointGenerator.getSubmersiblePath()));
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> robot.follower.followPath(waypointGenerator.getGrabOffWallPath()));
+        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new FollowPathCommand(robot.follower, waypointGenerator.getSubmersiblePath()));
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new FollowPathCommand(robot.follower, waypointGenerator.getGrabOffWallPath()));
 
         waitForStart();
 

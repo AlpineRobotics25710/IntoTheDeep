@@ -15,15 +15,11 @@ public class WaypointGenerator {
     public static Point toSubmersibleControlPoint = new Point(22.0, 74.5, Point.CARTESIAN);
 
     Follower follow;
-    public WaypointGenerator(Follower follow){
+
+    public WaypointGenerator(Follower follow) {
         this.follow = follow;
     }
-    public PathChain getGrabOffWallPath(){
-        return getGrabOffWallPath(follow);
-    }
-    public PathChain getSubmersiblePath(){
-        return getSubmersiblePath(follow);
-    }
+
     public static PathChain getGrabOffWallPath(Follower follower) {
         Pose currentPose = follower.getPose();
         grabOffWall = currentPose;  //wont this fix it
@@ -58,5 +54,13 @@ public class WaypointGenerator {
         ));
 
         return new PathChain(new Path(new BezierCurve(new Point(currentPose), controlPoint, targetPoint)));
+    }
+
+    public PathChain getGrabOffWallPath() {
+        return getGrabOffWallPath(follow);
+    }
+
+    public PathChain getSubmersiblePath() {
+        return getSubmersiblePath(follow);
     }
 }

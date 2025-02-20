@@ -1,12 +1,9 @@
-package com.pedropathing.commands;
+package org.firstinspires.ftc.teamcode.robot.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.pathgen.Path;
+import com.pedropathing.localization.Pose;
 
 
 public class TeleopMovement extends CommandBase {
@@ -15,6 +12,8 @@ public class TeleopMovement extends CommandBase {
     private double speed = 1;
     private int leftYDirection = 1, leftXDirection = 1, rightXDirection = 1;
     private boolean robotCentric = true;
+    Pose prevPose;
+
     public TeleopMovement(Follower follower, boolean robotCentric, GamepadEx gamepad, double speed, int forwardMovementDirection, int lateralMovementDirection, int angularMovementDirection) {
         this.follower = follower;
         this.robotCentric = robotCentric;
@@ -66,6 +65,7 @@ public class TeleopMovement extends CommandBase {
         prevPose = pose;
         return this;
     }
+
     public TeleopMovement setSpeed(double speed) {
         this.speed = speed;
         return this;
