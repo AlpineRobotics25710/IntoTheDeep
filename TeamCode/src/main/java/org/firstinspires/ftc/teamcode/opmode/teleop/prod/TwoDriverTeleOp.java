@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
+
 @Config
 @TeleOp(group = "production")
 public class TwoDriverTeleOp extends LinearOpMode {
@@ -68,16 +69,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
 
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-                new RetractNoTransfer(robot)
-        );
-
         gp2.getGamepadButton(GamepadKeys.Button.START).whenPressed(
                 new InstantCommand(() -> robot.follower.setHeadingOffset(0))
         );
+
         // Outtake slides commands
-        //gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new LowBasketCommand(robot, false));
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
 
         // Intake commands
         gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
@@ -89,13 +87,15 @@ public class TwoDriverTeleOp extends LinearOpMode {
             }
         });
 
-        if(Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) >0){
+        // What the hell are these here for
+        if (Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) > 0) {
             new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM);
         }
 
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
                 new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
         );
+
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);
             robot.loop();
@@ -110,7 +110,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         if (isStarted()) {
             robot.follower.startTeleopDrive();
-            new GrabOffWallCommand(robot).schedule();
         }
 
         while (!isStopRequested() && opModeIsActive()) {

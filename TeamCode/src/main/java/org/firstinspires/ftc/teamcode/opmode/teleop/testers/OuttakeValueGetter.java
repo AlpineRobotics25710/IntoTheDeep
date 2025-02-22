@@ -20,6 +20,7 @@ public class OuttakeValueGetter extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         TelemetryUtil.setup(telemetry);
         Robot robot = new Robot(hardwareMap, false);
+
         waitForStart();
 
         while (opModeIsActive()) {

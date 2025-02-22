@@ -143,8 +143,9 @@ public class Robot {
         if (isAuto) {
             new AutonInitializeCommand(this).schedule();
         } else {
-            new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
-            new WaitCommand(1000).schedule();
+            if (extendoRight.getCurrentPosition() > Extendo.BASE_POS) {
+                new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
+            }
             new GrabOffWallCommand(this).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
