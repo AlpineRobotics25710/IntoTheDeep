@@ -65,6 +65,7 @@ public class OneDriverTeleOp extends LinearOpMode {
             }
             gamepad1.rumble(0.75, 0.75, 500);
             gamepad1.runLedEffect(outtakeArmLedEffect);
+            gamepad1.runLedEffect(regularLedEffect);
             Log.i("TeamCode", "Outtake arm has moved. This is through the Android Logcat cuz Prathyush is so cool 😎.");
         });
         gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
