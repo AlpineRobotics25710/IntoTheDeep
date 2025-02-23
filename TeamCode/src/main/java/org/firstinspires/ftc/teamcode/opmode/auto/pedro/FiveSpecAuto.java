@@ -46,7 +46,7 @@ public class FiveSpecAuto extends LinearOpMode {
     Robot robot;
     public static double testScore = 41.500;
     public static double testGrab = 35.000;
-    public static double testGrabDistance = 10.25;
+    public static double testGrabDistance = 9.75;
     public static double specScore = 78.500;
 
     public static final long CLAW_DEPOSIT_DELAY = 100;
