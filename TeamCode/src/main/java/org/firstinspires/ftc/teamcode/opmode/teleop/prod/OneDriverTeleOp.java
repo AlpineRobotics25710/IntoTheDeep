@@ -95,11 +95,13 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
             // This is only for manual control though obviously not in commands
+            //if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS)) {
                 if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
                 } else {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
                 }
+            //}
         });
 
         // Reset imu for field centric
