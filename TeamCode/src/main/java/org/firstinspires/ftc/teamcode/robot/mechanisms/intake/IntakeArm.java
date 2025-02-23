@@ -8,13 +8,18 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 public class IntakeArm extends SubsystemBase {
-    public static double ARM_INTAKE_POS = 0.33;
-    public static double ARM_TRANSFER_POS = 0.2;
-    public static double WRIST_INTAKE_POS = 0.53;
-    public static double WRIST_TRANSFER_POS = 0.0;
-    public static double ARM_INIT_POS = 0.0;
-    public static double WRIST_INIT_POS = 0.05;
-    private IntakeArmState currentState;
+    // Arm commands
+    public static double ARM_INTAKE_POS = 0.39;
+    public static double ARM_TRANSFER_POS = 0.17;
+    public static double ARM_INIT_POS = 0.08;
+    public static double ARM_INTERIM_POS = 0.3;
+
+    // Wrist commands
+    public static double WRIST_INTAKE_POS = 0.45;
+    public static double WRIST_TRANSFER_POS = 0.13;
+    public static double WRIST_INIT_POS = 0.0;
+    public static double WRIST_INTERIM_POS = WRIST_INTAKE_POS;
+    public IntakeArmState currentState;
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServoRight;
@@ -32,7 +37,6 @@ public class IntakeArm extends SubsystemBase {
                 setArmPosition(ARM_INTAKE_POS);
                 setWristPosition(WRIST_INTAKE_POS);
                 break;
-
             case TRANSFER:
                 setArmPosition(ARM_TRANSFER_POS);
                 setWristPosition(WRIST_TRANSFER_POS);
@@ -40,8 +44,13 @@ public class IntakeArm extends SubsystemBase {
             case INIT:
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);
+                break;
+            case INTERIM:
+                setArmPosition(ARM_INTERIM_POS);
+                setWristPosition(WRIST_INTERIM_POS);
+                break;
         }
-        //TelemetryUtil.addData("Current Arm State", currentState);
+        TelemetryUtil.addData("Current Arm State", currentState);
     }
 
     public void setWristPosition(double position) {
@@ -66,6 +75,6 @@ public class IntakeArm extends SubsystemBase {
     }
 
     public enum IntakeArmState {
-        INTAKE, TRANSFER, INIT
+        INTAKE, TRANSFER, INIT, INTERIM
     }
 }

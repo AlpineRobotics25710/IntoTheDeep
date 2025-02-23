@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.util.Constants;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -13,13 +14,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
+import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.List;
 
@@ -68,7 +71,7 @@ public class Robot {
 
     public Follower follower;
 
-    public Robot(HardwareMap hardwareMap, boolean isAuto, boolean manualMode) {
+    public Robot(HardwareMap hardwareMap, boolean isAuto) {
         // Pedro
         Constants.setConstants(FConstants.class, LConstants.class);
 
@@ -93,11 +96,13 @@ public class Robot {
 
         // Set directions of all motors and servos
         extendoRight.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideLeft.setDirection(DcMotor.Direction.REVERSE);
-        outtakeSlideRight.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideLeft.setDirection(DcMotor.Direction.FORWARD);
+        outtakeSlideRight.setDirection(DcMotor.Direction.REVERSE);
         iArmRight.setDirection(Servo.Direction.REVERSE);
-        oArmRight.setDirection(Servo.Direction.REVERSE);
+        oArmRight.setDirection(Servo.Direction.FORWARD);
+        oArmLeft.setDirection(Servo.Direction.REVERSE);
         oWrist.setDirection(Servo.Direction.FORWARD);
+        //outtakeSwivelServo.setDirection(Servo.Direction.REVERSE);
 
         // Resetting encoders
         if (isAuto) {
@@ -126,25 +131,22 @@ public class Robot {
         // Initialize all mechanisms
         intakeArm = new IntakeArm(iArmRight, iArmLeft, iWristRight);
         intakeEnd = new IntakeEnd(activeIntake);
-        extendo = new Extendo(extendoRight, true);
+        extendo = new Extendo(extendoRight, false);
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
-        follower = new Follower(hardwareMap);
+        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+
         // Register all subsystems
-        CommandScheduler.getInstance().registerSubsystem(
-                intakeArm,
-                intakeEnd,
-                extendo,
-                outtakeClaw,
-                outtakeSlides,
-                outtakeArm
-        );
+        CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);
 
         if (isAuto) {
-            new AutonInitializeCommand(this, manualMode).schedule();
+            new AutonInitializeCommand(this).schedule();
         } else {
-            new TeleOpInitializeCommand(this, manualMode).schedule();
+            if (extendoRight.getCurrentPosition() > Extendo.BASE_POS) {
+                new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
+            }
+            new GrabOffWallCommand(this).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }
@@ -156,6 +158,15 @@ public class Robot {
     public void loop() {
         CommandScheduler.getInstance().run();
         follower.update();
+        TelemetryUtil.addData("intake arm pos", intakeArm.getArmPosition());
+        TelemetryUtil.addData("intake wrist pos", intakeArm.getWristPosition());
+        TelemetryUtil.addData("Intake state", intakeArm.currentState);
+        TelemetryUtil.addData("Current Arm State", intakeArm.currentState);
+        TelemetryUtil.addData("outtake arm pos", outtakeArm.getArmPosition());
+        TelemetryUtil.addData("outtake wrist pos", oWrist.getPosition());
+        TelemetryUtil.addData("Current outtake state", outtakeArm.getCurrentState());
+        TelemetryUtil.addData("Outtake slides pos", outtakeSlides.getCurrentPosition());
+        TelemetryUtil.addData("outtake slides target pos", outtakeSlides.getTargetPosition());
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();

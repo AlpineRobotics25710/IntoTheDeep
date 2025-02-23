@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 public class SampleOpModeNoLib extends LinearOpMode {
     @Override
     public void runOpMode() {
-        Robot robot = new Robot(hardwareMap, false, true);
+        Robot robot = new Robot(hardwareMap, false);
 
         waitForStart();
 

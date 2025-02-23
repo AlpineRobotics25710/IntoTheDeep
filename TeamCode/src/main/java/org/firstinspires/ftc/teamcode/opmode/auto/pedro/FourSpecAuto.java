@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.pedro;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
@@ -23,176 +25,179 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.TeleOpInitializeCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 import java.util.ArrayList;
 
 @Config
-@Autonomous(group = "production")
+@Autonomous(group="production")
 public class FourSpecAuto extends LinearOpMode {
-    public static double testX = 27;
-    public static double testY = 65.5;
-    public static double testHeading = 180;
-    private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
-    private Robot robot;
     private ElapsedTime timer;
+    private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
+    Robot robot;
+    public static double testScore = 41;
+    public static double testGrab = 35;
+    public static double testGrabDistance = 10.5;
 
-    public void generatePath() {
+    public static final long CLAW_DEPOSIT_DELAY = 100;
+    public static final long DEPOSIT_DELAY = 200;
+    public void generatePath(){
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
 
-        paths.add(
+        paths.add( //index 0
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 1
+                        .addPath( //line 1
                                 new BezierLine(
                                         new Point(8.000, 65.500, Point.CARTESIAN),
-                                        new Point(39.500, 68.000, Point.CARTESIAN)
+                                        new Point(testScore, 77.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
-
-        paths.add(
+        paths.add( //index 1
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 2
+                        .addPath( //line 2
                                 new BezierCurve(
-                                        new Point(39.500, 68.000, Point.CARTESIAN),
-                                        new Point(3.000, 33.000, Point.CARTESIAN),
-                                        new Point(67.000, 43.000, Point.CARTESIAN),
-                                        new Point(60.000, 23.000, Point.CARTESIAN)
+                                        new Point(testScore, 77.000, Point.CARTESIAN),
+                                        new Point(12.500, 16.500, Point.CARTESIAN),
+                                        new Point(64.000, 44.500, Point.CARTESIAN),
+                                        new Point(57.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
-        paths.add(
+        paths.add( //index 2
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 3
-                                new BezierCurve(
-                                        new Point(60.000, 23.000, Point.CARTESIAN),
-                                        new Point(20.157, 18.060, Point.CARTESIAN),
-                                        new Point(20.000, 23.000, Point.CARTESIAN)
+                        .addPath( //line 3
+                                new BezierLine(
+                                        new Point(57.000, 24.000, Point.CARTESIAN),
+                                        new Point(20.000, 24.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
-        paths.add(
+        paths.add( //index 3
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 4
+                        .addPath( //line 4
                                 new BezierCurve(
-                                        new Point(15, 23.000, Point.CARTESIAN),
-                                        new Point(73, 43, Point.CARTESIAN),
-                                        new Point(60.000, 16, Point.CARTESIAN)
+                                        new Point(20.000, 24.000, Point.CARTESIAN),
+                                        new Point(62.750, 27.000, Point.CARTESIAN),
+                                        new Point(80.000, 7.500, Point.CARTESIAN),
+                                        new Point(22.500, 13.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
-        paths.add(
+        paths.add( //index 4
                 robot.follower.pathBuilder()
-                        .addPath(
-                                //line 5
+                        .addPath( //line 5
                                 new BezierCurve(
-                                        new Point(60.000, 16.000, Point.CARTESIAN),
-                                        new Point(54.826, 18.060, Point.CARTESIAN),
-                                        new Point(18.157, 10.965, Point.CARTESIAN)
+                                        new Point(22.500, 13.000, Point.CARTESIAN),
+                                        new Point(11.500, 15.000, Point.CARTESIAN),
+                                        new Point(17.000, 35.500, Point.CARTESIAN),
+                                        new Point(10.500, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
         );
 
-        paths.add(
+        paths.add( //index 5
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // something i'm liteally high on smth
+                        .addPath( //line 6
                                 new BezierCurve(
-                                        new Point(18.157, 10.965, Point.CARTESIAN),
-                                        new Point(25.962, 29.510, Point.CARTESIAN),
-                                        new Point(9.675, 26.607, Point.CARTESIAN)
+                                        new Point(10.500, testGrab, Point.CARTESIAN),
+                                        new Point(18.500, 66.000, Point.CARTESIAN),
+                                        new Point(testScore, 74.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build()
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
         );
 
-        paths.add(
+        paths.add( //index 6
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 6
+                        .addPath( //line 7
                                 new BezierCurve(
-                                        new Point(9.675, 12.000, Point.CARTESIAN),
-                                        new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 71, Point.CARTESIAN)
+                                        new Point(testScore, 74.500, Point.CARTESIAN),
+                                        new Point(testGrabDistance, 66.000, Point.CARTESIAN),
+                                        new Point(27.500, 35.500, Point.CARTESIAN),
+                                        new Point(10.500, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
+        );
+
+        paths.add( //index 7
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 7
+                        .addPath( //line 8
                                 new BezierCurve(
-                                        new Point(39.500, 71, Point.CARTESIAN),
-                                        new Point(4.000, 67.000, Point.CARTESIAN),
-                                        new Point(46.000, 20.000, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(10.500, testGrab, Point.CARTESIAN),
+                                        new Point(17.500, 64.000, Point.CARTESIAN),
+                                        new Point(testScore, 72.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
+        );
+
+        paths.add( //index 8
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 8
+                        .addPath( //line 9
                                 new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 74, Point.CARTESIAN)
+                                        new Point(testScore, 72.000, Point.CARTESIAN),
+                                        new Point(10.000, 65.000, Point.CARTESIAN),
+                                        new Point(27.250, 35.750, Point.CARTESIAN),
+                                        new Point(10.500, testGrab, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .build()
+        );
+
+        paths.add( //index 9
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 9
+                        .addPath( //line 10
                                 new BezierCurve(
-                                        new Point(39.500, 74, Point.CARTESIAN),
-                                        new Point(2.500, 71.000, Point.CARTESIAN),
-                                        new Point(50.000, 21.500, Point.CARTESIAN),
-                                        new Point(9.675, 23.000, Point.CARTESIAN)
+                                        new Point(10.500, testGrab, Point.CARTESIAN),
+                                        new Point(21.500, 62.000, Point.CARTESIAN),
+                                        new Point(testScore, 69.500, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
+                        .setConstantHeadingInterpolation(Math.toRadians(180))
+                        .setZeroPowerAccelerationMultiplier(3)
+                        .build()
+        );
+
+        paths.add( //index 10
                 robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 10
-                                new BezierCurve(
-                                        new Point(9.675, 23.000, Point.CARTESIAN),
-                                        new Point(20.000, 60.000, Point.CARTESIAN),
-                                        new Point(39.500, 77, Point.CARTESIAN)
+                        .addPath( //line 11
+                                new BezierLine(
+                                        new Point(testScore, 67.000, Point.CARTESIAN),
+                                        new Point(20.000, 54.000, Point.CARTESIAN)
                                 )
                         )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
-        paths.add(
-                robot.follower.pathBuilder()
-                        .addPath(
-                                // Line 11
-                                new BezierCurve(
-                                        new Point(39.500, 77, Point.CARTESIAN),
-                                        new Point(12.000, 73.000, Point.CARTESIAN),
-                                        new Point(10.000, 10.000, Point.CARTESIAN)
-                                )
-                        )
-                        .setConstantHeadingInterpolation(Math.toRadians(180)).build());
+                        .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(230))
+                        .build()
+        );
     }
 
     @Override
@@ -202,98 +207,78 @@ public class FourSpecAuto extends LinearOpMode {
         TelemetryUtil.setup(telemetry);
         CommandScheduler.getInstance().reset();
         Constants.setConstants(FConstants.class, LConstants.class);
-        robot = new Robot(hardwareMap, true, false);
+        robot = new Robot(hardwareMap, true);
         generatePath();
 
+        CommandGroupBase deposit = new SequentialCommandGroup(
+                //depositing specimen at high chamber
+                new HighChamberCommand(robot),
+                new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
+                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
+                new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
+
+        );
+
+        CommandGroupBase pickUp = new SequentialCommandGroup( //grabbing specimen and preparing to deposit
+                new WaitCommand(150), //WE CAN REMOVE THIS LATER
+                new OuttakeIntermediateCommand(robot)
+                //new WaitCommand(350) //dont need this i think?
+        );
+
         CommandScheduler.getInstance().schedule(
-                // Shouldn't need this because it's called in robot.loop()
-                //new RunCommand(() -> robot.follower.update()),
+                new RunCommand(() -> robot.follower.update()), //shouldn't need this cus its called in robot.loop()??? idk ill keep it here fo rnow
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.get(0)), //preload
-
-                        new SequentialCommandGroup( //deposit preload
-                                new HighChamberCommand(robot, false),
-                                new WaitCommand(1000),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(500)
+                        new ParallelCommandGroup(
+                                new OuttakeIntermediateCommand(robot, true),
+                                new FollowPathCommand(robot.follower, paths.get(0)) //go to deposit preload(specimen 1)
                         ),
 
-                        new ParallelCommandGroup( //obsolete
+                        deposit,
+
+                        new ParallelCommandGroup( //preping for next spec pick up and going to push sample 1
                                 new GrabOffWallCommand(robot), //set up for next spec pickup
-                                new FollowPathCommand(robot.follower, paths.get(1)) //behind sample 1 and outtake in front
+                                new FollowPathCommand(robot.follower, paths.get(1)) //going to position to push sample 1
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(2)), //push sample 1
-                        new FollowPathCommand(robot.follower, paths.get(3)), //behind sample 2
+                        new FollowPathCommand(robot.follower, paths.get(2)), //pushing sample 1
 
-                        new FollowPathCommand(robot.follower, paths.get(4)), //push sample 2
-                        new FollowPathCommand(robot.follower, paths.get(5)), //pickup sample 2
+                        new FollowPathCommand(robot.follower, paths.get(3)), //pushing sample 2
 
-                        new SequentialCommandGroup(
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
-                                new WaitCommand(300)
+                        new FollowPathCommand(robot.follower, paths.get(4)), //going to pick up specimen 2
+
+                        new WaitCommand(200), //idk maybe this will work
+                        pickUp,
+
+                        new FollowPathCommand(robot.follower, paths.get(5)), //going to high chamber to deposit specimen 2
+
+                        deposit,
+
+                        new ParallelCommandGroup( //going back to pick up specimen 3
+                                new GrabOffWallCommand(robot), //set outtake up for next spec pickup
+                                new FollowPathCommand(robot.follower, paths.get(6)) //going to pick up specimen 3
                         ),
 
-                        new FollowPathCommand(robot.follower, paths.get(6)), //go to chamber
-                        new SequentialCommandGroup( //deposit sample 2
-                                new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(250)
+                        pickUp,
+
+                        new FollowPathCommand(robot.follower, paths.get(7)), //going to high chamber to deposit specimen 3
+
+                        deposit,
+
+                        new ParallelCommandGroup( //going back to pick up specimen 4
+                                new GrabOffWallCommand(robot), //set outtake up for next spec pickup
+                                new FollowPathCommand(robot.follower, paths.get(8)) //going to pick up specimen 4
                         ),
+
+                        pickUp,
+
+                        new FollowPathCommand(robot.follower, paths.get(9)), //going to high chamber to deposit specimen 4
+
+                        deposit,
 
                         new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(7)), //pick up sample 3
-                                new GrabOffWallCommand(robot) //set up for next spec pickup
-                        ),
-
-                        new SequentialCommandGroup(
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
-                                new WaitCommand(300)
-                        ),
-
-
-                        new FollowPathCommand(robot.follower, paths.get(8)), //go to chamber + deposit
-                        new SequentialCommandGroup( //deposit sample 3
-                                new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(250)
-                        ),
-
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(9)), //pick up sample 3
-                                new GrabOffWallCommand(robot) //set up for next spec pickup
-                        ),
-
-                        new SequentialCommandGroup(
-                                new WaitCommand(150), //WE CAN REMOVE THIS LATER
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED), //closing claw to pick up specimen
-                                new WaitCommand(225),
-                                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE), //lifting arm to stay clear of wall while moving
-                                new WaitCommand(300)
-                        ),
-
-                        new FollowPathCommand(robot.follower, paths.get(10)), //go to chamber + deposit
-                        new SequentialCommandGroup( //deposit sample 4
-                                new HighChamberCommand(robot, false),
-                                new WaitCommand(500),
-                                new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.OPEN),
-                                new WaitCommand(350)
-                        ),
-
-                        new ParallelCommandGroup(
-                                new FollowPathCommand(robot.follower, paths.get(11)), //pick up sample 3
-                                new GrabOffWallCommand(robot) //set up for next spec pickup
-                        ),
-
-                        new TeleOpInitializeCommand(robot, false)
+                                new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
+                                new FollowPathCommand(robot.follower, paths.get(10)) //park position/location
+                        )
                 )
         );
 
@@ -308,6 +293,7 @@ public class FourSpecAuto extends LinearOpMode {
 
             TelemetryUtil.addData("POSE", robot.follower.getPose());
             TelemetryUtil.addData("TIMER", timer.milliseconds());
+
             TelemetryUtil.update();
 
             dashboardPoseTracker.update();

@@ -18,17 +18,14 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 public class AutonInitializeCommand extends ParallelCommandGroup {
-    public AutonInitializeCommand(Robot robot, boolean manualMode) {
-        /*if (!manualMode) {
-            addCommands(new ExtendoCommand(robot, 0));
-        }*/
+    public AutonInitializeCommand(Robot robot) {
         addCommands(
                 new ExtendoCommand(robot, Extendo.BASE_POS),
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INIT),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.SIDEWAYS),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.BOTTOM),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)
         );
     }

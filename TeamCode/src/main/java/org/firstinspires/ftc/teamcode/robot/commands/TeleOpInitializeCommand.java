@@ -18,15 +18,12 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 public class TeleOpInitializeCommand extends ParallelCommandGroup {
-    public TeleOpInitializeCommand(Robot robot, boolean manualMode) {
-        /*if (!manualMode) {
-            addCommands(new ExtendoCommand(robot, 0));
-        }*/
+    public TeleOpInitializeCommand(Robot robot) {
         addCommands(
                 new ExtendoCommand(robot, Extendo.BASE_POS),
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF),
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INTERMEDIATE),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.INIT),
                 new OuttakeClawCommand(robot, OuttakeClaw.OuttakeClawState.CLOSED),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.TRANSFER_POS)

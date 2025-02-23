@@ -7,25 +7,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class OuttakeArm extends SubsystemBase {
     // Arm positions
-    public static double ARM_WALL_INTAKE_FRONT_POS = 0.7; // Adjust as needed
-    public static double ARM_WALL_INTAKE_BACK_POS = 0.2; // Adjust as needed
+    public static double ARM_WALL_INTAKE_FRONT_POS = 0.81; // Adjust as needed
     public static double ARM_TRANSFER_POS = 0.59; // COMPLETE
-    public static double ARM_OUTTAKE_FRONT_POS = 0.5;
-    public static double ARM_OUTTAKE_BACK_POS = 0.1; // COMPLETE
-    public static double ARM_INTERMEDIATE_POS = 0.35;
-    public static double ARM_DEPOSIT_SAMPLE_POS = 0.05; // Adjust as needed
-    public static double ARM_INIT_POS = 0.57;
+    public static double ARM_OUTTAKE_BACK_POS = 0.33; // COMPLETE
+    public static double ARM_INTERMEDIATE_POS = 0.6;
+    public static double ARM_INIT_POS = 0.85;
+    public static double ARM_GIVE_SPACE_FOR_INTAKE = 0.7;
+    public static double ARM_HIGH_BASKET_BACK = 0.35;
 
     // Wrist positions
-    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.5; // Adjust as needed
-    public static double WRIST_WALL_INTAKE_BACK_POS = 0.8; // Adjust as needed
-    public static double WRIST_TRANSFER_POS = 0; // COMPLETE
-    public static double WRIST_OUTTAKE_FRONT_POS = 1;
-    public static double WRIST_OUTTAKE_BACK_POS = 0.65; // COMPLETE
-    public static double WRIST_INTERIM_POS = 0.65;
-    public static double WRIST_DEPOSIT_SAMPLE_POS = 0.4; // Adjust as needed
-    public static double WRIST_INIT_POS = 1.0;
-
+    public static double WRIST_WALL_INTAKE_FRONT_POS = 0.42; // Avoid slamming the intake
+    public static double WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS = 0.25;
+    public static double WRIST_TRANSFER_POS = 0.82; // COMPLETE
+    public static double WRIST_OUTTAKE_BACK_POS = 0.37; // COMPLETE
+    public static double WRIST_INTERMEDIATE_POS = 0.37;
+    public static double WRIST_INIT_POS = 0.25;
+    public static double WRIST_GIVE_SPACE_FOR_INTAKE = 0.55;
+    public static double WRIST_HIGH_BASKET_BACK = 0.37;
     private final Servo armServoLeft;
     private final Servo armServoRight;
     private final Servo wristServo;
@@ -46,48 +44,48 @@ public class OuttakeArm extends SubsystemBase {
                 setWristPosition(WRIST_WALL_INTAKE_FRONT_POS);
                 break;
 
-            case WALL_INTAKE_BACK:
-                setArmPosition(ARM_WALL_INTAKE_BACK_POS);
-                setWristPosition(WRIST_WALL_INTAKE_BACK_POS);
-                break;
-
             case INTERMEDIATE:
                 setArmPosition(ARM_INTERMEDIATE_POS);
-                setWristPosition(WRIST_INTERIM_POS);
+                setWristPosition(WRIST_INTERMEDIATE_POS);
+                break;
 
             case TRANSFER:
                 setArmPosition(ARM_TRANSFER_POS);
                 setWristPosition(WRIST_TRANSFER_POS);
                 break;
 
-            case OUTTAKE_FRONT:
-                setArmPosition(ARM_OUTTAKE_FRONT_POS);
-                setWristPosition(WRIST_OUTTAKE_FRONT_POS);
-                break;
-
-            case OUTTAKE_BACK:
+            case SUBMERSIBLE_OUTTAKE_BACK:
                 setArmPosition(ARM_OUTTAKE_BACK_POS);
                 setWristPosition(WRIST_OUTTAKE_BACK_POS);
-                break;
-
-            case DEPOSIT_SAMPLE:
-                setArmPosition(ARM_DEPOSIT_SAMPLE_POS);
-                setWristPosition(WRIST_DEPOSIT_SAMPLE_POS);
                 break;
 
             case INIT:
                 setArmPosition(ARM_INIT_POS);
                 setWristPosition(WRIST_INIT_POS);
                 break;
+
+            case GIVE_SPACE_FOR_INTAKE:
+                setWristPosition(WRIST_GIVE_SPACE_FOR_INTAKE);
+                setArmPosition(ARM_GIVE_SPACE_FOR_INTAKE);
+                break;
+
+            case HIGH_BASKET_BACK:
+                setWristPosition(WRIST_HIGH_BASKET_BACK);
+                setArmPosition(ARM_HIGH_BASKET_BACK);
+                break;
         }
+    }
+
+    public double getWristPosition() {
+        return wristServo.getPosition();
     }
 
     public void setWristPosition(double position) {
         wristServo.setPosition(position);
     }
 
-    public double getWristPosition() {
-        return wristServo.getPosition();
+    public double getArmPosition() {
+        return armServoRight.getPosition();
     }
 
     public void setArmPosition(double position) {
@@ -95,22 +93,11 @@ public class OuttakeArm extends SubsystemBase {
         armServoRight.setPosition(position);
     }
 
-    public double getArmPosition() {
-        return armServoRight.getPosition();
-    }
-
     public OuttakeArmState getCurrentState() {
         return currentState;
     }
 
     public enum OuttakeArmState {
-        WALL_INTAKE_FRONT,
-        WALL_INTAKE_BACK,
-        TRANSFER,
-        INTERMEDIATE,
-        OUTTAKE_FRONT,
-        OUTTAKE_BACK,
-        DEPOSIT_SAMPLE,
-        INIT,
+        HIGH_BASKET_BACK, WALL_INTAKE_FRONT, TRANSFER, INTERMEDIATE, SUBMERSIBLE_OUTTAKE_BACK, INIT, GIVE_SPACE_FOR_INTAKE
     }
 }

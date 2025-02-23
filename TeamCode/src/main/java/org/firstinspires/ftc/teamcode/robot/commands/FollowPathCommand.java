@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
 
@@ -16,10 +17,11 @@ public class FollowPathCommand extends CommandBase {
         this.follower = follower;
         this.path = path;
     }
-
     public FollowPathCommand(Follower follower, Path path) {
         this(follower, new PathChain(path));
     }
+
+
 
     public FollowPathCommand setHoldEnd(boolean holdEnd) {
         this.holdEnd = holdEnd;

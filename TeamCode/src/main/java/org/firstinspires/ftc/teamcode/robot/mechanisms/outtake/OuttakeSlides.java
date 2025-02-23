@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @Config
 public class OuttakeSlides extends SubsystemBase {
     public static final double TRANSFER_POS = 0.0;
-    public static final double HIGH_BASKET = -1250.0;
-    public static final double LOW_BASKET = -425.0;
+    public static final double HIGH_BASKET = 1200;
+    public static final double LOW_BASKET = 150.0;
     public static final double LOW_CHAMBER = 0.0;
     public static final double HIGH_CHAMBER = 0.0;
     public static final double GRAB_OFF_WALL = 0.0;
@@ -20,7 +20,8 @@ public class OuttakeSlides extends SubsystemBase {
     public static double kI = 0.003;
     public static double kD = 0.0002;
     public static double kF = 0.0;
-    private static PIDController outtakePIDF;
+    public static final double ticksInDegrees = 0.403;
+    private static PIDController outtakePID;
     private final DcMotor left; //we can make left our lead motor in this case
     private final DcMotor right;
     public boolean slidesReached;
@@ -33,17 +34,19 @@ public class OuttakeSlides extends SubsystemBase {
         this.right = right;
         this.manualMode = manualMode;
         setManualMode(manualMode);
-        outtakePIDF = new PIDController(kP, kI, kD);
-        outtakePIDF.setTolerance(3);
+        outtakePID = new PIDController(kP, kI, kD);
+        outtakePID.setTolerance(3);
+    }
+
+    public double getTargetPosition() {
+        return targetPosition;
     }
 
     //in this case the position is inputted in ticks of the motor, can be changed later
     public void setTargetPosition(double position) {
         targetPosition = position;
     }
-    public double getTargetPosition(){
-        return targetPosition;
-    }
+
     public void setSlidesPower(double power) {
         left.setPower(power);
         right.setPower(power);
@@ -52,12 +55,17 @@ public class OuttakeSlides extends SubsystemBase {
     @Override
     public void periodic() {
         if (!manualMode) {
-            outtakePIDF.setPID(kP, kI, kD);
-            power = outtakePIDF.calculate(right.getCurrentPosition(), targetPosition);
-            slidesReached = (targetPosition > 0 && outtakePIDF.atSetPoint()) || (right.getCurrentPosition() <= 5 && targetPosition == 0);
-            setSlidesPower(power + kF);
-            TelemetryUtil.addData("power", power);
+            if (targetPosition == 0 && getCurrentPosition() < 100) {
+                setSlidesPower(-0.45);
+            } else {
+                outtakePID.setPID(kP, kI, kD);
+                power = outtakePID.calculate(left.getCurrentPosition(), targetPosition);
+                slidesReached = (targetPosition > 0 && outtakePID.atSetPoint()) || (left.getCurrentPosition() <= 5 && targetPosition == 0);
+//                double ff = Math.cos(Math.toRadians(targetPosition / ticksInDegrees)) * kF;
+                setSlidesPower(power + kF);
+            }
         }
+        TelemetryUtil.addData("Outtake slides power", power);
     }
 
     public double getPower() {
@@ -65,8 +73,9 @@ public class OuttakeSlides extends SubsystemBase {
     }
 
     public double getCurrentPosition() {
-        return right.getCurrentPosition();
+        return left.getCurrentPosition();
     }
+
     public boolean isManualMode() {
         return manualMode;
     }
