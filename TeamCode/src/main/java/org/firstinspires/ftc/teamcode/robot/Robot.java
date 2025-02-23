@@ -135,7 +135,7 @@ public class Robot {
         outtakeClaw = new OuttakeClaw(outtakeClawServo, outtakeSwivelServo);
         outtakeSlides = new OuttakeSlides(outtakeSlideLeft, outtakeSlideRight, false);
         outtakeArm = new OuttakeArm(oArmRight, oArmLeft, oWrist);
-        follower = new Follower(hardwareMap);
+        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
 
         // Register all subsystems
         CommandScheduler.getInstance().registerSubsystem(intakeArm, intakeEnd, extendo, outtakeClaw, outtakeSlides, outtakeArm);
