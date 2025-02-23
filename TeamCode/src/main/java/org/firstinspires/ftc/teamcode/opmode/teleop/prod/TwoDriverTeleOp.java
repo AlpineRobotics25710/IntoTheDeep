@@ -68,7 +68,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
         // Extendo commands
-        gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
 
@@ -81,16 +81,14 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
 
         // Intake commands
-        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
             // This is only for manual control though obviously not in commands
-            if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS)) {
                 if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
                 } else {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
                 }
-            }
         });
 
         // What the hell are these here for

@@ -358,6 +358,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         new FollowPathCommand(robot.follower, paths.get(13)), //going to high chamber to deposit specimen 5
 
                         deposit,
+                        new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.TRANSFER),
 
                         new ParallelCommandGroup(
                                 new IntakeCommand(robot, IntakeArm.IntakeArmState.INTAKE), //extending intake to get the IntakeArm in the observation zone for park
