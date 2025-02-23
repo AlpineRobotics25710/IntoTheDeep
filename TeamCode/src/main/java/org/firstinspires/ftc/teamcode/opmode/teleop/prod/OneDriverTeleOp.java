@@ -55,13 +55,12 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Outtake commands
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(() -> {
-            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT || robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.TRANSFER) {
+            if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INIT) {
+                // Don't want to do all of the extra grab off wall stuff if in the init state, just move the arm cuz nothing else should be out
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT).schedule();
             } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT) {
                 new OuttakeIntermediateCommand(robot).schedule();
-            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.INTERMEDIATE) {
-                new GrabOffWallCommand(robot).schedule();
-            } else if (robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.SUBMERSIBLE_OUTTAKE_BACK) {
+            } else {
                 new GrabOffWallCommand(robot).schedule();
             }
             gamepad1.rumble(0.75, 0.75, 500);
@@ -87,11 +86,14 @@ public class OneDriverTeleOp extends LinearOpMode {
 
         // Intake commands
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
-            // TelemetryUtil.addData("BUTTON X", "PRESSED");
-            if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
-            } else {
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
+            // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
+            // This is only for manual control though obviously not in commands
+            if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS)) {
+                if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
+                    new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
+                } else {
+                    new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
+                }
             }
         });
 
