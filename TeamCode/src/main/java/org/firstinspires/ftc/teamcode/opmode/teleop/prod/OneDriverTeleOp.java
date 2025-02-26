@@ -63,12 +63,18 @@ public class OneDriverTeleOp extends LinearOpMode {
             } else {
                 new GrabOffWallCommand(robot).schedule();
             }
-            gamepad1.rumble(0.75, 0.75, 500);
+            gamepad1.rumble(0.75, 0.75, 750);
             gamepad1.runLedEffect(outtakeArmLedEffect);
             gamepad1.runLedEffect(regularLedEffect);
             Log.i("TeamCode", "Outtake arm has moved. This is through the Android Logcat cuz Prathyush is so cool 😎.");
         });
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new HighChamberCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> {
+            if (robot.outtakeArm.getArmPosition() == OuttakeArm.ARM_OUTTAKE_BACK_POS) {
+                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OuttakeArm.ARM_INTERMEDIATE_POS)).schedule();
+            } else {
+                new HighChamberCommand(robot).schedule();
+            }
+        });
         //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
         gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
 
