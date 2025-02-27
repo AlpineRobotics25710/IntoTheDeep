@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
@@ -100,6 +101,11 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
         );
 
+        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+                new InfiniteAutoSpecScoring(robot)
+        );
+
+
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);
             robot.loop();
@@ -118,12 +124,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
-
-            if ((gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0 || gamepad1.right_stick_x != 0 || gamepad1.right_stick_y != 0) && robot.follower.isBusy()) {
-                robot.follower.breakFollowing();
-                robot.follower.startTeleopDrive();
-            }
-
             robot.loop();
             TelemetryUtil.update();
         }
