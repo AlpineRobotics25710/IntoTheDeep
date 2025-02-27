@@ -33,10 +33,10 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
         // Changed the instant commands that do the wait commands if a mechanism is not in certain position into conditional command
         // IF THEY DON'T WORK I PUT THE OLD CODE AT THE BOTTOM JUST COPY PASTE THAT HERE DO NOT REVERT I REPEAT DO NOT REVERT THE COMMIT BECAUSE I WILL FIND YOU
         super(
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new ConditionalCommand(new WaitCommand(INTAKE_ARM_DELAY), new InstantCommand(), () -> robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT),
-                new ExtendoCommand(robot, Extendo.BASE_POS),
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new ConditionalCommand(new WaitCommand(EXTENDO_DELAY), new InstantCommand(), () -> robot.extendo.getTargetPosition() > Extendo.BASE_POS),
+                new ExtendoCommand(robot, Extendo.BASE_POS),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
                 new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
