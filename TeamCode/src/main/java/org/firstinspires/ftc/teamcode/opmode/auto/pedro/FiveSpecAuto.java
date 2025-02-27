@@ -60,7 +60,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                 // Line 1
                                 new BezierLine(
                                         new Point(8.000, 65.500, Point.CARTESIAN),
-                                        new Point(testScore, specScore, Point.CARTESIAN)
+                                        new Point(testScore-0.5, specScore, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -73,7 +73,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 2
                                 new BezierCurve(
-                                        new Point(testScore, specScore, Point.CARTESIAN),
+                                        new Point(testScore-0.5, specScore, Point.CARTESIAN),
                                         new Point(12.500, 16.500, Point.CARTESIAN),
                                         new Point(64.000, 44.500, Point.CARTESIAN),
                                         new Point(57.000, 24.000, Point.CARTESIAN)
