@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
 import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.UninterruptibleCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
@@ -108,7 +109,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x)
+                new UninterruptibleCommand(new InfiniteAutoSpecScoring(robot)).interruptOn(() -> gamepad1.x)
         );
 
 
