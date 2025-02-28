@@ -66,7 +66,6 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
 
         fullCycle = new SequentialCommandGroup(
                 new InstantCommand(this::generatePaths),
-                new InstantCommand(() -> COUNT++),
                 new WaitCommand(200),
                 new ParallelCommandGroup(
                         pickUp,
@@ -114,11 +113,9 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
 
     @Override
     public void end(boolean interrupted) {
-        if (interrupted) {
-            robot.follower.breakFollowing();
-            robot.follower.setMaxPower(1);
-            robot.follower.startTeleopDrive();
-        }
+        robot.follower.breakFollowing();
+        robot.follower.setMaxPower(1);
+        robot.follower.startTeleopDrive();
     }
 
 
