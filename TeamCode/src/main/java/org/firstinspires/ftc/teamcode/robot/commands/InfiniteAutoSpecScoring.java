@@ -30,9 +30,8 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     PathChain grab, score;
     public static final InstantCommand INCREMENT_COUNT = new InstantCommand(() -> count++);
 
-    public InfiniteAutoSpecScoring(Robot robot, Pose grabPose) {
+    public InfiniteAutoSpecScoring(Robot robot) {
         this.robot = robot;
-        InfiniteAutoSpecScoring.grabPose = grabPose;
 
         /*addCommands( //will probobly break out of this before it ends
                 fullCycle,
@@ -72,8 +71,9 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     @Override
     public void initialize() {
         super.initialize();
-        //grabPose = new Pose(grabX, grabY, Math.toRadians(180));
+        grabPose = new Pose(grabX, grabY, Math.toRadians(180));
         scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
+        robot.follower.setPose(grabPose);
 
         generatePaths();
     }

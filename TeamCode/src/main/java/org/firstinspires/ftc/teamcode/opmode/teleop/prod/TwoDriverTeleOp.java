@@ -117,7 +117,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         // Waypointing stuff
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(InfiniteAutoSpecScoring.INCREMENT_COUNT);
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InfiniteAutoSpecScoring(robot, robot.follower.getPose()));
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InfiniteAutoSpecScoring(robot));
 
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);
