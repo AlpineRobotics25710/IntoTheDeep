@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
@@ -27,11 +29,14 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
 @TeleOp(group = "production")
 public class TwoDriverTeleOp extends LinearOpMode {
+    private static final Gamepad.LedEffect outtakeArmLedEffect = new Gamepad.LedEffect.Builder().addStep(1.0, 0.0, 0.0, 1000).build();
+    private static final Gamepad.LedEffect regularLedEffect = new Gamepad.LedEffect.Builder().addStep(0.0, 0.75, 0.0, Gamepad.LED_DURATION_CONTINUOUS).build();
     public static boolean robotCentric = true;
     private static Pose startPose = new Pose(0, 0, 0);
 
@@ -62,6 +67,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
                 new GrabOffWallCommand(robot).schedule();
             }
             gamepad1.rumble(0.75, 0.75, 750);
+            gamepad1.runLedEffect(outtakeArmLedEffect);
+            gamepad1.runLedEffect(regularLedEffect);
             Log.i("TeamCode", "Outtake arm has moved. This is through the Android Logcat cuz Prathyush is so cool 😎.");
         });
         gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> {
@@ -72,40 +79,45 @@ public class TwoDriverTeleOp extends LinearOpMode {
             }
         });
         //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
-        gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
+        gp2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(() -> {
+            if (robot.outtakeArm.getCurrentState() != OuttakeArm.OuttakeArmState.TRANSFER) {
+                new ClawToggleCommand(robot).schedule();
+            }
+        });
 
         // Extendo commands
-        //gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new TransferCommand(robot));
-
-        gp2.getGamepadButton(GamepadKeys.Button.START).whenPressed(
-                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
-        );
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new SequentialCommandGroup(
+                new TransferCommand(robot),
+                new InstantCommand(() -> gamepad1.rumble(0.5, 0.5, 750))
+        ));
 
         // Outtake slides commands
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new RetractNoTransfer(robot));
 
         // Intake commands
-        gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
+        gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
             // This is only for manual control though obviously not in commands
+            //if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS)) {
             if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
             } else {
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
             }
+            //}
         });
 
-        // What the hell are these here for
-        gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
-                new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
+        // Reset imu for field centric
+        gp1.getGamepadButton(GamepadKeys.Button.START).whenPressed(
+                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
         );
 
-        /*gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x)
-        );*/
+        // Waypointing stuff
+        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(InfiniteAutoSpecScoring.INCREMENT_COUNT);
+        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InfiniteAutoSpecScoring(robot, robot.follower.getPose()));
 
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);
@@ -121,10 +133,17 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         if (isStarted()) {
             robot.follower.startTeleopDrive();
+            gamepad1.runLedEffect(regularLedEffect);
         }
 
         while (!isStopRequested() && opModeIsActive()) {
             robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
+
+            if ((gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0 || gamepad1.right_stick_x != 0 || gamepad1.right_stick_y != 0) && robot.follower.isBusy()) {
+                robot.follower.breakFollowing();
+                robot.follower.startTeleopDrive();
+            }
+
             robot.loop();
             TelemetryUtil.update();
         }

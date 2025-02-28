@@ -19,15 +19,64 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     public static final long CLAW_DEPOSIT_DELAY = 100;
     public static final long DEPOSIT_DELAY = 200;
+    public static int grabX = 10, grabY = 35, scoreX = 40, scoreY = 62;
+    public static Pose grabPose, scorePose;
+    public static int count = 0;
+    public static int overallCount = 0;
     Robot robot;
     CommandGroupBase deposit;
     CommandGroupBase pickUp;
     CommandGroupBase fullCycle;
-
-    public static int grabX = 10, grabY = 35, scoreX = 40, scoreY = 62;
-    public static Pose grabPose, scorePose;
     PathChain grab, score;
-    public static int COUNT = 0;
+    public static final InstantCommand INCREMENT_COUNT = new InstantCommand(() -> count++);
+
+    public InfiniteAutoSpecScoring(Robot robot, Pose grabPose) {
+        this.robot = robot;
+        InfiniteAutoSpecScoring.grabPose = grabPose;
+
+        /*addCommands( //will probobly break out of this before it ends
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle,
+                fullCycle
+        );*/
+    }
+
+    @Override
+    public void execute() {
+        for (int i = 0; i < count; i++) {
+            addCommands(fullCycle);
+        }
+
+        super.execute();
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        //grabPose = new Pose(grabX, grabY, Math.toRadians(180));
+        scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
+
+        generatePaths();
+    }
 
     public void generatePaths() {
         robot.follower.setPose(grabPose);
@@ -42,18 +91,10 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
         score = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
                         new Point(scorePose),
-                        new Point(grabPose.getX() - (0.25*COUNT), grabPose.getY()))) //odo drift
+                        new Point(grabPose.getX() - (0.25 * overallCount), grabPose.getY()))) //odo drift
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
-    }
-
-    public InfiniteAutoSpecScoring(Robot robot) {
-        this.robot = robot;
-        grabPose = new Pose(grabX, grabY, Math.toRadians(180));
-        scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
-
-        generatePaths();
 
         deposit = new SequentialCommandGroup(
                 new HighChamberCommand(robot),
@@ -78,45 +119,17 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
                 new WaitCommand(400),
                 new GrabOffWallCommand(robot),
                 new FollowPathCommand(robot.follower, grab),
+                new InstantCommand(() -> overallCount++),
                 new InstantCommand(this::generatePaths)
-        );
-//
-//        for (int i = 0; i < COUNT; i++) {
-//            addCommands(fullCycle);
-//        }
-
-        addCommands( //will probobly break out of this before it ends
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle,
-                fullCycle
         );
     }
 
     @Override
     public void end(boolean interrupted) {
+        super.end(interrupted);
         robot.follower.breakFollowing();
         robot.follower.setMaxPower(1);
         robot.follower.startTeleopDrive();
+        count = 0;
     }
-
-
 }
