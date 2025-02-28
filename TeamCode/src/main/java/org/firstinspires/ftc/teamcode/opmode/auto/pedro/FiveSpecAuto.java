@@ -149,7 +149,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(45.000, 10.000, Point.CARTESIAN),
                                         new Point(0, 3.000, Point.CARTESIAN),
                                         new Point(20.500, 19.500, Point.CARTESIAN),
-                                        new Point(testGrabDistance-0.5, testGrab, Point.CARTESIAN)
+                                        new Point(testGrabDistance-1, testGrab, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -161,7 +161,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 8
                                 new BezierCurve(
-                                        new Point(testGrabDistance-0.5, testGrab, Point.CARTESIAN),
+                                        new Point(testGrabDistance-1, testGrab, Point.CARTESIAN),
                                         new Point(22.000, 74.500, Point.CARTESIAN),
                                         new Point(testScore, specScore-2.750, Point.CARTESIAN)
                                 )
@@ -178,7 +178,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore, specScore-2.750, Point.CARTESIAN),
                                         new Point(11.000, 66.000, Point.CARTESIAN),
                                         new Point(30.000, 35.500, Point.CARTESIAN),
-                                        new Point(testGrabDistance-0.75, testGrab, Point.CARTESIAN)
+                                        new Point(testGrabDistance-1.25, testGrab, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -190,7 +190,7 @@ public class FiveSpecAuto extends LinearOpMode {
                         .addPath(
                                 // Line 10
                                 new BezierCurve(
-                                        new Point(testGrabDistance-0.75, testGrab, Point.CARTESIAN),
+                                        new Point(testGrabDistance-1.25, testGrab, Point.CARTESIAN),
                                         new Point(17.500, 73.000, Point.CARTESIAN),
                                         new Point(testScore+0.5, specScore-5.500, Point.CARTESIAN)
                                 )

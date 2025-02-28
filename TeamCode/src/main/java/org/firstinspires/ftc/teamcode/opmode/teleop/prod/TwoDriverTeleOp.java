@@ -99,19 +99,13 @@ public class TwoDriverTeleOp extends LinearOpMode {
         });
 
         // What the hell are these here for
-        if (Math.abs(gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)) > 0) {
-            new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM);
-        }
-
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(
                 new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM)
         );
 
-        gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+        /*gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x)
-        );
-
-
+        );*/
 
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);

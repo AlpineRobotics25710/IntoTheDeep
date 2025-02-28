@@ -28,6 +28,7 @@ import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
+import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 
 @Config
@@ -76,16 +77,19 @@ public class OneDriverTeleOp extends LinearOpMode {
             }
         });
         //gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new LowChamberCommand(robot, false));
-        gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ClawToggleCommand(robot));
+        gp1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(() -> {
+            if (robot.outtakeArm.getCurrentState() != OuttakeArm.OuttakeArmState.TRANSFER) {
+                new ClawToggleCommand(robot).schedule();
+            }
+        });
 
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new SequentialCommandGroup(
                 new TransferCommand(robot),
-                new InstantCommand(() -> gamepad1.rumble(0.5, 0.5, 500))
+                new InstantCommand(() -> gamepad1.rumble(0.5, 0.5, 750))
         ));
-
 
         // Outtake slides commands
         gp1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
