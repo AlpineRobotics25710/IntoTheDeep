@@ -65,7 +65,6 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
         pickUp = new OuttakeIntermediateCommand(robot);
 
         fullCycle = new SequentialCommandGroup(
-                new InstantCommand(this::generatePaths),
                 new WaitCommand(200),
                 new ParallelCommandGroup(
                         pickUp,
@@ -78,7 +77,8 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
                 deposit,
                 new WaitCommand(400),
                 new GrabOffWallCommand(robot),
-                new FollowPathCommand(robot.follower, grab)
+                new FollowPathCommand(robot.follower, grab),
+                new InstantCommand(this::generatePaths)
         );
 //
 //        for (int i = 0; i < COUNT; i++) {
