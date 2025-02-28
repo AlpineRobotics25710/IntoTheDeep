@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
@@ -167,6 +168,9 @@ public class Robot {
         TelemetryUtil.addData("Current outtake state", outtakeArm.getCurrentState());
         TelemetryUtil.addData("Outtake slides pos", outtakeSlides.getCurrentPosition());
         TelemetryUtil.addData("outtake slides target pos", outtakeSlides.getTargetPosition());
+        TelemetryUtil.addData("GrabPose", InfiniteAutoSpecScoring.grabPose);
+        TelemetryUtil.addData("ScorePose", InfiniteAutoSpecScoring.scorePose);
+        TelemetryUtil.addData("Current Pose", follower.getPose());
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();

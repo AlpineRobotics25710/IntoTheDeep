@@ -91,11 +91,11 @@ public class TwoDriverTeleOp extends LinearOpMode {
         gp2.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
             // This is only for manual control though obviously not in commands
-                if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
-                    new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
-                } else {
-                    new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
-                }
+            if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
+            } else {
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
+            }
         });
 
         // What the hell are these here for
@@ -108,8 +108,9 @@ public class TwoDriverTeleOp extends LinearOpMode {
         );
 
         gp1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new InfiniteAutoSpecScoring(robot)
+                new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x)
         );
+
 
 
         while (opModeInInit()) {

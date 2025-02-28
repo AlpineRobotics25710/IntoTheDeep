@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot.commands;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -9,7 +7,6 @@ import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
@@ -28,23 +25,24 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     CommandGroupBase fullCycle;
 
     public static int grabX = 10, grabY = 35, scoreX = 40, scoreY = 62;
-    Pose grabPose, scorePose;
+    public static Pose grabPose, scorePose;
     PathChain grab, score;
-    double initialHeading;
+    public static int COUNT = 0;
+
     public void generatePaths() {
         robot.follower.setPose(grabPose);
         grab = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
                         new Point(grabPose.getX(), grabPose.getY()),
                         new Point(scorePose.getX(), scorePose.getY())))
-                .setLinearHeadingInterpolation(initialHeading, Math.toRadians(180))
+                .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
 
         score = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
                         new Point(scorePose),
-                        new Point(grabPose.getX() - 0.25, grabPose.getY()))) //odo drift
+                        new Point(grabPose.getX() - (0.25*COUNT), grabPose.getY()))) //odo drift
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
@@ -52,13 +50,10 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
 
     public InfiniteAutoSpecScoring(Robot robot) {
         this.robot = robot;
-        this.initialHeading = robot.follower.getPose().getHeading();
-
-        grabPose = new Pose(grabX, grabY, initialHeading);
+        grabPose = new Pose(grabX, grabY, Math.toRadians(180));
         scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
 
         generatePaths();
-        robot.follower.setPose(grabPose);
 
         deposit = new SequentialCommandGroup(
                 new HighChamberCommand(robot),
@@ -67,22 +62,29 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
                 new WaitCommand(CLAW_DEPOSIT_DELAY)
         );
 
-        pickUp = new SequentialCommandGroup(
-                new OuttakeIntermediateCommand(robot)
-        );
+        pickUp = new OuttakeIntermediateCommand(robot);
 
         fullCycle = new SequentialCommandGroup(
-                new InstantCommand(() -> generatePaths()),
+                new InstantCommand(this::generatePaths),
+                new InstantCommand(() -> COUNT++),
+                new WaitCommand(200),
                 new ParallelCommandGroup(
-                    pickUp,
-                    new SequentialCommandGroup(
-                        new WaitCommand(200),
-                        new FollowPathCommand(robot.follower, score)
-                    )
+                        pickUp,
+                        new SequentialCommandGroup(
+                                new WaitCommand(200),
+                                new FollowPathCommand(robot.follower, score)
+                        )
                 ),
+                new WaitCommand(400),
                 deposit,
+                new WaitCommand(400),
+                new GrabOffWallCommand(robot),
                 new FollowPathCommand(robot.follower, grab)
         );
+//
+//        for (int i = 0; i < COUNT; i++) {
+//            addCommands(fullCycle);
+//        }
 
         addCommands( //will probobly break out of this before it ends
                 fullCycle,
@@ -109,13 +111,15 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
                 fullCycle
         );
     }
+
     @Override
-    public boolean isFinished() {
-        if(gamepad1.x){
+    public void end(boolean interrupted) {
+        if (interrupted) {
             robot.follower.breakFollowing();
+            robot.follower.setMaxPower(1);
             robot.follower.startTeleopDrive();
         }
-        return gamepad1.x;
     }
+
 
 }
