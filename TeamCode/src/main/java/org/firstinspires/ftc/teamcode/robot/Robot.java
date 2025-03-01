@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.util.Constants;
@@ -145,7 +146,10 @@ public class Robot {
             new AutonInitializeCommand(this).schedule();
         } else {
             if (extendoRight.getCurrentPosition() > Extendo.BASE_POS) {
-                new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
+                new SequentialCommandGroup(
+                        new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                        new WaitCommand(600)
+                ).schedule();
             }
             new GrabOffWallCommand(this).schedule();
         }

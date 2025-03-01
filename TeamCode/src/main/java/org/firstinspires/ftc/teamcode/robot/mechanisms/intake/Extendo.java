@@ -14,7 +14,7 @@ public class Extendo extends SubsystemBase {
     public static double HALFWAY = 150.0;
     public static double BASE_POS = 0.0;
     public static double TRANSFER_POS = 50;
-    public static double kP = 0.015;
+    public static double kP = 0.3;
     public static double kI = 0.0;
     public static double kD = 0.0001;
     private static PIDController extendoPID;
