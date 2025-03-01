@@ -14,7 +14,7 @@ public class Extendo extends SubsystemBase {
     public static double HALFWAY = 150.0;
     public static double BASE_POS = 0.0;
     public static double TRANSFER_POS = 50;
-    public static double kP = 0.3;
+    public static double kP = 0.28;
     public static double kI = 0.0;
     public static double kD = 0.0001;
     private static PIDController extendoPID;
@@ -50,10 +50,10 @@ public class Extendo extends SubsystemBase {
             double currentPos = right.getCurrentPosition();
             double power = extendoPID.calculate(currentPos, targetPosition);
             if (currentPos - targetPosition <= 10 && targetPosition == Extendo.BASE_POS) {
-                power = -0.5;
+                power = -0.4;
             }
 
-            power = Range.clip(power, -1, 0.7);
+            power = Range.clip(power, -0.7, 0.7);
             setPower(power);
             TelemetryUtil.addData("power", power);
         }
