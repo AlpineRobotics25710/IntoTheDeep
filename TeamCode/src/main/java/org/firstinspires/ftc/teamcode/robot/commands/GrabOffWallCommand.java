@@ -33,24 +33,6 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
         // Changed the instant commands that do the wait commands if a mechanism is not in certain position into conditional command
         // IF THEY DON'T WORK I PUT THE OLD CODE AT THE BOTTOM JUST COPY PASTE THAT HERE DO NOT REVERT I REPEAT DO NOT REVERT THE COMMIT BECAUSE I WILL FIND YOU
         super(
-                new ConditionalCommand(new WaitCommand(INTAKE_ARM_DELAY), new InstantCommand(), () -> robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT),
-                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
-                new ConditionalCommand(new WaitCommand(EXTENDO_DELAY), new InstantCommand(), () -> robot.extendo.getTargetPosition() > Extendo.BASE_POS),
-                new ExtendoCommand(robot, Extendo.BASE_POS),
-                new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
-                new WaitCommand(WRIST_DELAY),
-                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
-                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OUTTAKE_SLOW_DOWN_POS)),
-                new WaitCommand(ARM_DELAY1),
-                new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
-                new ConditionalCommand(new WaitCommand(SLIDES_DELAY), new InstantCommand(), () -> robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL),
-                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
-                new WaitCommand(ARM_DELAY2)
-        );
-    }
-
-    /*
-    super(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
                 new InstantCommand(() -> {
                     if (robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT) {
@@ -77,5 +59,24 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
                 new WaitCommand(ARM_DELAY2)
         );
+    }
+
+    /*
+    super(
+                new ConditionalCommand(new WaitCommand(INTAKE_ARM_DELAY), new InstantCommand(), () -> robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT),
+                new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
+                new ConditionalCommand(new WaitCommand(EXTENDO_DELAY), new InstantCommand(), () -> robot.extendo.getTargetPosition() > Extendo.BASE_POS),
+                new ExtendoCommand(robot, Extendo.BASE_POS),
+                new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
+                new WaitCommand(WRIST_DELAY),
+                new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
+                new InstantCommand(() -> robot.outtakeArm.setArmPosition(OUTTAKE_SLOW_DOWN_POS)),
+                new WaitCommand(ARM_DELAY1),
+                new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
+                new ConditionalCommand(new WaitCommand(SLIDES_DELAY), new InstantCommand(), () -> robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL),
+                new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
+                new WaitCommand(ARM_DELAY2)
+        );
      */
+
 }

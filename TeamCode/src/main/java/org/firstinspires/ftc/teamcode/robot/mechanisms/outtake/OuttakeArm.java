@@ -18,7 +18,7 @@ public class OuttakeArm extends SubsystemBase {
     // Wrist positions
     public static double WRIST_WALL_INTAKE_FRONT_POS = 0.42; // Avoid slamming the intake
     public static double WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS = 0.25;
-    public static double WRIST_TRANSFER_POS = 0.82; // COMPLETE
+    public static double WRIST_TRANSFER_POS = 0.84; // COMPLETE
     public static double WRIST_OUTTAKE_BACK_POS = 0.37; // COMPLETE
     public static double WRIST_INTERMEDIATE_POS = 0.37;
     public static double WRIST_INIT_POS = 0.25;

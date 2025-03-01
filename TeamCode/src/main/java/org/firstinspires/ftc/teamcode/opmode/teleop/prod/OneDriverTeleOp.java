@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
@@ -99,19 +100,17 @@ public class OneDriverTeleOp extends LinearOpMode {
         gp1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> {
             // Do not allow the intake arm to move if the outtake is in the way (in grab off wall)
             // This is only for manual control though obviously not in commands
-            //if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS)) {
+            if (!(robot.outtakeArm.getCurrentState() == OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT && robot.extendo.getTargetPosition() == Extendo.BASE_POS && robot.intakeArm.currentState == IntakeArm.IntakeArmState.INIT)) {
                 if (robot.intakeArm.currentState == IntakeArm.IntakeArmState.INTERIM) {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTAKE).schedule();
                 } else {
                     new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INTERIM).schedule();
                 }
-            //}
+            }
         });
 
-        // Reset imu for field centric
-        gp1.getGamepadButton(GamepadKeys.Button.START).whenPressed(
-                new InstantCommand(() -> robot.follower.setHeadingOffset(0))
-        );
+        // Waypointing stuff
+        gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x));
 
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);

@@ -21,20 +21,39 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     public static final long DEPOSIT_DELAY = 200;
     public static int grabX = 10, grabY = 35, scoreX = 40, scoreY = 62;
     public static Pose grabPose, scorePose;
-    public static int count = 0;
-    public static int overallCount = 0;
     Robot robot;
     CommandGroupBase deposit;
     CommandGroupBase pickUp;
     CommandGroupBase fullCycle;
     PathChain grab, score;
-    public static final InstantCommand INCREMENT_COUNT = new InstantCommand(() -> count++);
 
     public InfiniteAutoSpecScoring(Robot robot) {
         this.robot = robot;
 
-        /*addCommands( //will probobly break out of this before it ends
-                fullCycle,
+        grabPose = new Pose(grabX, grabY, Math.toRadians(180));
+        scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
+        robot.follower.setPose(grabPose);
+        robot.follower.setMaxPower(1.0);
+
+        generatePaths();
+
+        fullCycle = new SequentialCommandGroup(
+                new WaitCommand(200),
+                pickUp,
+                new WaitCommand(200),
+                new FollowPathCommand(robot.follower, score),
+                new WaitCommand(400),
+                deposit,
+                new WaitCommand(400),
+                new ParallelCommandGroup(
+                        new GrabOffWallCommand(robot),
+                        new FollowPathCommand(robot.follower, grab),
+                        new InstantCommand(this::generatePaths)
+                )
+        );
+
+        addCommands( // will prob break out of this but i'm gonna find a better way to design this cuz this is so special needs
+                // if anyone sees this in our code RAJVEER WROTE THIS NOT PRATHYUSH
                 fullCycle,
                 fullCycle,
                 fullCycle,
@@ -56,26 +75,7 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
                 fullCycle,
                 fullCycle,
                 fullCycle
-        );*/
-    }
-
-    @Override
-    public void execute() {
-        for (int i = 0; i < count; i++) {
-            addCommands(fullCycle);
-        }
-
-        super.execute();
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
-        grabPose = new Pose(grabX, grabY, Math.toRadians(180));
-        scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
-        robot.follower.setPose(grabPose);
-
-        generatePaths();
+        );
     }
 
     public void generatePaths() {
@@ -91,7 +91,7 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
         score = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
                         new Point(scorePose),
-                        new Point(grabPose.getX() - (0.25 * overallCount), grabPose.getY()))) //odo drift
+                        new Point(grabPose.getX() - 0.25, grabPose.getY()))) //odo drift
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
@@ -104,24 +104,6 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
         );
 
         pickUp = new OuttakeIntermediateCommand(robot);
-
-        fullCycle = new SequentialCommandGroup(
-                new WaitCommand(200),
-                new ParallelCommandGroup(
-                        pickUp,
-                        new SequentialCommandGroup(
-                                new WaitCommand(200),
-                                new FollowPathCommand(robot.follower, score)
-                        )
-                ),
-                new WaitCommand(400),
-                deposit,
-                new WaitCommand(400),
-                new GrabOffWallCommand(robot),
-                new FollowPathCommand(robot.follower, grab),
-                new InstantCommand(() -> overallCount++),
-                new InstantCommand(this::generatePaths)
-        );
     }
 
     @Override
@@ -130,6 +112,5 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
         robot.follower.breakFollowing();
         robot.follower.setMaxPower(1);
         robot.follower.startTeleopDrive();
-        count = 0;
     }
 }
