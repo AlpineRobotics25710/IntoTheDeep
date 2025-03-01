@@ -46,11 +46,11 @@ public class FiveSpecAuto extends LinearOpMode {
     Robot robot;
     public static double testScore = 41.500;
     public static double testGrab = 35.000;
-    public static double testGrabDistance = 10;
+    public static double testGrabDistance = 10.25;
     public static double specScore = 78.500;
 
-    public static final long CLAW_DEPOSIT_DELAY = 100;
-    public static final long DEPOSIT_DELAY = 200;
+    public static int CLAW_DEPOSIT_DELAY = 100;
+    public static int DEPOSIT_DELAY = 200;
     public void generatePath(){
         robot.follower.setStartingPose(new Pose(8.000, 65.500, Math.toRadians(180)));
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.commands;
 
 import static org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm.WRIST_OUTTAKE_BACK_POS;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -13,9 +14,10 @@ import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.SwivelComm
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeClaw;
 
+@Config
 public class OuttakeIntermediateCommand extends SequentialCommandGroup {
     public static final long CLAW_DELAY = 200; //ms
-    public static final long WRIST_DELAY = 400; //ms
+    public static final long WRIST_DELAY = 200; //ms
     public static final long ARM_DELAY = 100; //ms
 
     public OuttakeIntermediateCommand(Robot robot) {

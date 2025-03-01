@@ -79,7 +79,6 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     }
 
     public void generatePaths() {
-        robot.follower.setPose(grabPose);
         grab = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
                         new Point(grabPose.getX(), grabPose.getY()),
