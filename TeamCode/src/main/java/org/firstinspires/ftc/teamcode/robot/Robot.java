@@ -149,6 +149,17 @@ public class Robot {
             new AutonInitializeCommand(this).schedule();
         } else {
             new SequentialCommandGroup(
+                    new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700)
+                            ),
+                            new InstantCommand(),
+                            () -> extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    ),
+                    new GrabOffWallCommand(this),
+                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+
                     /*new ConditionalCommand(
                             new SequentialCommandGroup(
                                     new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
@@ -163,13 +174,6 @@ public class Robot {
                             ),
                             () ->extendoRight.getCurrentPosition() > Extendo.BASE_POS
                     )*/
-
-                    new ConditionalCommand( 
-                            new SequentialCommandGroup(
-                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
-                                    new WaitCommand(700)
-                            ), new InstantCommand(), () -> extendoRight.getCurrentPosition() > Extendo.BASE_POS
-                    ), new GrabOffWallCommand(this), new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
             ).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
