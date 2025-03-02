@@ -49,6 +49,8 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         robot.follower.setStartingPose(startPose);
 
+        //
+
         // Active intake controls
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD));
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
@@ -130,7 +132,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
 
         while (!isStopRequested() && opModeIsActive()) {
-            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robotCentric);
+            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x*Math.max(0.1, 1-gamepad1.left_trigger), robotCentric);
 
             robot.loop();
             TelemetryUtil.update();
