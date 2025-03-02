@@ -23,7 +23,7 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
     public static long INTAKE_ARM_DELAY = 400;
     public static long EXTENDO_DELAY = 500;
     public static long SLIDES_DELAY = 800;
-    public static long WRIST_DELAY = 250;
+    public static long WRIST_DELAY = 350;
     public static long ARM_DELAY1 = 750;
     public static long ARM_DELAY2 = 300;
     public static double OUTTAKE_SLOW_DOWN_POS = 0.73; // idk what else to call it

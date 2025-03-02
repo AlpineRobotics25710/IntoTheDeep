@@ -42,7 +42,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group="production")
-public class Foursampleauto {
+public class Foursampleauto extends LinearOpMode {
     private ElapsedTime timer;
     private final ArrayList<PathChain> paths = new ArrayList<PathChain>();
     private DashboardPoseTracker dashboardPoseTracker;
@@ -179,7 +179,7 @@ public class Foursampleauto {
                 //depositing specimen at high chamber
                 new IntakeCommand(robot),
                 new WaitCommand(DEPOSIT_DELAY), //waiting for arm to deposit
-                new IntakeRetractCommand(robot, IntakeArm.IntakeArmState. ),
+                //new IntakeRetractCommand(robot, IntakeArm.IntakeArmState. ),
                 new WaitCommand(CLAW_DEPOSIT_DELAY) //waiting for claw to open
 
         );

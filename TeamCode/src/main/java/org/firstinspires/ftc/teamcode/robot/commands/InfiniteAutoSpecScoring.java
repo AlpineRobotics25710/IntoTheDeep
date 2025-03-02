@@ -29,10 +29,10 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
 
     public InfiniteAutoSpecScoring(Robot robot) {
         this.robot = robot;
-
         grabPose = new Pose(grabX, grabY, Math.toRadians(180));
         scorePose = new Pose(scoreX, scoreY, Math.toRadians(180));
-        robot.follower.setPose(grabPose);
+        robot.follower.setPose(new Pose(grabX, grabY, Math.toRadians(180)));
+
         robot.follower.setMaxPower(1.0);
 
         generatePaths();
@@ -81,16 +81,16 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
     public void generatePaths() {
         grab = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
-                        new Point(grabPose.getX(), grabPose.getY()),
-                        new Point(scorePose.getX(), scorePose.getY())))
+                        new Point(scorePose.getX(), scorePose.getY()),
+                        new Point(grabPose.getX(), grabPose.getY())))
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
 
         score = robot.follower.pathBuilder()
                 .addPath(new BezierLine(
-                        new Point(scorePose),
-                        new Point(grabPose.getX() - 0.25, grabPose.getY()))) //odo drift
+                        new Point(grabPose),
+                        new Point(scorePose.getX(), scorePose.getY()))) //odo drift
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
                 .setZeroPowerAccelerationMultiplier(3)
                 .build();
@@ -107,7 +107,6 @@ public class InfiniteAutoSpecScoring extends SequentialCommandGroup {
 
     @Override
     public void end(boolean interrupted) {
-        super.end(interrupted);
         robot.follower.breakFollowing();
         robot.follower.setMaxPower(1);
         robot.follower.startTeleopDrive();

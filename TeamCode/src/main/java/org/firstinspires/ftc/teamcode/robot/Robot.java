@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
@@ -19,7 +20,11 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
+import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeEndCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -148,11 +153,31 @@ public class Robot {
             new AutonInitializeCommand(this).schedule();
         } else {
             new SequentialCommandGroup(
-                    new ConditionalCommand(new SequentialCommandGroup(
-                            new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
-                            new WaitCommand(700)
-                    ), new InstantCommand(), () -> extendoRight.getCurrentPosition() > Extendo.BASE_POS),
-                    new GrabOffWallCommand(this)
+                    new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700)
+                            ),
+                            new InstantCommand(),
+                            () -> extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    ),
+                    new GrabOffWallCommand(this),
+                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+
+                    /*new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700),
+                                    new IntakeEndCommand(this, IntakeEnd.ActiveState.FORWARD),
+                                    new WaitCommand(300),
+                                    new TransferCommand(this)
+                            ),
+                            new ParallelCommandGroup(
+                                    new GrabOffWallCommand(this),
+                                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+                            ),
+                            () ->extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    )*/
             ).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));

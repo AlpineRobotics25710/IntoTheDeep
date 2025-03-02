@@ -112,7 +112,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         });
 
         // Waypointing stuff
-        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x));
+//        gp1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InfiniteAutoSpecScoring(robot).interruptOn(() -> gamepad1.x));
 
         while (opModeInInit()) {
             //robot.extendoRight.setPower(-0.35);
@@ -132,7 +132,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
 
         while (!isStopRequested() && opModeIsActive()) {
-            robot.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x*Math.max(0.1, 1-gamepad1.left_trigger), robotCentric);
+            robot.follower.setTeleOpMovementVectors((-gamepad1.left_stick_y)*Math.max(0.2, 1-gamepad1.left_trigger), (-gamepad1.left_stick_x)*Math.max(0.2, 1-gamepad1.left_trigger), (-gamepad1.right_stick_x)*Math.max(0.25, 1-gamepad1.left_trigger), robotCentric);
 
             robot.loop();
             TelemetryUtil.update();
