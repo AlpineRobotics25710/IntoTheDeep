@@ -208,7 +208,7 @@ public class FiveSpecAuto extends LinearOpMode {
                                         new Point(testScore+0.5, specScore-5.500, Point.CARTESIAN),
                                         new Point(10.000, 65.000, Point.CARTESIAN),
                                         new Point(30.000, 35.500, Point.CARTESIAN),
-                                        new Point(testGrabDistance-1, testGrab, Point.CARTESIAN)
+                                        new Point(testGrabDistance-1.25, testGrab, Point.CARTESIAN)
                                 )
                         )
                         .setConstantHeadingInterpolation(Math.toRadians(180))
@@ -219,7 +219,7 @@ public class FiveSpecAuto extends LinearOpMode {
                 robot.follower.pathBuilder()
                         .addPath( // Line 12
                                 new BezierCurve(
-                                        new Point(testGrabDistance-1, testGrab, Point.CARTESIAN),
+                                        new Point(testGrabDistance-1.25, testGrab, Point.CARTESIAN),
                                         new Point(17.500, 70.500, Point.CARTESIAN),
                                         new Point(testScore+0.75, specScore-8.250, Point.CARTESIAN)
                                 )
