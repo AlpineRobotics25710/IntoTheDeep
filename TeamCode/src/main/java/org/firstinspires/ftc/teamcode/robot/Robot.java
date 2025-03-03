@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.util.Constants;
@@ -15,7 +18,9 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 import org.firstinspires.ftc.teamcode.robot.commands.AutonInitializeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
+import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeClawCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeEnd;
@@ -143,10 +148,33 @@ public class Robot {
         if (isAuto) {
             new AutonInitializeCommand(this).schedule();
         } else {
-            if (extendoRight.getCurrentPosition() > Extendo.BASE_POS) {
-                new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER).schedule();
-            }
-            new GrabOffWallCommand(this).schedule();
+            new SequentialCommandGroup(
+                    new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700)
+                            ),
+                            new InstantCommand(),
+                            () -> extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    ),
+                    new GrabOffWallCommand(this),
+                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+
+                     /*new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700),
+                                    new IntakeEndCommand(this, IntakeEnd.ActiveState.FORWARD),
+                                    new WaitCommand(300),
+                                    new TransferCommand(this)
+                            ),
+                            new ParallelCommandGroup(
+                                    new GrabOffWallCommand(this),
+                                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+                            ),
+                            () ->extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    )*/
+            ).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
     }
@@ -167,6 +195,9 @@ public class Robot {
         TelemetryUtil.addData("Current outtake state", outtakeArm.getCurrentState());
         TelemetryUtil.addData("Outtake slides pos", outtakeSlides.getCurrentPosition());
         TelemetryUtil.addData("outtake slides target pos", outtakeSlides.getTargetPosition());
+        TelemetryUtil.addData("GrabPose", InfiniteAutoSpecScoring.grabPose);
+        TelemetryUtil.addData("ScorePose", InfiniteAutoSpecScoring.scorePose);
+        TelemetryUtil.addData("Current Pose", follower.getPose());
 
         for (LynxModule hub : allHubs) {
             hub.clearBulkCache();
