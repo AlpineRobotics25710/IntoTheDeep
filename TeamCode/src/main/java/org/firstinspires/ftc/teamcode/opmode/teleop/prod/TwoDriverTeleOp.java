@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.prod;
 import android.util.Log;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -16,7 +17,6 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.GrabOffWallCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighBasketCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.HighChamberCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.InfiniteAutoSpecScoring;
 import org.firstinspires.ftc.teamcode.robot.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.OuttakeIntermediateCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.RetractNoTransfer;
@@ -49,8 +49,6 @@ public class TwoDriverTeleOp extends LinearOpMode {
 
         robot.follower.setStartingPose(startPose);
 
-        //
-
         // Active intake controls
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeEndCommand(robot, IntakeEnd.ActiveState.FORWARD));
         gp1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenReleased(new IntakeEndCommand(robot, IntakeEnd.ActiveState.OFF));
@@ -67,9 +65,9 @@ public class TwoDriverTeleOp extends LinearOpMode {
             } else {
                 new GrabOffWallCommand(robot).schedule();
             }
-            gamepad1.rumble(0.75, 0.75, 750);
-            gamepad1.runLedEffect(outtakeArmLedEffect);
-            gamepad1.runLedEffect(regularLedEffect);
+            rumble(0.75, 0.75, 750);
+            runLedEffect(outtakeArmLedEffect);
+            runLedEffect(regularLedEffect);
             Log.i("TeamCode", "Outtake arm has moved. This is through the Android Logcat cuz Prathyush is so cool 😎.");
         });
         gp2.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> {
@@ -89,10 +87,7 @@ public class TwoDriverTeleOp extends LinearOpMode {
         // Extendo commands
         gp1.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).whenPressed(new IntakeCommand(robot, Extendo.MAX_LENGTH, IntakeArm.IntakeArmState.INTERIM));
         // RAJVEER TRANSFER RETRACTS EVERYTHING AND SO DOES GRAB OFF WALL
-        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new SequentialCommandGroup(
-                new TransferCommand(robot),
-                new InstantCommand(() -> gamepad1.rumble(0.5, 0.5, 750))
-        ));
+        gp2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(() -> CommandScheduler.getInstance().schedule(false, new TransferCommand(robot).andThen(new InstantCommand(() -> rumble(0.5, 0.5, 750)))));
 
         // Outtake slides commands
         gp2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new HighBasketCommand(robot));
@@ -132,11 +127,21 @@ public class TwoDriverTeleOp extends LinearOpMode {
         }
 
         while (!isStopRequested() && opModeIsActive()) {
-            robot.follower.setTeleOpMovementVectors((-gamepad1.left_stick_y)*Math.max(0.2, 1-gamepad1.left_trigger), (-gamepad1.left_stick_x)*Math.max(0.2, 1-gamepad1.left_trigger), (-gamepad1.right_stick_x)*Math.max(0.25, 1-gamepad1.left_trigger), robotCentric);
+            robot.follower.setTeleOpMovementVectors((-gamepad1.left_stick_y) * Math.max(0.2, 1 - gamepad1.left_trigger), (-gamepad1.left_stick_x) * Math.max(0.2, 1 - gamepad1.left_trigger), (-gamepad1.right_stick_x) * Math.max(0.25, 1 - gamepad1.left_trigger), robotCentric);
 
             robot.loop();
             TelemetryUtil.update();
         }
         robot.end();
+    }
+
+    public void runLedEffect(Gamepad.LedEffect effect) {
+        gamepad1.runLedEffect(effect);
+        gamepad2.runLedEffect(effect);
+    }
+
+    public void rumble(double left, double right, int duration) {
+        gamepad1.rumble(left, right, duration);
+        gamepad2.rumble(left, right, duration);
     }
 }
