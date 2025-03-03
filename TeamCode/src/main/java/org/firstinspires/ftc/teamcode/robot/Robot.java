@@ -159,6 +159,21 @@ public class Robot {
                     ),
                     new GrabOffWallCommand(this),
                     new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+
+                     /*new ConditionalCommand(
+                            new SequentialCommandGroup(
+                                    new OuttakeArmCommand(this, OuttakeArm.OuttakeArmState.TRANSFER),
+                                    new WaitCommand(700),
+                                    new IntakeEndCommand(this, IntakeEnd.ActiveState.FORWARD),
+                                    new WaitCommand(300),
+                                    new TransferCommand(this)
+                            ),
+                            new ParallelCommandGroup(
+                                    new GrabOffWallCommand(this),
+                                    new OuttakeClawCommand(this, OuttakeClaw.OuttakeClawState.OPEN)
+                            ),
+                            () ->extendoRight.getCurrentPosition() > Extendo.BASE_POS
+                    )*/
             ).schedule();
         }
         //CommandScheduler.getInstance().setDefaultCommand(intakeEnd, new IntakeEndCommand(this, IntakeEnd.ActiveState.OFF));
