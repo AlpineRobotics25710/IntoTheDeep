@@ -17,17 +17,12 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
 /**
- * This is the StraightBackAndForth autonomous OpMode. It runs the robot in a specified distance
- * straight forward. On reaching the end of the forward Path, the robot runs the backward Path the
+ * This is the StrafeBackAndForth autonomous OpMode. It runs the robot in a specified distance
+ * sideways. On reaching the end of the Path, the robot runs the other direction Path the
  * same distance back to the start. Rinse and repeat! This is good for testing a variety of Vectors,
- * like the drive Vector, the translational Vector, and the heading Vector. Remember to test your
- * tunings on CurvedBackAndForth as well, since tunings that work well for straight lines might
- * have issues going in curves.
+ * the translational vector especially.
  *
- * @author Anyi Lin - 10158 Scott's Bots
- * @author Aaron Yang - 10158 Scott's Bots
- * @author Harrison Womack - 10158 Scott's Bots
- * @version 1.0, 3/12/2024
+ * @author raj - 25710
  */
 @Config
 @Autonomous (name = "Strafe Back And Forth", group = "PIDF Tuning")
@@ -36,15 +31,15 @@ public class StrafeBackAndForth extends OpMode {
 
     public static double DISTANCE = 40;
 
-    private boolean forward = true;
+    private boolean left = true;
 
     private Follower follower;
 
-    private Path forwards;
-    private Path backwards;
+    private Path sideways;
+    private Path otherway;
 
     /**
-     * This initializes the Follower and creates the forward and backward Paths. Additionally, this
+     * This initializes the Follower and creates the strafe Paths. Additionally, this
      * initializes the FTC Dashboard telemetry.
      */
     @Override
@@ -52,12 +47,12 @@ public class StrafeBackAndForth extends OpMode {
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
 
-        forwards = new Path(new BezierLine(new Point(0,0, Point.CARTESIAN), new Point(0, DISTANCE, Point.CARTESIAN)));
-        forwards.setConstantHeadingInterpolation(0);
-        backwards = new Path(new BezierLine(new Point(0,DISTANCE, Point.CARTESIAN), new Point(0,0, Point.CARTESIAN)));
-        backwards.setConstantHeadingInterpolation(0);
+        sideways = new Path(new BezierLine(new Point(0,0, Point.CARTESIAN), new Point(0, DISTANCE, Point.CARTESIAN)));
+        sideways.setConstantHeadingInterpolation(0);
+        otherway = new Path(new BezierLine(new Point(0,DISTANCE, Point.CARTESIAN), new Point(0,0, Point.CARTESIAN)));
+        otherway.setConstantHeadingInterpolation(0);
 
-        follower.followPath(forwards);
+        follower.followPath(sideways);
 
         telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         telemetryA.addLine("This will run the robot in a SIDEWAYS line going " + DISTANCE
@@ -74,16 +69,16 @@ public class StrafeBackAndForth extends OpMode {
     public void loop() {
         follower.update();
         if (!follower.isBusy()) {
-            if (forward) {
-                forward = false;
-                follower.followPath(backwards);
+            if (left) {
+                left = false;
+                follower.followPath(otherway);
             } else {
-                forward = true;
-                follower.followPath(forwards);
+                left = true;
+                follower.followPath(sideways);
             }
         }
 
-        telemetryA.addData("going left i think", forward);
+        telemetryA.addData("going left i think", left);
         follower.telemetryDebug(telemetryA);
     }
 }
