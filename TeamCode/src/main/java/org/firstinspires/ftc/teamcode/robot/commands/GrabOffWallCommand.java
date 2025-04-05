@@ -34,28 +34,16 @@ public class GrabOffWallCommand extends SequentialCommandGroup {
         // IF THEY DON'T WORK I PUT THE OLD CODE AT THE BOTTOM JUST COPY PASTE THAT HERE DO NOT REVERT I REPEAT DO NOT REVERT THE COMMIT BECAUSE I WILL FIND YOU
         super(
                 new IntakeArmCommand(robot, IntakeArm.IntakeArmState.INIT),
-                new InstantCommand(() -> {
-                    if (robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT) {
-                        new WaitCommand(INTAKE_ARM_DELAY);
-                    }
-                }),
+                new ConditionalWaitCommand(() -> robot.intakeArm.currentState != IntakeArm.IntakeArmState.INIT, INTAKE_ARM_DELAY),
                 new ExtendoCommand(robot, Extendo.BASE_POS),
-                new InstantCommand(() -> {
-                    if (robot.extendo.getTargetPosition() > Extendo.BASE_POS) {
-                        new WaitCommand(EXTENDO_DELAY);
-                    }
-                }),
+                new ConditionalWaitCommand(() -> robot.extendo.getTargetPosition() > Extendo.BASE_POS, EXTENDO_DELAY),
                 new InstantCommand(() -> robot.outtakeArm.setWristPosition(OuttakeArm.WRIST_GRAB_OFF_WALL_INTERMEDIATE_POS)),
                 new WaitCommand(WRIST_DELAY),
                 new SwivelCommand(robot, OuttakeClaw.OuttakeSwivelState.TOP),
                 new InstantCommand(() -> robot.outtakeArm.setArmPosition(OUTTAKE_SLOW_DOWN_POS)),
                 new WaitCommand(ARM_DELAY1),
                 new OuttakeSlidesCommand(robot, OuttakeSlides.GRAB_OFF_WALL),
-                new InstantCommand(() -> {
-                    if (robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL) {
-                        new WaitCommand(SLIDES_DELAY);
-                    }
-                }),
+                new ConditionalWaitCommand(() -> robot.outtakeSlides.getTargetPosition() > OuttakeSlides.GRAB_OFF_WALL, SLIDES_DELAY),
                 new OuttakeArmCommand(robot, OuttakeArm.OuttakeArmState.WALL_INTAKE_FRONT),
                 new WaitCommand(ARM_DELAY2)
         );
