@@ -8,12 +8,9 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.ExtendoCommand;
 import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.IntakeArmCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeArmCommand;
-import org.firstinspires.ftc.teamcode.robot.commands.subsystemcommand.OuttakeSlidesCommand;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.Extendo;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.intake.IntakeArm;
 import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeArm;
-import org.firstinspires.ftc.teamcode.robot.mechanisms.outtake.OuttakeSlides;
 
 /**
  * Gets ready to intake a game piece
@@ -29,7 +26,6 @@ public class IntakeCommand extends SequentialCommandGroup {
                         robot.outtakeArm.setState(OuttakeArm.OuttakeArmState.GIVE_SPACE_FOR_INTAKE);
                     }
                 }),
-                new WaitCommand(500),
                 new ExtendoCommand(robot, extendoPos)
         );
     }
