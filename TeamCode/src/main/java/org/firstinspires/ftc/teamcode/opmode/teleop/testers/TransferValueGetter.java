@@ -13,12 +13,12 @@ import org.firstinspires.ftc.teamcode.robot.utils.TelemetryUtil;
 @TeleOp
 @Config
 public class TransferValueGetter extends LinearOpMode {
-    public static double outtakeArmPos = 0.0;
-    public static double outtakeWristPos = 0.0;
-    public static double outtakeClawPos = 0.0;
-    public static double outtakeSwivelPos = 0.0;
-    public static double intakeArmPos = 0.0;
-    public static double intakeWristPos = 0.0;
+    public static double outtakeArmPos = 0.58;
+    public static double outtakeWristPos = 0.84;
+    public static double outtakeClawPos = 0.2;
+    public static double outtakeSwivelPos = 0.35;
+    public static double intakeArmPos = 0.17;
+    public static double intakeWristPos = 0.09;
     public static IntakeEnd.ActiveState activeState = IntakeEnd.ActiveState.OFF;
     public static boolean drive = false;
 
